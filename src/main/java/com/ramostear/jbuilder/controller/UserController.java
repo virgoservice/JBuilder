@@ -41,7 +41,7 @@ public class UserController {
 		return "user/index";
 	}
 	
-	@RequestMapping(value="/list",method=RequestMethod.POST)
+	@RequestMapping(value="/list",method=RequestMethod.GET)
 	public String list(User user,ReqDto req,Model model){
 		model.addAttribute("list", userService.findByPage(req.getPageNo(), req.getPageSize(), "createTime", true));
 		return "user/list";
