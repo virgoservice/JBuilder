@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ramostear.jbuilder.dao.PermissionDao">
+	<resultMap type="Permission" id="resultMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="parentId" property="parentId"/>
+		<result column="parentName" property="parentName"/>
+		<result column="permission" property="permission"/>
+		<result column="icon" property="icon"/>
+		<result column="url" property="url"/>
+	</resultMap>
+	
+	<select id="getPermission" resultMap="resultMap" parameterType="Long">
+		select * from sys_permission 
+		where 
+		id = #{id}
+	</select>
+	
+	<select id="findAll" resultMap="resultMap">
+		select * from sys_permission order by id asc 
+	</select>
+	
+	<select id="findByRoles" resultMap="resultMap">
+		select p.id,p.name,p.parentId,p.parentName,p.permission,p.icon,p.url 
+		from sys_permission p,sys_role r,sys_role_permission rp 
+		where 
+		p.id = rp.permissionId 
+		and 
+		r.id = rp.roleId 
+		and 
+		r.id in 
+		<foreach collection="roleIds" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+</mapper>

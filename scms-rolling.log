@@ -1,0 +1,7 @@
+[塞拉SCMS 2017-05-04 14:22:51,976](INFO) - com.alibaba.druid.pool.DruidDataSource - (DruidDataSource.java:640) {dataSource-1} inited 
+[塞拉SCMS 2017-05-04 14:22:54,491](INFO) - net.sf.ehcache.util.UpdateChecker - (UpdateChecker.java:98) New update(s) found: 2.6.5 [http://www.terracotta.org/confluence/display/release/Release+Notes+Ehcache+Core+2.6]. Please check http://ehcache.org for the latest version. 
+[塞拉SCMS 2017-05-04 14:33:03,435](INFO) - com.alibaba.druid.pool.DruidDataSource - (DruidDataSource.java:640) {dataSource-1} inited 
+[塞拉SCMS 2017-05-04 14:33:15,790](INFO) - net.sf.ehcache.util.UpdateChecker - (UpdateChecker.java:98) New update(s) found: 2.6.5 [http://www.terracotta.org/confluence/display/release/Release+Notes+Ehcache+Core+2.6]. Please check http://ehcache.org for the latest version. 
+[塞拉SCMS 2017-05-04 14:35:56,829](INFO) - com.alibaba.druid.pool.DruidDataSource - (DruidDataSource.java:640) {dataSource-1} inited 
+[塞拉SCMS 2017-05-04 14:35:59,051](INFO) - net.sf.ehcache.util.UpdateChecker - (UpdateChecker.java:98) New update(s) found: 2.6.5 [http://www.terracotta.org/confluence/display/release/Release+Notes+Ehcache+Core+2.6]. Please check http://ehcache.org for the latest version. 
+[塞拉SCMS 2017-05-04 14:37:17,709](INFO) - com.alibaba.druid.pool.DruidDataSource - (DruidDataSource.java:640) {dataSource-1} inited 

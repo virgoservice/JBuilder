@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ramostear.jbuilder.dao.UserDao">
+
+	<resultMap type="User" id="resultMap">
+		<id column="id" property="id"/>
+		<result column="username" property="username"/>
+		<result column="nickname" property="nickname"/>
+		<result column="passowrd" property="password"/>
+		<result column="salt" property="salt"/>
+		<result column="createTime" property="createTime"/>
+		<result column="status" property="status"/>
+		<result column="portraitImgUrl" property="portraitImgUrl"/>
+		<result column="tag" property="tag"/>
+	</resultMap>
+	
+	<sql id="propSql">
+		id,username,nickname,password,createTime,salt,status,portraitImgUrl,tag
+	</sql>
+	
+	<insert id="save" parameterType="User" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		insert into sys_user 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="username != null">username,</if>
+			<if test="nickname != null">nickname,</if>
+			<if test="password != null">password,</if>
+			<if test="salt != null">salt,</if>
+			<if test="createTime != null">createTime,</if>
+			<if test="status != null">status,</if>
+			<if test="portraitImgUrl != null">portraitImgUrl,</if>
+			<if test="tag != null">tag</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="username != null">#{username},</if>
+			<if test="nickname != null">#{nickname},</if>
+			<if test="password != null">#{password},</if>
+			<if test="salt != null">#{salt},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="status != null">#{status},</if>
+			<if test="portraitImgUrl != null">#{portraitImgUrl},</if>
+			<if test="tag != null">#{tag}</if>
+		</trim>
+	</insert>
+	
+	<delete id="delete" parameterType="Long">
+		delete from sys_user where id=#{id}
+	</delete>
+	
+	<update id="update" parameterType="User">
+		update sys_user 
+		<set>
+			<if test="nickname != null">nickname = #{nickname},</if>
+			<if test="password != null">password = #{password},</if>
+			<if test="salt != null">salt = #{salt},</if>
+			<if test="status != null">status = #{status},</if>
+			<if test="portraitImgUrl != null">portraitImgUrl = #{portraitImgUrl},</if>
+			<if test="tag != null"> tag = #{tag}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<select id="findById" parameterType="Long" resultType="User">
+		select 
+		<include refid="propSql"></include>
+		from sys_user 
+		where id = #{id}
+	</select>
+	
+	<select id="findByName" parameterType="string" resultType="User">
+		select  <include refid="propSql"></include> 
+		from sys_user 
+		where 
+		username = #{username}
+	</select>
+	
+	<select id="findAll" resultType="User">
+		select <include refid="propSql"></include> 
+		from sys_user
+	</select>
+	
+	<select id="size" resultType="Long">
+		select count(*) from sys_user
+	</select>
+	
+	<select id="findByPage" resultType="User">
+		select <include refid="propSql"></include> 
+		from sys_user 
+		order by ${orderBy} 
+		<if test="order == true">
+			DESC
+		</if>
+		<if test="order == false">
+			ASC
+		</if>
+		limit #{offset},#{size}
+	</select>
+	
+	
+	<delete id="deleteBach">
+		delete from sys_user 
+		where sys_user.id in 
+		<foreach collection="userIds" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<insert id="correlationRoles">
+		insert into sys_user_role(userId,roleId) values 
+		<foreach collection="roleIds" index="index" item="item" separator=",">
+			(#{userId},#{item})
+		</foreach>
+	</insert>
+	
+	<delete id="uncorrelationRoles">
+		delete from sys_user_role
+		where userId=#{userId} 
+		and roleId in 
+		 <foreach collection="roleIds" item="item" index="index" open="(" separator="," close=")">
+		 	#{item}
+		 </foreach>
+	</delete>
+	
+	<delete id="uncorelationAllRoles">
+		delete from sys_user_role 
+		where userId=#{userId}
+	</delete>	
+	
+	<delete id="deleteUserRole">
+		delete from sys_user_role 
+		where 
+		userId = #{userId}
+	</delete>
+	
+	<delete id="deleteUserRoleBatch">
+		delete from sys_user_role 
+		where 
+		userId in 
+		<foreach collection="userIds" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</delete>	
+	
+	<select id="findRoles" parameterType="java.lang.String" resultType="java.lang.String">
+		select r.name 
+		from 
+		sys_user u,sys_role r,sys_user_role ur 
+		where 
+		u.username = #{username} 
+		and 
+		u.id = ur.userId 
+		and 
+		r.id = ur.roleId 
+	</select>
+	
+	<select id="findPermission" parameterType="java.lang.String" resultType="java.lang.String">
+		select p.permission 
+		from sys_user u,sys_role r,sys_permission p,sys_user_role ur,sys_role_permission rp 
+		where 
+		u.username = #{username} 
+		and 
+		u.id = ur.userId 
+		and 
+		r.id = ur.roleId 
+		and 
+		r.id = rp.roleId 
+		and 
+		p.id = rp.permissionId
+	</select>
+	
+	<select id="findRoleIdsById" parameterType="java.lang.Long" resultType="java.lang.Long">
+		select r.id 
+		from sys_user u,sys_role r,sys_user_role ur 
+		where 
+		u.id = #{userId} 
+		and 
+		u.id = ur.userId 
+		and 
+		r.id = ur.roleId
+	</select>
+</mapper>
