@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ramostear.jbuilder.dao.BannerDao">
+
+	<resultMap type="com.ramostear.jbuilder.entity.Banner" id="resultMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="title" property="title"/>
+		<result column="image" property="image"/>
+		<result column="alt" property="alt"/>
+		<result column="showOrder" property="showOrder"/>
+		<result column="status" property="status"/>
+	</resultMap>
+
+	<insert id="save" parameterType="com.ramostear.jbuilder.entity.Banner" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert into sys_banner 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null">name,</if>
+			<if test="title != null">title,</if>
+			<if test="image != null">image,</if>
+			<if test="alt != null">alt,</if>
+			<if test="showOrder != null">showOrder</if>
+			<if test="status != null">status</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="name != null">#{name},</if>
+			<if test="title != null">#{title},</if>
+			<if test="image != null">#{image},</if>
+			<if test="alt != null">#{alt},</if>
+			<if test="showOrder != null">#{showOrder}</if>
+			<if test="status != null">#{status}</if>
+		</trim>
+	</insert>	
+		
+	<update id="update" parameterType="com.ramostear.jbuilder.entity.Banner">
+		update sys_banner
+		<set>
+			<if test="name != null">name = #{name},</if>
+			<if test="title != null">title = #{title},</if>
+			<if test="image != null">image = #{image},</if>
+			<if test="alt != null">alt = #{alt},</if>
+			<if test="showOrder != null">showOrder = #{showOrder}</if>
+			<if test="status != null">status = #{status}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<select id="size" resultType="Long">
+		select count(*) from sys_banner
+	</select>
+	
+	<delete id="delete" parameterType="Long">
+		delete from sys_banner 
+		where 
+		id = #{id}
+	</delete>
+
+	<select id="findById" parameterType="Long" resultMap="resultMap">
+		select * from sys_banner 
+		where 
+		id = #{id}
+	</select>
+	
+	<select id="findAll"  resultMap="resultMap">
+		select * from sys_banner
+	</select>
+	
+	<select id="findByPage" resultMap="resultMap">
+		select * from sys_banner 
+		order by ${order} 
+		<if test="order == true">
+			DESC
+		</if>
+		<if test="order == false">
+			ASC
+		</if>
+		limit #{offset},#{size}
+	</select>
+	
+	
+</mapper>

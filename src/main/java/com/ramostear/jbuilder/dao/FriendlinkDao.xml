@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ramostear.jbuilder.dao.FriendlinkDao">
+
+
+
+
+	<resultMap type="com.ramostear.jbuilder.entity.Friendlink" id="resultMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="url" property="url"/>
+		<result column="createTime" property="createTime"/>
+		<result column="logo" property="logo"/>
+		<result column="showOrder" property="showOrder"/>
+	</resultMap>
+
+	<insert id="save" parameterType="com.ramostear.jbuilder.entity.Friendlink" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert into sys_friendlink 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null">name,</if>
+			<if test="url != null">url,</if>
+			<if test="createTime != null">createTime,</if>
+			<if test="logo != null">logo,</if>
+			<if test="showOrder != null">showOrder</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="name != null">#{name},</if>
+			<if test="url != null">#{url},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="logo != null">#{logo},</if>
+			<if test="showOrder != null">#{showOrder}</if>
+		</trim>
+	</insert>	
+	
+	<update id="update" parameterType="com.ramostear.jbuilder.entity.Friendlink">
+		update sys_friendlink
+		<set>
+			<if test="name != null">name = #{name},</if>
+			<if test="url != null">url = #{url},</if>
+			<if test="createTime != null">createTime = #{createTime},</if>
+			<if test="logo != null">logo = #{logo},</if>
+			<if test="showOrder != null">showOrder = #{showOrder}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<select id="size" resultType="Long">
+		select count(*) from sys_friendlink
+	</select>
+	
+	<delete id="delete" parameterType="Long">
+		delete from sys_friendlink 
+		where 
+		id = #{id}
+	</delete>
+
+	<select id="findById" parameterType="Long" resultMap="resultMap">
+		select * from sys_friendlink 
+		where 
+		id = #{id}
+	</select>
+	
+	<select id="findAll"  resultMap="resultMap">
+		select * from sys_friendlink
+	</select>
+	
+	<select id="findByPage" resultMap="resultMap">
+		select * from sys_friendlink 
+		order by ${order} 
+		<if test="order == true">
+			DESC
+		</if>
+		<if test="order == false">
+			ASC
+		</if>
+		limit #{offset},#{size}
+	</select>
+	
+	
+</mapper>
