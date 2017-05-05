@@ -17,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.ramostear.jbuilder.entity.Friendlink;
 import com.ramostear.jbuilder.kit.ReqDto;
 import com.ramostear.jbuilder.service.FriendlinkService;

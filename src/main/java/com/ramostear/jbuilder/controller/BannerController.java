@@ -9,25 +9,13 @@
 								                 limitations under the License. 
 */
 package com.ramostear.jbuilder.controller;
-
-import java.util.Date;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Request;
-
-import org.apache.http.HttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.ramostear.jbuilder.entity.Banner;
-import com.ramostear.jbuilder.entity.Friendlink;
-import com.ramostear.jbuilder.entity.User;
 import com.ramostear.jbuilder.kit.ReqDto;
-import com.ramostear.jbuilder.service.FriendlinkService;
 import com.ramostear.jbuilder.service.impl.BannerServiceImpl;
 
 /** 
