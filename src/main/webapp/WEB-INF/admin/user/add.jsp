@@ -1,38 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html>
-
 	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>JBuilder 2 | 控制台</title>
-		<!-- Tell the browser to be responsive to screen width -->
-		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-		<!-- Bootstrap 3.3.6 -->
-		<link rel="stylesheet" href="<%=path %>/resources/admin/bootstrap/css/bootstrap.min.css">
-		<!-- Font Awesome -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-		<!-- Ionicons -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-		<!-- Theme style -->
-		<link rel="stylesheet" href="<%=path %>/resources/admin/dist/css/AdminLTE.min.css">
-		<!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-		<link rel="stylesheet" href="<%=path %>/resources/admin/dist/css/skins/_all-skins.min.css">
-		<!-- iCheck -->
-		<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/iCheck/flat/blue.css">
-		<!-- jvectormap -->
-		<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
-		<!-- bootstrap wysihtml5 - text editor -->
-		<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>JBuilder 2 | 添加用户</title>
+	<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/editormd/css/editormd.css" />
+	<link rel="stylesheet" type="text/css" href="<%=path %>/resources/admin/plugins/layer-v3.0.3/layer/skin/default/layer.css"/>
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<!-- Bootstrap 3.3.6 -->
+	<link rel="stylesheet" href="<%=path %>/resources/admin/bootstrap/css/bootstrap.min.css">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+	<!-- Ionicons -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+	<!-- Theme style -->
+	<link rel="stylesheet" href="<%=path %>/resources/admin/dist/css/AdminLTE.min.css">
+	<!-- AdminLTE Skins. Choose a skin from the css/skins
+      folder instead of downloading all of them to reduce the load. -->
+	<link rel="stylesheet" href="<%=path %>/resources/admin/dist/css/skins/_all-skins.min.css">
+	<!-- iCheck -->
+	<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/iCheck/flat/blue.css">
+	<!-- jvectormap -->
+	<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+	<!-- bootstrap wysihtml5 - text editor -->
+	<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
-		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-		<!--[if lt IE 9]>
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
@@ -59,7 +61,7 @@
 								</a>
 								<ul class="dropdown-menu">
 									<li class="user-header">
-										<img src="<%=path %>/resources/admin/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+										<img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 										<p>谭朝红 - 超级管理员</p>
 									</li>
 									<li class="user-footer">
@@ -94,7 +96,7 @@
 							</a>
 							<ul class="treeview-menu">
 								<li>
-									<a href="article_list.html" ><i class="fa fa-align-justify"></i>所有文章</a>
+									<a href="article_list.html"><i class="fa fa-align-justify"></i>所有文章</a>
 								</li>
 								<li>
 									<a href="article_add.html"><i class="fa fa-pencil-square-o"></i> 撰写文章</a>
@@ -150,8 +152,8 @@
 								<i class="fa fa-file-photo-o"></i>
 								<span>附件</span>
 								<span class="pull-right-container">
-					            	<i class="fa fa-angle-left pull-right"></i>
-					            </span>
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
 							</a>
 							<ul class="treeview-menu">
 								<li>
@@ -167,14 +169,14 @@
 								<i class="fa  fa-user"></i>
 								<span>用户</span>
 								<span class="pull-right-container">
-					            	<i class="fa fa-angle-left pull-right"></i>
+					              	<i class="fa fa-angle-left pull-right"></i>
 					            </span>
 							</a>
 							<ul class="treeview-menu">
-								<li class="active">
+								<li>
 									<a href="<%=path %>/admin/user/index"><i class="fa fa-users"></i> 所有用户</a>
 								</li>
-								<li>
+								<li class="active">
 									<a href="<%=path %>/admin/user/add"><i class="fa fa-user-plus"></i> 添加用户</a>
 								</li>
 								<li>
@@ -248,58 +250,116 @@
 			<div class="content-wrapper">
 				<!-- Content Header (Page header) -->
 				<section class="content-header">
-					<h1> 用户列表</h1>
+					<h1>用户资料</h1>
 				</section>
 				<section class="content">
-					<div class="row" style="padding: 0 15px 10px 15px;">
-						<ul class="list-inline" style="float: left;">
-							<li class="all active">
-								<a href="#" class="current">
-									全部 <span class="count">(10)</span>
-								</a>|
-							</li>
-							<li class="all">
-								<a href="#" class="current">
-									管理员 <span class="count">(3)</span>
-								</a>|
-							</li>
-							<li class="all">
-								<a href="#" class="current">
-									注册用户 <span class="count">(7)</span>
-								</a>
-							</li>
-						</ul>
-						<form class="form-horizontal col-sm-3" method="post" style="float: right;" action="#">
-							<div class="input-group input-group-sm">
-								<input id="#" class="form-control" type="search"  value="" name="k" placeholder="请输入关键词"/>
-								<span class="input-group-btn">
-									<button type="button" class="btn btn-primary btn-flat">搜索</button>
-								</span>
+					<form id="form" method="post">
+						<div class="row">
+							<div class="col-md-9">
+								<div class="box box-solid">
+									<div class="box-body">
+										<div class="form-horizontal">
+											<h4>用户姓名</h4>
+											<hr />
+											<div class="form-group">
+												<label for="username" class="col-md-2 control-label">姓名（必填）</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" name="username" id="username"  value=""/>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="nickname" class="col-sm-2 control-label">昵称（必填）</label>
+												<div class="col-sm-9">
+													<input type="text" class="form-control" name="nickname" id="nickname"  value=""/>
+												</div>
+											</div>
+										</div>
+										<div class="form-horizontal">
+											<h4>联系信息</h4>
+											<hr />
+											<div class="form-group">
+												<label for="email" class="col-md-2 control-label">电子邮件（必填）</label>
+												<div class="col-md-9">
+													<input type="email" class="form-control" name="email" id="email"  value=""/>
+												</div>
+											</div>
+										</div>
+										<div class="form-horizontal">
+											<h4>用户密码</h4>
+											<hr />
+											<div class="form-group">
+												<label for="pwd" class="col-md-2 control-label">密码（必填）</label>
+												<div class="col-md-9">
+													<input type="password" class="form-control" name="password" id="pwd"  value=""/>
+												</div>
+											</div>
+										</div>
+										<div class="form-horizontal">
+											<h4>个人说明</h4>
+											<hr />
+											<div class="form-group">
+												<label for="qm" class="col-md-2 control-label">个性签名</label>
+												<div class="col-md-9">
+													<textarea rows="4" id="qm" name="signature" class="form-control" placeholder="分享你的一些心情或者公开信息"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
-						</form>
-					</div>
-					<div class="row" style="padding: 0 15px 10px 15px;">
-						<div style="float: left;">
-							<select class="form-control input-sm">
-								<option value="">批量操作</option>
-							</select>
-						</div>
-						<div style="float: left;">
-							<select class="form-control input-sm">
-								<option value="">将角色更为</option>
-							</select>
-						</div>
-						<div style="float: left;">
-							<form action="#" method="post">
-								<input type="hidden" name="cid"/>
-								<input type="hidden" name="keyword"/>
-								<input type="submit"  class="btn btn-block btn-sm btn-default" value="筛选"/>
-							</form>
-						</div>
-					</div>
-					<div id="user-table">
-						<!--异步填充内容  -->
-					</div>
+							<div class="col-md-3">
+								<div class="box box-solid" style="display: block;padding: 10px 15px; position: relative;">
+									<div class="box-body">
+										<button type="button" class="btn btn-primary btn-sm " onclick="submitDo()">保存</button>
+										<button type="button" class="btn btn-default btn-sm pull-right">重置</button>
+									</div>
+								</div>
+								
+								<div class="box box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">角色</h3>
+										<div class="box-tools">
+											<button type="button" class="btn btn-box-tool" data-widget="collapse">
+												<i class="fa fa-minus"></i>
+												<%-- <c:forEach items="${roles}" var="role">
+													<option value="${role.id}">${role.description }</option>
+												</c:forEach> --%>
+											</button>
+										</div>
+									</div>
+									<div class="box-body" style="padding: 10px 0;">
+										
+									</div>
+								</div>
+								<div class="box box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">头像</h3>
+										<div class="box-tools">
+											<button type="button" class="btn btn-box-tool" data-widget="collapse">
+												<i class="fa fa-minus"></i>
+											</button>
+										</div>
+									</div>
+									<div class="box-body no-padding">
+										<ul class="nav">
+											<li class="">
+												<div style="min-height: 100px;">
+													<img src="<%=path %>/resources/admin/dist/img/avatar5.png" id="thumbnail" class="img-responsive img-circle center-block"/>
+													<input type="hidden" name="" value="" id="" />
+												</div>
+												<div style="clear: both;"></div>
+											</li>
+											<li style="border-top: 1px solid #f4f4f4; display: block;padding: 10px 15px;position: relative;">
+												<button type="button" class="btn btn-default btn-sm" onclick="selectThumbnail()">上传头像</button>
+												<a href="javascript:;" style="display: inline;" onclick="removeThumbnail()">移除头像</a>
+												<div style="clear: both;"></div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>							
+					</form>
 				</section>
 			</div>
 			<footer class="main-footer">
@@ -312,6 +372,37 @@
 		</div>
 		<!-- jQuery 2.2.3 -->
 		<script src="<%=path %>/resources/admin/plugins/jQuery/jquery-2.2.3.min.js"></script>
+		<script src="<%=path %>/resources/admin/plugins/jQuery/jquery.min.js"></script>
+		<script src="<%=path %>/resources/admin/plugins/editormd/editormd.min.js"></script>
+		<script type="text/javascript" src="<%=path %>/resources/admin/plugins/layer-v3.0.3/layer/layer.js" ></script>
+		<script type="text/javascript">
+			var testEditor;
+            $(function() {
+                testEditor = editormd("test-editormd", {
+                    width   : "100%",
+                    height  : 640,
+                    syncScrolling : "single",
+                    path    : "./plugins/editormd/lib/",
+                    //theme : "dark",
+                    //previewTheme : "dark",
+                    //editorTheme : "pastel-on-dark",
+                    //markdown : md,
+                    codeFold : true,
+                    //saveHTMLToTextarea : true,    // 保存 HTML 到 Textarea
+                    //searchReplace : true,
+                    //htmlDecode : "style,script,iframe|on*",            // 开启 HTML 标签解析，为了安全性，默认不开启    
+                    emoji : true,
+                    taskList : true,
+                    tocm            : true,         // Using [TOCM]
+                    tex : true,                   // 开启科学公式TeX语言支持，默认关闭
+                    flowChart : true,             // 开启流程图支持，默认关闭
+                    sequenceDiagram : true,       // 开启时序/序列图支持，默认关闭,
+                    imageUpload : true,
+                    imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                    imageUploadURL : "./php/upload.php",
+                });
+            });
+        </script>
 		<!-- jQuery UI 1.11.4 -->
 		<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 		<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -340,26 +431,45 @@
 		<!-- AdminLTE App -->
 		<script src="<%=path %>/resources/admin/dist/js/app.min.js"></script>
 		<script type="text/javascript">
-			query();
-			function query(pageNo,pageSize){
-				$.ajax({
-					url:"<%=path %>/admin/user/list",
-					type:"GET",
-					data:{
-						pageNo:pageNo,
-						pageSize:pageSize
-					},
-					cache:false,
-					success:function(html){
-						$("#user-table").html("");
-						$("#user-table").html(html);
-					},
-					error:function(){
-						alert("未处理");
+		
+		function submitDo(){
+			var data = $("#form").serialize();
+			data = decodeURIComponent(data,true);
+			$.ajax({
+				url:"<%=path%>/admin/user/add",
+				type:'POST',
+				data:data,
+				contentType:"application/x-www-form-urlencoded",
+				encoding:"utf-8",
+				cache:false,
+				success:function(html){
+					layer.open({
+						content:"用户已经成功创建！",	
+						btn:['我知道了'],
+						yes:function(index){
+							layer.close(index);
+						},
+					});
+				}
+			});
+		}	
+		
+			function selectThumbnail(){
+				layer.open({
+					type:2,
+					title:'上传头像',
+					shadeClose:true,
+					shade:0.8,
+					area:['60%','60%'],
+					content:'face_upload.html',
+					end:function(){
+						if(''!=data.url && null != data.url){
+							$("#thumbnail").attr('src',data.url);
+							$("#content_thumbnail").attr("value",data.url);
+						}
 					}
 				});
 			}
 		</script>
 	</body>
-
 </html>

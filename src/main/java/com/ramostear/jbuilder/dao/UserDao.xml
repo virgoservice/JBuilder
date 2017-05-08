@@ -11,12 +11,13 @@
 		<result column="salt" property="salt"/>
 		<result column="createTime" property="createTime"/>
 		<result column="status" property="status"/>
-		<result column="portraitImgUrl" property="portraitImgUrl"/>
-		<result column="tag" property="tag"/>
+		<result column="avatar" property="avatar"/>
+		<result column="signature" property="signature"/>
+		<result column="email" property="email"/>
 	</resultMap>
 	
 	<sql id="propSql">
-		id,username,nickname,password,createTime,salt,status,portraitImgUrl,tag
+		id,username,nickname,password,createTime,salt,status,avatar,signature,email
 	</sql>
 	
 	<insert id="save" parameterType="User" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
@@ -28,8 +29,9 @@
 			<if test="salt != null">salt,</if>
 			<if test="createTime != null">createTime,</if>
 			<if test="status != null">status,</if>
-			<if test="portraitImgUrl != null">portraitImgUrl,</if>
-			<if test="tag != null">tag</if>
+			<if test="avatar != null">avatar,</if>
+			<if test="signature != null">signature,</if>
+			<if test="email != null">email</if>
 		</trim>
 		<trim prefix="values(" suffix=")" suffixOverrides=",">
 			<if test="username != null">#{username},</if>
@@ -38,8 +40,9 @@
 			<if test="salt != null">#{salt},</if>
 			<if test="createTime != null">#{createTime},</if>
 			<if test="status != null">#{status},</if>
-			<if test="portraitImgUrl != null">#{portraitImgUrl},</if>
-			<if test="tag != null">#{tag}</if>
+			<if test="avatar != null">#{avatar},</if>
+			<if test="signature != null">#{signature},</if>
+			<if test="email != null">#{email}</if>
 		</trim>
 	</insert>
 	
@@ -54,8 +57,8 @@
 			<if test="password != null">password = #{password},</if>
 			<if test="salt != null">salt = #{salt},</if>
 			<if test="status != null">status = #{status},</if>
-			<if test="portraitImgUrl != null">portraitImgUrl = #{portraitImgUrl},</if>
-			<if test="tag != null"> tag = #{tag}</if>
+			<if test="avatar != null">avatar = #{avatar},</if>
+			<if test="email != null"> email = #{email}</if>
 		</set>
 		where id = #{id}
 	</update>

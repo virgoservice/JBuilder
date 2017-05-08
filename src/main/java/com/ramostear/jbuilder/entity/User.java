@@ -34,9 +34,11 @@ public class User {
 	
 	private Integer status;//1启用、0锁定
 	
-	private String portraitImgUrl;//头像URL
+	private String avatar;//头像
 	
-	private String tag;//个性签名
+	private String signature;//个性说明
+	
+	private String email;
 	
 	public User(){}
 	
@@ -101,20 +103,28 @@ public class User {
 		this.status = status;
 	}
 	
-	public String getPortraitImgUrl() {
-		return portraitImgUrl;
+	public String getAvatar() {
+		return avatar;
 	}
 
-	public void setPortraitImgUrl(String portraitImgUrl) {
-		this.portraitImgUrl = portraitImgUrl;
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
-	public String getTag() {
-		return tag;
+	public String getSignature() {
+		return signature;
 	}
 
-	public void setTag(String tag) {
-		this.tag = tag;
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getCredentialsSalt(){

@@ -115,11 +115,11 @@ public class UserServiceImpl implements UserService{
 			if(user.getNickname() != null && !"".equals(user.getNickname())){
 				u.setNickname(user.getNickname());
 			}
-			if(user.getTag() != null && !"".equals(user.getTag())){
-				u.setTag(user.getTag());
+			if(user.getSignature() != null && !"".equals(user.getSignature())){
+				u.setSignature(user.getSignature());
 			}
-			if(user.getPortraitImgUrl() != null && !"".equals(user.getPortraitImgUrl())){
-				u.setPortraitImgUrl(user.getPortraitImgUrl());
+			if(user.getAvatar()!= null && !"".equals(user.getAvatar())){
+				u.setAvatar(user.getAvatar());
 			}
 			u.setStatus(user.getStatus());
 			userDao.update(u);
