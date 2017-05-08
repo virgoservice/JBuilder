@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ramostear.jbuilder.dao.SiteDao">
+
+	<resultMap type="com.ramostear.jbuilder.entity.Site" id="resultMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="title" property="title"/>
+		<result column="subtitle" property="title"/>
+		<result column="domain" property="domain"/>
+		<result column="email" property="email"/>
+		<result column="phone" property="phone"/>
+		<result column="qq" property="qq"/>
+		<result column="address" property="address"/>
+		<result column="postCode" property="postCode"/>
+		<result column="description" property="description"/>
+		<result column="keyword" property="keyword"/>
+		<result column="icp" property="icp"/>
+		<result column="copyright" property="copyright"/>
+		<result column="logo" property="logo"/>
+	</resultMap>
+	
+	<sql id="propSql">
+		id,name,title,subtitle,domain,email,phone,qq,address,postCode,description,keyword,icp,copyright,logo
+	</sql>
+	
+	<update id="update" parameterType="com.ramostear.jbuilder.entity.Site">
+		update sys_site
+		<set>
+			<if test="name != null">name = #{name},</if>
+			<if test="title != null">title = #{title},</if>
+			<if test="subtitle != null">subtitle = #{subtitle},</if>
+			<if test="domain != null">domain = #{domain},</if>
+			<if test="email != null">email = #{email},</if>
+			<if test="phone != null">phone = #{phone},</if>
+			<if test="qq != null">qq = #{qq},</if>
+			<if test="address != null">address = #{address},</if>
+			<if test="postCode != null">postCode = #{postCode},</if>
+			<if test="description != null">description = #{description},</if>
+			<if test="keyword != null">keyword = #{keyword},</if>
+			<if test="icp != null">icp = #{icp},</if>
+			<if test="copyright != null">copyright = #{copyright},</if>
+			<if test="logo != null"> logo = #{logo}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<select id="findById" parameterType="Long" resultType="com.ramostear.jbuilder.entity.Site">
+		select 
+		<include refid="propSql"></include>
+		from sys_site
+		where id = #{id}
+	</select>
+	
+</mapper>
