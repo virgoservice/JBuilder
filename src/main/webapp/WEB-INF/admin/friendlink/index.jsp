@@ -263,7 +263,7 @@
                         <div class="form-group">
                         	<input type="hidden" name="id" value=''id="id"/>
                             <label for="tag-name" class="input-title">名称</label>
-                            <input type="text" name='name' id='name' class="form-control" value="" />
+                            <input type="text" name='name' id='name' class="form-control" value=""/>
                         </div>
                         <div class="form-group">
                             <label for="tag-name1" class="input-title">链接</label>
@@ -293,9 +293,9 @@
                     <div class="row" style="padding: 0 0 10px 0;">
                         <form class="form-horizontal col-sm-3" method="post" style="float: left;" action="#">
                             <div class="input-group input-group-sm">
-                                <input id="#" class="form-control" type="search"  value="" name="k" placeholder="请输入关键词"/>
+                                <input class="form-control" type="search"  value="" name="k" id='search' placeholder="请输入关键词"/>
                                 <span class="input-group-btn">
-									<button type="button" class="btn btn-primary btn-flat">搜索</button>
+									<button type="button" class="btn btn-primary btn-flat" onclick="query()">搜索</button>
 								</span>
                             </div>
                         </form>
@@ -344,6 +344,8 @@
 <script src="<%=path %>/resources/admin/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="<%=path %>/resources/admin/plugins/fastclick/fastclick.js"></script>
+
+<script src="<%=path %>/resources/admin/dist/js/validate.js"></script>
 <script type="text/javascript">
     function selectThumbnail(){
         layer.open({
@@ -363,10 +365,20 @@
     }
     
     function save(){
+    	//表单验证
+    	var detect = new Detect();
+	    detect.add('名称',$(":input[name='name']").val(),["nameLength"]);  
+	    detect.add('链接',$(":input[name='url']").val(),["isUrl"]);  
+	    detect.add('排序',$(":input[name='showOrder']").val(),["isNumber"]);  
+	    var result=detect.getResult();
+	    if(result){
+	    	alert(result)
+	    	return;
+	    }
     	
     	var id=$("#id").val();
-    	var formdata = id==""?$("#form").serialize().replace('id=',''):$("#form").serialize();
-    	var orp=id==''?'add':'edit';
+    	var formdata = id?$("#form").serialize().replace('id=',''):$("#form").serialize();
+    	var orp=id?'add':'edit';
     	
     	$.ajax({
 			url:"<%=path %>/admin/link/"+orp,
@@ -412,7 +424,7 @@
 			data:{
 				pageNo:pageNo,
 				pageSize:pageSize,
-				query:'test'
+				search:$('#search').val()
 			},
 			cache:false,
 			success:function(html){
@@ -430,6 +442,10 @@
     }
     
     query();
+
+
+    
+    
 </script>
 </body>
 

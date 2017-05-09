@@ -9,11 +9,17 @@
 								                 limitations under the License. 
 */
 package com.ramostear.jbuilder.controller;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.alibaba.fastjson.JSONObject;
 import com.ramostear.jbuilder.entity.Banner;
 import com.ramostear.jbuilder.kit.ReqDto;
 import com.ramostear.jbuilder.service.impl.BannerServiceImpl;
@@ -37,9 +43,12 @@ public class BannerController {
 	}
 	
 	@RequestMapping(value="/list",method=RequestMethod.GET)
-	public String list(Banner banner,ReqDto req,Model model){
-		model.addAttribute("list", bannerService.findByPage(req.getPageNo(), req.getPageSize(), "createTime", true));
-		
+	public String list(Banner banner,ReqDto req,Model model,@RequestParam Map<String,String> search){
+		Map param = (Map)JSONObject.parse(search.get("search"));  
+		System.out.println(param);
+		model.addAttribute("list", bannerService.findByPage(req.getPageNo(), req.getPageSize(), "createTime", true,param));
+
+        
 		return "banner/list";
 	}
 	

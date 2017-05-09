@@ -10,6 +10,8 @@
 */
 package com.ramostear.jbuilder.service;
 
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.ramostear.jbuilder.entity.Banner;
@@ -34,5 +36,5 @@ public interface BannerService {
 	
 	public Banner findByName(String name);
 	
-	public PageDto<Banner> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("oderBy")String orderBy,@Param("order") boolean order);
+	public PageDto<Banner> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("oderBy")String orderBy,@Param("order") boolean order,@Param("search")Map search);
 }

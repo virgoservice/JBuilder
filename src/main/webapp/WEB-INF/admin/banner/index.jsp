@@ -272,9 +272,9 @@
                 </ul>
                 <form class="form-horizontal col-sm-3" method="post" style="float: right;" action="#">
                     <div class="input-group input-group-sm">
-                        <input id="#" class="form-control" type="search" value="" name="k" placeholder="请输入关键词">
+                        <input id="search" class="form-control" type="search" value="" name="k" placeholder="请输入关键词">
                         <span class="input-group-btn">
-									<button type="button" class="btn btn-primary btn-flat">搜索</button>
+									<button type="button" class="btn btn-primary btn-flat" onclick="query()">搜索</button>
 								</span>
                     </div>
                 </form>
@@ -371,12 +371,16 @@
     }
     
     function query(pageNo,pageSize){
+    	var queryData={};
+    	queryData.name=$('#search').val()
+    	
     	$.ajax({
 			url:"<%=path %>/admin/banner/list",
-			type:"GET",
+			type:"get",
 			data:{
 				pageNo:pageNo,
-				pageSize:pageSize
+				pageSize:pageSize,
+				search:JSON.stringify(queryData)
 			},
 			cache:false,
 			success:function(html){

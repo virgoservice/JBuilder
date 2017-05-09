@@ -67,6 +67,9 @@
 	
 	<select id="findByPage" resultMap="resultMap">
 		select * from sys_friendlink 
+		<if test="search != null and search!=''">
+			where name like '%${search}%'
+		</if>
 		order by ${order} 
 		<if test="order == true">
 			DESC
@@ -74,8 +77,7 @@
 		<if test="order == false">
 			ASC
 		</if>
+		
 		limit #{offset},#{size}
 	</select>
-	
-	
 </mapper>

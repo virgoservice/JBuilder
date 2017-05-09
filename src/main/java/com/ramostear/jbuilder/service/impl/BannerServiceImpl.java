@@ -1,6 +1,7 @@
 package com.ramostear.jbuilder.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,14 +32,12 @@ public class BannerServiceImpl implements BannerService {
 
 	@Override
 	public Banner update(Banner link) {
-		// TODO Auto-generated method stub
 		bdao.update(link);
 		return link;
 	}
 
 	@Override
 	public boolean delete(Long id) {
-		// TODO Auto-generated method stub
 		return bdao.delete(id);
 	}
 	
@@ -53,8 +52,8 @@ public class BannerServiceImpl implements BannerService {
 	}
 
 	@Override
-	public PageDto<Banner> findByPage(int offset, int size, String orderBy,boolean order) {
-		List<Banner> list = bdao.findByPage((offset-1)*size, size, orderBy, order);
+	public PageDto<Banner> findByPage(int offset, int size, String orderBy,boolean order,Map search) {
+		List<Banner> list = bdao.findByMany((offset-1)*size, size, orderBy, order,search);
 		Long totalSize = bdao.size();
 		return new PageDto<Banner>(totalSize,offset,size,list);
 	}

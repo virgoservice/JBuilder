@@ -1,6 +1,7 @@
 package com.ramostear.jbuilder.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -28,6 +29,7 @@ public interface BannerDao {
 	
 	public List<Banner> findAll();
 	
-	public List<Banner> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order);
+	public List<Banner> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order,@Param("search")String search);
 	
+	public List<Banner> findByMany(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order,@Param("search")Map search);
 }

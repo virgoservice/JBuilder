@@ -31,5 +31,5 @@ public interface FriendlinkService {
 	
 	public Friendlink findByName(String name);
 	
-	public PageDto<Friendlink> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("oderBy")String orderBy,@Param("order") boolean order);
+	public PageDto<Friendlink> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("oderBy")String orderBy,@Param("order") boolean order,@Param("search")String search);
 }

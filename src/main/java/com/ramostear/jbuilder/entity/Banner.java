@@ -23,13 +23,13 @@ public class Banner {
 	private String title;
 	private String image;
 	private String alt;
-	private String showOrder;
+	private Integer showOrder;
 	private Integer status;
 	
 	public Banner(){}
 	
 	public Banner(Long id, String name, String title, String image,
-			String alt, String showOrder, Integer status) {
+			String alt, Integer showOrder, Integer status) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -72,11 +72,11 @@ public class Banner {
 		this.alt = alt;
 	}
 
-	public String getShowOrder() {
+	public Integer getShowOrder() {
 		return showOrder;
 	}
 
-	public void setShowOrder(String showOrder) {
+	public void setShowOrder(Integer showOrder) {
 		this.showOrder = showOrder;
 	}
 

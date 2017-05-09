@@ -40,15 +40,15 @@ public class FriendlinkController {
 	}
 	
 	@RequestMapping(value="/list",method=RequestMethod.GET)
-	public String list(Friendlink link,ReqDto req,Model model){
-		model.addAttribute("list", friendlinkService.findByPage(req.getPageNo(), req.getPageSize(), "createTime", true));
+	public String list(Friendlink link,ReqDto req,Model model,String search){
+		model.addAttribute("list", friendlinkService.findByPage(req.getPageNo(), req.getPageSize(), "createTime", true,search));
 		
 		return "friendlink/list";
 	}
 	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String add(Friendlink link){
-		link.setCreateTime(new Date());;
+		link.setCreateTime(new Date());
 		friendlinkService.add(link);
 		return "friendlink/index";
 	}

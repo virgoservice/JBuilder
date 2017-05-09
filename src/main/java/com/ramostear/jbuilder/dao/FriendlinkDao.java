@@ -38,7 +38,7 @@ public interface FriendlinkDao {
 	
 	public List<Friendlink> findAll();
 	
-	public List<Friendlink> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order);
+	public List<Friendlink> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order,@Param("search")String search);
 	
 	
 }

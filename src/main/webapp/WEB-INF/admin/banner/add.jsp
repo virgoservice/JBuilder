@@ -355,6 +355,7 @@
 <script src="<%=path %>/resources/admin/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="<%=path %>/resources/admin/plugins/fastclick/fastclick.js"></script>
+<script src="<%=path %>/resources/admin/dist/js/validate.js"></script>
 <script type="text/javascript">
     function selectThumbnail(){
         layer.open({
@@ -374,10 +375,22 @@
     }
     
     function save(){
+    	//表单验证
+    	var detect = new Detect();
+	    detect.add('名称',$(":input[name='name']").val(),["tooLong"]);  
+	    detect.add('标题',$(":input[name='title']").val(),["tooLong"]);  
+	    detect.add('alt提示',$(":input[name='alt']").val(),["tooLong"]);  
+	    detect.add('排序',$(":input[name='showOrder']").val(),["isNumber"]);  
+	    
+	    var result=detect.getResult();
+	    if(result){
+	    	alert(result)
+	    	return;
+	    }
  
     	var id=$("#id").val();
-    	var formdata = id==""?$("#form").serialize().replace('id=',''):$("#form").serialize();
-    	var orp=id==''?'add':'edit';
+    	var formdata = id?$("#form").serialize().replace('id=',''):$("#form").serialize();
+    	var orp=id?'add':'edit';
     	
     	$.ajax({
 			url:"<%=path %>/admin/banner/"+orp,

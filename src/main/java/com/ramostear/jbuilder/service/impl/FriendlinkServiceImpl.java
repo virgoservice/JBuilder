@@ -31,14 +31,12 @@ public class FriendlinkServiceImpl implements FriendlinkService {
 
 	@Override
 	public Friendlink update(Friendlink link) {
-		// TODO Auto-generated method stub
 		linkdao.update(link);
 		return link;
 	}
 
 	@Override
 	public boolean delete(Long id) {
-		// TODO Auto-generated method stub
 		return linkdao.delete(id);
 	}
 
@@ -48,8 +46,8 @@ public class FriendlinkServiceImpl implements FriendlinkService {
 	}
 
 	@Override
-	public PageDto<Friendlink> findByPage(int offset, int size, String orderBy,boolean order) {
-		List<Friendlink> list = linkdao.findByPage((offset-1)*size, size, orderBy, order);
+	public PageDto<Friendlink> findByPage(int offset, int size, String orderBy,boolean order,String search) {
+		List<Friendlink> list = linkdao.findByPage((offset-1)*size, size, orderBy, order,search);
 		Long totalSize = linkdao.size();
 		return new PageDto<Friendlink>(totalSize,offset,size,list);
 	}
