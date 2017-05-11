@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ramostear.jbuilder.dao.ArticleDao">
+
+
+	<resultMap type="com.ramostear.jbuilder.entity.Article" id="resultMap">
+		<id column="id" property="id"/>
+		<result column="author" property="author"/>
+		<result column="status" property="status"/>
+		<result column="categoryId" property="categoryId"/>
+		<result column="categoryName" property="categoryName"/>
+		<result column="content" property="content"/>
+		<result column="contentCode" property="contentCode"/>
+		<result column="createTime" property="createTime"/>
+		<result column="modifyTime" property="modifyTime"/>
+		<result column="intro" property="intro"/>
+		<result column="showOrder" property="showOrder"/>
+		<result column="tag" property="tag"/>
+		<result column="title" property="title"/>
+		<result column="type" property="type"/>
+		<result column="cover" property="cover"/>
+		<result column="description" property="description"/>
+		<result column="keyword" property="keyword"/>
+		
+	</resultMap>
+	
+
+	<insert id="save" parameterType="com.ramostear.jbuilder.entity.Article" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert into sys_article
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="author != null">author,</if>
+			<if test="status != null">status,</if>
+			<if test="categoryId != null">categoryId,</if>
+			<if test="categoryName != null">categoryName,</if>
+			<if test="content != null">content,</if>
+			<if test="contentCode != null">contentCode,</if>
+			<if test="modifyTime != null">modifyTime,</if>
+			<if test="intro != null">intro,</if>
+			<if test="showOrder != null">showOrder,</if>
+			<if test="tag != null">tag,</if>
+			<if test="createTime != null">createTime,</if>
+			<if test="title != null">title,</if>
+			<if test="type != null">type,</if>
+			<if test="cover != null">cover,</if>
+			<if test="description != null">description,</if>
+			<if test="keyword != null">keyword</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="author != null">#{author},</if>
+			<if test="status != null">#{status},</if>
+			<if test="categoryId != null">#{categoryId},</if>
+			<if test="categoryName != null">#{categoryName},</if>
+			<if test="content != null">#{content},</if>
+			<if test="contentCode != null">#{contentCode},</if>
+			<if test="modifyTime != null">#{modifyTime},</if>
+			<if test="intro != null">#{intro},</if>
+			<if test="showOrder != null">#{showOrder},</if>
+			<if test="tag != null">#{tag},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="title != null">#{title},</if>
+			<if test="type != null">#{type},</if>
+			<if test="cover != null">#{cover},</if>
+			<if test="description != null">#{description},</if>
+			<if test="keyword != null">#{keyword}</if>
+		</trim>
+	</insert>	
+	
+	<update id="update" parameterType="com.ramostear.jbuilder.entity.Article">
+		update sys_article
+		<set>
+			<if test="author != null">author=#{author},</if>
+			<if test="status != null">status=#{status},</if>
+			<if test="categoryId != null">categoryId=#{categoryId},</if>
+			<if test="categoryName != null">categoryName=#{categoryName},</if>
+			<if test="content != null">content=#{content},</if>
+			<if test="contentCode != null">contentCode=#{contentCode},</if>
+			<if test="modifyTime != null">modifyTime=#{modifyTime},</if>
+			<if test="intro != null">intro=#{intro},</if>
+			<if test="showOrder != null">showOrder=#{showOrder},</if>
+			<if test="tag != null">tag=#{tag},</if>
+			<if test="createTime != null">createTime=#{createTime},</if>
+			<if test="title != null">title=#{title},</if>
+			<if test="type != null">type=#{type},</if>
+			<if test="cover != null">cover=#{cover},</if>
+			<if test="description != null">description=#{description},</if>
+			<if test="keyword != null">keyword=#{keyword}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<select id="size" resultType="Long">
+		select count(*) from sys_article
+	</select>
+	<select id="getStatusCount" resultType="java.util.HashMap">
+		select `status`,count(1) as count from sys_article GROUP BY status 
+	</select>
+	
+	
+	<delete id="delete" parameterType="Long">
+		delete from sys_article 
+		where 
+		id = #{id}
+	</delete>
+
+	<select id="findById" parameterType="Long" resultMap="resultMap">
+		select * from sys_article 
+		where 
+		id = #{id}
+	</select>
+	
+	<select id="findAll"  resultMap="resultMap">
+		select * from sys_article
+	</select>
+	
+	<select id="findByPage" resultMap="resultMap">
+		select * from sys_article 
+		<if test="search != null and search!=''">
+			where title like '%${search}%'
+		</if>
+		order by ${order} 
+		<if test="order == true">
+			DESC
+		</if>
+		<if test="order == false">
+			ASC
+		</if>
+		
+		limit #{offset},#{size}
+	</select>
+	
+</mapper>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <%@ page pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>  
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
 	String path = request.getContextPath();
 %>
@@ -100,7 +100,7 @@
                         <li>
                             <a href="article_add.html"><i class="fa fa-pencil-square-o"></i> 撰写文章</a>
                         </li>
-                        <li >
+                        <li class="active">
                             <a href="category_list.html"><i class="fa fa-map-signs"></i> 所有栏目</a>
                         </li>
                         <li>
@@ -112,7 +112,7 @@
                         <li>
                             <a href="pages/UI/modals.html"><i class="fa fa-object-ungroup"></i> 新建轮播</a>
                         </li>
-                        <li class="active">
+                        <li >
                             <a href="pages/UI/timeline.html"><i class="fa fa-share-alt-square"></i> 所有友链</a>
                         </li>
                         <li>
@@ -247,66 +247,84 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <h1> 所有友链</h1>
-        </section>
-        <section class="content">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="box box-solid">
-                        <div class="box-body">
-                        
-                        
-                    <form id="form">
-                        <h4>新的友情链接</h4>
-                        <div class="form-group">
-                        	<input type="hidden" name="id" value=''id="id"/>
-                            <label for="tag-name" class="input-title">名称</label>
-                            <input type="text" name='name' id='name' class="form-control" value=""/>
-                        </div>
-                        <div class="form-group">
-                            <label for="tag-name1" class="input-title">链接</label>
-                            <input type="text" name='url' id='url' class="form-control" value="" />
-                        </div>
-                        <div class="form-group">
-                            <label class="input-title">排序</label>
-                            <input type="text" name='showOrder' id='showOrder' class="form-control" value="" />
-                            <div style="clear: both;"></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="input-title">LOGO</label>
-                            <button type="button" class="btn btn-default btn-sm" onclick="selectThumbnail()">
-                                <i class="fa fa-upload"></i> 上传图片
-                            </button>
-                            <img id="logo">
-                        </div>
-                        <div class="form-group text-center">
-                            <button type="button" onclick="save()" class="btn btn-primary">保 存</button>
-                        </div>
-
-                    </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <div class="row" style="padding: 0 0 10px 0;">
-                        <form class="form-horizontal col-sm-3" method="post" style="float: left;" action="#">
-                            <div class="input-group input-group-sm">
-                                <input class="form-control" type="search"  value="" name="k" id='search' placeholder="请输入关键词"/>
-                                <span class="input-group-btn">
-									<button type="button" class="btn btn-primary btn-flat" onclick="query()">搜索</button>
-								</span>
-                            </div>
-                        </form>
-                    </div>
-                    <div id="table">
-                    
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1> 栏目分类</h1>
+				</section>
+				<section class="content">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="box box-solid">
+								<div class="box-body">
+							<form  method="post" id="form">
+								<h4>新的栏目分类</h4>
+								<div class="form-group">
+									<label for="tag-name" class="input-title">名称</label>
+									<input type="hidden" id="id" name="id" value=""/>
+									<input type="text" name="name" class="form-control" value="" />
+									<p>这将是它在站点上显示的名字</p>
+								</div>
+								<div class="form-group">
+									<label for="tag-name1" class="input-title">关键词</label>
+									<input type="text" name="keyword" class="form-control" value="" />
+									<p>SEO优化用</p>
+								</div>
+								<div class="form-group">
+									<label for="tag-name1" class="input-title">排序</label>
+									<input type="text" name="showOrder" class="form-control" value="0"  maxlength="10"/>
+								</div>
+								<div class="form-group">
+									<label class="input-title">父节点</label>
+									<select name="parentId" class="form-control input-sm" id="parentId">
+										<option value="">无</option>
+									</select>
+									<div style="clear: both;"></div>
+								</div>
+								<div class="form-group">
+									<label class="input-title">描述</label>
+									<textarea class="form-control" name="description" rows="3"></textarea>
+									<p>分类的描述内容，是否显示决定于模板</p>
+								</div>
+								<!-- 
+								<div class="form-group">
+									<label for="slug" class="input-title">是否添加到导航菜单</label>
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" name="" value="true" />添加到导航菜单
+										</label>
+									</div>
+								</div>
+								 -->
+								<button type="button" onclick="save()" class="btn btn-primary">保 存</button>
+								<button type="button" onclick="remove()" class="btn">重 置</button>
+							</form>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<div class="row" style="padding: 0 15px 10px 15px;">
+								<div style="float: left;">
+									<select class="form-control input-sm">
+										<option value="">全部分类</option>
+										<c:forEach items="${plist}" var="item">
+										<option value="${item.id}">${item.name }</option>
+										</c:forEach>
+									</select>
+								</div>
+								<div style="float: left;">
+									<select class="form-control input-sm">
+										<option value="">全部专题</option>
+									</select>
+								</div>
+								<div style="float: left;">
+									<input type="submit"  class="btn btn-block btn-sm btn-default" value="筛选" onclick="query()"/>
+								</div>
+							</div>
+							<div id="table"></div>
+						</div>
+					</div>
+				</section>
+			</div>
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
             <b>Version</b> 2.4.0
@@ -347,41 +365,25 @@
 
 <script src="<%=path %>/resources/admin/dist/js/validate.js"></script>
 <script type="text/javascript">
-    function selectThumbnail(){
-        layer.open({
-            type:2,
-            title:'上传logo',
-            shadeClose:true,
-            shade:0.8,
-            area:['50%','60%'],
-            content:'face_upload.html',
-            end:function(){
-                if(''!=data.url && null != data.url){
-                    $("#thumbnail").attr('src',data.url);
-                    $("#content_thumbnail").attr("value",data.url);
-                }
-            }
-        });
-    }
     
     function save(){
     	//表单验证
     	var detect = new Detect();
 	    detect.add('名称',$(":input[name='name']").val(),["nameLength"]);  
-	    detect.add('链接',$(":input[name='url']").val(),["isUrl"]);  
-	    detect.add('排序',$(":input[name='showOrder']").val(),["isNumber"]);  
+	    detect.add('关键词',$(":input[name='keyword']").val(),["nameLength"]);
+	    detect.add('排序',$(":input[name='showOrder']").val(),["isNumber"]);
 	    var result=detect.getResult();
 	    if(result){
 	    	alert(result)
 	    	return;
 	    }
     	
-    	var id=$("#id").val();
-    	var formdata = id?$("#form").serialize():$("#form").serialize().replace('id=','');
+    	var id=$(":input[name='id']").val();
+    	var formdata = id?$("#form").serialize():$("#form").serialize().replace('id=','')
     	var orp=id?'edit':'add';
     	
     	$.ajax({
-			url:"<%=path %>/admin/link/"+orp,
+			url:"<%=path %>/admin/category/"+orp,
 			type:"post",
 			contentType:"application/x-www-form-urlencoded",
             encoding:"utf-8",
@@ -396,16 +398,19 @@
 		});
     }
     
-    function edit(id,logo,name,url,showOrder){
-    	$("#id").val(id)
-    	$("#name").val(name)
-    	$("#url").val(url)
-    	$("#showOrder").val(showOrder)
+    function edit(obj){
+    	$(":input[name='id']").val(obj.id)
+    	$(":input[name='name']").val(obj.name)
+    	$(":input[name='keyword']").val(obj.keyword)
+    	$(":input[name='showOrder']").val(obj.showOrder)
+    	$(":input[name='description']").val(obj.description)
+    	$(":input[name='parentId']").val(obj.parentId)
+    	
     }
     
     function del(id){
     	$.ajax({
-			url:"<%=path %>/admin/link/delete",
+			url:"<%=path %>/admin/category/delete",
 			type:"get",
 			data:{'id':id},
 			success:function(html){
@@ -419,7 +424,7 @@
     
     function query(pageNo,pageSize){
     	$.ajax({
-			url:"<%=path %>/admin/link/list",
+			url:"<%=path %>/admin/category/list",
 			type:"GET",
 			data:{
 				pageNo:pageNo,
@@ -434,18 +439,33 @@
 				
 			}
 		});
+    	loadParentId();
     }
     
     function remove(){
     	$('#form')[0].reset();
     	$('#id').val('');
+    	loadParentId();
     }
     
     query();
-
-
-    
-    
+    loadParentId();
+    function loadParentId(){
+    	$.ajax({
+			url:"<%=path %>/admin/category/getParent",
+			type:"get",
+			success:function(data){
+				var html="<option value=''>无</option>";
+				for(var i in data){
+					html+="<option value='"+data[i].id+"'>"+data[i].name+"</option>"
+				}
+				$("#parentId").html(html);
+			},
+			error:function(){
+				
+			}
+		});
+    }
 </script>
 </body>
 

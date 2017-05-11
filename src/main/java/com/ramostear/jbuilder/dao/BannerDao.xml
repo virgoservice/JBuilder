@@ -20,7 +20,7 @@
 			<if test="title != null">title,</if>
 			<if test="image != null">image,</if>
 			<if test="alt != null">alt,</if>
-			<if test="showOrder != null">showOrder</if>
+			<if test="showOrder != null">showOrder,</if>
 			<if test="status != null">status</if>
 		</trim>
 		<trim prefix="values(" suffix=")" suffixOverrides=",">
@@ -28,7 +28,7 @@
 			<if test="title != null">#{title},</if>
 			<if test="image != null">#{image},</if>
 			<if test="alt != null">#{alt},</if>
-			<if test="showOrder != null">#{showOrder}</if>
+			<if test="showOrder != null">#{showOrder},</if>
 			<if test="status != null">#{status}</if>
 		</trim>
 	</insert>	
@@ -40,7 +40,7 @@
 			<if test="title != null">title = #{title},</if>
 			<if test="image != null">image = #{image},</if>
 			<if test="alt != null">alt = #{alt},</if>
-			<if test="showOrder != null">showOrder = #{showOrder}</if>
+			<if test="showOrder != null">showOrder = #{showOrder},</if>
 			<if test="status != null">status = #{status}</if>
 		</set>
 		where id = #{id}

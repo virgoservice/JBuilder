@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ramostear.jbuilder.dao.CategoryDao">
+
+
+
+
+	<resultMap type="com.ramostear.jbuilder.entity.Category" id="resultMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="parentId" property="parentId"/>
+		<result column="parentName" property="parentName"/>
+		<result column="keyword" property="keyword"/>
+		<result column="description" property="description"/>
+		<result column="createTime" property="createTime"/>
+		<result column="type" property="type"/>
+		<result column="showOrder" property="showOrder"/>
+	</resultMap>
+	
+
+	<insert id="save" parameterType="com.ramostear.jbuilder.entity.Category" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert into sys_category
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null">name,</if>
+			<if test="parentId != null">parentId,</if>
+			<if test="parentName != null">parentName,</if>
+			<if test="keyword != null">keyword,</if>
+			<if test="description != null">description,</if>
+			<if test="createTime != null">createTime,</if>
+			<if test="type != null">type,</if>
+			<if test="showOrder != null">showOrder</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="name != null">#{name},</if>
+			<if test="parentId != null">#{parentId},</if>
+			<if test="parentName != null">#{parentName},</if>
+			<if test="keyword != null">#{keyword},</if>
+			<if test="description != null">#{description},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="type != null">#{type},</if>
+			<if test="showOrder != null">#{showOrder}</if>
+		</trim>
+	</insert>	
+	
+	<update id="update" parameterType="com.ramostear.jbuilder.entity.Category">
+		update sys_category
+		<set>
+			<if test="name != null">name = #{name},</if>
+			<if test="parentId != null">parentId = #{parentId},</if>
+			<if test="parentName != null">parentName = #{parentName},</if>
+			<if test="keyword != null">keyword = #{keyword},</if>
+			<if test="description != null">description = #{description},</if>
+			<if test="createTime != null">createTime = #{createTime},</if>
+			<if test="type != null">type = #{type},</if>
+			<if test="showOrder != null">showOrder = #{showOrder} </if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<select id="size" resultType="Long">
+		select count(*) from sys_category
+	</select>
+	
+	<delete id="delete" parameterType="Long">
+		delete from sys_category 
+		where 
+		id = #{id}
+	</delete>
+
+	<select id="findById" parameterType="Long" resultMap="resultMap">
+		select * from sys_category 
+		where 
+		id = #{id}
+	</select>
+	
+	<select id="findAll"  resultMap="resultMap">
+		select * from sys_category order by showOrder
+	</select>
+	
+	<select id="findByPage" resultMap="resultMap">
+		select * from sys_category 
+		<if test="search != null and search!=''">
+			where name like '%${search}%'
+		</if>
+		order by ${order} 
+		<if test="order == true">
+			DESC
+		</if>
+		<if test="order == false">
+			ASC
+		</if>
+		
+		limit #{offset},#{size}
+	</select>
+	
+	<select id="findParent" resultType="java.util.HashMap">
+		SELECT name,id  from sys_category where ISNULL(parentId) order by showOrder
+	</select>
+</mapper>

@@ -389,8 +389,8 @@
 	    }
  
     	var id=$("#id").val();
-    	var formdata = id?$("#form").serialize().replace('id=',''):$("#form").serialize();
-    	var orp=id?'add':'edit';
+    	var formdata = id?$("#form").serialize():$("#form").serialize().replace('id=','')
+    	var orp=id?'edit':'add';
     	
     	$.ajax({
 			url:"<%=path %>/admin/banner/"+orp,

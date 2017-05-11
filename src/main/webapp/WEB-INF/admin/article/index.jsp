@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <%@ page pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>  
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
 	String path = request.getContextPath();
 %>
@@ -100,7 +100,7 @@
                         <li>
                             <a href="article_add.html"><i class="fa fa-pencil-square-o"></i> 撰写文章</a>
                         </li>
-                        <li >
+                        <li class="active">
                             <a href="category_list.html"><i class="fa fa-map-signs"></i> 所有栏目</a>
                         </li>
                         <li>
@@ -112,7 +112,7 @@
                         <li>
                             <a href="pages/UI/modals.html"><i class="fa fa-object-ungroup"></i> 新建轮播</a>
                         </li>
-                        <li class="active">
+                        <li >
                             <a href="pages/UI/timeline.html"><i class="fa fa-share-alt-square"></i> 所有友链</a>
                         </li>
                         <li>
@@ -247,66 +247,76 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <h1> 所有友链</h1>
-        </section>
-        <section class="content">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="box box-solid">
-                        <div class="box-body">
-                        
-                        
-                    <form id="form">
-                        <h4>新的友情链接</h4>
-                        <div class="form-group">
-                        	<input type="hidden" name="id" value=''id="id"/>
-                            <label for="tag-name" class="input-title">名称</label>
-                            <input type="text" name='name' id='name' class="form-control" value=""/>
-                        </div>
-                        <div class="form-group">
-                            <label for="tag-name1" class="input-title">链接</label>
-                            <input type="text" name='url' id='url' class="form-control" value="" />
-                        </div>
-                        <div class="form-group">
-                            <label class="input-title">排序</label>
-                            <input type="text" name='showOrder' id='showOrder' class="form-control" value="" />
-                            <div style="clear: both;"></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="input-title">LOGO</label>
-                            <button type="button" class="btn btn-default btn-sm" onclick="selectThumbnail()">
-                                <i class="fa fa-upload"></i> 上传图片
-                            </button>
-                            <img id="logo">
-                        </div>
-                        <div class="form-group text-center">
-                            <button type="button" onclick="save()" class="btn btn-primary">保 存</button>
-                        </div>
-
-                    </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <div class="row" style="padding: 0 0 10px 0;">
-                        <form class="form-horizontal col-sm-3" method="post" style="float: left;" action="#">
-                            <div class="input-group input-group-sm">
-                                <input class="form-control" type="search"  value="" name="k" id='search' placeholder="请输入关键词"/>
-                                <span class="input-group-btn">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1> 所有文章</h1>
+				</section>
+				<section class="content">
+					<div class="row" style="padding: 0 15px 10px 15px;">
+						<ul class="list-inline" style="float: left;">
+							<li class="all active">
+								<a href="#" class="current">
+									
+									<c:forEach items="${statusList}" var="item">  
+										<c:set var="sum" value="${sum+item.count}"></c:set>
+									</c:forEach>
+									全部 <span class="count">(${sum})</span>
+								</a>|
+							</li>
+							<li class="all">
+								<a href="#" class="current">
+									 
+									<c:forEach items="${statusList}" var="item">  
+										<c:if test="${item.status==2}">
+										已发布<span class="count"> (${item.count}) </span>
+										</c:if>
+									</c:forEach>
+									
+								</a>|
+							</li>
+							<li class="all">
+								<a href="#" class="current">
+									<c:forEach items="${statusList}" var="item">  
+										<c:if test="${item.status!=2}">
+										未发布<span class="count"> (${item.count}) </span>
+										</c:if>
+									</c:forEach>
+								</a>
+							</li>
+						</ul>
+						<form class="form-horizontal col-sm-3" method="post" style="float: right;" action="#">
+							<div class="input-group input-group-sm">
+								<input id="search" class="form-control" type="search"  value="" name="k" placeholder="请输入关键词"/>
+								<span class="input-group-btn">
 									<button type="button" class="btn btn-primary btn-flat" onclick="query()">搜索</button>
+									<button type="button" class="btn  btn-flat" onclick="javaScript:$('#search').val('');query()">重置</button>
 								</span>
-                            </div>
-                        </form>
-                    </div>
-                    <div id="table">
-                    
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
+							</div>
+						</form>
+					</div>
+					<div class="row" style="padding: 0 15px 10px 15px;">
+						<div style="float: left;">
+							<select class="form-control input-sm">
+								<option value="">全部分类</option>
+							</select>
+						</div>
+						<div style="float: left;">
+							<select class="form-control input-sm">
+								<option value="">全部专题</option>
+							</select>
+						</div>
+						<div style="float: left;">
+							<form action="#" method="post">
+								<input type="hidden" name="cid"/>
+								<input type="hidden" name="keyword"/>
+								<input type="submit"  class="btn btn-block btn-sm btn-default" value="筛选"/>
+							</form>
+						</div>
+					</div>
+					<div id="table"></div>
+					
+				</section>
+			</div>
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
             <b>Version</b> 2.4.0
@@ -347,41 +357,25 @@
 
 <script src="<%=path %>/resources/admin/dist/js/validate.js"></script>
 <script type="text/javascript">
-    function selectThumbnail(){
-        layer.open({
-            type:2,
-            title:'上传logo',
-            shadeClose:true,
-            shade:0.8,
-            area:['50%','60%'],
-            content:'face_upload.html',
-            end:function(){
-                if(''!=data.url && null != data.url){
-                    $("#thumbnail").attr('src',data.url);
-                    $("#content_thumbnail").attr("value",data.url);
-                }
-            }
-        });
-    }
     
     function save(){
     	//表单验证
     	var detect = new Detect();
 	    detect.add('名称',$(":input[name='name']").val(),["nameLength"]);  
-	    detect.add('链接',$(":input[name='url']").val(),["isUrl"]);  
-	    detect.add('排序',$(":input[name='showOrder']").val(),["isNumber"]);  
+	    detect.add('关键词',$(":input[name='keyword']").val(),["nameLength"]);
+	    detect.add('排序',$(":input[name='showOrder']").val(),["isNumber"]);
 	    var result=detect.getResult();
 	    if(result){
 	    	alert(result)
 	    	return;
 	    }
     	
-    	var id=$("#id").val();
-    	var formdata = id?$("#form").serialize():$("#form").serialize().replace('id=','');
+    	var id=$(":input[name='id']").val();
+    	var formdata = id?$("#form").serialize():$("#form").serialize().replace('id=','')
     	var orp=id?'edit':'add';
     	
     	$.ajax({
-			url:"<%=path %>/admin/link/"+orp,
+			url:"<%=path %>/admin/category/"+orp,
 			type:"post",
 			contentType:"application/x-www-form-urlencoded",
             encoding:"utf-8",
@@ -396,16 +390,13 @@
 		});
     }
     
-    function edit(id,logo,name,url,showOrder){
-    	$("#id").val(id)
-    	$("#name").val(name)
-    	$("#url").val(url)
-    	$("#showOrder").val(showOrder)
+    function edit(obj){
+    	window.location.href="<%=path %>/admin/article/edit?id="+obj.id;
     }
     
     function del(id){
     	$.ajax({
-			url:"<%=path %>/admin/link/delete",
+			url:"<%=path %>/admin/article/delete",
 			type:"get",
 			data:{'id':id},
 			success:function(html){
@@ -419,7 +410,7 @@
     
     function query(pageNo,pageSize){
     	$.ajax({
-			url:"<%=path %>/admin/link/list",
+			url:"<%=path %>/admin/article/list",
 			type:"GET",
 			data:{
 				pageNo:pageNo,
@@ -443,9 +434,6 @@
     
     query();
 
-
-    
-    
 </script>
 </body>
 
