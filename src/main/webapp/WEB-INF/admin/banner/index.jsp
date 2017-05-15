@@ -334,6 +334,7 @@
 <script src="<%=path %>/resources/admin/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="<%=path %>/resources/admin/plugins/fastclick/fastclick.js"></script>
+<script src="<%=path %>/resources/admin/dist/js/app.min.js"></script>
 <script type="text/javascript">
     function selectThumbnail(){
         layer.open({

@@ -355,9 +355,6 @@
 													<a href="#tab_seo" data-toggle="tab" aria-expanded="false">SEO</a>
 												</li>
 												<li>
-													<a href="#tab_position" data-toggle="tab" aria-expanded="false">位置</a>
-												</li>
-												<li>
 													<a href="#tab_remark" data-toggle="tab" aria-expanded="false">备注</a>
 												</li>
 											</ul>
@@ -395,20 +392,6 @@
 													</div>
 													<div class="form-group">
 														<textarea class="form-control" rows="2" name="description" placeholder="请输入描述">${article.description }</textarea>
-													</div>
-												</div>
-												<div class="tab-pane form-horizontal" id="tab_position">
-													<div class="form-group">
-														<label for="_lng" class="col-sm-3 control-label">经度</label>
-														<div class="col-sm-9">
-															<input type="text" class="form-control" name="" id="_lng"  value=""/>
-														</div>
-													</div>
-													<div class="form-group">
-														<label for="_lat" class="col-sm-3 control-label">纬度</label>
-														<div class="col-sm-9">
-															<input type="text" class="form-control" name="" id="_lat"  value=""/>
-														</div>
 													</div>
 												</div>
 												<div class="tab-pane" id="tab_remark">
@@ -466,6 +449,8 @@
 <!-- FastClick -->
 <script src="<%=path %>/resources/admin/plugins/fastclick/fastclick.js"></script>
 <script src="<%=path %>/resources/admin/dist/js/validate.js"></script>
+<script src="<%=path %>/resources/admin/dist/js/app.min.js"></script>
+
 <script src="<%=path %>/resources/admin/dist/js/bootstrap-treeview.min.js"></script>
 <script src="<%=path %>/resources/admin/dist/css/bootstrap-treeview.min.css"></script>
 <script type="text/javascript">
