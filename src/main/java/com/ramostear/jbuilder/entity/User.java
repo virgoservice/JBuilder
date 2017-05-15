@@ -34,11 +34,19 @@ public class User {
 	
 	private Integer status;//1启用、0锁定
 	
-	private String avatar;//头像
+	private String avatar;//头像URL
 	
-	private String signature;//个性说明
+	private String signature;//个性签名
 	
-	private String email;
+	private String email;//电子邮箱
+	
+	private Integer type;//用户类型 0：guest 1：admin 2:user
+	
+	private String phone;
+	
+	private String qq;
+	
+	private String weibo;
 	
 	public User(){}
 	
@@ -102,7 +110,7 @@ public class User {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	
+
 	public String getAvatar() {
 		return avatar;
 	}
@@ -118,13 +126,45 @@ public class User {
 	public void setSignature(String signature) {
 		this.signature = signature;
 	}
-
+	
 	public String getEmail() {
 		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getQq() {
+		return qq;
+	}
+
+	public void setQq(String qq) {
+		this.qq = qq;
+	}
+
+	public String getWeibo() {
+		return weibo;
+	}
+
+	public void setWeibo(String weibo) {
+		this.weibo = weibo;
 	}
 
 	public String getCredentialsSalt(){

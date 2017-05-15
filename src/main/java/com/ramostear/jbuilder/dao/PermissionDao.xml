@@ -9,7 +9,7 @@
 		<result column="parentName" property="parentName"/>
 		<result column="permission" property="permission"/>
 		<result column="icon" property="icon"/>
-		<result column="url" property="url"/>
+		<result column="uri" property="uri"/>
 	</resultMap>
 	
 	<select id="getPermission" resultMap="resultMap" parameterType="Long">

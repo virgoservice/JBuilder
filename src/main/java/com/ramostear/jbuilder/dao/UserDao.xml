@@ -13,11 +13,12 @@
 		<result column="status" property="status"/>
 		<result column="avatar" property="avatar"/>
 		<result column="signature" property="signature"/>
-		<result column="email" property="email"/>
+		<result column="emial" property="email"/>
+		<result column="type" property="type"/>
 	</resultMap>
 	
 	<sql id="propSql">
-		id,username,nickname,password,createTime,salt,status,avatar,signature,email
+		id,username,nickname,password,createTime,salt,status,avatar,signature,email,type,phone,qq,weibo
 	</sql>
 	
 	<insert id="save" parameterType="User" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
@@ -31,7 +32,11 @@
 			<if test="status != null">status,</if>
 			<if test="avatar != null">avatar,</if>
 			<if test="signature != null">signature,</if>
-			<if test="email != null">email</if>
+			<if test="email != null">email,</if>
+			<if test="type != null">type,</if>
+			<if test="phone != null">phone,</if>
+			<if test="qq != null">qq,</if>
+			<if test="weibo != null">weibo</if>
 		</trim>
 		<trim prefix="values(" suffix=")" suffixOverrides=",">
 			<if test="username != null">#{username},</if>
@@ -42,7 +47,11 @@
 			<if test="status != null">#{status},</if>
 			<if test="avatar != null">#{avatar},</if>
 			<if test="signature != null">#{signature},</if>
-			<if test="email != null">#{email}</if>
+			<if test="email !=null">#{email},</if>
+			<if test="type !=null">#{type},</if>
+			<if test="phone !=null">#{phone},</if>
+			<if test="qq !=null">#{qq},</if>
+			<if test="weibo !=null">#{weibo}</if>
 		</trim>
 	</insert>
 	
@@ -58,7 +67,12 @@
 			<if test="salt != null">salt = #{salt},</if>
 			<if test="status != null">status = #{status},</if>
 			<if test="avatar != null">avatar = #{avatar},</if>
-			<if test="email != null"> email = #{email}</if>
+			<if test="signature != null"> signature = #{signature}</if>
+			<if test="email != null">email = #{email},</if>
+			<if test="type != null">type = #{type},</if>
+			<if test="phone != null">phone = #{phone},</if>
+			<if test="qq != null">qq = #{qq},</if>
+			<if test="weibo != null">weibo = #{weibo}</if>
 		</set>
 		where id = #{id}
 	</update>

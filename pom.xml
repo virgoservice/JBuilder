@@ -32,7 +32,7 @@
 		<filters.version>2.0.235</filters.version>
 		<relaxngDatatype.version>20020414</relaxngDatatype.version>
 		<quartz.version>1.7.3</quartz.version>
-		<pull-parser.version>2</pull-parser.version>
+		<pull-parser.version>2.1.10</pull-parser.version>
 		<protobuf-java.version>2.3.0</protobuf-java.version>
 		<java-image-scaling.version>0.8.6</java-image-scaling.version>
 		<guava.version>18.0</guava.version>
