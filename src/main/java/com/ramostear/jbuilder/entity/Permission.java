@@ -32,7 +32,7 @@ public class Permission {
 	
 	private String icon;
 	
-	private String url;
+	private String uri;
 	
 	private List<Permission> children;
 	
@@ -48,7 +48,7 @@ public class Permission {
 	 * @param url
 	 */
 	public Permission(Long id, String name, Long parentId, String parentName,
-			String permission, String icon, String url) {
+			String permission, String icon, String uri) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -56,7 +56,7 @@ public class Permission {
 		this.parentName = parentName;
 		this.permission = permission;
 		this.icon = icon;
-		this.url = url;
+		this.uri = uri;
 	}
 
 	public Long getId() {
@@ -107,12 +107,12 @@ public class Permission {
 		this.icon = icon;
 	}
 
-	public String getUrl() {
-		return url;
+	public String getUri() {
+		return uri;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setUri(String uri) {
+		this.uri = uri;
 	}
 
 	public List<Permission> getChildren() {
