@@ -38,7 +38,7 @@ public class ArticleServiceImpl implements ArticleService {
 	 */
 	@Override
 	public Article add(Article a) {
-		if(a.getStatus()==2){ //2已发布，添加发布日期
+		if(a.getStatus()!=null&&a.getStatus()==2){ //2已发布，添加发布日期
 			a.setCreateTime(new Date());
 		}
 		articleDao.save(a);
@@ -90,7 +90,6 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	public List<Map<String, String>> getStatusCount() {
-		// TODO Auto-generated method stub
 		return this.articleDao.getStatusCount();
 	}
 

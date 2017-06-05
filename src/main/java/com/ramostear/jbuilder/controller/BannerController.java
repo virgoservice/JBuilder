@@ -9,8 +9,13 @@
 								                 limitations under the License. 
 */
 package com.ramostear.jbuilder.controller;
+import java.io.File;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,11 +23,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ramostear.jbuilder.entity.Attachment;
 import com.ramostear.jbuilder.entity.Banner;
 import com.ramostear.jbuilder.kit.ReqDto;
 import com.ramostear.jbuilder.service.impl.BannerServiceImpl;
+import com.ramostear.jbuilder.util.QiniuFileUtil;
 
 /** 
  * @Desc: () 
@@ -45,10 +55,8 @@ public class BannerController {
 	@RequestMapping(value="/list",method=RequestMethod.GET)
 	public String list(Banner banner,ReqDto req,Model model,@RequestParam Map<String,String> search){
 		Map param = (Map)JSONObject.parse(search.get("search"));  
-		System.out.println(param);
 		model.addAttribute("list", bannerService.findByPage(req.getPageNo(), req.getPageSize(), "createTime", true,param));
 
-        
 		return "banner/list";
 	}
 	
@@ -58,7 +66,11 @@ public class BannerController {
 	}
 	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public String add(Banner banner){
+	public String add(Banner banner,MultipartFile file){
+		if(file!=null){
+			String url = QiniuFileUtil.upload(file);
+			banner.setImage(url);
+		}
 		bannerService.add(banner);
 		return "banner/index";
 	}
@@ -70,7 +82,18 @@ public class BannerController {
 	}
 	
 	@RequestMapping(value="/edit",method=RequestMethod.POST)
-	public String eidt(Banner banner){
+	public String eidt(Banner banner,MultipartFile file){
+		String url="";
+		if(banner.getImage()==null&&file!=null){
+			url = QiniuFileUtil.upload(file);
+		}else{
+			Banner temp=this.bannerService.findById(banner.getId());
+			if(temp!=null&&temp.getImage()!=banner.getImage()){
+				url = QiniuFileUtil.upload(file);
+			}
+		}
+		
+		banner.setImage(url);
 		bannerService.update(banner);
 		return "banner/index";
 	}

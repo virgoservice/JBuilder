@@ -265,7 +265,6 @@
 							</li>
 							<li class="all">
 								<a href="#" class="current">
-									 
 									<c:forEach items="${statusList}" var="item">  
 										<c:if test="${item.status==2}">
 										已发布<span class="count"> (${item.count}) </span>

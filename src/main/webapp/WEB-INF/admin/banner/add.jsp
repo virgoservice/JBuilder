@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <%@ page pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>  
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 	String path = request.getContextPath();
 %>
@@ -252,7 +252,7 @@
             <h1>新建轮播</h1>
         </section>
         <section class="content">
-            <form id="form" method="post">
+            <form id="form" method="post" action="#" >
                 <div class="row">
                     <div class="col-md-12">
                         <div class="box box-solid">
@@ -293,8 +293,11 @@
                                     <div class="form-group">
                                         <label for="QQ" class="col-sm-2 control-label">图片</label>
                                         <div class="col-sm-2">
-                                            <button type="button" class="btn btn-default btn-sm" onclick="selectThumbnail()">
-                                                <i class="fa fa-upload"></i> 上传图片
+                                            <button type="button" class="btn btn-default btn-sm" ">
+                                            	<input type="file" name="file" accept="image/*" >
+                                            	<c:if test="${banner.image !=null}">
+                                            		<img src="${banner.image}" style="max-height: 300;max-width: 450" >
+                                            	</c:if>
                                             </button>
                                         </div>
                                         <div class="col-md-7">
@@ -317,7 +320,7 @@
             </form>
         </section>
     </div>
-    
+
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
             <b>Version</b> 2.4.0
@@ -390,22 +393,27 @@
 	    }
  
     	var id=$("#id").val();
-    	var formdata = id?$("#form").serialize():$("#form").serialize().replace('id=','')
     	var orp=id?'edit':'add';
     	
-    	$.ajax({
-			url:"<%=path %>/admin/banner/"+orp,
-			type:"post",
-			contentType:"application/x-www-form-urlencoded",
-            encoding:"utf-8",
-			data:formdata,
-			success:function(html){
-				window.location.href="<%=path %>/admin/banner/index";
-			},
-			error:function(){
-				
-			}
-		});
+    	
+    	
+        var formData = new FormData($("#form")[0]);  
+        $.ajax({  
+             url: "<%=path %>/admin/banner/"+orp ,  
+             type: 'POST',  
+             data: formData,  
+             async: false,  
+             cache: false,  
+             contentType: false,  
+             processData: false,  
+             success: function (returndata) {  
+                 alert("保存成功！");
+                 window.location.href="<%=path %>/admin/banner/index";
+             },  
+             error: function (returndata) {  
+                 alert("保存失败");  
+             }  
+        });  
     }
 </script>
 </body>
