@@ -78,6 +78,8 @@ public interface UserService {
 	 * @param roleIds
 	 * @return
 	 */
+	public User updateUser(User user);
+	
 	public User update(User user,Long...roleIds);
 	
 	public User findByName(String username);

@@ -29,6 +29,7 @@
 		<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
 		<!-- bootstrap wysihtml5 - text editor -->
 		<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+		 <link rel="stylesheet" href="<%=path %>/resources/admin/plugins/layer-v3.0.3/layer/skin/default/layer.css">
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -255,17 +256,17 @@
 						<ul class="list-inline" style="float: left;">
 							<li class="all active">
 								<a href="#" class="current">
-									全部 <span class="count">(10)</span>
+									全部 <span class="count">(2)</span>
 								</a>|
 							</li>
 							<li class="all">
 								<a href="#" class="current">
-									管理员 <span class="count">(3)</span>
+									管理员 <span class="count">(1)</span>
 								</a>|
 							</li>
 							<li class="all">
 								<a href="#" class="current">
-									注册用户 <span class="count">(7)</span>
+									注册用户 <span class="count">(1)</span>
 								</a>
 							</li>
 						</ul>
@@ -339,6 +340,7 @@
 		<script src="<%=path %>/resources/admin/plugins/fastclick/fastclick.js"></script>
 		<!-- AdminLTE App -->
 		<script src="<%=path %>/resources/admin/dist/js/app.min.js"></script>
+		<script src="<%=path %>/resources/admin/plugins/layer-v3.0.3/layer/layer.js"></script>
 		<script type="text/javascript">
 			query();
 			function query(pageNo,pageSize){
@@ -356,6 +358,48 @@
 					},
 					error:function(){
 						alert("未处理");
+					}
+				});
+			}
+			function del(id){
+				top.layer.open({
+					title:false,
+					icon:2,
+					content:"该操作不可逆！确认删除该用户吗？",
+					offset:'15px',
+					btn:['确认删除'],
+					btnAlign:'c',
+					yes:function(index){
+						$.ajax({
+							url:"<%=path %>/admin/user/delete",
+							type:"POST",
+							data:{
+								id:id,
+							},
+							contentType:"application/x-www-form-urlencoded",
+							encoding:"utf-8",
+							cache:false,
+						});
+						location.reload();
+						layer.close(index);
+					},
+					cancel:function(index){
+						layer.close(index);
+					}
+				});
+			}
+			function changeStatus(id){
+				$.ajax({
+					url:"<%=path %>/admin/user/changeStatus",
+					type:"POST",
+					data:{
+						id:id,
+					},
+					contentType:"application/x-www-form-urlencoded",
+					encoding:"utf-8",
+					cache:false,
+					success:function(){
+						location.reload();
 					}
 				});
 			}

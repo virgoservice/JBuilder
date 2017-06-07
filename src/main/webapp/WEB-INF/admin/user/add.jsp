@@ -283,14 +283,32 @@
 													<input type="email" class="form-control" name="email" id="email"  value=""/>
 												</div>
 											</div>
+											<div class="form-group">
+												<label for="phone" class="col-sm-2 control-label">联系电话</label>
+												<div class="col-sm-9">
+													<input type="tel" class="form-control" name="phone" id="phone"  value=""/>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="qq" class="col-sm-2 control-label">QQ号码</label>
+												<div class="col-sm-9">
+													<input type="text" class="form-control" name="qq" id="qq"  value=""/>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="weibo" class="col-sm-2 control-label">微博号码</label>
+												<div class="col-sm-9">
+													<input type="text" class="form-control" name="weibo" id="weibo"  value=""/>
+												</div>
+											</div>
 										</div>
 										<div class="form-horizontal">
 											<h4>用户密码</h4>
 											<hr />
 											<div class="form-group">
-												<label for="pwd" class="col-md-2 control-label">密码（必填）</label>
+												<label for="password" class="col-md-2 control-label">密码（必填）</label>
 												<div class="col-md-9">
-													<input type="password" class="form-control" name="password" id="pwd"  value=""/>
+													<input type="password" class="form-control" name="password" id="password"  value=""/>
 												</div>
 											</div>
 										</div>
@@ -298,9 +316,9 @@
 											<h4>个人说明</h4>
 											<hr />
 											<div class="form-group">
-												<label for="qm" class="col-md-2 control-label">个性签名</label>
+												<label for="signature" class="col-md-2 control-label">个性签名</label>
 												<div class="col-md-9">
-													<textarea rows="4" id="qm" name="signature" class="form-control" placeholder="分享你的一些心情或者公开信息"></textarea>
+													<textarea rows="4" id="signature" name="signature"  id="signature" class="form-control" placeholder="分享你的一些心情或者公开信息"></textarea>
 												</div>
 											</div>
 										</div>
@@ -321,14 +339,19 @@
 										<div class="box-tools">
 											<button type="button" class="btn btn-box-tool" data-widget="collapse">
 												<i class="fa fa-minus"></i>
-												<%-- <c:forEach items="${roles}" var="role">
-													<option value="${role.id}">${role.description }</option>
-												</c:forEach> --%>
 											</button>
 										</div>
 									</div>
-									<div class="box-body" style="padding: 10px 0;">
-										
+									<div class="box-body" style="padding: 10px 3px;">
+										<c:forEach items="${roles}" var="role">
+											<div class="col-sm-6">
+												<div class="checkbox">
+													<label>
+														<input type="checkbox" name="roleIds" value="${role.id }"/>${role.name}
+													</label>
+												</div>
+											</div>
+										</c:forEach>
 									</div>
 								</div>
 								<div class="box box-solid">
@@ -345,7 +368,7 @@
 											<li class="">
 												<div style="min-height: 100px;">
 													<img src="<%=path %>/resources/admin/dist/img/avatar5.png" id="thumbnail" class="img-responsive img-circle center-block"/>
-													<input type="hidden" name="" value="" id="" />
+													<input type="hidden" name="avatar" value="resources/admin/dist/img/avatar5.png" id="avatar" />
 												</div>
 												<div style="clear: both;"></div>
 											</li>
@@ -448,6 +471,7 @@
 						btn:['我知道了'],
 						yes:function(index){
 							layer.close(index);
+							$(location).attr("href","<%=path%>/admin/user/index");
 						},
 					});
 				}

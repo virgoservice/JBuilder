@@ -34,6 +34,7 @@
 				description = #{description}
 			</if>
 		</set>
+		where id = #{id}
 	</update>
 	
 	<delete id="delete" parameterType="Long">

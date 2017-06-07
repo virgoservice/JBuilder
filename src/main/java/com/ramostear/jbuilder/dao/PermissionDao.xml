@@ -23,7 +23,7 @@
 	</select>
 	
 	<select id="findByRoles" resultMap="resultMap">
-		select p.id,p.name,p.parentId,p.parentName,p.permission,p.icon,p.url 
+		select p.id,p.name,p.parentId,p.parentName,p.permission,p.icon,p.uri  
 		from sys_permission p,sys_role r,sys_role_permission rp 
 		where 
 		p.id = rp.permissionId 

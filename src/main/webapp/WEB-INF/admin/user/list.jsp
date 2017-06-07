@@ -18,6 +18,7 @@
 					<th>QQ号码</th>
 					<th>微博账号</th>
 					<th>创建日期</th>
+					<th>状态</th>
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -43,139 +44,21 @@
 						<td>${user.weibo}</td>
 						<td><fmt:formatDate value="${user.createTime}" pattern="yyyy-MM-dd"/></td>
 						<td>
-							<a href="user_edit.html">编辑</a> |
-							<a href="#" style="color:crimson">冻结</a> |
-							<a href="#" style="color:crimson">永久删除</a> 
+							<c:if test="${user.status eq 0 }"><i class="fa fa-toggle-off" style="color:crimson;"></i></c:if>
+							<c:if test="${user.status eq 1 }"><i class="fa fa-toggle-on" style="color: #3c8dbc;"></i></c:if>
+						</td>
+						<td>
+							<a href="<%=path %>/admin/user/edit?id=${user.id}">编辑</a> |
+							<c:if test="${user.status eq 0 }">
+								<a href="javascript:void(0);" onclick="changeStatus(${user.id});" style="color:#3c8dbc">解冻</a> |
+							</c:if>
+							<c:if test="${user.status eq 1 }">
+								<a href="javascript:void(0);" onclick="changeStatus(${user.id});" style="color:crimson">冻结</a> |
+							</c:if>
+							<a href="javascript:void(0);" onclick="del(${user.id});" style="color:crimson">永久删除</a> 
 						</td>
 					</tr>
 				</c:forEach>
-				
-				<!-- <tr>
-					<td>112</td>
-					<td>Fix and squish bugs</td>
-					<td>Ramostear</td>
-					<td>大数据</td>
-					<td>微服务</td>
-					<td>spring</td>
-					<td>2017-04-26</td>
-					<td>
-						<a href="user_edit.html">编辑</a> |
-						<a href="#" style="color:crimson">冻结</a> |
-						<a href="#" style="color:crimson">永久删除</a>  
-					</td>
-				</tr>
-				<tr>
-					<td>113</td>
-					<td>Fix and squish bugs</td>
-					<td>Ramostear</td>
-					<td>大数据</td>
-					<td>微服务</td>
-					<td>spring</td>
-					<td>2017-04-26</td>
-					<td>
-						<a href="user_edit.html">编辑</a> |
-						<a href="#" style="color:crimson">冻结</a> |
-						<a href="#" style="color:crimson">永久删除</a> 
-					</td>
-				</tr>
-				<tr>
-					<td>114</td>
-					<td>Fix and squish bugs</td>
-					<td>Ramostear</td>
-					<td>大数据</td>
-					<td>微服务</td>
-					<td>spring</td>
-					<td>2017-04-26</td>
-					<td>
-						<a href="user_edit.html">编辑</a> |
-						<a href="#" style="color:crimson">冻结</a> |
-						<a href="#" style="color:crimson">永久删除</a> 
-					</td>
-				</tr>
-				<tr>
-					<td>115</td>
-					<td>Fix and squish bugs</td>
-					<td>Ramostear</td>
-					<td>大数据</td>
-					<td>微服务</td>
-					<td>spring</td>
-					<td>2017-04-26</td>
-					<td>
-						<a href="user_edit.html">编辑</a> |
-						<a href="#" style="color:crimson">冻结</a> |
-						<a href="#" style="color:crimson">永久删除</a> 
-					</td>
-				</tr>
-				<tr>
-					<td>115</td>
-					<td>Fix and squish bugs</td>
-					<td>Ramostear</td>
-					<td>大数据</td>
-					<td>微服务</td>
-					<td>spring</td>
-					<td>2017-04-26</td>
-					<td>
-						<a href="user_edit.html">编辑</a> |
-						<a href="#" style="color:crimson">冻结</a> |
-						<a href="#" style="color:crimson">永久删除</a> 
-					</td>
-				</tr>
-				<tr>
-					<td>115</td>
-					<td>Fix and squish bugs</td>
-					<td>Ramostear</td>
-					<td>大数据</td>
-					<td>微服务</td>
-					<td>spring</td>
-					<td>2017-04-26</td>
-					<td>
-						<a href="user_edit.html">编辑</a> |
-						<a href="#" style="color:crimson">冻结</a> |
-						<a href="#" style="color:crimson">永久删除</a> 
-					</td>
-				</tr>
-				<tr>
-					<td>115</td>
-					<td>Fix and squish bugs</td>
-					<td>Ramostear</td>
-					<td>大数据</td>
-					<td>微服务</td>
-					<td>spring</td>
-					<td>2017-04-26</td>
-					<td>
-						<a href="user_edit.html">编辑</a> |
-						<a href="#" style="color:crimson">冻结</a> |
-						<a href="#" style="color:crimson">永久删除</a> 
-					</td>
-				</tr>
-				<tr>
-					<td>115</td>
-					<td>Fix and squish bugs</td>
-					<td>Ramostear</td>
-					<td>大数据</td>
-					<td>微服务</td>
-					<td>spring</td>
-					<td>2017-04-26</td>
-					<td>
-						<a href="user_edit.html">编辑</a> |
-						<a href="#" style="color:crimson">冻结</a> |
-						<a href="#" style="color:crimson">永久删除</a> 
-					</td>
-				</tr>
-				<tr>
-					<td>115</td>
-					<td>Fix and squish bugs</td>
-					<td>Ramostear</td>
-					<td>大数据</td>
-					<td>微服务</td>
-					<td>spring</td>
-					<td>2017-04-26</td>
-					<td>
-						<a href="user_edit.html">编辑</a> |
-						<a href="#" style="color:crimson">冻结</a> |
-						<a href="#" style="color:crimson">永久删除</a> 
-					</td>
-				</tr> -->
 			</tbody>
 		</table>
 	</div>
@@ -184,28 +67,11 @@
 	<div class="col-sm-5">
 	</div>
 	<div class="col-sm-7">
-		<!-- <div class="dataTables_paginate paging_simple_numbers pull-right">
-			<ul class="pagination">
-				<li class="paginate_button previous disabled">
-					<a href="#">上一页</a>
-				</li>
-				<li class="paginate_button active">
-					<a href="#">1</a>
-				</li>
-				<li class="paginate_button">
-					<a href="#">2</a>
-				</li>
-				<li class="paginate_button">
-					<a href="#">3</a>
-				</li>
-				<li class="paginate_button">
-					<a href="#">4</a>
-				</li>
-				<li class="paginate_button next">
-					<a href="#">下一页</a>
-				</li>
-			</ul>
-		</div> -->
-		${list.pageStr}
+		<c:if test="${!empty list.items}">
+	        ${list.pageStr }
+    	</c:if>
+    	<c:if test="${empty list.items}">
+	                            共查询到0条数据！
+    	</c:if>
 	</div>
 </div>

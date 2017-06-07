@@ -55,6 +55,8 @@ public class UserController {
 	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String add(User user,Model model,Long...roleIds){
+		user.setStatus(1);	//默认启用
+		user.setType(1);	//0：来宾用户；1：管理员；2：注册用户
 		userService.add(user, roleIds);
 		return "user/index";
 	}
@@ -97,5 +99,19 @@ public class UserController {
 			model.addAttribute("user", new User());
 		}
 		return "user/profile";
+	}
+	@RequestMapping(value="/changeStatus",method=RequestMethod.POST)
+	public String changeStatus(Long id){
+		User u = userService.findById(id);
+		User user = new User();
+		user.setId(u.getId());
+		if(u.getStatus()==0){
+			user.setStatus(1);
+		}
+		if(u.getStatus()==1){
+			user.setStatus(0);
+		}
+		userService.updateUser(user);
+		return "user/index";
 	}
 }

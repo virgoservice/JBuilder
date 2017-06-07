@@ -35,7 +35,7 @@ import javax.imageio.ImageIO;
 public class VerifyCodeUtil {
 	
 
-	public static final String VERIFY_CODES = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+	public static final String VERIFY_CODES = "23456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz";
     private static Random random = new Random();
  
  

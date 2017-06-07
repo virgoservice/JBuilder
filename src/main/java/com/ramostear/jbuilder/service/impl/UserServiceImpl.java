@@ -195,4 +195,14 @@ public class UserServiceImpl implements UserService{
 		return userDao.findById(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.ramostear.jbuilder.service.UserService#updateUser(com.ramostear.jbuilder.entity.User)
+	 */
+	@Override
+	public User updateUser(User user) {
+		userDao.update(user);
+		return user;
+	}
+
+
 }
