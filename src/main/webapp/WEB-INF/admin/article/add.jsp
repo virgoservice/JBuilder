@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <%@ page pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>  
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 	String path = request.getContextPath();
 %>
@@ -254,7 +254,6 @@
 				</section>
 				<section class="content" style="z-index: 9999;">
 					<form action="#" id="form" method="post">
-						
 						<div class="row">
 							<div class="col-md-9">
 								<div class="form-group">
@@ -323,14 +322,17 @@
 										<ul class="nav">
 											<li class="">
 												<div style="min-height: 100px;">
-													<img src="dist/img/photo3.jpg" id="thumbnail" style="max-width: 100%;" />
-													<input type="hidden" name="" value="" id="" />
+													<c:if test="${article.cover !=null}">
+	                                            		<img src="${article.cover}" style="max-width: 100%;" >
+	                                            	</c:if>
+													
 												</div>
 												<div style="clear: both;"></div>
 											</li>
 											<li style="border-top: 1px solid #f4f4f4; display: block;padding: 10px 15px;position: relative;">
-												<button type="button" class="btn btn-default btn-sm" onclick="selectThumbnail()">选择图片</button>
-												<a href="javascript:;" style="display: inline;" onclick="removeThumbnail()">移除封面</a>
+												<input type="file" name="file" accept="image/*" class="btn btn-default btn-sm">
+                                            	
+												
 												<div style="clear: both;"></div>
 											</li>
 										</ul>
@@ -353,9 +355,6 @@
 												</li>
 												<li>
 													<a href="#tab_seo" data-toggle="tab" aria-expanded="false">SEO</a>
-												</li>
-												<li>
-													<a href="#tab_position" data-toggle="tab" aria-expanded="false">位置</a>
 												</li>
 												<li>
 													<a href="#tab_remark" data-toggle="tab" aria-expanded="false">备注</a>
@@ -395,20 +394,6 @@
 													</div>
 													<div class="form-group">
 														<textarea class="form-control" rows="2" name="description" placeholder="请输入描述">${article.description }</textarea>
-													</div>
-												</div>
-												<div class="tab-pane form-horizontal" id="tab_position">
-													<div class="form-group">
-														<label for="_lng" class="col-sm-3 control-label">经度</label>
-														<div class="col-sm-9">
-															<input type="text" class="form-control" name="" id="_lng"  value=""/>
-														</div>
-													</div>
-													<div class="form-group">
-														<label for="_lat" class="col-sm-3 control-label">纬度</label>
-														<div class="col-sm-9">
-															<input type="text" class="form-control" name="" id="_lat"  value=""/>
-														</div>
 													</div>
 												</div>
 												<div class="tab-pane" id="tab_remark">
@@ -466,6 +451,8 @@
 <!-- FastClick -->
 <script src="<%=path %>/resources/admin/plugins/fastclick/fastclick.js"></script>
 <script src="<%=path %>/resources/admin/dist/js/validate.js"></script>
+<script src="<%=path %>/resources/admin/dist/js/app.min.js"></script>
+
 <script src="<%=path %>/resources/admin/dist/js/bootstrap-treeview.min.js"></script>
 <script src="<%=path %>/resources/admin/dist/css/bootstrap-treeview.min.css"></script>
 <script type="text/javascript">
@@ -497,22 +484,6 @@
             });
         </script>
 <script type="text/javascript">
-    function selectThumbnail(){
-        layer.open({
-            type:2,
-            title:'上传封面',
-            shadeClose:true,
-            shade:0.8,
-            area:['50%','60%'],
-            content:'face_upload.html',
-            end:function(){
-                if(''!=data.url && null != data.url){
-                    $("#thumbnail").attr('src',data.url);
-                    $("#content_thumbnail").attr("value",data.url);
-                }
-            }
-        });
-    }
     
     function save(status){
     	//表单验证
@@ -527,22 +498,25 @@
 	    }
  
     	var id=$("#id").val();
-    	var formdata = id?$("#form").serialize():$("#form").serialize().replace('id=','')
     	var orp=id?'edit':'add';
     	
-    	$.ajax({
-			url:"<%=path %>/admin/article/"+orp,
-			type:"post",
-			contentType:"application/x-www-form-urlencoded",
-            encoding:"utf-8",
-			data:formdata+"&status="+status,
-			success:function(html){
-				window.location.href="<%=path %>/admin/article/index";
-			},
-			error:function(){
-				
-			}
-		});
+    	
+    	var formData = new FormData($("#form")[0]);
+        $.ajax({  
+             url: "<%=path %>/admin/article/"+orp+"?status="+status,
+             type: 'POST',  
+             data: formData,  
+             async: false,  
+             cache: false,  
+             contentType: false,  
+             processData: false,  
+             success: function (returndata) {  
+            	 window.location.href="<%=path %>/admin/article/index";
+             },  
+             error: function (returndata) {  
+                 alert("保存失败");  
+             }  
+        });  
     }
     
       $(function () {

@@ -29,7 +29,7 @@
 						<td>${item.status}</td>
 						<td><a href="#"
 							onclick="edit(${item.id})">编辑</a>
-							| <a href="#">查看</a> | <a href="#" style="color: crimson"
+							| <a href="#" onclick="edit(${item.id})">查看</a> | <a href="#" style="color: crimson"
 							onclick="del(${item.id})">删除</a></td>
 					</tr>
 				</c:forEach>

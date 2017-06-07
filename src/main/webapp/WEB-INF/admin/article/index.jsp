@@ -265,7 +265,6 @@
 							</li>
 							<li class="all">
 								<a href="#" class="current">
-									 
 									<c:forEach items="${statusList}" var="item">  
 										<c:if test="${item.status==2}">
 										已发布<span class="count"> (${item.count}) </span>
@@ -356,6 +355,7 @@
 <script src="<%=path %>/resources/admin/plugins/fastclick/fastclick.js"></script>
 
 <script src="<%=path %>/resources/admin/dist/js/validate.js"></script>
+<script src="<%=path %>/resources/admin/dist/js/app.min.js"></script>
 <script type="text/javascript">
     
     function save(){

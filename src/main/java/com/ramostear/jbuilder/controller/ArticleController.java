@@ -9,15 +9,18 @@
 								                 limitations under the License. 
 */
 package com.ramostear.jbuilder.controller;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.ramostear.jbuilder.entity.Article;
 import com.ramostear.jbuilder.kit.ReqDto;
 import com.ramostear.jbuilder.service.ArticleService;
+import com.ramostear.jbuilder.service.AttachmentService;
+import com.ramostear.jbuilder.util.QiniuFileUtil;
 
 /** 
  * @Desc: () 
@@ -31,6 +34,9 @@ public class ArticleController {
 
 	@Autowired
 	private ArticleService articleService;
+	
+	@Autowired
+	private AttachmentService attachmentService;
 	
 	@RequestMapping(value="/index",method=RequestMethod.GET)
 	public String index(Model model){
@@ -50,8 +56,15 @@ public class ArticleController {
 		return "article/add";
 	}
 	
+	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public String add(Article article){
+	public String add(Article article,MultipartFile file,String status){
+		if(file!=null){
+			String url = QiniuFileUtil.upload(file);
+			article.setCover(url);
+		}
+		System.out.println(status);
+		article.setStatus(Integer.parseInt(status));
 		articleService.add(article);
 		return "article/index";
 	}
@@ -63,7 +76,18 @@ public class ArticleController {
 	}
 	
 	@RequestMapping(value="/edit",method=RequestMethod.POST)
-	public String eidt(Article article){
+	public String eidt(Article article,MultipartFile file,String status){
+		String url="";
+		if(article.getCover()==null&&file!=null){
+			url = QiniuFileUtil.upload(file);
+		}else{
+			Article temp=this.articleService.findById(article.getId());
+			if(temp!=null&&temp.getCover()!=article.getCover()){
+				url = QiniuFileUtil.upload(file);
+			}
+		}
+		article.setStatus(Integer.parseInt(status));
+		article.setCover(url);
 		articleService.update(article);
 		return "article/index";
 	}
