@@ -12,11 +12,13 @@ package com.ramostear.jbuilder.controller;
 
 import java.util.Date;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.ramostear.jbuilder.entity.Friendlink;
 import com.ramostear.jbuilder.kit.ReqDto;
 import com.ramostear.jbuilder.service.FriendlinkService;
@@ -34,18 +36,21 @@ public class FriendlinkController {
 	@Autowired
 	private FriendlinkService friendlinkService;
 	
+	@RequiresPermissions(value="link")
 	@RequestMapping(value="/index",method=RequestMethod.GET)
 	public String index(){
 		return "friendlink/index";
 	}
 	
+	@RequiresPermissions(value="link:list")
 	@RequestMapping(value="/list",method=RequestMethod.GET)
 	public String list(Friendlink link,ReqDto req,Model model,String search){
-		model.addAttribute("list", friendlinkService.findByPage(req.getPageNo(), req.getPageSize(), "createTime", true,search));
+		model.addAttribute("list", friendlinkService.findByPage(req.getPageNo(), req.getPageSize(), "id", true,search));
 		
 		return "friendlink/list";
 	}
 	
+	@RequiresPermissions(value="link:add")
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String add(Friendlink link){
 		link.setCreateTime(new Date());
@@ -53,12 +58,14 @@ public class FriendlinkController {
 		return "friendlink/index";
 	}
 	
+	@RequiresPermissions(value="link:edit")
 	@RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String eidt(Friendlink link){
 		friendlinkService.update(link);
 		return "friendlink/index";
 	}
 	
+	@RequiresPermissions(value="link:delete")
 	@RequestMapping(value="/delete",method=RequestMethod.GET)
 	public String delete(Long id){
 		friendlinkService.delete(id);

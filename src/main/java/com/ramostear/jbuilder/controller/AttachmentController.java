@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +41,7 @@ public class AttachmentController {
 	@Autowired
 	private AttachmentService attachmentService;
 
+	@RequiresPermissions(value="attach")
 	@RequestMapping(value = "/admin/attachment/list", method = RequestMethod.GET)
 	public String list(Model model) {
 		List<Attachment> attachmentList = attachmentService.listAll();

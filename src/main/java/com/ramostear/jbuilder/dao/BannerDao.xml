@@ -88,7 +88,7 @@
 				and ${index} like '%#{item}%'
 			</if>
         </foreach>
-		order by ${order} 
+		order by ${orderBy} 
 		<if test="order == true">
 			DESC
 		</if>

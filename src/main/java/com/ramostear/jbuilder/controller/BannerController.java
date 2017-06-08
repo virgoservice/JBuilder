@@ -9,14 +9,9 @@
 								                 limitations under the License. 
 */
 package com.ramostear.jbuilder.controller;
-import java.io.File;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,11 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ramostear.jbuilder.entity.Attachment;
 import com.ramostear.jbuilder.entity.Banner;
 import com.ramostear.jbuilder.kit.ReqDto;
 import com.ramostear.jbuilder.service.impl.BannerServiceImpl;
@@ -47,24 +39,29 @@ public class BannerController {
 	@Autowired
 	private BannerServiceImpl bannerService;
 	
+
+	@RequiresPermissions(value="banner")
 	@RequestMapping(value="/index",method=RequestMethod.GET)
 	public String index(){
 		return "banner/index";
 	}
 	
+	@RequiresPermissions(value="banner:list")
 	@RequestMapping(value="/list",method=RequestMethod.GET)
 	public String list(Banner banner,ReqDto req,Model model,@RequestParam Map<String,String> search){
 		Map param = (Map)JSONObject.parse(search.get("search"));  
-		model.addAttribute("list", bannerService.findByPage(req.getPageNo(), req.getPageSize(), "createTime", true,param));
+		model.addAttribute("list", bannerService.findByPage(req.getPageNo(), req.getPageSize(), "id", true,param));
 
 		return "banner/list";
 	}
 	
+	@RequiresPermissions(value="banner:add")
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String toAdd(){
 		return "banner/add";
 	}
 	
+	@RequiresPermissions(value="banner:add")
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String add(Banner banner,MultipartFile file){
 		if(file!=null){
@@ -75,12 +72,14 @@ public class BannerController {
 		return "banner/index";
 	}
 	
+	@RequiresPermissions(value="banner:edit")
 	@RequestMapping(value="/edit",method=RequestMethod.GET)
 	public String eidt(Long id,Model model){
 		model.addAttribute("banner",bannerService.findById(id));
 		return "banner/add";
 	}
 	
+	@RequiresPermissions(value="banner:edit")
 	@RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String eidt(Banner banner,MultipartFile file){
 		String url="";
@@ -98,9 +97,16 @@ public class BannerController {
 		return "banner/index";
 	}
 	
+	@RequiresPermissions(value="banner:delete")
 	@RequestMapping(value="/delete",method=RequestMethod.GET)
 	public String delete(Long id){
-		bannerService.delete(id);
+		Banner temp=this.bannerService.findById(id);
+		if(temp!=null){
+			QiniuFileUtil.deleteQiniuFile(temp.getImage());
+			bannerService.delete(id);
+		}
+		
+		
 		return "banner/index";
 	}
 	

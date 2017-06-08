@@ -1,6 +1,6 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>  
 
 <div class="box box-solid">
 	<div class="box-body table-responsive no-padding">
@@ -27,10 +27,17 @@
 						<td>${item.alt}</td>
 						<td>${item.showOrder}</td>
 						<td>${item.status}</td>
-						<td><a href="#"
-							onclick="edit(${item.id})">编辑</a>
-							| <a href="#" onclick="edit(${item.id})">查看</a> | <a href="#" style="color: crimson"
-							onclick="del(${item.id})">删除</a></td>
+						<td>
+						<shiro:hasPermission name="banner:edit">  
+						<a href="#" onclick="edit(${item.id})">编辑</a>
+							| 
+						</shiro:hasPermission>
+						<a href="#" onclick="edit(${item.id})">查看</a> 
+						<shiro:hasPermission name="banner:delete">  
+						| <a href="#" style="color: crimson"
+							onclick="del(${item.id})">删除</a>
+							</shiro:hasPermission>
+							</td>
 					</tr>
 				</c:forEach>
 

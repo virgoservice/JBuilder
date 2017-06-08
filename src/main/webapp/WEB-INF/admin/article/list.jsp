@@ -1,6 +1,7 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>  
                     <div class="box box-solid">
                         <div class="box-body table-responsive no-padding">
                             <table class="table table-hover">
@@ -37,9 +38,14 @@
 										<td>${item.tag}</td>
 										<td><fmt:formatDate value="${item.createTime}" type="both" /></td>
 										<td>
-										  <a href="#" onclick="edit(${item.toString()})">编辑</a> 
-										| <a href="#">查看</a> 
-										| <a href="#" style="color: crimson" onclick="del(${item.id})">删除</a></td>
+										<shiro:hasPermission name="article:edit">  
+										  <a href="#" onclick="edit(${item.toString()})">编辑</a> | 
+										</shiro:hasPermission>
+										<a href="#">查看</a> 
+										<shiro:hasPermission name="article:delete">  
+										| <a href="#" style="color: crimson" onclick="del(${item.id})">删除</a>
+										</shiro:hasPermission>
+										</td>
 									</tr>
 									</c:forEach>
                                 </tbody>

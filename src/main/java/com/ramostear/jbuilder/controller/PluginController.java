@@ -12,6 +12,7 @@ package com.ramostear.jbuilder.controller;
 
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +38,7 @@ public class PluginController {
 	@Autowired
 	private PluginService pluginService;
 
+	@RequiresPermissions(value="plugin:list")
 	@RequestMapping(value = "/admin/plugin/list", method = RequestMethod.GET)
 	public String list(Model model) {
 		List<Plugin> pluginList = null;
@@ -45,6 +47,7 @@ public class PluginController {
 		return "plugin/list";
 	}
 
+	@RequiresPermissions(value="plugin:add")
 	@RequestMapping(value = "/admin/plugin/add", method = RequestMethod.GET)
 	public String add(Model model) {
 		Plugin plugin = new Plugin();
@@ -52,6 +55,7 @@ public class PluginController {
 		return "plugin/add";
 	}
 
+	@RequiresPermissions(value="plugin:edit")
 	@RequestMapping(value = "/admin/plugin/edit", method = RequestMethod.GET)
 	public String edit(@RequestParam("id") Long id, Model model) {
 		Plugin plugin = pluginService.findById(id);
@@ -62,6 +66,7 @@ public class PluginController {
 		return "plugin/add";
 	}
 
+	@RequiresPermissions(value="plugin:edit")
 	@RequestMapping(value = "/admin/plugin/edit", method = RequestMethod.POST)
 	@ResponseBody
 	public Result edit(Plugin plugin) {
@@ -86,6 +91,7 @@ public class PluginController {
 		return result;
 	}
 
+	@RequiresPermissions(value="plugin:list")
 	@RequestMapping(value = "/admin/plugin/start", method = RequestMethod.POST)
 	@ResponseBody
 	public Result start(@RequestParam("id") Long id) {
@@ -104,6 +110,7 @@ public class PluginController {
 		return result;
 	}
 
+	@RequiresPermissions(value="plugin:delete")
 	@RequestMapping(value = "/admin/plugin/delete", method = RequestMethod.POST)
 	@ResponseBody
 	public Result delete(Long id) {
