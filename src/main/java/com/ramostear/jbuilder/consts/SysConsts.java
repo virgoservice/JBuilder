@@ -17,5 +17,18 @@ package com.ramostear.jbuilder.consts;
  * @email:ramostear@163.com 
  */
 public class SysConsts {
+	
+	/**
+	 * 系统当前的登录用户
+	 */
+	public static final String LOGIN_USER = "login_user";
 
+	/**
+	 * 系统菜单
+	 */
+	public static final String SYS_MENU = "menu";
+	/**
+	 * 验证码信息
+	 */
+	public static final String VERIFY_CODE = "verify_code";
 }

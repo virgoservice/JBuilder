@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ramostear.jbuilder.dao.AttachmentDao">
+  <resultMap id="BaseResultMap" type="com.ramostear.jbuilder.entity.Attachment">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="size" jdbcType="DOUBLE" property="size" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, name, title, size, type, url, createTime, description
+  </sql>
+
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_attachment
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="findByUrl" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_attachment
+    where url = #{url,jdbcType=VARCHAR}
+  </select>
+
+  <select id="listAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_attachment
+  </select>
+
+  <select id="listByConditions" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_attachment
+    <where>
+      <if test="type != null">type = #{type, jdbcType=VARCHAR}</if>
+      <if test="createTimeBegin != null and createTimeEnd != null">
+    	and createTime between
+		#{createTimeBegin, jdbcType=TIMESTAMP} and #{createTimeEnd, jdbcType=TIMESTAMP}
+      </if>
+	  <if test="orderBy != null and isAsc==true">order by ${orderBy} ASC</if>
+	  <if test="orderBy != null and isAsc==false">order by ${orderBy} DESC</if>
+	  limit #{offset},#{pageSize}
+	</where>
+  </select>
+
+  <select id="getTotalByConditions" resultType="java.lang.Long">
+    select COUNT(*)
+    from sys_attachment
+    <where>
+      <if test="type != null">type = #{type, jdbcType=VARCHAR}</if>
+      <if test="createTimeBegin != null and createTimeEnd != null">
+    	and createTime between
+		#{createTimeBegin, jdbcType=TIMESTAMP} and #{createTimeEnd, jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from sys_attachment
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="deleteBatch" parameterType="java.lang.Long">
+    delete from sys_attachment
+   	where id in 
+	<foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+		#{item}
+	</foreach>
+  </delete>
+
+  <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.ramostear.jbuilder.entity.Attachment">
+    insert into sys_attachment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="size != null">
+        size,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        #{size,jdbcType=DOUBLE},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="update" useGeneratedKeys="true" keyProperty="id" parameterType="com.ramostear.jbuilder.entity.Attachment">
+    update sys_attachment
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        size = #{size,jdbcType=DOUBLE},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

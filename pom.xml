@@ -32,7 +32,7 @@
 		<filters.version>2.0.235</filters.version>
 		<relaxngDatatype.version>20020414</relaxngDatatype.version>
 		<quartz.version>1.7.3</quartz.version>
-		<pull-parser.version>2</pull-parser.version>
+		<pull-parser.version>2.1.10</pull-parser.version>
 		<protobuf-java.version>2.3.0</protobuf-java.version>
 		<java-image-scaling.version>0.8.6</java-image-scaling.version>
 		<guava.version>18.0</guava.version>
@@ -68,6 +68,7 @@
 		<mmseg4j.version>1.8.6</mmseg4j.version>
 		<lucene.version>3.5.0</lucene.version>
 		<tika.version>1.0</tika.version>
+		<staxon.version>1.2</staxon.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -110,6 +111,11 @@
 			<groupId>net.java.dev.msv</groupId>
 			<artifactId>xsdlib</artifactId>
 			<version>${xsdlib.version}</version>
+		</dependency>
+		<dependency>  
+			<groupId>de.odysseus.staxon</groupId>  
+			<artifactId>staxon</artifactId>  
+			<version>${staxon.version}</version>  
 		</dependency>
 		<dependency>
 			<groupId>xpp3</groupId>
@@ -539,6 +545,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
+				 	
 					<source>1.8</source>
 					<target>1.8</target>
 					<encoding>UTF-8</encoding>
@@ -553,6 +560,7 @@
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>9.3.6.v20151106</version>
 				<configuration>
+					<scanIntervalSeconds>1</scanIntervalSeconds>
 					<webApp>
 						<contextPath>/JBuilder</contextPath>
 					</webApp>

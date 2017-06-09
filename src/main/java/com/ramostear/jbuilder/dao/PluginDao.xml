@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ramostear.jbuilder.dao.PluginDao">
+  <resultMap id="BaseResultMap" type="com.ramostear.jbuilder.entity.Plugin">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="accessKey" jdbcType="VARCHAR" property="accessKey" />
+    <result column="secretKey" jdbcType="VARCHAR" property="secretKey" />
+    <result column="provider" jdbcType="VARCHAR" property="provider" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ramostear.jbuilder.entity.Plugin">
+    <result column="script" jdbcType="LONGVARCHAR" property="script" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, name, account, accessKey, secretKey, provider, version, description, status
+  </sql>
+
+  <sql id="Blob_Column_List">
+    script
+  </sql>
+
+  <select id="listByConditions" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_plugin
+    <where>
+      <if test="provider != null">provider = #{provider,jdbcType=VARCHAR}</if>
+      <if test="status != null">and status = #{status,jdbcType=INTEGER}</if>
+	  <if test="orderBy != null and isAsc==true">order by ${orderBy} ASC</if>
+	  <if test="orderBy != null and isAsc==false">order by ${orderBy} DESC</if>
+	  limit #{offset},#{pageSize}
+	</where>
+  </select>
+
+  <select id="listAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_plugin
+  </select>
+
+  <select id="getTotalByConditions" parameterType="java.lang.String" resultType="java.lang.Long">
+    select COUNT(*) from sys_plugin
+    <where>
+      <if test="provider != null">provider = #{provider,jdbcType=VARCHAR}</if>
+      <if test="status != null">and status = #{status,jdbcType=INTEGER}</if>
+    </where>
+  </select>
+
+  <select id="findById" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_plugin
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from sys_plugin
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="deleteBatch" parameterType="java.lang.Long">
+    delete from sys_plugin
+   	where id in 
+	<foreach collection="ids" item="item" index="index" open="(" separator="," close=")">
+		#{item}
+	</foreach>
+  </delete>
+
+  <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.ramostear.jbuilder.entity.Plugin">
+    insert into sys_plugin
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="account != null">
+        account,
+      </if>
+      <if test="accessKey != null">
+        accessKey,
+      </if>
+      <if test="secretKey != null">
+        secretKey,
+      </if>
+      <if test="provider != null">
+        provider,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="script != null">
+        script,
+      </if>
+      <if test="status != null">
+      	status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="accessKey != null">
+        #{accessKey,jdbcType=VARCHAR},
+      </if>
+      <if test="secretKey != null">
+        #{secretKey,jdbcType=VARCHAR},
+      </if>
+      <if test="provider != null">
+        #{provider,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="script != null">
+        #{script,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="status != null">
+      	#{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="update" useGeneratedKeys="true" keyProperty="id" parameterType="com.ramostear.jbuilder.entity.Plugin">
+    update sys_plugin
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null">
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="accessKey != null">
+        accessKey = #{accessKey,jdbcType=VARCHAR},
+      </if>
+      <if test="secretKey != null">
+        secretKey = #{secretKey,jdbcType=VARCHAR},
+      </if>
+      <if test="provider != null">
+        provider = #{provider,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="script != null">
+        script = #{script,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

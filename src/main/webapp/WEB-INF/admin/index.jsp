@@ -10,24 +10,24 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>JBuilder 1.2 | 控制台</title>
 		<!-- Tell the browser to be responsive to screen width -->
-		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
 		<!-- Bootstrap 3.3.6 -->
-		<link rel="stylesheet" href="<%=path %>/resources/admin/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="<%=path %>/resources/admin/bootstrap/css/bootstrap.min.css" />
 		<!-- Font Awesome -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" />
 		<!-- Ionicons -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" />
 		<!-- Theme style -->
-		<link rel="stylesheet" href="<%=path %>/resources/admin/dist/css/AdminLTE.min.css">
+		<link rel="stylesheet" href="<%=path %>/resources/admin/dist/css/AdminLTE.min.css" />
 		<!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-		<link rel="stylesheet" href="<%=path %>/resources/admin/dist/css/skins/_all-skins.min.css">
+		<link rel="stylesheet" href="<%=path %>/resources/admin/dist/css/skins/_all-skins.min.css" />
 		<!-- iCheck -->
-		<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/iCheck/flat/blue.css">
+		<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/iCheck/flat/blue.css" />
 		<!-- jvectormap -->
-		<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+		<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/jvectormap/jquery-jvectormap-1.2.2.css" />
 		<!-- bootstrap wysihtml5 - text editor -->
-		<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+		<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" />
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -152,10 +152,10 @@
 							</a>
 							<ul class="treeview-menu">
 								<li>
-									<a href="attachment_list.html"><i class="fa fa-copy"></i> 所有附件</a>
+									<a href="./attachment/list"><i class="fa fa-copy"></i> 所有附件</a>
 								</li>
 								<li>
-									<a href="attachment_upload.html"><i class="fa  fa-upload"></i> 上传附件</a>
+									<a href="./attchment/add"><i class="fa  fa-upload"></i> 上传附件</a>
 								</li>
 							</ul>
 						</li>
@@ -206,10 +206,10 @@
 							</a>
 							<ul class="treeview-menu">
 								<li>
-									<a href="plugin_list.html"><i class="fa fa-dropbox"></i> 所有插件</a>
+									<a href="./plugin/list"><i class="fa fa-dropbox"></i> 所有插件</a>
 								</li>
 								<li>
-									<a href="pages/UI/icons.html"><i class="fa  fa-retweet"></i> 安装插件</a>
+									<a href="./plugin/add"><i class="fa  fa-retweet"></i> 安装插件</a>
 								</li>
 							</ul>
 						</li>

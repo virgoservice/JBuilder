@@ -10,9 +10,21 @@
 */
 package com.ramostear.jbuilder.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.ramostear.jbuilder.consts.SysConsts;
+import com.ramostear.jbuilder.entity.Permission;
+import com.ramostear.jbuilder.entity.User;
+import com.ramostear.jbuilder.service.PermissionService;
+import com.ramostear.jbuilder.service.UserService;
 
 /** 
  * @Desc: () 
@@ -24,13 +36,31 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/admin")
 public class AdminController {
 
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private PermissionService permissionService;
+	
 	/**
 	 * 跳转到后台首页
 	 * @return
 	 */
 	@RequestMapping(value="/index",method=RequestMethod.GET)
-	public String index(){
-		return "index";
+	public String index(HttpServletResponse response,HttpSession session){
+		User user = (User)session.getAttribute(SysConsts.LOGIN_USER);
+		if(user != null){
+			List<Long> ridList = userService.findRoleIdsById(user.getId());
+			Long[] ridArray = new Long[ridList.size()];
+			for(int i=0,n=ridList.size();i<n;i++){
+				ridArray[i] = ridList.get(i);
+			}
+			Permission menu = permissionService.getMenuByRoles(ridArray);
+			session.setAttribute(SysConsts.SYS_MENU, menu);
+			return "index";
+		}else{
+			return "redirect:/admin/login";
+		}
 	}
 	
 }

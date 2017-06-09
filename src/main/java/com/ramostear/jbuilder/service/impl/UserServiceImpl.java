@@ -115,11 +115,14 @@ public class UserServiceImpl implements UserService{
 			if(user.getNickname() != null && !"".equals(user.getNickname())){
 				u.setNickname(user.getNickname());
 			}
-			if(user.getTag() != null && !"".equals(user.getTag())){
-				u.setTag(user.getTag());
+			if(user.getSignature() != null && !"".equals(user.getSignature())){
+				u.setSignature(user.getSignature());
 			}
-			if(user.getPortraitImgUrl() != null && !"".equals(user.getPortraitImgUrl())){
-				u.setPortraitImgUrl(user.getPortraitImgUrl());
+			if(user.getAvatar() != null && !"".equals(user.getAvatar())){
+				u.setAvatar(user.getAvatar());
+			}
+			if(user.getEmail() != null && !"".equals(user.getEmail())){
+				u.setEmail(user.getEmail());
 			}
 			u.setStatus(user.getStatus());
 			userDao.update(u);
@@ -191,5 +194,15 @@ public class UserServiceImpl implements UserService{
 	public User findById(Long id) {
 		return userDao.findById(id);
 	}
+
+	/* (non-Javadoc)
+	 * @see com.ramostear.jbuilder.service.UserService#updateUser(com.ramostear.jbuilder.entity.User)
+	 */
+	@Override
+	public User updateUser(User user) {
+		userDao.update(user);
+		return user;
+	}
+
 
 }
