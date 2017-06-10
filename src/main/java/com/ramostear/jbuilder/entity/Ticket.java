@@ -39,6 +39,11 @@ public class Ticket {
 	private Integer status;
 	private String description;
 	
+	
+	
+	public Ticket() {
+		super();
+	}
 	public Long getId() {
 		return id;
 	}

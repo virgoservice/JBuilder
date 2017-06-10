@@ -10,6 +10,11 @@
 */
 package com.ramostear.jbuilder.service;
 
+import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqCancelOrderVO;
+import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqOrderVo;
+import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqVO;
+import com.ramostear.jbuilder.kit.ziyoubaokit.vo.SendOrderVO;
+
 /** 
  * @Desc: () 
  * @author: 赖生龙 
@@ -18,5 +23,33 @@ package com.ramostear.jbuilder.service;
  */
 public interface ZiyoubaoService {
 
-	public String
+	/**
+	 * 下订单
+	 * @param vo
+	 * @return
+	 */
+	public ReqOrderVo sendOrder(SendOrderVO vo);
+	
+	/**
+	 * 取消订单（全部商品）
+	 * @param orderCode 订单号
+	 * @return
+	 */
+	public ReqCancelOrderVO cancelOrder(String orderCode);
+	
+	/**
+	 * 取消订单（订单里的子定订单）
+	 * @param childOrderCode 子订单号
+	 * @param number 票数
+	 * @param returnCode 退单号
+	 * @return
+	 */
+	public ReqCancelOrderVO cancelChildOfOrder(String childOrderCode,Integer number,String returnCode);
+	
+	/**
+	 * 退票情况查询
+	 * @retreatBatchNo 退单情况查询编号
+	 * @return
+	 */
+	public ReqVO queryCancelResult(String retreatBatchNo);
 }

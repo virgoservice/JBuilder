@@ -1,27 +1,25 @@
 /**   
 													The Apache License 2.0
 												  Copyright (c) 2016 Ramostear 
-								                              2017年6月10日 下午3:02:36
+								                              2017年6月10日 下午5:07:35
 								Unless required by applicable law or agreed to in writing, software
 								 distributed under the License is distributed on an "AS IS" BASIS,
 							  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 								See the License for the specific language governing permissions and
 								                 limitations under the License. 
 */
-package com.ramostear.jbuilder.entity;
+package com.ramostear.jbuilder.kit.ziyoubaokit.vo;
 
 import java.util.Date;
 
 /** 
  * @Desc: () 
  * @author: 赖生龙 
- * @date: 2017年6月10日 下午3:02:36 
+ * @date: 2017年6月10日 下午5:07:35 
  * @email:361801580@qq.com 
  */
-public class OrderChild {
+public class TicketVO {
 
-	private Long id;
-	private Long ticketId;
 	private String orderCode;
 	private double price;
 	private Integer quantity;
@@ -30,43 +28,10 @@ public class OrderChild {
 	private String goodsCode;
 	private String goodsName;
 	private String remark;
-	private String status;
-	private Date createTime;
-	private String retreatBatchNo;
 	
-	public OrderChild() {
+	
+	public TicketVO() {
 		super();
-	}
-	public OrderChild(Long id, Long ticketId, String orderCode, double price,
-			Integer quantity, double totalPrice, Date occDate, String goodsCode,
-			String goodsName, String remark, String status, Date createTime,
-			String retreatBatchNo) {
-		super();
-		this.id = id;
-		this.ticketId = ticketId;
-		this.orderCode = orderCode;
-		this.price = price;
-		this.quantity = quantity;
-		this.totalPrice = totalPrice;
-		this.occDate = occDate;
-		this.goodsCode = goodsCode;
-		this.goodsName = goodsName;
-		this.remark = remark;
-		this.status = status;
-		this.createTime = createTime;
-		this.retreatBatchNo = retreatBatchNo;
-	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public Long getTicketId() {
-		return ticketId;
-	}
-	public void setTicketId(Long ticketId) {
-		this.ticketId = ticketId;
 	}
 	public String getOrderCode() {
 		return orderCode;
@@ -116,24 +81,19 @@ public class OrderChild {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public String getStatus() {
-		return status;
+	public TicketVO(String orderCode, double price, Integer quantity,
+			double totalPrice, Date occDate, String goodsCode,
+			String goodsName, String remark) {
+		super();
+		this.orderCode = orderCode;
+		this.price = price;
+		this.quantity = quantity;
+		this.totalPrice = totalPrice;
+		this.occDate = occDate;
+		this.goodsCode = goodsCode;
+		this.goodsName = goodsName;
+		this.remark = remark;
 	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	public Date getCreateTime() {
-		return createTime;
-	}
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-	public String getRetreatBatchNo() {
-		return retreatBatchNo;
-	}
-	public void setRetreatBatchNo(String retreatBatchNo) {
-		this.retreatBatchNo = retreatBatchNo;
-	} 	 
 	
 	
 	
