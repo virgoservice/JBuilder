@@ -2,12 +2,15 @@ package com.ramostear.jbuilder.kit.ziyoubaokit;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 
 import com.ramostear.jbuilder.kit.ziyoubaokit.vo.SendOrderVO;
 import com.ramostear.jbuilder.kit.ziyoubaokit.vo.TicketVO;
+import com.ramostear.jbuilder.util.PropertiesUtil;
 
 public class XmlTemplate {
 	
+	public static Properties p=PropertiesUtil.getInstance().getProperties("ziyoubao");
 	/**
 	 * 下单xml模板
 	 * @param vo
@@ -21,7 +24,7 @@ public class XmlTemplate {
 		sb.append(getIden());
 		sb.append("<orderRequest>");
 		sb.append("<order>");
-		sb.append("<certificateNo>"+vo.getCertificateNo()+"</certificateNo>");
+		sb.append("<certificateNo></certificateNo>");
 		sb.append("<linkName>"+vo.getLinkName()+"</linkName>");
 		sb.append("<linkMobile>"+vo.getLinkMobile()+"</linkMobile>");
 		sb.append("<orderCode>"+vo.getOrderCode()+"</orderCode>");
@@ -70,8 +73,10 @@ public class XmlTemplate {
 	}
 	
 	/**
-	 * 取消子订单
-	 * @param childOrderId
+	 * 取消部分订单
+	 * @param childOrderCode 
+	 * @param number
+	 * @param returnCode
 	 * @return
 	 */
 	public static String cancelChildOfOrder(String childOrderCode,Integer number,String returnCode){
@@ -128,8 +133,8 @@ public class XmlTemplate {
 	public static String getIden(){
 		StringBuilder sb=new StringBuilder();
 		sb.append("<identityInfo>");
-		sb.append("<corpCode>admin</corpCode>");
-		sb.append("<userName>TESTFX</userName>");
+		sb.append("<corpCode>"+p.getProperty("corpCode")+"</corpCode>");
+		sb.append("<userName>"+p.getProperty("userName")+"</userName>");
 		sb.append("</identityInfo>");
 		return sb.toString();
 	}

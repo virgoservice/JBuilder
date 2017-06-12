@@ -24,7 +24,7 @@ public class TicketVO {
 	private double price;
 	private Integer quantity;
 	private double totalPrice;
-	private Date occDate;
+	private String occDate;
 	private String goodsCode;
 	private String goodsName;
 	private String remark;
@@ -57,10 +57,10 @@ public class TicketVO {
 	public void setTotalPrice(double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-	public Date getOccDate() {
+	public String getOccDate() {
 		return occDate;
 	}
-	public void setOccDate(Date occDate) {
+	public void setOccDate(String occDate) {
 		this.occDate = occDate;
 	}
 	public String getGoodsCode() {
@@ -82,7 +82,7 @@ public class TicketVO {
 		this.remark = remark;
 	}
 	public TicketVO(String orderCode, double price, Integer quantity,
-			double totalPrice, Date occDate, String goodsCode,
+			double totalPrice, String occDate, String goodsCode,
 			String goodsName, String remark) {
 		super();
 		this.orderCode = orderCode;

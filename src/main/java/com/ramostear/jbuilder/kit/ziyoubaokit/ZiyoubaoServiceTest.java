@@ -1,11 +1,22 @@
 package com.ramostear.jbuilder.kit.ziyoubaokit;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqCancelOrderVO;
+import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqOrderVo;
+import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqVO;
+import com.ramostear.jbuilder.kit.ziyoubaokit.vo.SendOrderVO;
+import com.ramostear.jbuilder.kit.ziyoubaokit.vo.TicketVO;
+import com.ramostear.jbuilder.service.impl.ZiyoubaoServiceImpl;
 import com.ramostear.jbuilder.util.HttpRequestUtil;
+import com.ramostear.jbuilder.util.PropertiesUtil;
 import com.ramostear.jbuilder.util.StaxonUtils;
 
 
@@ -33,19 +44,56 @@ public class ZiyoubaoServiceTest {
 		//String reqstr=XmlTemplate.cancelOrder(orderid);
 		//查询取消订单状态
 		//af1edf5e2ef3465cbe2769f48841bf6b
-		String reqstr=XmlTemplate.queryCancelOrder("af1edf5e2ef3465cbe2769f48841bf6b");
-		String res=HttpRequestUtil.sendPost(testUrl,reqstr,privateKey);
-		
-	    String sjon=StaxonUtils.xml2json(res);
-	    
-	    JSONObject object = JSON.parseObject(sjon);  
-	    JSONObject object2 = object.getJSONObject("PWBResponse");
-	    System.out.println(object.get("PWBResponse"));
-	    Map<String, Class> cm = new HashMap<String, Class>(); 
+//		String reqstr=XmlTemplate.queryCancelOrder("af1edf5e2ef3465cbe2769f48841bf6b");
+//		String res=HttpRequestUtil.sendPost(reqstr);
+//	
+//   
+//	    String sjon=StaxonUtils.xml2json(res);
+//	    JSONObject object = JSON.parseObject(sjon);  
+//	    System.out.println(object);
+//	    JSONObject object2 = object.getJSONObject("PWBResponse");
+//	    System.out.println(object2.getInteger("code"));
+	    //Map<String, Class> cm = new HashMap<String, Class>(); 
 		//XStream xstream = new XStream();
 		//xstream.alias("person", Ticket.class);  
 		//System.out.println(xstream.fromXML(res));
-    }
+		
+		
+		
+//		下单测试
+//		ZiyoubaoServiceImpl ser=new ZiyoubaoServiceImpl();
+//		SendOrderVO svo=new SendOrderVO();
+//		svo.setOrderCode("t007");
+//		svo.setLinkName("laowang");
+//		svo.setLinkMobile("13648362969");
+//		svo.setOrderPrice(10000);
+//		svo.setPayMethod("zyb");
+//		
+//		List<TicketVO> tlist=new ArrayList<TicketVO>();
+//		TicketVO tvo=new TicketVO();
+//		tvo.setGoodsCode("PST20160918013085");
+//		tvo.setGoodsName("测试票");
+//		tvo.setOccDate("2017-06-12 12:12:12");
+//		tvo.setOrderCode("c007");
+//		tvo.setPrice(213.21);
+//		tvo.setQuantity(2);
+//		tvo.setTotalPrice(500);
+//		tvo.setRemark("这是备注");
+//		tlist.add(tvo);
+//		退票测试
+//		svo.setTicketList(tlist);
+//		ReqOrderVo result=ser.sendOrder(svo);
+//		System.out.println(result.getDescription());
+//		System.out.println(result.toString());
+//		退票状态查询测试
+		ZiyoubaoServiceImpl ser=new ZiyoubaoServiceImpl();
+		ReqVO ret=ser.queryCancelResult("f1fa8a239a3f4519ae08612ae2bdf6aa");
+		System.out.println(ret.toString());
+		
+		//f1fa8a239a3f4519ae08612ae2bdf6aa
+		
+		
+	}
 	
 	
 }

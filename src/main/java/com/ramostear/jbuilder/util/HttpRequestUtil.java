@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
 
+import com.ramostear.jbuilder.kit.ziyoubaokit.XmlTemplate;
+
 /**
  * 
 * @Desc: () 
@@ -24,14 +26,14 @@ public class HttpRequestUtil {
      * @param sign 签名
      * @return 所代表远程资源的响应结果
      */
-    public static String sendPost(String url, String xmlMsg,String key) {
+    public static String sendPost(String xmlMsg) {
     	//md5加密字符串
-    	String md5str="xmlMsg="+ xmlMsg +key;
+    	String md5str="xmlMsg="+ xmlMsg +XmlTemplate.p.getProperty("privateKey");
         PrintWriter out = null;
         BufferedReader in = null;
         String result = "";
         try {
-            URL realUrl = new URL(url);
+            URL realUrl = new URL(XmlTemplate.p.getProperty("url"));
             // 打开和URL之间的连接
             URLConnection conn = realUrl.openConnection();
             conn.setRequestProperty("accept", "*/*");

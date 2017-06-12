@@ -10,6 +10,8 @@
 */
 package com.ramostear.jbuilder.kit.ziyoubaokit.vo;
 
+import java.util.List;
+
 /** 
  * @Desc: (下单回复vo) 
  * @author: 赖生龙 
@@ -26,7 +28,7 @@ public class ReqOrderVo {
 	private double orderPrice;
 	private String payMethod;
 	private String assistCheckNo;//辅助码
-	
+	private List<TicketVO> ticketOrders;
 	
 	public Integer getCode() {
 		return code;
@@ -121,22 +123,26 @@ public class ReqOrderVo {
 		super();
 	}
 
-
-	public ReqOrderVo(Integer code, String description,
-			String certificateNo, String linkName, String linkMobile,
-			String orderCode, double orderPrice, String payMethod,
-			String assistCheckNo) {
-		super();
-		this.code = code;
-		this.description = description;
-		this.certificateNo = certificateNo;
-		this.linkName = linkName;
-		this.linkMobile = linkMobile;
-		this.orderCode = orderCode;
-		this.orderPrice = orderPrice;
-		this.payMethod = payMethod;
-		this.assistCheckNo = assistCheckNo;
+	public List<TicketVO> getTicketOrders() {
+		return ticketOrders;
 	}
+
+	public void setTicketOrders(List<TicketVO> ticketOrders) {
+		this.ticketOrders = ticketOrders;
+	}
+
+	@Override
+	public String toString() {
+		return "ReqOrderVo [code=" + code + ", description=" + description
+				+ ", certificateNo=" + certificateNo + ", linkName=" + linkName
+				+ ", linkMobile=" + linkMobile + ", orderCode=" + orderCode
+				+ ", orderPrice=" + orderPrice + ", payMethod=" + payMethod
+				+ ", assistCheckNo=" + assistCheckNo + ", ticketOrders="
+				+ ticketOrders + "]";
+	}
+
+
+	
 	
 	
 }

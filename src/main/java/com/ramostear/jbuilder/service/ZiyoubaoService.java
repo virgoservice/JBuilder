@@ -9,7 +9,6 @@
 								                 limitations under the License. 
 */
 package com.ramostear.jbuilder.service;
-
 import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqCancelOrderVO;
 import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqOrderVo;
 import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqVO;
@@ -32,14 +31,14 @@ public interface ZiyoubaoService {
 	
 	/**
 	 * 取消订单（全部商品）
-	 * @param orderCode 订单号
+	 * @param orderCode 主订单号
 	 * @return
 	 */
 	public ReqCancelOrderVO cancelOrder(String orderCode);
 	
 	/**
 	 * 取消订单（订单里的子定订单）
-	 * @param childOrderCode 子订单号
+	 * @param childOrderCode 子订单不号
 	 * @param number 票数
 	 * @param returnCode 退单号
 	 * @return
@@ -52,4 +51,11 @@ public interface ZiyoubaoService {
 	 * @return
 	 */
 	public ReqVO queryCancelResult(String retreatBatchNo);
+	
+	/**
+	 * 发送短信
+	 * @param ordercode
+	 * @param tplCode
+	 */
+	public void send_sm(String ordercode,String tplCode);
 }
