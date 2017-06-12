@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ramostear.jbuilder.dao.OrderChildDao">
+
+	<resultMap type="com.ramostear.jbuilder.entity.OrderChild" id="resultMap">
+		<id column="id" property="id"/>
+		<result column="ticketId" property="ticketId"/>
+		<result column="orderCode" property="orderCode"/>
+		<result column="price" property="price"/>
+		<result column="quantity" property="quantity"/>
+		<result column="totalPrice" property="totalPrice"/>
+		<result column="occDate" property="occDate"/>
+		<result column="goodsCode" property="goodsCode"/>
+		<result column="goodsName" property="goodsName"/>
+		<result column="remark" property="remark"/>
+		<result column="status" property="status"/>
+		<result column="createTime" property="createTime"/>
+		<result column="retreatBatchNo" property="retreatBatchNo"/>
+	</resultMap>
+	
+	<insert id="save" parameterType="com.ramostear.jbuilder.entity.OrderChild" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert into order_order_child
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="ticketId != null">ticketId,</if>
+			<if test="orderCode != null">orderCode,</if>
+			<if test="price != null">price,</if>
+			<if test="quantity != null">quantity,</if>
+			<if test="totalPrice != null">totalPrice,</if>
+			<if test="occDate != null">occDate,</if>
+			<if test="goodsCode != null">goodsCode,</if>
+			<if test="goodsName != null">goodsName,</if>
+			<if test="remark != null">remark,</if>
+			<if test="status != null">status,</if>
+			<if test="createTime != null">createTime,</if>
+			<if test="retreatBatchNo != null">retreatBatchNo</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="ticketId != null">#{ticketId},</if>
+			<if test="orderCode != null">#{orderCode},</if>
+			<if test="price != null">#{price},</if>
+			<if test="quantity != null">#{quantity},</if>
+			<if test="totalPrice != null">#{totalPrice},</if>
+			<if test="occDate != null">#{occDate},</if>
+			<if test="goodsCode != null">#{goodsCode},</if>
+			<if test="goodsName != null">#{goodsName},</if>
+			<if test="remark != null">#{remark},</if>
+			<if test="status != null">#{status},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="retreatBatchNo != null">#{retreatBatchNo}</if>
+		</trim>
+	</insert>	
+	
+	<update id="update" parameterType="com.ramostear.jbuilder.entity.OrderChild">
+		update order_order_child
+		<set>
+			<if test="ticketId != null">ticketId=#{ticketId},</if>
+			<if test="orderCode != null">orderCode=#{orderCode},</if>
+			<if test="price != null">price=#{price},</if>
+			<if test="quantity != null">quantity=#{quantity},</if>
+			<if test="totalPrice != null">totalPrice=#{totalPrice},</if>
+			<if test="occDate != null">occDate=#{occDate},</if>
+			<if test="goodsCode != null">goodsCode=#{goodsCode},</if>
+			<if test="goodsName != null">goodsName=#{goodsName},</if>
+			<if test="status != null">status=#{status},</if>
+			<if test="createTime != null">createTime=#{createTime},</if>
+			<if test="retreatBatchNo != null">retreatBatchNo=#{retreatBatchNo},</if>
+			<if test="remark != null">remark=#{remark}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<select id="size" resultType="Long">
+		select count(*) from order_order_child
+	</select>
+	
+	
+	<delete id="delete" parameterType="Long">
+		delete from order_order_child 
+		where 
+		id = #{id}
+	</delete>
+
+	<select id="findById" parameterType="Long" resultMap="resultMap">
+		select * from order_order_child 
+		where 
+		id = #{id}
+	</select>
+	
+	<select id="findByOrderCode" parameterType="String" resultMap="resultMap">
+		select * from order_order_child 
+		where 
+		orderCode = #{orderCode}
+	</select>
+	
+	<select id="findAll"  resultMap="resultMap">
+		select * from order_order_child
+	</select>
+	
+	<select id="findByPage" resultMap="resultMap">
+		select * from order_order_child 
+		<if test="orderCode != null and orderCode!=''">
+			where orderCode like '%${orderCode}%'
+		</if>
+		order by ${orderBy} 
+		<if test="order == true">
+			DESC
+		</if>
+		<if test="order == false">
+			ASC
+		</if>
+		limit #{offset},#{size}
+	</select>
+	
+</mapper>

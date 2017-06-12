@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ramostear.jbuilder.dao.CancelOrderDao">
+		
+	<resultMap type="com.ramostear.jbuilder.entity.CancelOrder" id="resultMap">
+		<id column="id" property="id"/>
+		<result column="CancelOrderCode" property="CancelOrderCode"/>
+		<result column="orderId" property="orderId"/>
+		<result column="childOrderId" property="childOrderId"/>
+		<result column="retreatBatchNo" property="retreatBatchNo"/>
+		<result column="num" property="num"/>
+		<result column="status" property="status"/>
+		<result column="cancelDate" property="cancelDate"/>
+	</resultMap>
+	
+	<insert id="save" parameterType="com.ramostear.jbuilder.entity.CancelOrder" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert into order_cancel_order
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="CancelOrderCode != null">CancelOrderCode,</if>
+			<if test="orderId != null">orderId,</if>
+			<if test="childOrderId != null">childOrderId,</if>
+			<if test="retreatBatchNo != null">retreatBatchNo,</if>
+			<if test="num != null">num,</if>
+			<if test="status != null">status,</if>
+			<if test="cancelDate != null">cancelDate</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="CancelOrderCode != null">#{CancelOrderCode},</if>
+			<if test="orderId != null">#{orderId},</if>
+			<if test="childOrderId != null">#{childOrderId},</if>
+			<if test="retreatBatchNo != null">#{retreatBatchNo},</if>
+			<if test="num != null">#{num},</if>
+			<if test="status != null">#{status},</if>
+			<if test="cancelDate != null">#{cancelDate}</if>
+		</trim>
+	</insert>	
+	
+	<update id="update" parameterType="com.ramostear.jbuilder.entity.CancelOrder">
+		update order_cancel_order
+		<set>
+			<if test="CancelOrderCode != null">CancelOrderCode=#{CancelOrderCode},</if>
+			<if test="orderId != null">orderId=#{orderId},</if>
+			<if test="childOrderId != null">childOrderId=#{childOrderId},</if>
+			<if test="retreatBatchNo != null">retreatBatchNo=#{retreatBatchNo},</if>
+			<if test="num != null">num=#{num},</if>
+			<if test="status != null">status=#{status},</if>
+			<if test="cancelDate != null">cancelDate=#{cancelDate}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<select id="size" resultType="Long">
+		select count(*) from order_cancel_order
+	</select>
+	
+	
+	<delete id="delete" parameterType="Long">
+		delete from order_cancel_order 
+		where 
+		id = #{id}
+	</delete>
+
+	<select id="findById" parameterType="Long" resultMap="resultMap">
+		select * from order_cancel_order 
+		where 
+		id = #{id}
+	</select>
+	
+	<select id="findByOrderCode" parameterType="String" resultMap="resultMap">
+		select * from order_cancel_order 
+		where 
+		CancelOrderCode = #{orderCode}
+	</select>
+	
+	<select id="findAll"  resultMap="resultMap">
+		select * from order_cancel_order
+	</select>
+	
+	<select id="findByPage" resultMap="resultMap">
+		select * from order_cancel_order 
+		<if test="orderCode != null and orderCode!=''">
+			where CancelOrderCode like '%${orderCode}%'
+		</if>
+		order by ${orderBy} 
+		<if test="order == true">
+			DESC
+		</if>
+		<if test="order == false">
+			ASC
+		</if>
+		limit #{offset},#{size}
+	</select>
+	
+</mapper>
