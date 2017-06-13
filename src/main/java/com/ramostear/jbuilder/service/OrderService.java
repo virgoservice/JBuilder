@@ -11,8 +11,14 @@
 package com.ramostear.jbuilder.service;
 
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
+
 import com.ramostear.jbuilder.entity.Order;
+import com.ramostear.jbuilder.entity.OrderChild;
+import com.ramostear.jbuilder.entity.Ticket;
+import com.ramostear.jbuilder.kit.PageDto;
+import com.ramostear.jbuilder.kit.UserException;
 
 /** 
  * @Desc: () 
@@ -22,13 +28,22 @@ import com.ramostear.jbuilder.entity.Order;
  */
 public interface OrderService {
 	
-	public boolean save(Order order);
+	/**
+	 * 保存订单
+	 * @param order
+	 * @param childOrder
+	 * @return
+	 */
+	public boolean save(Order order,List<OrderChild> childOrders);
 	
 	public boolean update(Order order);
 	
 	public boolean delete(Long id);
-	
-	public Long size();
+	/**
+	 * 取消订单
+	 * @param id
+	 */
+	public boolean cancelOrder(Long id);
 	
 	public Order findById(Long id);
 	
@@ -36,7 +51,7 @@ public interface OrderService {
 	
 	public List<Order> findAll();
 	
-	public List<Order> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order,@Param("orderCode")String orderCode);
+	public PageDto<Order> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order,@Param("orderCode")String orderCode);
 
 
 }

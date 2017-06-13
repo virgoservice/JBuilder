@@ -10,6 +10,8 @@
 */
 package com.ramostear.jbuilder.service.impl;
 
+import org.springframework.stereotype.Service;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ramostear.jbuilder.kit.ziyoubaokit.XmlTemplate;
@@ -27,6 +29,7 @@ import com.ramostear.jbuilder.util.StaxonUtils;
  * @date: 2017年6月12日 上午11:01:43 
  * @email:361801580@qq.com 
  */
+@Service("ziyoubaoService")
 public class ZiyoubaoServiceImpl implements ZiyoubaoService {
 
 	/* (non-Javadoc)

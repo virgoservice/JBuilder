@@ -5,6 +5,7 @@
 
 	<resultMap type="com.ramostear.jbuilder.entity.OrderChild" id="resultMap">
 		<id column="id" property="id"/>
+		<result column="orderId" property="orderId"/>
 		<result column="ticketId" property="ticketId"/>
 		<result column="orderCode" property="orderCode"/>
 		<result column="price" property="price"/>
@@ -22,6 +23,7 @@
 	<insert id="save" parameterType="com.ramostear.jbuilder.entity.OrderChild" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
 		insert into order_order_child
 		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orderId != null">orderId,</if>
 			<if test="ticketId != null">ticketId,</if>
 			<if test="orderCode != null">orderCode,</if>
 			<if test="price != null">price,</if>
@@ -36,6 +38,7 @@
 			<if test="retreatBatchNo != null">retreatBatchNo</if>
 		</trim>
 		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="orderId != null">#{orderId},</if>
 			<if test="ticketId != null">#{ticketId},</if>
 			<if test="orderCode != null">#{orderCode},</if>
 			<if test="price != null">#{price},</if>
@@ -54,6 +57,7 @@
 	<update id="update" parameterType="com.ramostear.jbuilder.entity.OrderChild">
 		update order_order_child
 		<set>
+			<if test="orderId != null">orderId=#{orderId},</if>
 			<if test="ticketId != null">ticketId=#{ticketId},</if>
 			<if test="orderCode != null">orderCode=#{orderCode},</if>
 			<if test="price != null">price=#{price},</if>
@@ -80,6 +84,12 @@
 		where 
 		id = #{id}
 	</delete>
+	
+	<delete id="deleteByPid" parameterType="Long">
+		delete from order_order_child 
+		where 
+		orderId = #{pid}
+	</delete>
 
 	<select id="findById" parameterType="Long" resultMap="resultMap">
 		select * from order_order_child 
@@ -91,6 +101,12 @@
 		select * from order_order_child 
 		where 
 		orderCode = #{orderCode}
+	</select>
+	
+	<select id="getAllByOid" parameterType="Long" resultMap="resultMap">
+		select * from order_order_child 
+		where 
+		orderId = #{oid}
 	</select>
 	
 	<select id="findAll"  resultMap="resultMap">

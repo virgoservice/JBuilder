@@ -35,4 +35,10 @@ public class ReqVO {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	@Override
+	public String toString() {
+		return "ReqVO [code=" + code + ", description=" + description + "]";
+	}
+	
+	
 }

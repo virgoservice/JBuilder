@@ -21,6 +21,7 @@ import java.util.Date;
 public class OrderChild {
 
 	private Long id;
+	private Long orderId;
 	private Long ticketId;
 	private String orderCode;
 	private double price;
@@ -37,12 +38,16 @@ public class OrderChild {
 	public OrderChild() {
 		super();
 	}
-	public OrderChild(Long id, Long ticketId, String orderCode, double price,
-			Integer quantity, double totalPrice, Date occDate, String goodsCode,
-			String goodsName, String remark, String status, Date createTime,
-			String retreatBatchNo) {
+
+	
+	
+	public OrderChild(Long id, Long orderId, Long ticketId, String orderCode,
+			double price, Integer quantity, double totalPrice, Date occDate,
+			String goodsCode, String goodsName, String remark, String status,
+			Date createTime, String retreatBatchNo) {
 		super();
 		this.id = id;
+		this.orderId = orderId;
 		this.ticketId = ticketId;
 		this.orderCode = orderCode;
 		this.price = price;
@@ -56,85 +61,120 @@ public class OrderChild {
 		this.createTime = createTime;
 		this.retreatBatchNo = retreatBatchNo;
 	}
+
+
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	public Long getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(Long orderId) {
+		this.orderId = orderId;
+	}
+
 	public Long getTicketId() {
 		return ticketId;
 	}
+
 	public void setTicketId(Long ticketId) {
 		this.ticketId = ticketId;
 	}
+
 	public String getOrderCode() {
 		return orderCode;
 	}
+
 	public void setOrderCode(String orderCode) {
 		this.orderCode = orderCode;
 	}
+
 	public double getPrice() {
 		return price;
 	}
+
 	public void setPrice(double price) {
 		this.price = price;
 	}
+
 	public Integer getQuantity() {
 		return quantity;
 	}
+
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
+
 	public double getTotalPrice() {
 		return totalPrice;
 	}
+
 	public void setTotalPrice(double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
+
 	public Date getOccDate() {
 		return occDate;
 	}
+
 	public void setOccDate(Date occDate) {
 		this.occDate = occDate;
 	}
+
 	public String getGoodsCode() {
 		return goodsCode;
 	}
+
 	public void setGoodsCode(String goodsCode) {
 		this.goodsCode = goodsCode;
 	}
+
 	public String getGoodsName() {
 		return goodsName;
 	}
+
 	public void setGoodsName(String goodsName) {
 		this.goodsName = goodsName;
 	}
+
 	public String getRemark() {
 		return remark;
 	}
+
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
+
 	public String getStatus() {
 		return status;
 	}
+
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
 	public Date getCreateTime() {
 		return createTime;
 	}
+
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+
 	public String getRetreatBatchNo() {
 		return retreatBatchNo;
 	}
+
 	public void setRetreatBatchNo(String retreatBatchNo) {
 		this.retreatBatchNo = retreatBatchNo;
-	} 	 
-	
+	}
 	
 	
 }

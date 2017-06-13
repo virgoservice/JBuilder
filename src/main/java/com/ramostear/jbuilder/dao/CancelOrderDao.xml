@@ -12,6 +12,8 @@
 		<result column="num" property="num"/>
 		<result column="status" property="status"/>
 		<result column="cancelDate" property="cancelDate"/>
+		<result column="result" property="result"/>
+		
 	</resultMap>
 	
 	<insert id="save" parameterType="com.ramostear.jbuilder.entity.CancelOrder" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
@@ -23,6 +25,7 @@
 			<if test="retreatBatchNo != null">retreatBatchNo,</if>
 			<if test="num != null">num,</if>
 			<if test="status != null">status,</if>
+			<if test="result != null">result,</if>
 			<if test="cancelDate != null">cancelDate</if>
 		</trim>
 		<trim prefix="values(" suffix=")" suffixOverrides=",">
@@ -32,6 +35,7 @@
 			<if test="retreatBatchNo != null">#{retreatBatchNo},</if>
 			<if test="num != null">#{num},</if>
 			<if test="status != null">#{status},</if>
+			<if test="result != null">#{result},</if>
 			<if test="cancelDate != null">#{cancelDate}</if>
 		</trim>
 	</insert>	
@@ -45,6 +49,7 @@
 			<if test="retreatBatchNo != null">retreatBatchNo=#{retreatBatchNo},</if>
 			<if test="num != null">num=#{num},</if>
 			<if test="status != null">status=#{status},</if>
+			<if test="result != null">result=#{result},</if>
 			<if test="cancelDate != null">cancelDate=#{cancelDate}</if>
 		</set>
 		where id = #{id}

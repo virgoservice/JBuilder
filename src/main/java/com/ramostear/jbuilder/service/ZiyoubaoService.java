@@ -10,7 +10,7 @@
 */
 package com.ramostear.jbuilder.service;
 import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqCancelOrderVO;
-import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqOrderVo;
+import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqOrderVO;
 import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqVO;
 import com.ramostear.jbuilder.kit.ziyoubaokit.vo.SendOrderVO;
 
@@ -27,7 +27,7 @@ public interface ZiyoubaoService {
 	 * @param vo
 	 * @return
 	 */
-	public ReqOrderVo sendOrder(SendOrderVO vo);
+	public ReqOrderVO sendOrder(SendOrderVO vo);
 	
 	/**
 	 * 取消订单（全部商品）

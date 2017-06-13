@@ -13,6 +13,7 @@ package com.ramostear.jbuilder.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ramostear.jbuilder.dao.InvalidDateDao;
 import com.ramostear.jbuilder.entity.InvalidDate;
@@ -24,6 +25,7 @@ import com.ramostear.jbuilder.service.InvalidDateService;
  * @date: 2017年6月13日 上午11:13:55 
  * @email:361801580@qq.com 
  */
+@Service("invalidDateService")
 public class InvalidDateServiceImpl implements InvalidDateService {
 
 	@Autowired

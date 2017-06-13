@@ -27,15 +27,108 @@ public class CancelOrder {
 	private String retreatBatchNo;
 	private	Integer num;
 	private String status;
+	private String result;
 	private Date cancelDate;
 	
 	
 	public CancelOrder() {
 		super();
 	}
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public String getCancelOrderCode() {
+		return CancelOrderCode;
+	}
+
+
+	public void setCancelOrderCode(String cancelOrderCode) {
+		CancelOrderCode = cancelOrderCode;
+	}
+
+
+	public Long getOrderId() {
+		return orderId;
+	}
+
+
+	public void setOrderId(Long orderId) {
+		this.orderId = orderId;
+	}
+
+
+	public Long getChildOrderId() {
+		return childOrderId;
+	}
+
+
+	public void setChildOrderId(Long childOrderId) {
+		this.childOrderId = childOrderId;
+	}
+
+
+	public String getRetreatBatchNo() {
+		return retreatBatchNo;
+	}
+
+
+	public void setRetreatBatchNo(String retreatBatchNo) {
+		this.retreatBatchNo = retreatBatchNo;
+	}
+
+
+	public Integer getNum() {
+		return num;
+	}
+
+
+	public void setNum(Integer num) {
+		this.num = num;
+	}
+
+
+	public String getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
+	public String getResult() {
+		return result;
+	}
+
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+
+	public Date getCancelDate() {
+		return cancelDate;
+	}
+
+
+	public void setCancelDate(Date cancelDate) {
+		this.cancelDate = cancelDate;
+	}
+
+
 	public CancelOrder(Long id, String cancelOrderCode, Long orderId,
 			Long childOrderId, String retreatBatchNo, Integer num,
-			String status, Date cancelDate) {
+			String status, String result, Date cancelDate) {
 		super();
 		this.id = id;
 		CancelOrderCode = cancelOrderCode;
@@ -44,54 +137,7 @@ public class CancelOrder {
 		this.retreatBatchNo = retreatBatchNo;
 		this.num = num;
 		this.status = status;
-		this.cancelDate = cancelDate;
-	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getCancelOrderCode() {
-		return CancelOrderCode;
-	}
-	public void setCancelOrderCode(String cancelOrderCode) {
-		CancelOrderCode = cancelOrderCode;
-	}
-	public Long getOrderId() {
-		return orderId;
-	}
-	public void setOrderId(Long orderId) {
-		this.orderId = orderId;
-	}
-	public Long getChildOrderId() {
-		return childOrderId;
-	}
-	public void setChildOrderId(Long childOrderId) {
-		this.childOrderId = childOrderId;
-	}
-	public String getRetreatBatchNo() {
-		return retreatBatchNo;
-	}
-	public void setRetreatBatchNo(String retreatBatchNo) {
-		this.retreatBatchNo = retreatBatchNo;
-	}
-	public Integer getNum() {
-		return num;
-	}
-	public void setNum(Integer num) {
-		this.num = num;
-	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	public Date getCancelDate() {
-		return cancelDate;
-	}
-	public void setCancelDate(Date cancelDate) {
+		this.result = result;
 		this.cancelDate = cancelDate;
 	}
 	

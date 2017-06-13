@@ -43,6 +43,11 @@ public class ReqCancelOrderVO {
 	public void setRetreatBatchNo(String retreatBatchNo) {
 		this.retreatBatchNo = retreatBatchNo;
 	}
+	@Override
+	public String toString() {
+		return "ReqCancelOrderVO [code=" + code + ", description="
+				+ description + ", retreatBatchNo=" + retreatBatchNo + "]";
+	}
 	
 	
 }

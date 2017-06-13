@@ -29,6 +29,8 @@ public interface OrderChildDao {
 	
 	public boolean delete(Long id);
 	
+	public boolean deleteByPid(Long pid);//根据订单id删除所子订单
+	
 	public Long size();
 	
 	public OrderChild findById(Long id);
@@ -36,6 +38,8 @@ public interface OrderChildDao {
 	public OrderChild findByOrderCode(String orderCode);
 	
 	public List<OrderChild> findAll();
+	
+	public List<OrderChild> getAllByOid(Long oid);
 	
 	public List<OrderChild> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order,@Param("orderCode")String orderCode);
 

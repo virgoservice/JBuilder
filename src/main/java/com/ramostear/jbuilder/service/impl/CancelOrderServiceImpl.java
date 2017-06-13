@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ramostear.jbuilder.dao.CancelOrderDao;
-import com.ramostear.jbuilder.entity.Article;
 import com.ramostear.jbuilder.entity.CancelOrder;
 import com.ramostear.jbuilder.kit.PageDto;
 import com.ramostear.jbuilder.service.CancelOrderService;
