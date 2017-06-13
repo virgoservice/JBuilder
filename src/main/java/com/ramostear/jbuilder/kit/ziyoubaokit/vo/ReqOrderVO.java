@@ -18,7 +18,7 @@ import java.util.List;
  * @date: 2017年6月10日 下午5:12:52 
  * @email:361801580@qq.com 
  */
-public class ReqOrderVo {
+public class ReqOrderVO {
 	private Integer code;
 	private String description;
 	private String certificateNo;
@@ -119,7 +119,7 @@ public class ReqOrderVo {
 	}
 
 
-	public ReqOrderVo() {
+	public ReqOrderVO() {
 		super();
 	}
 

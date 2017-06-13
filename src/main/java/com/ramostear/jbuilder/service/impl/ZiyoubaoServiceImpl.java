@@ -14,7 +14,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ramostear.jbuilder.kit.ziyoubaokit.XmlTemplate;
 import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqCancelOrderVO;
-import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqOrderVo;
+import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqOrderVO;
 import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqVO;
 import com.ramostear.jbuilder.kit.ziyoubaokit.vo.SendOrderVO;
 import com.ramostear.jbuilder.service.ZiyoubaoService;
@@ -33,7 +33,7 @@ public class ZiyoubaoServiceImpl implements ZiyoubaoService {
 	 * @see com.ramostear.jbuilder.service.ZiyoubaoService#sendOrder(com.ramostear.jbuilder.kit.ziyoubaokit.vo.SendOrderVO)
 	 */
 	@Override
-	public ReqOrderVo sendOrder(SendOrderVO vo) {
+	public ReqOrderVO sendOrder(SendOrderVO vo) {
 		
 		String reqstr=XmlTemplate.sendOrderTemp(vo);
 		System.out.println(reqstr);
@@ -42,7 +42,7 @@ public class ZiyoubaoServiceImpl implements ZiyoubaoService {
 		JSONObject result = JSON.parseObject(sjon);  
 	    JSONObject detail = result.getJSONObject("PWBResponse");
 		
-		ReqOrderVo rvo=new ReqOrderVo();
+		ReqOrderVO rvo=new ReqOrderVO();
 		rvo.setCode(detail.getInteger("code"));
 		rvo.setDescription(detail.getString("description"));
 		if(rvo.getCode()!=0)//如果报错了就直接返回

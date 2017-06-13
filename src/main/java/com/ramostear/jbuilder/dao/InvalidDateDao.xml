@@ -46,10 +46,10 @@
 		id = #{id}
 	</delete>
 
-	<select id="findById" parameterType="Long" resultMap="resultMap">
+	<select id="findByTId" parameterType="Long" resultMap="resultMap">
 		select * from order_invaliddate 
 		where 
-		id = #{id}
+		ticketId = #{tid}
 	</select>
 	
 	<select id="findAll"  resultMap="resultMap">

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ramostear.jbuilder.dao.ScenicSpotDao">
+
+	<resultMap type="com.ramostear.jbuilder.entity.ScenicSpot" id="resultMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		
+	</resultMap>
+	
+
+	<insert id="save" parameterType="com.ramostear.jbuilder.entity.Article" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert into order_scenic_spot
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null">name</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="name != null">#{name}</if>
+		</trim>
+	</insert>	
+	
+	<update id="update" parameterType="com.ramostear.jbuilder.entity.Article">
+		update order_scenic_spot
+		<set>
+			<if test="name != null">name=#{name}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<select id="size" resultType="Long">
+		select count(*) from order_scenic_spot
+	</select>
+	
+	<delete id="delete" parameterType="Long">
+		delete from order_scenic_spot 
+		where 
+		id = #{id}
+	</delete>
+
+	<select id="findById" parameterType="Long" resultMap="resultMap">
+		select * from order_scenic_spot 
+		where 
+		id = #{id}
+	</select>
+	
+	<select id="findAll"  resultMap="resultMap">
+		select * from order_scenic_spot
+	</select>
+	
+	<select id="findByPage" resultMap="resultMap">
+		select * from order_scenic_spot 
+		<if test="search != null and search!=''">
+			where name like '%${search}%'
+		</if>
+		order by ${orderBy} 
+		<if test="order == true">
+			DESC
+		</if>
+		<if test="order == false">
+			ASC
+		</if>
+		
+		limit #{offset},#{size}
+	</select>
+	
+</mapper>
