@@ -15,11 +15,13 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -57,12 +59,15 @@ public class LoginController {
 	 * @return
 	 */
 	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public String login(String username,String password,HttpSession session){
+	public String login(String username,String password,String verifyCode,HttpSession session,Model model){
 		String code = (String)session.getAttribute(SysConsts.VERIFY_CODE);
-		/*if(verifyCode == null|| verifyCode.trim().equals("")||!verifyCode.equals(code)){
-			return "redirect:/admin/login";
-		}*/
-		System.out.println(code+"======"+session.getId());
+		if(verifyCode == null|| verifyCode.trim().equals("")||!verifyCode.equalsIgnoreCase(code)){
+			model.addAttribute("msg", "验证码不正确，请核对后登录！")
+			.addAttribute("username", username)
+			.addAttribute("password", password).
+			addAttribute("verifyCode", verifyCode);
+			return "login";
+		}
 		session.removeAttribute(SysConsts.VERIFY_CODE);
 		Subject currUser = SecurityUtils.getSubject();
 		if(!currUser.isAuthenticated()){
@@ -71,10 +76,24 @@ public class LoginController {
 			try {
 				currUser.login(token);
 			}catch(UnknownAccountException uae){
-				return "redirect:/admin/login";
+				model.addAttribute("msg", "用户名或密码不正确！")
+				.addAttribute("username", username)
+				.addAttribute("password", password).
+				addAttribute("verifyCode", verifyCode);
+				return "login";
+			}catch (LockedAccountException e){
+				model.addAttribute("msg", "用户已被锁定，请联系管理员！")
+				.addAttribute("username", username)
+				.addAttribute("password", password).
+				addAttribute("verifyCode", verifyCode);
+				return "login";
 			}
 			catch (AuthenticationException e) {
-				return "redirect:/admin/login";
+				model.addAttribute("msg", "用户名或密码不正确！")
+				.addAttribute("username", username)
+				.addAttribute("password", password).
+				addAttribute("verifyCode", verifyCode);
+				return "login";
 			}
 		}
 		if(currUser.isAuthenticated()){
@@ -82,7 +101,7 @@ public class LoginController {
 			session.setAttribute(SysConsts.LOGIN_USER, user);
 			return "redirect:/admin/index";
 		}
-		return "redirect:/admin/login";
+		return "login";
 	}
 	
 	/**
