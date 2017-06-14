@@ -46,7 +46,7 @@
 				<!-- /.login-logo -->
 				<div class="box-body"
 					style="border-radius: 5px; background-color: rgba(255, 255, 255, 0.75);">
-					<p class="login-box-msg text-danger"><i class="fa  fa-bell"></i> ${msg}</p>
+					<p class="login-box-msg text-danger">${msg}</p>
 
 					<form action="<%=path %>/admin/login" method="post">
 						<div class="form-group has-feedback">

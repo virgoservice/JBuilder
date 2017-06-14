@@ -62,7 +62,7 @@ public class LoginController {
 	public String login(String username,String password,String verifyCode,HttpSession session,Model model){
 		String code = (String)session.getAttribute(SysConsts.VERIFY_CODE);
 		if(verifyCode == null|| verifyCode.trim().equals("")||!verifyCode.equalsIgnoreCase(code)){
-			model.addAttribute("msg", "验证码不正确，请核对后登录！")
+			model.addAttribute("msg", "<i class=\"fa  fa-bell\"></i> 验证码不正确，请核对后登录！")
 			.addAttribute("username", username)
 			.addAttribute("password", password).
 			addAttribute("verifyCode", verifyCode);
@@ -76,20 +76,20 @@ public class LoginController {
 			try {
 				currUser.login(token);
 			}catch(UnknownAccountException uae){
-				model.addAttribute("msg", "用户名或密码不正确！")
+				model.addAttribute("msg", "<i class=\"fa  fa-bell\"></i> 用户名或密码不正确！")
 				.addAttribute("username", username)
 				.addAttribute("password", password).
 				addAttribute("verifyCode", verifyCode);
 				return "login";
 			}catch (LockedAccountException e){
-				model.addAttribute("msg", "用户已被锁定，请联系管理员！")
+				model.addAttribute("msg", "<i class=\"fa  fa-bell\"></i> 用户已被锁定，请联系管理员！")
 				.addAttribute("username", username)
 				.addAttribute("password", password).
 				addAttribute("verifyCode", verifyCode);
 				return "login";
 			}
 			catch (AuthenticationException e) {
-				model.addAttribute("msg", "用户名或密码不正确！")
+				model.addAttribute("msg", "<i class=\"fa  fa-bell\"></i> 用户名或密码不正确！")
 				.addAttribute("username", username)
 				.addAttribute("password", password).
 				addAttribute("verifyCode", verifyCode);
