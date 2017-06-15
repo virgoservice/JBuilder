@@ -3,6 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ramostear.jbuilder.dao.OrderChildDao">
 
+
 	<resultMap type="com.ramostear.jbuilder.entity.OrderChild" id="resultMap">
 		<id column="id" property="id"/>
 		<result column="orderId" property="orderId"/>
@@ -15,11 +16,14 @@
 		<result column="goodsCode" property="goodsCode"/>
 		<result column="goodsName" property="goodsName"/>
 		<result column="remark" property="remark"/>
+		<result column="payStatus" property="payStatus"/>
+		<result column="returnStatus" property="returnStatus"/>
+		<result column="noticeStatus" property="noticeStatus"/>
 		<result column="status" property="status"/>
 		<result column="createTime" property="createTime"/>
 		<result column="retreatBatchNo" property="retreatBatchNo"/>
 	</resultMap>
-	
+
 	<insert id="save" parameterType="com.ramostear.jbuilder.entity.OrderChild" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
 		insert into order_order_child
 		<trim prefix="(" suffix=")" suffixOverrides=",">
@@ -33,6 +37,9 @@
 			<if test="goodsCode != null">goodsCode,</if>
 			<if test="goodsName != null">goodsName,</if>
 			<if test="remark != null">remark,</if>
+			<if test="status != null">payStatus,</if>
+			<if test="status != null">returnStatus,</if>
+			<if test="status != null">noticeStatus,</if>
 			<if test="status != null">status,</if>
 			<if test="createTime != null">createTime,</if>
 			<if test="retreatBatchNo != null">retreatBatchNo</if>
@@ -48,6 +55,9 @@
 			<if test="goodsCode != null">#{goodsCode},</if>
 			<if test="goodsName != null">#{goodsName},</if>
 			<if test="remark != null">#{remark},</if>
+			<if test="status != null">#{payStatus},</if>
+			<if test="status != null">#{returnStatus},</if>
+			<if test="status != null">#{noticeStatus},</if>
 			<if test="status != null">#{status},</if>
 			<if test="createTime != null">#{createTime},</if>
 			<if test="retreatBatchNo != null">#{retreatBatchNo}</if>
@@ -66,6 +76,9 @@
 			<if test="occDate != null">occDate=#{occDate},</if>
 			<if test="goodsCode != null">goodsCode=#{goodsCode},</if>
 			<if test="goodsName != null">goodsName=#{goodsName},</if>
+			<if test="payStatus != null">payStatus=#{payStatus},</if>
+			<if test="returnStatus != null">returnStatus=#{returnStatus},</if>
+			<if test="noticeStatus != null">noticeStatus=#{noticeStatus},</if>
 			<if test="status != null">status=#{status},</if>
 			<if test="createTime != null">createTime=#{createTime},</if>
 			<if test="retreatBatchNo != null">retreatBatchNo=#{retreatBatchNo},</if>

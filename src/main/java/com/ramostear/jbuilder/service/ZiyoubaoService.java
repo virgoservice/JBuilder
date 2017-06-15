@@ -58,4 +58,11 @@ public interface ZiyoubaoService {
 	 * @param tplCode
 	 */
 	public void send_sm(String ordercode,String tplCode);
+	
+	/**
+	 * 改签游玩时间
+	 * @param orderCode 子订单号
+	 * @return
+	 */
+	public ReqVO modifyOccDate(String childOrderCode);
 }

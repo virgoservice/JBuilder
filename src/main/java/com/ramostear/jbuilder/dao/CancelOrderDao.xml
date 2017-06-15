@@ -12,8 +12,9 @@
 		<result column="num" property="num"/>
 		<result column="status" property="status"/>
 		<result column="cancelDate" property="cancelDate"/>
-		<result column="result" property="result"/>
 		
+		<result column="result" property="result"/>
+		<result column="totalPrice" property="totalPrice"/>
 	</resultMap>
 	
 	<insert id="save" parameterType="com.ramostear.jbuilder.entity.CancelOrder" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
@@ -25,6 +26,7 @@
 			<if test="retreatBatchNo != null">retreatBatchNo,</if>
 			<if test="num != null">num,</if>
 			<if test="status != null">status,</if>
+			<if test="totalPrice != null">totalPrice,</if>
 			<if test="result != null">result,</if>
 			<if test="cancelDate != null">cancelDate</if>
 		</trim>
@@ -35,6 +37,7 @@
 			<if test="retreatBatchNo != null">#{retreatBatchNo},</if>
 			<if test="num != null">#{num},</if>
 			<if test="status != null">#{status},</if>
+			<if test="totalPrice != totalPrice">#{totalPrice},</if>
 			<if test="result != null">#{result},</if>
 			<if test="cancelDate != null">#{cancelDate}</if>
 		</trim>
@@ -50,6 +53,7 @@
 			<if test="num != null">num=#{num},</if>
 			<if test="status != null">status=#{status},</if>
 			<if test="result != null">result=#{result},</if>
+			<if test="totalPrice != null">totalPrice=#{totalPrice},</if>
 			<if test="cancelDate != null">cancelDate=#{cancelDate}</if>
 		</set>
 		where id = #{id}
@@ -77,6 +81,13 @@
 		where 
 		CancelOrderCode = #{orderCode}
 	</select>
+	
+	<select id="findByChildOrderId" parameterType="Long" resultMap="resultMap">
+		select * from order_cancel_order 
+		where 
+		childOrderId = #{id}
+	</select>
+	
 	
 	<select id="findAll"  resultMap="resultMap">
 		select * from order_cancel_order

@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.ramostear.jbuilder.dao.OrderChildDao;
 import com.ramostear.jbuilder.entity.OrderChild;
 import com.ramostear.jbuilder.service.OrderChildService;
@@ -43,6 +44,11 @@ public class OrderChildServiceImpl implements OrderChildService {
 	@Override
 	public List<OrderChild> getAllByOid(Long oid) {
 		return this.odao.getAllByOid(oid);
+	}
+
+	@Override
+	public OrderChild findByOrderCode(String orderCode) {
+		return this.odao.findByOrderCode(orderCode);
 	}
 
 }

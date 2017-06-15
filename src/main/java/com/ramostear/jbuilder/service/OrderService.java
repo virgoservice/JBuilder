@@ -33,6 +33,7 @@ public interface OrderService {
 	 * @param order
 	 * @param childOrder
 	 * @return
+	 * @throws Exception 
 	 */
 	public boolean save(Order order,List<OrderChild> childOrders);
 	
@@ -45,6 +46,14 @@ public interface OrderService {
 	 */
 	public boolean cancelOrder(Long id);
 	
+	/**
+	 * 退票
+	 * @param id 子订单id
+	 * @param num 退票数量
+	 * @return
+	 */
+	public boolean returnTicket(Long id,Integer num);
+	
 	public Order findById(Long id);
 	
 	public Order findByOrderCode(String orderCode);
@@ -53,5 +62,15 @@ public interface OrderService {
 	
 	public PageDto<Order> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order,@Param("orderCode")String orderCode);
 
+	/**
+	 * 查询用户订单
+	 * @param offset
+	 * @param size
+	 * @param orderBy
+	 * @param order
+	 * @param orderCode
+	 * @return
+	 */
+	public PageDto<Order> findByPageByUid(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order,@Param("uid")String uid);
 
 }

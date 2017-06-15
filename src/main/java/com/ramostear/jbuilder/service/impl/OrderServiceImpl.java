@@ -17,15 +17,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ramostear.jbuilder.dao.CancelOrderDao;
 import com.ramostear.jbuilder.dao.OrderChildDao;
 import com.ramostear.jbuilder.dao.OrderDao;
 import com.ramostear.jbuilder.dao.TicketDao;
+import com.ramostear.jbuilder.entity.CancelOrder;
 import com.ramostear.jbuilder.entity.Order;
 import com.ramostear.jbuilder.entity.OrderChild;
 import com.ramostear.jbuilder.entity.Ticket;
 import com.ramostear.jbuilder.kit.PageDto;
 import com.ramostear.jbuilder.kit.UserException;
+import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqCancelOrderVO;
 import com.ramostear.jbuilder.service.OrderService;
+import com.ramostear.jbuilder.service.ZiyoubaoService;
+import com.ramostear.jbuilder.util.OrderCodeGenerator;
 
 /** 
  * @Desc: () 
@@ -44,11 +49,16 @@ public class OrderServiceImpl implements OrderService {
 	private OrderChildDao cdao;
 	@Autowired
 	private TicketDao tdao;
+	@Autowired
+	private ZiyoubaoService ziyoubao;
+	@Autowired
+	private CancelOrderDao cancel;
 	
 	/**
 	 * 保存订单和子订单
 	 * @throws UserException 
 	 */ 
+	@Transactional
 	@Override
 	public boolean save(Order order,List<OrderChild> childOrders){
 		
@@ -57,20 +67,25 @@ public class OrderServiceImpl implements OrderService {
 			Ticket temp=tdao.findById(co.getTicketId());
 			if(temp==null){
 				//异常,商品不存在
+				
+				return false;
 			}
 			//生成子订单
-			co.setOrderCode("123");//订单编号生成策略
+			co.setOrderCode(OrderCodeGenerator.getChildOrderCode());
 			co.setCreateTime(new Date());
 			co.setGoodsCode(temp.getGoodsCode());
 			co.setGoodsName(temp.getName());
 			co.setPrice(temp.getPrice());
-			co.setTotalPrice(temp.getPrice()*co.getQuantity());//总价
+			co.setTotalPrice(temp.getPrice()*Math.abs(co.getQuantity()));//取绝对值，防止负值
 			
 			order.setOrderPrice(order.getOrderPrice()+co.getTotalPrice());//订单总价
 		}
-		
+		order.setOrderCode(OrderCodeGenerator.getOrderCode());
 		order.setCreateTime(new Date());
+		order.setStatus("0");//已下单
+		order.setPayStatus("0");//待付款
 		odao.save(order);
+		
 		//保存子订单
 		for(OrderChild co : childOrders){
 			co.setOrderId(order.getId());
@@ -80,15 +95,78 @@ public class OrderServiceImpl implements OrderService {
 		return true;
 	}
 
+	@Transactional
 	@Override
 	public boolean cancelOrder(Long id) {
 		Order order=this.odao.findById(id);
 		if(order!=null&&order.getPayStatus()=="1"){//已付款
-			order.setStatus("2");
+			//调用取消订单接口
+			//执行退票。
+			ReqCancelOrderVO result=this.ziyoubao.cancelOrder(order.getOrderCode());
+			if(result.getCode()!=0){
+				//抛出异常
+				
+			}
+			order.setStatus("1");//申请退款
+			order.setRetreatBatchNo(result.getRetreatBatchNo());//设置退款编号
 			this.odao.update(order);
+			
 			return true;
+		}else if(order!=null&&order.getPayStatus()=="0"){//未付款，直接删除订单
+			List<OrderChild> list=this.cdao.getAllByOid(order.getId());
+			//删除子订单
+			for(OrderChild c:list){
+				this.cdao.delete(c.getId());
+			}
+			//删除订单
+			this.odao.delete(order.getId());
+			//记录删除日志
+			
 		}
 		return false;
+	}
+	
+	/**
+	 * 退票流程
+	 * 1、检测是否已经退票
+	 */
+	@Override
+	public boolean returnTicket(Long id, Integer num) {
+		num=Math.abs(num);
+		
+		OrderChild order=this.cdao.findById(id);
+		if(order==null){
+			//订单不存在
+			
+		}
+		if(num>order.getQuantity()){
+			//退票数量错误
+			
+		}
+		
+		Ticket ticket=this.tdao.findById(order.getTicketId());
+		//产生退票单
+		CancelOrder cancel=new CancelOrder();
+		cancel.setOrderId(order.getOrderId());
+		cancel.setChildOrderId(order.getId());
+		cancel.setNum(num);
+		cancel.setCancelOrderCode(OrderCodeGenerator.getCancelOrderCode());//退单号
+		cancel.setCancelDate(new Date());
+		cancel.setStatus("0");
+		cancel.setTotalPrice(ticket.getPrice()*num);//总价
+		
+		//发起退票接口
+		ReqCancelOrderVO re=this.ziyoubao.cancelChildOfOrder(order.getOrderCode(), num, cancel.getCancelOrderCode());
+		if(re.getCode()!=0){
+			//抛出异常
+			
+		}
+		order.setStatus("1");
+		order.setRetreatBatchNo(re.getRetreatBatchNo());
+		cancel.setRetreatBatchNo(re.getRetreatBatchNo());
+		this.cdao.save(order);
+		this.cancel.save(cancel);
+		return true;
 	}
 	
 	/* (non-Javadoc)
@@ -145,6 +223,16 @@ public class OrderServiceImpl implements OrderService {
 		Long totalSize = odao.size();
 		return new PageDto<Order>(totalSize,offset,size,list);
 	}
+
+	@Override
+	public PageDto<Order> findByPageByUid(int offset, int size, String orderBy,
+			boolean order, String uid) {
+		List<Order> list = odao.findByPage((offset-1)*size, size, orderBy, order,uid);
+		Long totalSize = odao.size();
+		return new PageDto<Order>(totalSize,offset,size,list);
+	}
+
+
 
 	
 

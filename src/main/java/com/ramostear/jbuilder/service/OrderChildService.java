@@ -21,6 +21,8 @@ import com.ramostear.jbuilder.entity.OrderChild;
  * @email:361801580@qq.com 
  */
 public interface OrderChildService {
+	
+	public OrderChild findByOrderCode(String orderCode);
 
 	public boolean update(OrderChild orderChild);
 	//根据订单id查询所有子订单

@@ -31,6 +31,9 @@ public class OrderChild {
 	private String goodsCode;
 	private String goodsName;
 	private String remark;
+	private String payStatus;
+	private String returnStatus;
+	private String noticeStatus;
 	private String status;
 	private Date createTime;
 	private String retreatBatchNo;
@@ -38,31 +41,6 @@ public class OrderChild {
 	public OrderChild() {
 		super();
 	}
-
-	
-	
-	public OrderChild(Long id, Long orderId, Long ticketId, String orderCode,
-			double price, Integer quantity, double totalPrice, Date occDate,
-			String goodsCode, String goodsName, String remark, String status,
-			Date createTime, String retreatBatchNo) {
-		super();
-		this.id = id;
-		this.orderId = orderId;
-		this.ticketId = ticketId;
-		this.orderCode = orderCode;
-		this.price = price;
-		this.quantity = quantity;
-		this.totalPrice = totalPrice;
-		this.occDate = occDate;
-		this.goodsCode = goodsCode;
-		this.goodsName = goodsName;
-		this.remark = remark;
-		this.status = status;
-		this.createTime = createTime;
-		this.retreatBatchNo = retreatBatchNo;
-	}
-
-
 
 	public Long getId() {
 		return id;
@@ -152,6 +130,30 @@ public class OrderChild {
 		this.remark = remark;
 	}
 
+	public String getPayStatus() {
+		return payStatus;
+	}
+
+	public void setPayStatus(String payStatus) {
+		this.payStatus = payStatus;
+	}
+
+	public String getReturnStatus() {
+		return returnStatus;
+	}
+
+	public void setReturnStatus(String returnStatus) {
+		this.returnStatus = returnStatus;
+	}
+
+	public String getNoticeStatus() {
+		return noticeStatus;
+	}
+
+	public void setNoticeStatus(String noticeStatus) {
+		this.noticeStatus = noticeStatus;
+	}
+
 	public String getStatus() {
 		return status;
 	}
@@ -175,6 +177,44 @@ public class OrderChild {
 	public void setRetreatBatchNo(String retreatBatchNo) {
 		this.retreatBatchNo = retreatBatchNo;
 	}
-	
+
+	public OrderChild(Long id, Long orderId, Long ticketId, String orderCode,
+			double price, Integer quantity, double totalPrice, Date occDate,
+			String goodsCode, String goodsName, String remark,
+			String payStatus, String returnStatus, String noticeStatus,
+			String status, Date createTime, String retreatBatchNo) {
+		super();
+		this.id = id;
+		this.orderId = orderId;
+		this.ticketId = ticketId;
+		this.orderCode = orderCode;
+		this.price = price;
+		this.quantity = quantity;
+		this.totalPrice = totalPrice;
+		this.occDate = occDate;
+		this.goodsCode = goodsCode;
+		this.goodsName = goodsName;
+		this.remark = remark;
+		this.payStatus = payStatus;
+		this.returnStatus = returnStatus;
+		this.noticeStatus = noticeStatus;
+		this.status = status;
+		this.createTime = createTime;
+		this.retreatBatchNo = retreatBatchNo;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderChild [id=" + id + ", orderId=" + orderId + ", ticketId="
+				+ ticketId + ", orderCode=" + orderCode + ", price=" + price
+				+ ", quantity=" + quantity + ", totalPrice=" + totalPrice
+				+ ", occDate=" + occDate + ", goodsCode=" + goodsCode
+				+ ", goodsName=" + goodsName + ", remark=" + remark
+				+ ", payStatus=" + payStatus + ", returnStatus=" + returnStatus
+				+ ", noticeStatus=" + noticeStatus + ", status=" + status
+				+ ", createTime=" + createTime + ", retreatBatchNo="
+				+ retreatBatchNo + "]";
+	}
+
 	
 }

@@ -92,4 +92,9 @@ public class CancelOrderServiceImpl implements CancelOrderService {
 		return new PageDto<CancelOrder>(totalSize,offset,size,list);
 	}
 
+	@Override
+	public CancelOrder findByChildOrderId(Long id) {
+		return this.cdao.findByChildOrderId(id);
+	}
+
 }

@@ -64,7 +64,7 @@ public class ZiyoubaoServiceTest {
 //		下单测试
 //		ZiyoubaoServiceImpl ser=new ZiyoubaoServiceImpl();
 //		SendOrderVO svo=new SendOrderVO();
-//		svo.setOrderCode("t008");
+//		svo.setOrderCode("t009");
 //		svo.setLinkName("laowang");
 //		svo.setLinkMobile("13648362969");
 //		svo.setOrderPrice(10000);
@@ -75,26 +75,27 @@ public class ZiyoubaoServiceTest {
 //		tvo.setGoodsCode("PST20160918013085");
 //		tvo.setGoodsName("测试票");
 //		tvo.setOccDate("2017-06-18 12:12:12");
-//		tvo.setOrderCode("c008");
+//		tvo.setOrderCode("c009");
 //		tvo.setPrice(213.21);
 //		tvo.setQuantity(2);
 //		tvo.setTotalPrice(500);
 //		tvo.setRemark("这是备注");
 //		tlist.add(tvo);
-//		退票测试
-		//svo.setTicketList(tlist);
-		//ReqOrderVO result=ser.sendOrder(svo);
-		//System.out.println(result.getDescription());
-		//System.out.println(result.toString());
-//		退票状态查询测试
-		//ZiyoubaoServiceImpl ser=new ZiyoubaoServiceImpl();
-		//ReqVO ret=ser.queryCancelResult("67ad784bd68543adb1aa28ceb2aa9ead");
-		//System.out.println(ret.toString());
-		//ReqOrderVO result=ser.sendOrder(svo);
-		//System.out.println(result.toString());
-		//f1fa8a239a3f4519ae08612ae2bdf6aa
+//		svo.setTicketList(tlist);
+//		ReqOrderVO result=ser.sendOrder(svo);
+//		System.out.println(result.getDescription());
+//		System.out.println(result.toString());
 		
-		throw new UserException("500","werwer");
+//		ZiyoubaoServiceImpl ser=new ZiyoubaoServiceImpl();
+//		ReqCancelOrderVO ret=ser.cancelOrder("t009");
+//		System.out.println(ret.toString());
+		
+//		退票状态查询测试
+		ZiyoubaoServiceImpl ser=new ZiyoubaoServiceImpl();
+		ReqVO ret=ser.queryCancelResult("e7f3e216bdd0485489a6102d9640e475");
+		System.out.println(ret.toString());
+		
+		
 	}
 	
 	

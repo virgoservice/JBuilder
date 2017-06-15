@@ -11,6 +11,7 @@
 package com.ramostear.jbuilder.entity;
 
 import java.util.Date;
+import java.util.List;
 
 /** 
  * @Desc: () 
@@ -20,6 +21,7 @@ import java.util.Date;
  */
 public class Order {
 	private Long id;
+	private Long userId;
 	private String certificateNo;
 	private String linkName;
 	private String linkMobile;
@@ -30,129 +32,161 @@ public class Order {
 	private String status;
 	private Date createTime;
 	private String retreatBatchNo;
+	private Integer ziyoubaoStatus;
+	private Integer checkNum;
+	private Integer returnNum;
+	private Integer total;
 	
+	private List<OrderChild> list;
 	
 	public Order() {
 		super();
 	}
 
-
 	public Long getId() {
 		return id;
 	}
-
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 
 	public String getCertificateNo() {
 		return certificateNo;
 	}
 
-
 	public void setCertificateNo(String certificateNo) {
 		this.certificateNo = certificateNo;
 	}
-
 
 	public String getLinkName() {
 		return linkName;
 	}
 
-
 	public void setLinkName(String linkName) {
 		this.linkName = linkName;
 	}
-
 
 	public String getLinkMobile() {
 		return linkMobile;
 	}
 
-
 	public void setLinkMobile(String linkMobile) {
 		this.linkMobile = linkMobile;
 	}
-
 
 	public String getOrderCode() {
 		return orderCode;
 	}
 
-
 	public void setOrderCode(String orderCode) {
 		this.orderCode = orderCode;
 	}
-
 
 	public double getOrderPrice() {
 		return orderPrice;
 	}
 
-
 	public void setOrderPrice(double orderPrice) {
 		this.orderPrice = orderPrice;
 	}
-
 
 	public String getPayMethod() {
 		return payMethod;
 	}
 
-
 	public void setPayMethod(String payMethod) {
 		this.payMethod = payMethod;
 	}
-
 
 	public String getPayStatus() {
 		return payStatus;
 	}
 
-
 	public void setPayStatus(String payStatus) {
 		this.payStatus = payStatus;
 	}
-
 
 	public String getStatus() {
 		return status;
 	}
 
-
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
 
 	public Date getCreateTime() {
 		return createTime;
 	}
 
-
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-
 
 	public String getRetreatBatchNo() {
 		return retreatBatchNo;
 	}
 
-
 	public void setRetreatBatchNo(String retreatBatchNo) {
 		this.retreatBatchNo = retreatBatchNo;
 	}
 
+	public Integer getZiyoubaoStatus() {
+		return ziyoubaoStatus;
+	}
 
-	public Order(Long id, String certificateNo, String linkName,
+	public void setZiyoubaoStatus(Integer ziyoubaoStatus) {
+		this.ziyoubaoStatus = ziyoubaoStatus;
+	}
+
+	public Integer getCheckNum() {
+		return checkNum;
+	}
+
+	public void setCheckNum(Integer checkNum) {
+		this.checkNum = checkNum;
+	}
+
+	public Integer getReturnNum() {
+		return returnNum;
+	}
+
+	public void setReturnNum(Integer returnNum) {
+		this.returnNum = returnNum;
+	}
+
+	public Integer getTotal() {
+		return total;
+	}
+
+	public void setTotal(Integer total) {
+		this.total = total;
+	}
+
+	public List<OrderChild> getList() {
+		return list;
+	}
+
+	public void setList(List<OrderChild> list) {
+		this.list = list;
+	}
+
+	public Order(Long id, Long userId, String certificateNo, String linkName,
 			String linkMobile, String orderCode, double orderPrice,
 			String payMethod, String payStatus, String status, Date createTime,
-			String retreatBatchNo) {
+			String retreatBatchNo, Integer ziyoubaoStatus, Integer checkNum,
+			Integer returnNum, Integer total, List<OrderChild> list) {
 		super();
 		this.id = id;
+		this.userId = userId;
 		this.certificateNo = certificateNo;
 		this.linkName = linkName;
 		this.linkMobile = linkMobile;
@@ -163,7 +197,29 @@ public class Order {
 		this.status = status;
 		this.createTime = createTime;
 		this.retreatBatchNo = retreatBatchNo;
+		this.ziyoubaoStatus = ziyoubaoStatus;
+		this.checkNum = checkNum;
+		this.returnNum = returnNum;
+		this.total = total;
+		this.list = list;
 	}
+
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", userId=" + userId + ", certificateNo="
+				+ certificateNo + ", linkName=" + linkName + ", linkMobile="
+				+ linkMobile + ", orderCode=" + orderCode + ", orderPrice="
+				+ orderPrice + ", payMethod=" + payMethod + ", payStatus="
+				+ payStatus + ", status=" + status + ", createTime="
+				+ createTime + ", retreatBatchNo=" + retreatBatchNo
+				+ ", ziyoubaoStatus=" + ziyoubaoStatus + ", checkNum="
+				+ checkNum + ", returnNum=" + returnNum + ", total=" + total
+				+ ", list=" + list + "]";
+	}
+
+	
+
+	
 	
 	
 }
