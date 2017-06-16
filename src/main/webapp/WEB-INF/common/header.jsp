@@ -5,9 +5,9 @@
 	String path = request.getContextPath();
 %>
 <header class="main-header">
-	<a href="#" class="logo">
-		<span class="logo-mini"><b>J</b>BC</span>
-		<span class="logo-lg"><b>JBuilder</b></span>
+	<a href="<%=path %>/admin/index" class="logo">
+		<span class="logo-mini"><b>J</b>B</span>
+		<span class="logo-lg"><b>JB</b>uilder</span>
 	</a>
 	<nav class="navbar navbar-static-top">
 		<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -17,13 +17,13 @@
 			<ul class="nav navbar-nav">
 				<li class="dropdown user user-menu">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<img src="<%=path %>/resources/admin/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-						<span class="hidden-xs">谭朝红，&nbsp;你好！</span>
+						<img src="<%=path %>/${login_user.avatar}" class="user-image" alt="User Image">
+						<span class="hidden-xs">${login_user.nickname} ，&nbsp;你好！</span>
 					</a>
 					<ul class="dropdown-menu">
 						<li class="user-header">
-							<img src="<%=path %>/resources/admin/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-							<p>谭朝红 - 超级管理员</p>
+							<img src="<%=path %>/${login_user.avatar}" class="img-circle" alt="User Image">
+							<p>${login_user.nickname } - ${login_user.signature}</p>
 						</li>
 						<li class="user-footer">
 							<div class="pull-left">
