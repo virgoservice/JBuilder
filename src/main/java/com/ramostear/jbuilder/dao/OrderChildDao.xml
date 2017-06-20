@@ -110,6 +110,13 @@
 		id = #{id}
 	</select>
 	
+	<select id="findByIdAndUid" parameterType="Long" resultMap="resultMap">
+		select * from order_order_child 
+		where 
+		id = #{id}
+		and userId=#{uid}
+	</select>
+	
 	<select id="findByOrderCode" parameterType="String" resultMap="resultMap">
 		select * from order_order_child 
 		where 

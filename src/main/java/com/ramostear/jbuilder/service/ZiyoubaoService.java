@@ -64,5 +64,5 @@ public interface ZiyoubaoService {
 	 * @param orderCode 子订单号
 	 * @return
 	 */
-	public ReqVO modifyOccDate(String childOrderCode);
+	public ReqVO modifyOccDate(String childOrderCode,String newDate);
 }

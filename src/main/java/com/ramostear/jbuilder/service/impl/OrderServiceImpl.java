@@ -10,6 +10,7 @@
 */
 package com.ramostear.jbuilder.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,11 +26,15 @@ import com.ramostear.jbuilder.entity.CancelOrder;
 import com.ramostear.jbuilder.entity.Order;
 import com.ramostear.jbuilder.entity.OrderChild;
 import com.ramostear.jbuilder.entity.Ticket;
+import com.ramostear.jbuilder.exception.BusinessException;
 import com.ramostear.jbuilder.kit.PageDto;
-import com.ramostear.jbuilder.kit.UserException;
 import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqCancelOrderVO;
+import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqOrderVO;
+import com.ramostear.jbuilder.kit.ziyoubaokit.vo.SendOrderVO;
+import com.ramostear.jbuilder.kit.ziyoubaokit.vo.TicketVO;
 import com.ramostear.jbuilder.service.OrderService;
 import com.ramostear.jbuilder.service.ZiyoubaoService;
+import com.ramostear.jbuilder.util.DateUtil;
 import com.ramostear.jbuilder.util.OrderCodeGenerator;
 
 /** 
@@ -56,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
 	
 	/**
 	 * 保存订单和子订单
-	 * @throws UserException 
+	 * @throws BusinessException 
 	 */ 
 	@Transactional
 	@Override
@@ -67,8 +72,7 @@ public class OrderServiceImpl implements OrderService {
 			Ticket temp=tdao.findById(co.getTicketId());
 			if(temp==null){
 				//异常,商品不存在
-				
-				return false;
+				throw new BusinessException("您要订购的商品不存在！");
 			}
 			//生成子订单
 			co.setOrderCode(OrderCodeGenerator.getChildOrderCode());
@@ -105,7 +109,7 @@ public class OrderServiceImpl implements OrderService {
 			ReqCancelOrderVO result=this.ziyoubao.cancelOrder(order.getOrderCode());
 			if(result.getCode()!=0){
 				//抛出异常
-				
+				throw new BusinessException(result.getDescription());
 			}
 			order.setStatus("1");//申请退款
 			order.setRetreatBatchNo(result.getRetreatBatchNo());//设置退款编号
@@ -131,17 +135,17 @@ public class OrderServiceImpl implements OrderService {
 	 * 1、检测是否已经退票
 	 */
 	@Override
-	public boolean returnTicket(Long id, Integer num) {
+	public ReqCancelOrderVO returnTicket(Long id,Integer num) {
 		num=Math.abs(num);
 		
 		OrderChild order=this.cdao.findById(id);
 		if(order==null){
 			//订单不存在
-			
+			throw new BusinessException("订单不存在！");
 		}
 		if(num>order.getQuantity()){
 			//退票数量错误
-			
+			throw new BusinessException("退票数量不足！");
 		}
 		
 		Ticket ticket=this.tdao.findById(order.getTicketId());
@@ -159,14 +163,14 @@ public class OrderServiceImpl implements OrderService {
 		ReqCancelOrderVO re=this.ziyoubao.cancelChildOfOrder(order.getOrderCode(), num, cancel.getCancelOrderCode());
 		if(re.getCode()!=0){
 			//抛出异常
-			
+			throw new BusinessException(re.getDescription());
 		}
 		order.setStatus("1");
 		order.setRetreatBatchNo(re.getRetreatBatchNo());
 		cancel.setRetreatBatchNo(re.getRetreatBatchNo());
-		this.cdao.save(order);
+		this.cdao.update(order);
 		this.cancel.save(cancel);
-		return true;
+		return re;
 	}
 	
 	/* (non-Javadoc)
@@ -230,6 +234,56 @@ public class OrderServiceImpl implements OrderService {
 		List<Order> list = odao.findByPage((offset-1)*size, size, orderBy, order,uid);
 		Long totalSize = odao.size();
 		return new PageDto<Order>(totalSize,offset,size,list);
+	}
+
+	@Override
+	public ReqOrderVO payOrder(Long orderId) {
+		//1、付款后更新订单状态
+		Order order=this.odao.findById(orderId);
+		if("1".equals(order.getPayStatus())){
+			throw new BusinessException("该订单已经支付！");
+		}
+		
+		order.setPayStatus("1");//已付款
+		order.setStatus("2");//已完成
+		this.odao.update(order);
+		
+		List<OrderChild> child=this.cdao.getAllByOid(orderId);
+				
+		SendOrderVO send=new SendOrderVO();
+		send.setOrderCode(order.getOrderCode());
+		send.setOrderPrice(order.getOrderPrice());
+		send.setLinkMobile(order.getLinkMobile());
+		send.setLinkName(order.getLinkName());
+		send.setPayMethod(order.getPayMethod());
+		List<TicketVO> ticketList =new ArrayList<TicketVO>();
+				
+		for(OrderChild item : child){
+			TicketVO t=new TicketVO();
+			t.setGoodsCode(item.getGoodsCode());
+			t.setGoodsName(item.getGoodsName());
+			t.setOccDate(DateUtil.getDateYYYYMMDD(item.getOccDate()));
+			t.setOrderCode(item.getOrderCode());
+			t.setPrice(item.getPrice());
+			t.setQuantity(item.getQuantity());
+			t.setRemark(item.getRemark());
+			t.setTotalPrice(item.getTotalPrice());
+			ticketList.add(t);
+			
+			//更新子订单状态
+			item.setPayStatus("1");//已经付款
+			this.cdao.update(item);
+		}
+				
+		send.setTicketList(ticketList);
+				
+		ReqOrderVO ret=this.ziyoubao.sendOrder(send);
+		return ret;
+	}
+
+	@Override
+	public Order findByIdAndUid(Long id, Long uid) {
+		return this.odao.findByIdAndUid(id, uid);
 	}
 
 

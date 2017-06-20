@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ramostear.jbuilder.dao.OrderLogDao">
+
+	<resultMap type="com.ramostear.jbuilder.entity.OrderLog" id="resultMap">
+		<id column="id" property="id"/>
+		<result column="type" property="type"/>
+		<result column="detail" property="detail"/>
+		<result column="detail1" property="detail1"/>
+		<result column="detail2" property="detail2"/>
+		
+	</resultMap>
+
+	<insert id="save" parameterType="com.ramostear.jbuilder.entity.OrderLog" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert into order_order_log
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="type != null">type,</if>
+			<if test="detail != null">detail,</if>
+			<if test="detail2 != null">detail2,</if>
+			<if test="detail1 != null">detail1</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="type != null">#{type},</if>
+			<if test="detail != null">#{detail},</if>
+			<if test="detail1 != null">#{detail1},</if>
+			<if test="detail2 != null">#{detail2}</if>
+		</trim>
+	</insert>
+	
+	<update id="update" parameterType="com.ramostear.jbuilder.entity.OrderLog">
+		update order_order_log
+		<set>
+			<if test="type != null">type = #{type},</if>
+			<if test="detail != null">detail = #{detail},</if>
+			<if test="detail1 != null">detail1 = #{detail1},</if>
+			<if test="detail2 != null">detail2 = #{detail2}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<select id="size" resultType="Long">
+		select count(*) from order_order_log
+	</select>
+	
+	<delete id="delete" parameterType="Long">
+		delete from order_order_log 
+		where 
+		id = #{id}
+	</delete>
+
+	<select id="findById" parameterType="Long" resultMap="resultMap">
+		select * from order_order_log 
+		where 
+		id = #{id}
+	</select>
+	
+	<select id="findAll"  resultMap="resultMap">
+		select * from order_order_log order by showOrder
+	</select>
+	
+	<select id="findByPage" resultMap="resultMap">
+		select * from order_order_log 
+		<if test="search != null and search!=''">
+			where detail like '%${search}%'
+		</if>
+		
+		limit #{offset},#{size}
+	</select>
+	
+</mapper>

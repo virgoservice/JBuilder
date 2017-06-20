@@ -51,4 +51,9 @@ public class OrderChildServiceImpl implements OrderChildService {
 		return this.odao.findByOrderCode(orderCode);
 	}
 
+	@Override
+	public OrderChild findById(Long cid) {
+		return this.odao.findById(cid);
+	}
+
 }

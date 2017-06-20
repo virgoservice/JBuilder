@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ramostear.jbuilder.entity.CancelOrder;
 import com.ramostear.jbuilder.entity.Order;
 import com.ramostear.jbuilder.entity.OrderChild;
+import com.ramostear.jbuilder.exception.BusinessException;
 import com.ramostear.jbuilder.kit.ziyoubaokit.XmlTemplate;
 import com.ramostear.jbuilder.service.CancelOrderService;
 import com.ramostear.jbuilder.service.OrderChildService;
@@ -29,6 +30,7 @@ import com.ramostear.jbuilder.util.StaxonUtils;
  * @date: 2017年6月14日 下午5:16:46 
  * @email:361801580@qq.com 
  */
+
 @Controller
 @RequestMapping("/order/notice")
 public class NoticeController {
@@ -36,9 +38,9 @@ public class NoticeController {
 	@Autowired
 	private OrderService orderService;
 	@Autowired
-	private OrderChildService childService;
+	private OrderChildService orderChildService;
 	@Autowired
-	private CancelOrderService cancelService;
+	private CancelOrderService cancelOrderService;
 	
 	/**
 	 * 订单完结通知
@@ -59,12 +61,12 @@ public class NoticeController {
 		String md5=StaxonUtils.getMD5(md5str);
 		
 		if(!md5.equals(sign)){
-			return "error";
+			return "签名错误";
 		}
 		
 		Order order=this.orderService.findByOrderCode(orderCode);
 		if(order==null){
-			return "error";
+			return "订单不存在";
 		}
 		
 		//如果已经更新了订单
@@ -102,13 +104,13 @@ public class NoticeController {
 		//验证请求
 		String md5str=orderCode +XmlTemplate.p.getProperty("privateKey");
 		String md5=StaxonUtils.getMD5(md5str);
-		
+		System.out.println(md5);
 		if(!md5.equals(sign)){
-			return "error";
+			throw new BusinessException("签名错误");
 		}
 		
 		if("success".equals(auditStatus)){
-			OrderChild child=this.childService.findByOrderCode(subOrderCode);
+			OrderChild child=this.orderChildService.findByOrderCode(subOrderCode);
 			if(child!=null&&child.getNoticeStatus().equals("0")){
 				//更新订单和订单日志
 				//发起退款支付
@@ -117,35 +119,39 @@ public class NoticeController {
 				child.setStatus("3");	//已退款流程
 				child.setNoticeStatus("1");//已接收通知
 				child.setReturnStatus("1");//已经退款状态
-				this.childService.update(child);
+				this.orderChildService.update(child);
 					
 				//更改退单记录
-				CancelOrder cancel=this.cancelService.findByChildOrderId(child.getId());
-				cancel.setStatus("1");
-				cancel.setResult(auditStatus);
-				this.cancelService.update(cancel);
+				CancelOrder cancel=this.cancelOrderService.findByChildOrderId(child.getId());
+				if(cancel!=null){
+					cancel.setStatus("1");
+					cancel.setResult(auditStatus);
+					this.cancelOrderService.update(cancel);
+				}
 			}
 		}else if("failure".equals(auditStatus)){
 			//退票失败
-			OrderChild child=this.childService.findByOrderCode(subOrderCode);
+			OrderChild child=this.orderChildService.findByOrderCode(subOrderCode);
 			if(child!=null&&child.getNoticeStatus().equals("0")){
 				//更新订单和订单日志
 				
 				child.setStatus("2");	//退票失败
 				child.setNoticeStatus("1");//已接收通知
-				this.childService.update(child);
+				this.orderChildService.update(child);
 					
 				//更改退单记录
-				CancelOrder cancel=this.cancelService.findByChildOrderId(child.getId());
-				cancel.setStatus("1");
-				cancel.setResult(auditStatus);
-				this.cancelService.update(cancel);
+				CancelOrder cancel=this.cancelOrderService.findByChildOrderId(child.getId());
+				if(cancel!=null){
+					cancel.setStatus("1");
+					cancel.setResult(auditStatus);
+					this.cancelOrderService.update(cancel);
+				}
+				
 			}
 			
 		}else{
 			return "";
 		}
-		
 		
 		return "success";
 	}
@@ -168,23 +174,21 @@ public class NoticeController {
 		//验证请求
 		String md5str="order_no="+order_no +XmlTemplate.p.getProperty("privateKey");
 		String md5=StaxonUtils.getMD5(md5str);
-		
+		System.out.println(md5);
 		if(!md5.equals(sign)){
-			return "签名错误";
+			throw new BusinessException("签名错误");
 		}
 		
-		OrderChild child=this.childService.findByOrderCode(subOrderCode);
+		OrderChild child=this.orderChildService.findByOrderCode(subOrderCode);
 		
+		//判断更新状态
 		if(child!=null&&child.getNoticeStatus().equals("0")){
-			
 			//更新订单和订单日志
-			child.setStatus("4");	//已退完成
+			child.setStatus("4");	//已完成
 			child.setNoticeStatus("1");//已接收通知
-			this.childService.update(child);
+			this.orderChildService.update(child);
 					
 		}
-		
-		
 		
 		return "success";
 	}

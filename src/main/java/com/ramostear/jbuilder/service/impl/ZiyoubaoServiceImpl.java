@@ -39,7 +39,6 @@ public class ZiyoubaoServiceImpl implements ZiyoubaoService {
 	public ReqOrderVO sendOrder(SendOrderVO vo) {
 		
 		String reqstr=XmlTemplate.sendOrderTemp(vo);
-		System.out.println(reqstr);
 		String res=HttpRequestUtil.sendPost(reqstr);//发送结果
 		String sjon=StaxonUtils.xml2json(res);		//结果转json
 		JSONObject result = JSON.parseObject(sjon);  
@@ -132,9 +131,21 @@ public class ZiyoubaoServiceImpl implements ZiyoubaoService {
 	}
 
 	@Override
-	public ReqVO modifyOccDate(String childOrderCode) {
-		// TODO Auto-generated method stub
-		return null;
+	public ReqVO modifyOccDate(String childOrderCode, String newDate) {
+		
+		String reqstr=XmlTemplate.ChangeOccDate(childOrderCode, newDate);
+		String res=HttpRequestUtil.sendPost(reqstr);//发送结果
+		String sjon=StaxonUtils.xml2json(res);		//结果转json
+		JSONObject result = JSON.parseObject(sjon);  
+	    JSONObject detail = result.getJSONObject("PWBResponse");
+	    
+	    ReqVO r=new ReqVO();
+		r.setCode(detail.getInteger("code"));
+		r.setDescription(detail.getString("description"));
+		return r;
+		
 	}
+
+	
 
 }

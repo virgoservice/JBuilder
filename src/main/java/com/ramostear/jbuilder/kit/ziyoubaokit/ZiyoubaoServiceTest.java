@@ -9,7 +9,7 @@ import java.util.Properties;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.ramostear.jbuilder.kit.UserException;
+import com.ramostear.jbuilder.exception.BusinessException;
 import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqCancelOrderVO;
 import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqOrderVO;
 import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqVO;
@@ -62,38 +62,38 @@ public class ZiyoubaoServiceTest {
 		
 		
 //		下单测试
-//		ZiyoubaoServiceImpl ser=new ZiyoubaoServiceImpl();
-//		SendOrderVO svo=new SendOrderVO();
-//		svo.setOrderCode("t009");
-//		svo.setLinkName("laowang");
-//		svo.setLinkMobile("13648362969");
-//		svo.setOrderPrice(10000);
-//		svo.setPayMethod("zyb");
-//		
-//		List<TicketVO> tlist=new ArrayList<TicketVO>();
-//		TicketVO tvo=new TicketVO();
-//		tvo.setGoodsCode("PST20160918013085");
-//		tvo.setGoodsName("测试票");
-//		tvo.setOccDate("2017-06-18 12:12:12");
-//		tvo.setOrderCode("c009");
-//		tvo.setPrice(213.21);
-//		tvo.setQuantity(2);
-//		tvo.setTotalPrice(500);
-//		tvo.setRemark("这是备注");
-//		tlist.add(tvo);
-//		svo.setTicketList(tlist);
-//		ReqOrderVO result=ser.sendOrder(svo);
-//		System.out.println(result.getDescription());
-//		System.out.println(result.toString());
+		ZiyoubaoServiceImpl ser=new ZiyoubaoServiceImpl();
+		SendOrderVO svo=new SendOrderVO();
+		svo.setOrderCode("t0091");
+		svo.setLinkName("laowang");
+		svo.setLinkMobile("13648362969");
+		svo.setOrderPrice(10000);
+		svo.setPayMethod("zyb");
+		
+		List<TicketVO> tlist=new ArrayList<TicketVO>();
+		TicketVO tvo=new TicketVO();
+		tvo.setGoodsCode("PST20160918013085");
+		tvo.setGoodsName("测试票");
+		tvo.setOccDate("2017-06-28 12:12:12");
+		tvo.setOrderCode("c0091");
+		tvo.setPrice(213.21);
+		tvo.setQuantity(2);
+		tvo.setTotalPrice(500);
+		tvo.setRemark("这是备注");
+		tlist.add(tvo);
+		svo.setTicketList(tlist);
+		ReqOrderVO result=ser.sendOrder(svo);
+		System.out.println(result.getDescription());
+		System.out.println(result.toString());
 		
 //		ZiyoubaoServiceImpl ser=new ZiyoubaoServiceImpl();
 //		ReqCancelOrderVO ret=ser.cancelOrder("t009");
 //		System.out.println(ret.toString());
 		
 //		退票状态查询测试
-		ZiyoubaoServiceImpl ser=new ZiyoubaoServiceImpl();
-		ReqVO ret=ser.queryCancelResult("e7f3e216bdd0485489a6102d9640e475");
-		System.out.println(ret.toString());
+//		ZiyoubaoServiceImpl ser=new ZiyoubaoServiceImpl();
+//		ReqVO ret=ser.queryCancelResult("e7f3e216bdd0485489a6102d9640e475");
+//		System.out.println(ret.toString());
 		
 		
 	}

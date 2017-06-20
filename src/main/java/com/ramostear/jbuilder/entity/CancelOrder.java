@@ -21,7 +21,7 @@ import java.util.Date;
 public class CancelOrder {
 
 	private Long id;
-	private String CancelOrderCode;
+	private String cancelOrderCode;
 	private Long orderId;
 	private Long childOrderId;
 	private String retreatBatchNo;
@@ -44,11 +44,11 @@ public class CancelOrder {
 	}
 
 	public String getCancelOrderCode() {
-		return CancelOrderCode;
+		return cancelOrderCode;
 	}
 
 	public void setCancelOrderCode(String cancelOrderCode) {
-		CancelOrderCode = cancelOrderCode;
+		this.cancelOrderCode = cancelOrderCode;
 	}
 
 	public Long getOrderId() {
@@ -120,7 +120,7 @@ public class CancelOrder {
 			String status, String result, Date cancelDate, double totalPrice) {
 		super();
 		this.id = id;
-		CancelOrderCode = cancelOrderCode;
+		this.cancelOrderCode = cancelOrderCode;
 		this.orderId = orderId;
 		this.childOrderId = childOrderId;
 		this.retreatBatchNo = retreatBatchNo;
@@ -133,15 +133,11 @@ public class CancelOrder {
 
 	@Override
 	public String toString() {
-		return "CancelOrder [id=" + id + ", CancelOrderCode=" + CancelOrderCode
+		return "CancelOrder [id=" + id + ", cancelOrderCode=" + cancelOrderCode
 				+ ", orderId=" + orderId + ", childOrderId=" + childOrderId
 				+ ", retreatBatchNo=" + retreatBatchNo + ", num=" + num
 				+ ", status=" + status + ", result=" + result + ", cancelDate="
 				+ cancelDate + ", totalPrice=" + totalPrice + "]";
 	}
 
-
-	
-	
-	
 }

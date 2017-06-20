@@ -115,6 +115,23 @@ public class XmlTemplate {
 		return sb.toString();
 	}
 	
+	public static String ChangeOccDate(String orderCode,String newDate){
+		StringBuilder sb=new StringBuilder();
+		sb.append("<PWBRequest>");
+		sb.append("<transactionName>ORDER_ENDORSE_REQ</transactionName>");
+		sb.append(getHead());
+		sb.append(getIden());
+		sb.append("<orderRequest>");
+		sb.append("<endorse>");
+		sb.append("<subOrderCode>"+orderCode+"</subOrderCode>");
+		sb.append("<newOccDate>"+newDate+"</newOccDate>");
+		sb.append("</endorse>");
+		sb.append("</orderRequest>");
+		sb.append("</PWBRequest>");
+		
+		return sb.toString();
+	}
+	
 	public static String getDate(){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
 	    String dateNowStr = sdf.format(new Date());

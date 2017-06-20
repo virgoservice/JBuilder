@@ -77,7 +77,7 @@
 			<if test="orderCode != null">orderCode=#{orderCode},</if>
 			<if test="orderPrice != null">orderPrice=#{orderPrice},</if>
 			<if test="payMethod != null">payMethod=#{payMethod},</if>
-			<if test="payStatus != null">payMethod=#{payStatus},</if>
+			<if test="payStatus != null">payStatus=#{payStatus},</if>
 			<if test="status != null">status=#{status},</if>
 			<if test="createTime != null">createTime=#{createTime},</if>
 			
@@ -107,6 +107,15 @@
 		where 
 		id = #{id}
 	</select>
+	
+	<select id="findByIdAndUid" parameterType="Long" resultMap="resultMap">
+		select * from order_order 
+		where 
+		id = #{id}
+		and userId=#{uid}
+	</select>
+	
+	
 	
 	<select id="findByOrderCode" parameterType="String" resultMap="resultMap">
 		select * from order_order 

@@ -1,7 +1,7 @@
 /**   
 													The Apache License 2.0
 												  Copyright (c) 2016 Ramostear 
-								                              2017年6月13日 下午3:45:28
+								                              2017年6月16日 上午10:32:06
 								Unless required by applicable law or agreed to in writing, software
 								 distributed under the License is distributed on an "AS IS" BASIS,
 							  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -9,25 +9,22 @@
 								                 limitations under the License. 
 */
 package com.ramostear.jbuilder.service;
+import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
-import com.ramostear.jbuilder.entity.OrderChild;
+import com.ramostear.jbuilder.entity.OrderLog;
+import com.ramostear.jbuilder.kit.PageDto;
 
 /** 
  * @Desc: () 
  * @author: 赖生龙 
- * @date: 2017年6月13日 下午3:45:28 
+ * @date: 2017年6月16日 上午10:32:06 
  * @email:361801580@qq.com 
  */
-public interface OrderChildService {
+public interface OrderLogService {
 	
-	public OrderChild findByOrderCode(String orderCode);
+	public boolean add(OrderLog log);
+	
+	public PageDto<OrderLog> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("oderBy")String orderBy,@Param("order") boolean order,@Param("search")String search);
 
-	public boolean update(OrderChild orderChild);
-	
-	public OrderChild findById(Long cid);
-	
-	//根据订单id查询所有子订单
-	public List<OrderChild> getAllByOid(Long oid);
 }
+

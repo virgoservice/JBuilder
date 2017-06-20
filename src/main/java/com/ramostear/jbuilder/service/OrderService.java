@@ -16,9 +16,9 @@ import org.apache.ibatis.annotations.Param;
 
 import com.ramostear.jbuilder.entity.Order;
 import com.ramostear.jbuilder.entity.OrderChild;
-import com.ramostear.jbuilder.entity.Ticket;
 import com.ramostear.jbuilder.kit.PageDto;
-import com.ramostear.jbuilder.kit.UserException;
+import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqCancelOrderVO;
+import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqOrderVO;
 
 /** 
  * @Desc: () 
@@ -36,6 +36,11 @@ public interface OrderService {
 	 * @throws Exception 
 	 */
 	public boolean save(Order order,List<OrderChild> childOrders);
+	/**
+	 * 订单付款后续
+	 * @return
+	 */
+	public ReqOrderVO payOrder(Long orderId);
 	
 	public boolean update(Order order);
 	
@@ -52,9 +57,11 @@ public interface OrderService {
 	 * @param num 退票数量
 	 * @return
 	 */
-	public boolean returnTicket(Long id,Integer num);
+	ReqCancelOrderVO returnTicket(Long id, Integer num);
 	
 	public Order findById(Long id);
+	//根据用户id和id查询
+	public Order findByIdAndUid(Long id,Long uid);
 	
 	public Order findByOrderCode(String orderCode);
 	
@@ -72,5 +79,6 @@ public interface OrderService {
 	 * @return
 	 */
 	public PageDto<Order> findByPageByUid(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order,@Param("uid")String uid);
+	
 
 }
