@@ -93,8 +93,9 @@ public class CancelOrderServiceImpl implements CancelOrderService {
 	}
 
 	@Override
-	public CancelOrder findByChildOrderId(Long id) {
-		return this.cdao.findByChildOrderId(id);
+	public CancelOrder findByRetreatBatchNo(String retreatBatchNo) {
+		return this.cdao.findByRetreatBatchNo(retreatBatchNo);
 	}
+
 
 }

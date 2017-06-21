@@ -4,7 +4,6 @@
 <mapper namespace="com.ramostear.jbuilder.dao.OrderDao">
 
 
-
 	<resultMap type="com.ramostear.jbuilder.entity.Order" id="resultMap">
 		<id column="id" property="id"/>
 		
@@ -17,6 +16,9 @@
 		<result column="payMethod" property="payMethod"/>
 		<result column="payStatus" property="payStatus"/>
 		<result column="ziyoubaoStatus" property="ziyoubaoStatus"/>
+		<result column="ziyoubaoSend" property="ziyoubaoSend"/>
+		<result column="ziyoubaoCheckNo" property="ziyoubaoCheckNo"/>
+		
 		<result column="checkNum" property="checkNum"/>
 		<result column="returnNum" property="returnNum"/>
 		<result column="total" property="total"/>
@@ -37,12 +39,15 @@
 			<if test="payMethod != null">payMethod,</if>
 			<if test="payStatus != null">payStatus,</if>
 			<if test="ziyoubaoStatus != null">ziyoubaoStatus,</if>
+			<if test="ziyoubaoSend != null">ziyoubaoSend,</if>
 			<if test="checkNum != null">checkNum,</if>
 			<if test="returnNum != null">returnNum,</if>
 			<if test="total != null">total,</if>
 			<if test="status != null">status,</if>
 			<if test="createTime != null">createTime,</if>
-			<if test="retreatBatchNo != null">retreatBatchNo</if>
+			<if test="retreatBatchNo != null">retreatBatchNo,</if>
+			<if test="ziyoubaoCheckNo != null">ziyoubaoCheckNo</if>
+			
 		</trim>
 		<trim prefix="values(" suffix=")" suffixOverrides=",">
 			
@@ -56,10 +61,12 @@
 			<if test="payStatus != null">#{payStatus},</if>
 			
 			<if test="ziyoubaoStatus != null">#{ziyoubaoStatus},</if>
+			<if test="ziyoubaoSend != null">#{ziyoubaoSend},</if>
 			<if test="checkNum != null">#{checkNum},</if>
 			<if test="returnNum != null">#{returnNum},</if>
 			<if test="total != null">#{total},</if>
 			
+			<if test="ziyoubaoCheckNo != null">#{ziyoubaoCheckNo},</if>
 			<if test="status != null">#{status},</if>
 			<if test="createTime != null">#{createTime},</if>
 			<if test="retreatBatchNo != null">#{retreatBatchNo}</if>
@@ -81,7 +88,9 @@
 			<if test="status != null">status=#{status},</if>
 			<if test="createTime != null">createTime=#{createTime},</if>
 			
+			<if test="ziyoubaoCheckNo != null">ziyoubaoCheckNo=#{ziyoubaoCheckNo},</if>
 			<if test="ziyoubaoStatus != null">ziyoubaoStatus=#{ziyoubaoStatus},</if>
+			<if test="ziyoubaoSend != null">ziyoubaoSend=#{ziyoubaoSend},</if>
 			<if test="checkNum != null">checkNum=#{checkNum},</if>
 			<if test="returnNum != null">returnNum=#{returnNum},</if>
 			<if test="total != null">total=#{total},</if>
@@ -114,8 +123,6 @@
 		id = #{id}
 		and userId=#{uid}
 	</select>
-	
-	
 	
 	<select id="findByOrderCode" parameterType="String" resultMap="resultMap">
 		select * from order_order 

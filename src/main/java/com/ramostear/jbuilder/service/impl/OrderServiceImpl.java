@@ -10,7 +10,6 @@
 */
 package com.ramostear.jbuilder.service.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,12 +28,8 @@ import com.ramostear.jbuilder.entity.Ticket;
 import com.ramostear.jbuilder.exception.BusinessException;
 import com.ramostear.jbuilder.kit.PageDto;
 import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqCancelOrderVO;
-import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqOrderVO;
-import com.ramostear.jbuilder.kit.ziyoubaokit.vo.SendOrderVO;
-import com.ramostear.jbuilder.kit.ziyoubaokit.vo.TicketVO;
 import com.ramostear.jbuilder.service.OrderService;
 import com.ramostear.jbuilder.service.ZiyoubaoService;
-import com.ramostear.jbuilder.util.DateUtil;
 import com.ramostear.jbuilder.util.OrderCodeGenerator;
 
 /** 
@@ -178,8 +173,7 @@ public class OrderServiceImpl implements OrderService {
 	 */
 	@Override
 	public boolean update(Order order) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.odao.update(order);
 	}
 
 	/* (non-Javadoc)
@@ -213,7 +207,6 @@ public class OrderServiceImpl implements OrderService {
 	 */
 	@Override
 	public List<Order> findAll() {
-		// TODO Auto-generated method stub
 		return this.odao.findAll();
 	}
 
@@ -237,7 +230,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public ReqOrderVO payOrder(Long orderId) {
+	public void payOrder(Long orderId) {
 		//1、付款后更新订单状态
 		Order order=this.odao.findById(orderId);
 		if("1".equals(order.getPayStatus())){
@@ -246,39 +239,16 @@ public class OrderServiceImpl implements OrderService {
 		
 		order.setPayStatus("1");//已付款
 		order.setStatus("2");//已完成
+		order.setZiyoubaoSend(1);//已发送ziyoubao接口
 		this.odao.update(order);
 		
 		List<OrderChild> child=this.cdao.getAllByOid(orderId);
 				
-		SendOrderVO send=new SendOrderVO();
-		send.setOrderCode(order.getOrderCode());
-		send.setOrderPrice(order.getOrderPrice());
-		send.setLinkMobile(order.getLinkMobile());
-		send.setLinkName(order.getLinkName());
-		send.setPayMethod(order.getPayMethod());
-		List<TicketVO> ticketList =new ArrayList<TicketVO>();
-				
 		for(OrderChild item : child){
-			TicketVO t=new TicketVO();
-			t.setGoodsCode(item.getGoodsCode());
-			t.setGoodsName(item.getGoodsName());
-			t.setOccDate(DateUtil.getDateYYYYMMDD(item.getOccDate()));
-			t.setOrderCode(item.getOrderCode());
-			t.setPrice(item.getPrice());
-			t.setQuantity(item.getQuantity());
-			t.setRemark(item.getRemark());
-			t.setTotalPrice(item.getTotalPrice());
-			ticketList.add(t);
-			
 			//更新子订单状态
 			item.setPayStatus("1");//已经付款
 			this.cdao.update(item);
 		}
-				
-		send.setTicketList(ticketList);
-				
-		ReqOrderVO ret=this.ziyoubao.sendOrder(send);
-		return ret;
 	}
 
 	@Override

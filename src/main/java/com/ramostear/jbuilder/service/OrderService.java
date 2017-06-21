@@ -37,10 +37,10 @@ public interface OrderService {
 	 */
 	public boolean save(Order order,List<OrderChild> childOrders);
 	/**
-	 * 订单付款后续
+	 * 订单付款
 	 * @return
 	 */
-	public ReqOrderVO payOrder(Long orderId);
+	public void payOrder(Long orderId);
 	
 	public boolean update(Order order);
 	

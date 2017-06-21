@@ -35,9 +35,9 @@ public class ExceptionHandler implements HandlerExceptionResolver {
 	public ModelAndView resolveException(HttpServletRequest request,
 			HttpServletResponse response, Object handler, Exception exception) {
 		// 判断是否ajax请求
-        if (!(request.getHeader("accept").indexOf("application/json") > -1 || (request
+        if (request.getHeader("accept")!=null&&(!(request.getHeader("accept").indexOf("application/json") > -1 || (request
                 .getHeader("X-Requested-With") != null && request.getHeader(
-                "X-Requested-With").indexOf("XMLHttpRequest") > -1))) {
+                "X-Requested-With").indexOf("XMLHttpRequest") > -1)))) {
             // 如果不是ajax，JSP格式返回
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("success", false);

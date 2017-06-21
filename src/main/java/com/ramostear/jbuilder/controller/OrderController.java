@@ -89,17 +89,17 @@ public class OrderController {
 	 * 此处做测试，移动到付款完成后的逻辑里面
 	 * 订单付款后续逻辑,发起zhiyoubao购票
 	 */
-	@ResponseBody
-	@RequestMapping(value="/orderPay",method=RequestMethod.POST)
-	public Result orderPay(Long orderId){
-		
-		ReqOrderVO req=this.orderService.payOrder(orderId);
-		
-		Result result = new Result();
-		result.setObj(req);
-		
-		return result;
-	}
+//	@ResponseBody
+//	@RequestMapping(value="/orderPay",method=RequestMethod.POST)
+//	public Result orderPay(Long orderId){
+//		
+//		ReqOrderVO req=this.orderService.payOrder(orderId);
+//		
+//		Result result = new Result();
+//		result.setObj(req);
+//		
+//		return result;
+//	}
 	
 	/**
 	 * 退票

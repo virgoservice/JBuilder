@@ -82,10 +82,10 @@
 		CancelOrderCode = #{orderCode}
 	</select>
 	
-	<select id="findByChildOrderId" parameterType="Long" resultMap="resultMap">
+	<select id="findByRetreatBatchNo" parameterType="String" resultMap="resultMap">
 		select * from order_cancel_order 
 		where 
-		childOrderId = #{id}
+		retreatBatchNo = #{retreatBatchNo}
 	</select>
 	
 	

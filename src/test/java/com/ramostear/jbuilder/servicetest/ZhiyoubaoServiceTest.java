@@ -10,7 +10,21 @@
 */
 package com.ramostear.jbuilder.servicetest;
 
-import com.ramostear.jbuilder.kit.UserException;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.AlipayClient;
+import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.request.AlipayOpenPublicTemplateMessageIndustryModifyRequest;
+import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.alipay.api.request.AlipayTradePayRequest;
+import com.alipay.api.response.AlipayOpenPublicTemplateMessageIndustryModifyResponse;
+import com.alipay.api.response.AlipayTradePayResponse;
+import com.ramostear.jbuilder.kit.alipay.AlipayManager;
+
 
 /**
  * @description:
@@ -92,6 +106,54 @@ public class ZhiyoubaoServiceTest {
 		//System.out.println(result.toString());
 		//f1fa8a239a3f4519ae08612ae2bdf6aa
 		
-		throw new UserException("500","werwer");
+
+		//实例化客户端
+//		AlipayClient alipayClient = AlipayManager.getIstance();
+//		
+//		
+//		AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();//创建API对应的request
+//	    alipayRequest.setReturnUrl("http://domain.com/CallBack/return_url.jsp");
+//	    alipayRequest.setNotifyUrl("http://domain.com/CallBack/notify_url.jsp");//在公共参数中设置回跳和通知地址
+//	    alipayRequest.setBizContent("{" +
+//	        "    \"out_trade_no\":\"20150320010101001\"," +
+//	        "    \"product_code\":\"FAST_INSTANT_TRADE_PAY\"," +
+//	        "    \"total_amount\":88.88," +
+//	        "    \"subject\":\"Iphone6 16G\"," +
+//	        "    \"body\":\"Iphone6 16G\"," +
+//	        "    \"passback_params\":\"merchantBizType%3d3C%26merchantBizNo%3d2016010101111\"," +
+//	        "    \"extend_params\":{" +
+//	        "    \"sys_service_provider_id\":\"2088511833207846\"" +
+//	        "    }"+
+//	        "  }");//填充业务参数
+//	    String form="";
+//	    try {
+//	        form = alipayClient.pageExecute(alipayRequest).getBody(); //调用SDK生成表单
+//	    } catch (AlipayApiException e) {
+//	        e.printStackTrace();
+//	    }
+//	    System.out.println(form.toString());
+		
+		Map<String, Object> map = new HashMap<String, Object>();  
+		map.put("out_trade_no", "20150320010101001");
+		map.put("product_code", "FAST_INSTANT_TRADE_PAY");
+		map.put("total_amount", "10");
+		map.put("subject", "234");
+		map.put("body", "234234234");
+		String json = JSON.toJSONString(map);
+		System.out.println(json);
+		
+		
+		String test="{" +
+      "    \"out_trade_no\":\"20150320010101001\"," +
+      "    \"product_code\":\"FAST_INSTANT_TRADE_PAY\"," +
+      "    \"total_amount\":88.88," +
+      "    \"subject\":\"sdf水电费水电费 16G\"," +
+      "    \"body\":\"Iphone6 16G\"," +
+      "    \"passback_params\":\"merchantBizType%3d3C%26merchantBizNo%3d2016010101111\"," +
+      "    \"extend_params\":{" +
+      "    \"sys_service_provider_id\":\"2088511833207846\"" +
+      "    }"+
+      "  }";
+		System.out.println(test);
 	}
 }

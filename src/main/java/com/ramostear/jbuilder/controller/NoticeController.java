@@ -20,6 +20,7 @@ import com.ramostear.jbuilder.entity.Order;
 import com.ramostear.jbuilder.entity.OrderChild;
 import com.ramostear.jbuilder.exception.BusinessException;
 import com.ramostear.jbuilder.kit.ziyoubaokit.XmlTemplate;
+import com.ramostear.jbuilder.service.AlipayService;
 import com.ramostear.jbuilder.service.CancelOrderService;
 import com.ramostear.jbuilder.service.OrderChildService;
 import com.ramostear.jbuilder.service.OrderService;
@@ -41,6 +42,8 @@ public class NoticeController {
 	private OrderChildService orderChildService;
 	@Autowired
 	private CancelOrderService cancelOrderService;
+	@Autowired
+	private AlipayService alipayService;
 	
 	/**
 	 * 订单完结通知
@@ -99,7 +102,7 @@ public class NoticeController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/return",method=RequestMethod.POST)
-	public String returnTicket(String orderCode,String subOrderCode,String retreatBatchNo,String auditStatus,String returnNum,String sign){
+	public String returnTicket(String orderCode,String subOrderCode,String retreatBatchNo,String auditStatus,Integer returnNum,String sign){
 		
 		//验证请求
 		String md5str=orderCode +XmlTemplate.p.getProperty("privateKey");
@@ -114,20 +117,7 @@ public class NoticeController {
 			if(child!=null&&child.getNoticeStatus().equals("0")){
 				//更新订单和订单日志
 				//发起退款支付
-				//***
-					
-				child.setStatus("3");	//已退款流程
-				child.setNoticeStatus("1");//已接收通知
-				child.setReturnStatus("1");//已经退款状态
-				this.orderChildService.update(child);
-					
-				//更改退单记录
-				CancelOrder cancel=this.cancelOrderService.findByChildOrderId(child.getId());
-				if(cancel!=null){
-					cancel.setStatus("1");
-					cancel.setResult(auditStatus);
-					this.cancelOrderService.update(cancel);
-				}
+				this.alipayService.AlipayRefunds(child.getOrderId(), child.getId(), returnNum,retreatBatchNo);
 			}
 		}else if("failure".equals(auditStatus)){
 			//退票失败
@@ -140,7 +130,7 @@ public class NoticeController {
 				this.orderChildService.update(child);
 					
 				//更改退单记录
-				CancelOrder cancel=this.cancelOrderService.findByChildOrderId(child.getId());
+				CancelOrder cancel=this.cancelOrderService.findByRetreatBatchNo(retreatBatchNo);
 				if(cancel!=null){
 					cancel.setStatus("1");
 					cancel.setResult(auditStatus);
