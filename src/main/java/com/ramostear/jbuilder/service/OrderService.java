@@ -17,8 +17,6 @@ import org.apache.ibatis.annotations.Param;
 import com.ramostear.jbuilder.entity.Order;
 import com.ramostear.jbuilder.entity.OrderChild;
 import com.ramostear.jbuilder.kit.PageDto;
-import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqCancelOrderVO;
-import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqOrderVO;
 
 /** 
  * @Desc: () 
@@ -52,15 +50,25 @@ public interface OrderService {
 	public boolean cancelOrder(Long id);
 	
 	/**
+	 * 检票
+	 * @param corderId 子订单id
+	 * @param num	检票数量
+	 * @return
+	 */
+	public boolean checkOrder(Long corderId,Integer num);
+	
+	/**
 	 * 退票
 	 * @param id 子订单id
 	 * @param num 退票数量
 	 * @return
 	 */
-	ReqCancelOrderVO returnTicket(Long id, Integer num);
+	boolean returnTicket(Long id, Integer num);
 	
 	public Order findById(Long id);
-	//根据用户id和id查询
+	/**
+	 * 根据用户id和id查询
+	 */
 	public Order findByIdAndUid(Long id,Long uid);
 	
 	public Order findByOrderCode(String orderCode);

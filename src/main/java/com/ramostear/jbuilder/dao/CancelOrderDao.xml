@@ -88,6 +88,12 @@
 		retreatBatchNo = #{retreatBatchNo}
 	</select>
 	
+	<select id="findCancelCount"  parameterType="Long"  resultType="Long">
+		select sum(t.num) from 
+		order_cancel_order t 
+		where t.childOrderId=#{id}
+ 
+	</select>
 	
 	<select id="findAll"  resultMap="resultMap">
 		select * from order_cancel_order

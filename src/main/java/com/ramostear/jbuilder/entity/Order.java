@@ -39,7 +39,6 @@ public class Order {
 	private Integer ziyoubaoSend;
 	private String ziyoubaoCheckNo;
 	
-	
 	private List<OrderChild> list;
 
 

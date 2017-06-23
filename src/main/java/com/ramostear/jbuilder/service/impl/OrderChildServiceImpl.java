@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import com.ramostear.jbuilder.dao.OrderChildDao;
 import com.ramostear.jbuilder.entity.OrderChild;
+import com.ramostear.jbuilder.entity.OrderLog;
+import com.ramostear.jbuilder.kit.PageDto;
 import com.ramostear.jbuilder.service.OrderChildService;
 
 /** 
@@ -54,6 +56,14 @@ public class OrderChildServiceImpl implements OrderChildService {
 	@Override
 	public OrderChild findById(Long cid) {
 		return this.odao.findById(cid);
+	}
+
+	@Override
+	public PageDto<OrderChild> findCheckByPage(int offset, int size,
+			String orderBy, boolean order, String search) {
+		List<OrderChild> list = this.odao.findCheckByPage((offset-1)*size, size, orderBy, order,search);
+		Long totalSize = this.odao.checkPageSize();
+		return new PageDto<OrderChild>(totalSize,offset,size,list);
 	}
 
 }

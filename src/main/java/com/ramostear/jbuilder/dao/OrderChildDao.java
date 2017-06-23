@@ -33,6 +33,8 @@ public interface OrderChildDao {
 	
 	public Long size();
 	
+	public Long checkPageSize();
+	
 	public OrderChild findById(Long id);
 	
 	public OrderChild findByOrderCode(String orderCode);
@@ -41,6 +43,6 @@ public interface OrderChildDao {
 	
 	public List<OrderChild> getAllByOid(Long oid);
 	
-	public List<OrderChild> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order,@Param("orderCode")String orderCode);
+	public List<OrderChild> findCheckByPage(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order,@Param("orderCode")String orderCode);
 
 }

@@ -11,7 +11,9 @@
 package com.ramostear.jbuilder.dao;
 
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
+
 import com.ramostear.jbuilder.entity.CancelOrder;
 
 /**
@@ -38,6 +40,8 @@ public interface CancelOrderDao {
 	public CancelOrder findByRetreatBatchNo(String retreatBatchNo);
 	
 	public List<CancelOrder> findAll();
+	
+	public Long findCancelCount(Long id);
 	
 	public List<CancelOrder> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order,@Param("orderCode")String orderCode);
 

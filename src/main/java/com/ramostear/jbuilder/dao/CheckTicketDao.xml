@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ramostear.jbuilder.dao.CheckTicketDao">
+
+	<resultMap type="com.ramostear.jbuilder.entity.CheckTicket" id="resultMap">
+		<id column="id" property="id"/>
+		<result column="orderCID" property="orderCID"/>
+		<result column="orderID" property="orderID"/>
+		<result column="checkTime" property="checkTime"/>
+		<result column="checkNum" property="checkNum"/>
+		<result column="checkUserID" property="checkUserID"/>
+		<result column="goodName" property="goodName"/>
+		
+		
+	</resultMap>
+	
+
+	<insert id="save" parameterType="com.ramostear.jbuilder.entity.CheckTicket" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert into order_check_ticket
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orderCID != null">orderCID,</if>
+			<if test="orderID != null">orderID,</if>
+			<if test="checkTime != null">checkTime,</if>
+			<if test="checkNum != null">checkNum,</if>
+			<if test="checkUserID != null">checkUserID,</if>
+			<if test="goodName != null">goodName</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="orderCID != null">#{orderCID},</if>
+			<if test="orderID != null">#{orderID},</if>
+			<if test="checkTime != null">#{checkTime},</if>
+			<if test="checkNum != null">#{checkNum},</if>
+			<if test="checkUserID != null">#{checkUserID},</if>
+			<if test="goodName != null">#{goodName}</if>
+		</trim>
+	</insert>	
+	
+	<update id="update" parameterType="com.ramostear.jbuilder.entity.CheckTicket">
+		update order_check_ticket
+		<set>
+			<if test="orderCID != null">orderCID=#{orderCID},</if>
+			<if test="orderID != null">orderID=#{orderID},</if>
+			<if test="checkTime != null">checkTime=#{checkTime},</if>
+			<if test="checkNum != null">checkNum=#{checkNum},</if>
+			<if test="checkUserID != null">checkUserID=#{checkUserID},</if>
+			<if test="goodName != null">goodName=#{goodName}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<select id="size" resultType="Long">
+		select count(*) from order_check_ticket
+	</select>
+	
+	<delete id="delete" parameterType="Long">
+		delete from order_check_ticket 
+		where 
+		id = #{id}
+	</delete>
+
+	<select id="findById" parameterType="Long" resultMap="resultMap">
+		select * from order_check_ticket 
+		where 
+		id = #{id}
+	</select>
+	
+	<select id="findAll"  resultMap="resultMap">
+		select * from order_check_ticket
+	</select>
+	
+	<select id="findCheckCount"  parameterType="Long"  resultType="Long">
+		select sum(t.checkNum) from 
+		order_check_ticket t 
+		where t.orderCID=#{id}
+ 
+	</select>
+	
+	<select id="findByPage" resultMap="resultMap">
+		select * from order_check_ticket 
+		
+		order by ${orderBy} 
+		<if test="order == true">
+			DESC
+		</if>
+		<if test="order == false">
+			ASC
+		</if>
+		
+		limit #{offset},#{size}
+	</select>
+	
+</mapper>

@@ -25,13 +25,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
-import com.alipay.api.request.AlipayTradeRefundRequest;
-import com.alipay.api.response.AlipayTradeRefundResponse;
 import com.ramostear.jbuilder.consts.SysConsts;
 import com.ramostear.jbuilder.entity.Order;
 import com.ramostear.jbuilder.entity.OrderChild;
@@ -106,10 +103,10 @@ public class PayController {
 		}
 		System.out.println(form);
 		return form;
-	}
+	} 
 	
 	/**
-	 * 支付结果异步通知
+	 * 支付结果异步通知处理付款后业务
 	 * @param request
 	 * @return
 	 */
@@ -155,17 +152,17 @@ public class PayController {
 	}
 	
 	/**
-	 * 退款测试
+	 * 管理员处理退款
 	 * @param orderId
 	 * @param session
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value="/refunds",method=RequestMethod.POST)
-	public String refunds(Long orderChildId,HttpSession session){
+	public String refunds(Long cancelOrderId,HttpSession session){
+		//考虑权限处理
 		
-		//this.alipayService.AlipayRefunds(234234L, 234234L, 1);
-		
+		this.alipayService.AlipayRefunds(cancelOrderId);
 		return "success";
 	}
 }

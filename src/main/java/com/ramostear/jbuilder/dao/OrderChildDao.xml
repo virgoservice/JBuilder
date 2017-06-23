@@ -22,6 +22,8 @@
 		<result column="status" property="status"/>
 		<result column="createTime" property="createTime"/>
 		<result column="retreatBatchNo" property="retreatBatchNo"/>
+		<result column="checkStatus" property="checkStatus"/>
+		<association property="order" column="orderId" select="findOrder"/>
 	</resultMap>
 
 	<insert id="save" parameterType="com.ramostear.jbuilder.entity.OrderChild" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
@@ -42,6 +44,8 @@
 			<if test="status != null">noticeStatus,</if>
 			<if test="status != null">status,</if>
 			<if test="createTime != null">createTime,</if>
+			<if test="checkStatus != null">checkStatus,</if>
+			
 			<if test="retreatBatchNo != null">retreatBatchNo</if>
 		</trim>
 		<trim prefix="values(" suffix=")" suffixOverrides=",">
@@ -60,6 +64,7 @@
 			<if test="status != null">#{noticeStatus},</if>
 			<if test="status != null">#{status},</if>
 			<if test="createTime != null">#{createTime},</if>
+			<if test="checkStatus != null">#{checkStatus},</if>
 			<if test="retreatBatchNo != null">#{retreatBatchNo}</if>
 		</trim>
 	</insert>	
@@ -81,11 +86,19 @@
 			<if test="noticeStatus != null">noticeStatus=#{noticeStatus},</if>
 			<if test="status != null">status=#{status},</if>
 			<if test="createTime != null">createTime=#{createTime},</if>
+			<if test="checkStatus != null">checkStatus=#{checkStatus},</if>
 			<if test="retreatBatchNo != null">retreatBatchNo=#{retreatBatchNo},</if>
 			<if test="remark != null">remark=#{remark}</if>
 		</set>
 		where id = #{id}
 	</update>
+	
+	<select id="findOrder" parameterType="Long" resultType="com.ramostear.jbuilder.entity.Order">
+		select * from order_order 
+		where 
+		id = #{id}
+	</select>
+	
 	
 	<select id="size" resultType="Long">
 		select count(*) from order_order_child
@@ -133,11 +146,12 @@
 		select * from order_order_child
 	</select>
 	
-	<select id="findByPage" resultMap="resultMap">
-		select * from order_order_child 
+	<select id="findCheckByPage" resultMap="resultMap">
+		select * from order_order_child where 1=1
 		<if test="orderCode != null and orderCode!=''">
-			where orderCode like '%${orderCode}%'
+			and orderCode like '%${orderCode}%'
 		</if>
+		and checkStatus in (0,1)
 		order by ${orderBy} 
 		<if test="order == true">
 			DESC
@@ -148,4 +162,7 @@
 		limit #{offset},#{size}
 	</select>
 	
+	<select id="checkPageSize" resultType="Long">
+		select count(*) from order_order_child where checkStatus in (0,1)
+	</select>
 </mapper>

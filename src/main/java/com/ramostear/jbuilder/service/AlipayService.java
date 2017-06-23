@@ -27,13 +27,14 @@ public interface AlipayService {
 	 */
 	public boolean AlipayNotice(Map<String,String> param);
 	
+
 	/**
 	 * 退款
-	 * @param orderId 订单id
-	 * @param cOrderId 子订单id
-	 * @param returnNum 退票数量（ziyoubao接口返回）
-	 * @param retreatBatchNo 
+	 * @param cancelOrderId 退款记录id
+	 * @param returnNum	退款数量
 	 * @return
 	 */
-	public boolean AlipayRefunds(Long orderId,Long cOrderId,Integer returnNum, String retreatBatchNo);
+	public boolean AlipayRefunds(Long cancelOrderId);
+
+	
 }

@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,17 +22,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
+import com.ramostear.jbuilder.entity.Category;
+import com.ramostear.jbuilder.entity.CheckTicket;
 import com.ramostear.jbuilder.entity.Order;
 import com.ramostear.jbuilder.entity.OrderChild;
 import com.ramostear.jbuilder.exception.BusinessException;
+import com.ramostear.jbuilder.kit.ReqDto;
 import com.ramostear.jbuilder.kit.Result;
-import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqCancelOrderVO;
-import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqOrderVO;
-import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqVO;
+import com.ramostear.jbuilder.service.CheckTicketService;
 import com.ramostear.jbuilder.service.OrderChildService;
 import com.ramostear.jbuilder.service.OrderService;
-import com.ramostear.jbuilder.service.ZiyoubaoService;
-import com.ramostear.jbuilder.util.DateUtil;
 
 /** 
  * @Desc: () 
@@ -45,18 +47,24 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 	@Autowired
-	private ZiyoubaoService ziyoubao;
-	@Autowired
 	private OrderChildService orderChildService;
+	@Autowired
+	private CheckTicketService checkTicketService;
 	
 	@RequestMapping(value="/index",method=RequestMethod.GET)
 	public String index(){
 		return "order/index";
 	}
 	
+	/**
+	 * 用户下单
+	 * @param model
+	 * @param order
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public Result add(Model model,Order order){
+	public Result add(Order order){
 		Result result = new Result();
 		
 		order.setUserId(1L);//用户id
@@ -65,44 +73,15 @@ public class OrderController {
 		result.setSuccess(res);
 		
 		Map<String, Object> map = new HashMap<String, Object>();  
-		map.put("mes", 111);
+		map.put("mes", "test message");
 		map.put("code", 0);
 		result.setObj(map);
 		
 		return result;
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="/queryCancelStatus",method=RequestMethod.POST)
-	public Result queryCancelStatus(String retreatBatchNo){
-		Result result = new Result();
-		
-		ReqVO req=this.ziyoubao.queryCancelResult(retreatBatchNo);
-		
-		result.setSuccess(true);
-		result.setObj(req);
-		
-		return result;
-	}
-	
 	/**
-	 * 此处做测试，移动到付款完成后的逻辑里面
-	 * 订单付款后续逻辑,发起zhiyoubao购票
-	 */
-//	@ResponseBody
-//	@RequestMapping(value="/orderPay",method=RequestMethod.POST)
-//	public Result orderPay(Long orderId){
-//		
-//		ReqOrderVO req=this.orderService.payOrder(orderId);
-//		
-//		Result result = new Result();
-//		result.setObj(req);
-//		
-//		return result;
-//	}
-	
-	/**
-	 * 退票
+	 * 申请退票
 	 * @param orderId 子订单id
 	 * @param num	退票数量
 	 * @return
@@ -112,6 +91,7 @@ public class OrderController {
 	public Result returnTicket(Long corderId,Integer num){
 		//是否持有该订单
 		Long userId=1L;
+		
 		OrderChild child=this.orderChildService.findById(corderId);
 		if(child==null){
 			throw new BusinessException("订单不存在！");
@@ -121,44 +101,69 @@ public class OrderController {
 			throw new BusinessException("订单不存在！");
 		}
 		
-		ReqCancelOrderVO req=this.orderService.returnTicket(corderId,num);
+		
+		boolean req=this.orderService.returnTicket(corderId,num);
 		
 		Result result = new Result();
-		result.setObj(req);
+		result.setSuccess(req);
 		
 		return result;
 	}
 	
 	/**
-	 * 查询退票信息
-	 * @param retreatBatchNo
+	 * 待检票列表
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/queryReturn",method=RequestMethod.POST)
-	public Result queryReturn(String retreatBatchNo){
+	@RequestMapping(value="/checkTicketList",method=RequestMethod.GET)
+	public String checkTicketList(ReqDto req,Model model,String search){
 		
-		ReqVO req=this.ziyoubao.queryCancelResult(retreatBatchNo);
+		model.addAttribute("list", this.orderChildService.findCheckByPage(req.getPageNo(), req.getPageSize(), "id", true,search));
 		
-		Result result = new Result();
-		result.setObj(req);
-		
-		return result;
+		return JSON.toJSONString(this.orderChildService.findCheckByPage(req.getPageNo(), req.getPageSize(), "id", true,search));
 	}
 	
+	
 	/**
-	 * 改签游玩时间.
-	 * 限制：需要智游宝票型配置支持才行
+	 * 检票
+	 * @param corderId
+	 * @param num
+	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/changeOCC",method=RequestMethod.POST)
-	public Result changeOCC(String cOrderCode,Date newDate){
-		//如果功能定位为用户操作，判断用户是否持有改订单
+	@RequestMapping(value="/checkTicket",method=RequestMethod.POST)
+	public Result checkTicket(Long corderId,Integer num,HttpSession session){
+		//是否持有该订单
+		Long userId=1L;
 		
-		ReqVO req=this.ziyoubao.modifyOccDate(cOrderCode, DateUtil.getDateYYYYMMDD(newDate));
+		OrderChild child=this.orderChildService.findById(corderId);
+		if(child==null){
+			throw new BusinessException("子订单不存在！");
+		}
+		Order order=this.orderService.findByIdAndUid(child.getOrderId(), userId);
+		if(order==null){
+			throw new BusinessException("订单不存在！");
+		}
+		if("0".equals(order.getPayStatus())){
+			throw new BusinessException("该订单未付款");
+		}
 		
+		boolean req=this.orderService.checkOrder(corderId,num);
+		
+		//保存检票信息
+		if(req){
+			CheckTicket ct=new CheckTicket();
+			ct.setCheckNum(num);
+			ct.setCheckTime(new Date());
+			ct.setGoodName(child.getGoodsName());
+			ct.setOrderCID(corderId);
+			ct.setOrderID(child.getOrderId());
+			ct.setCheckUserID(userId);
+			
+			this.checkTicketService.add(ct);
+		}
 		Result result = new Result();
-		result.setObj(req);
+		result.setSuccess(req);
 		
 		return result;
 	}

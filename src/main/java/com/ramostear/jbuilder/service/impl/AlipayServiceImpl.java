@@ -10,9 +10,7 @@
 */
 package com.ramostear.jbuilder.service.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +25,10 @@ import com.ramostear.jbuilder.entity.Order;
 import com.ramostear.jbuilder.entity.OrderChild;
 import com.ramostear.jbuilder.exception.BusinessException;
 import com.ramostear.jbuilder.kit.alipay.AlipayManager;
-import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqOrderVO;
-import com.ramostear.jbuilder.kit.ziyoubaokit.vo.SendOrderVO;
-import com.ramostear.jbuilder.kit.ziyoubaokit.vo.TicketVO;
 import com.ramostear.jbuilder.service.AlipayService;
 import com.ramostear.jbuilder.service.CancelOrderService;
 import com.ramostear.jbuilder.service.OrderChildService;
 import com.ramostear.jbuilder.service.OrderService;
-import com.ramostear.jbuilder.service.ZiyoubaoService;
-import com.ramostear.jbuilder.util.DateUtil;
 
 /** 
  * @Desc: () 
@@ -50,8 +43,6 @@ public class AlipayServiceImpl implements AlipayService {
 	private OrderService orderService;
 	@Autowired
 	private OrderChildService orderChildService;
-	@Autowired
-	private ZiyoubaoService ziyoubaoService;
 	@Autowired
 	private CancelOrderService cancelOrderService;
 	/* (non-Javadoc)
@@ -68,7 +59,6 @@ public class AlipayServiceImpl implements AlipayService {
 		
 		//处理订单逻辑
 		String orderNo=params.get("out_trade_no");
-		//String tradeNo=params.get("trade_no");
 		String tradeStatus=params.get("trade_status");
 		String total_amount=params.get("total_amount");
 		String app_id=params.get("app_id");
@@ -95,46 +85,8 @@ public class AlipayServiceImpl implements AlipayService {
 			//暂不处理
 			
 		}else if (tradeStatus.equals("TRADE_SUCCESS")){
-			
 			//更新订单信息
 			this.orderService.payOrder(order.getId());
-			
-			//发起ziyoubao下票
-			List<OrderChild> child=this.orderChildService.getAllByOid(order.getId());
-					
-			SendOrderVO send=new SendOrderVO();
-			send.setOrderCode(order.getOrderCode());
-			send.setOrderPrice(order.getOrderPrice());
-			send.setLinkMobile(order.getLinkMobile());
-			send.setLinkName(order.getLinkName());
-			send.setPayMethod(order.getPayMethod());
-			List<TicketVO> ticketList =new ArrayList<TicketVO>();
-					
-			for(OrderChild item : child){
-				TicketVO t=new TicketVO();
-				t.setGoodsCode(item.getGoodsCode());
-				t.setGoodsName(item.getGoodsName());
-				t.setOccDate(DateUtil.getDateYYYYMMDD(item.getOccDate()));
-				t.setOrderCode(item.getOrderCode());
-				t.setPrice(item.getPrice());
-				t.setQuantity(item.getQuantity());
-				t.setRemark(item.getRemark());
-				t.setTotalPrice(item.getTotalPrice());
-				ticketList.add(t);
-			}
-					
-			send.setTicketList(ticketList);
-					
-			ReqOrderVO ret=this.ziyoubaoService.sendOrder(send);
-			if(ret.getCode()!=0){
-				//抛出异常
-				throw new BusinessException(ret.getDescription()+order.toString());
-			}
-			order=this.orderService.findByOrderCode(orderNo);
-			order.setZiyoubaoSend(1);//已发送ziyoubao接口
-			order.setZiyoubaoCheckNo(ret.getAssistCheckNo());//辅助码
-			this.orderService.update(order);
-			System.out.println(JSON.toJSON(ret));
 			
 		}
 
@@ -142,31 +94,35 @@ public class AlipayServiceImpl implements AlipayService {
 	}
 
 	@Override
-	public boolean AlipayRefunds(Long orderId,Long cOrderId,Integer num,String retreatBatchNo) {
+	public boolean AlipayRefunds(Long cancelOrderId) {
 		
 		AlipayClient alipayClient = AlipayManager.getIstance();
 		AlipayTradeRefundRequest request = new AlipayTradeRefundRequest();
 		
-		Order order=this.orderService.findById(orderId);
-		
-		if(order==null){
-			throw new BusinessException("订单不存在！");
+		CancelOrder cancel=this.cancelOrderService.findById(cancelOrderId);
+		if(cancel==null){
+			throw new BusinessException("退单不存在！");
+		}
+		if("1".equals(cancel.getStatus())){
+			throw new BusinessException("该退单已经退款！");
 		}
 		
-		OrderChild child=this.orderChildService.findById(cOrderId);
+		OrderChild child=this.orderChildService.findById(cancel.getChildOrderId());
 		if(child==null){
 			throw new BusinessException("子订单不存在！");
 		}
 		
-		if(child.getOrderId()!=orderId){
-			throw new BusinessException("订单关联错误！");
+		Order order=this.orderService.findById(cancel.getOrderId());
+		if(order==null){
+			throw new BusinessException("订单不存在！");
 		}
+		
 		
 		Map<String, Object> map = new HashMap<String, Object>();  
 		map.put("out_trade_no", order.getOrderCode());
-		map.put("refund_amount", child.getPrice()*num);
-		map.put("refund_reason", "系统退款");
-		map.put("out_request_no",child.getRetreatBatchNo());
+		map.put("refund_amount", child.getPrice()*cancel.getNum());
+		map.put("refund_reason", "正常退款");
+		map.put("out_request_no",cancel.getCancelOrderCode());
 		map.put("operator_id","1");//用户id
 		
 		request.setBizContent(JSON.toJSONString(map));
@@ -182,17 +138,20 @@ public class AlipayServiceImpl implements AlipayService {
 				this.orderChildService.update(child);
 					
 				//更改退单记录
-				CancelOrder cancel=this.cancelOrderService.findByRetreatBatchNo(retreatBatchNo);
 				if(cancel!=null){
-					cancel.setStatus("1");
+					cancel.setStatus("1");//已退款
 					cancel.setResult("success");
 					this.cancelOrderService.update(cancel);
 				}
+				//更新订单退票数量
+				order.setReturnNum((order.getReturnNum()+cancel.getNum()));
+				this.orderService.update(order);
+				
 				System.out.println(response.getBody());
 				return true;
 			} else {
-				System.out.println("调用失败");
 				System.out.println(response.getBody());
+				throw new BusinessException("退款失败");
 			}
 		} catch (AlipayApiException e) {
 			e.printStackTrace();

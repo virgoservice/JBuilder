@@ -18,18 +18,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ramostear.jbuilder.dao.CancelOrderDao;
+import com.ramostear.jbuilder.dao.CheckTicketDao;
 import com.ramostear.jbuilder.dao.OrderChildDao;
 import com.ramostear.jbuilder.dao.OrderDao;
 import com.ramostear.jbuilder.dao.TicketDao;
 import com.ramostear.jbuilder.entity.CancelOrder;
-import com.ramostear.jbuilder.entity.Order;
+import com.ramostear.jbuilder.entity.CheckTicket;
+import com.ramostear.jbuilder.entity.Order; 
 import com.ramostear.jbuilder.entity.OrderChild;
 import com.ramostear.jbuilder.entity.Ticket;
 import com.ramostear.jbuilder.exception.BusinessException;
 import com.ramostear.jbuilder.kit.PageDto;
-import com.ramostear.jbuilder.kit.ziyoubaokit.vo.ReqCancelOrderVO;
+import com.ramostear.jbuilder.service.CheckTicketService;
 import com.ramostear.jbuilder.service.OrderService;
-import com.ramostear.jbuilder.service.ZiyoubaoService;
 import com.ramostear.jbuilder.util.OrderCodeGenerator;
 
 /** 
@@ -38,7 +39,6 @@ import com.ramostear.jbuilder.util.OrderCodeGenerator;
  * @date: 2017年6月12日 下午5:17:09 
  * @email:361801580@qq.com 
  */
-@Transactional
 @Service("orderService")
 public class OrderServiceImpl implements OrderService {
 
@@ -50,10 +50,10 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private TicketDao tdao;
 	@Autowired
-	private ZiyoubaoService ziyoubao;
-	@Autowired
 	private CancelOrderDao cancel;
-	
+	@Autowired
+	private CheckTicketDao checkDao;
+
 	/**
 	 * 保存订单和子订单
 	 * @throws BusinessException 
@@ -63,6 +63,7 @@ public class OrderServiceImpl implements OrderService {
 	public boolean save(Order order,List<OrderChild> childOrders){
 		
 		//校验订单金额是否正确
+		
 		for(OrderChild co : childOrders){
 			Ticket temp=tdao.findById(co.getTicketId());
 			if(temp==null){
@@ -78,6 +79,9 @@ public class OrderServiceImpl implements OrderService {
 			co.setTotalPrice(temp.getPrice()*Math.abs(co.getQuantity()));//取绝对值，防止负值
 			
 			order.setOrderPrice(order.getOrderPrice()+co.getTotalPrice());//订单总价
+			if(order.getTotal()==null)
+				order.setTotal(0);
+			order.setTotal((order.getTotal()+co.getQuantity()));//订单总票数
 		}
 		order.setOrderCode(OrderCodeGenerator.getOrderCode());
 		order.setCreateTime(new Date());
@@ -98,20 +102,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public boolean cancelOrder(Long id) {
 		Order order=this.odao.findById(id);
-		if(order!=null&&order.getPayStatus()=="1"){//已付款
-			//调用取消订单接口
-			//执行退票。
-			ReqCancelOrderVO result=this.ziyoubao.cancelOrder(order.getOrderCode());
-			if(result.getCode()!=0){
-				//抛出异常
-				throw new BusinessException(result.getDescription());
-			}
-			order.setStatus("1");//申请退款
-			order.setRetreatBatchNo(result.getRetreatBatchNo());//设置退款编号
-			this.odao.update(order);
-			
-			return true;
-		}else if(order!=null&&order.getPayStatus()=="0"){//未付款，直接删除订单
+		if(order!=null&&order.getPayStatus()=="0"){//未付款，直接删除订单
 			List<OrderChild> list=this.cdao.getAllByOid(order.getId());
 			//删除子订单
 			for(OrderChild c:list){
@@ -121,26 +112,32 @@ public class OrderServiceImpl implements OrderService {
 			this.odao.delete(order.getId());
 			//记录删除日志
 			
+			return true;
+		}else{
+			throw new BusinessException("已付款订单无法取消！");
 		}
-		return false;
 	}
 	
 	/**
-	 * 退票流程
-	 * 1、检测是否已经退票
+		申请退票
 	 */
 	@Override
-	public ReqCancelOrderVO returnTicket(Long id,Integer num) {
+	public boolean returnTicket(Long id,Integer num) {
 		num=Math.abs(num);
 		
 		OrderChild order=this.cdao.findById(id);
-		if(order==null){
-			//订单不存在
-			throw new BusinessException("订单不存在！");
+		Long count=this.cancel.findCancelCount(id);//申请取消数量
+		Long checkCount=this.checkDao.findCheckCount(id);//已检票数量
+		
+		if("0".equals(order.getPayStatus())){
+			throw new BusinessException("该订单未付款！");
 		}
-		if(num>order.getQuantity()){
-			//退票数量错误
-			throw new BusinessException("退票数量不足！");
+		
+		if(count==null)
+			count=0L;
+		
+		if(num>order.getQuantity()-count-checkCount){
+			throw new BusinessException("可退票数量不足！");
 		}
 		
 		Ticket ticket=this.tdao.findById(order.getTicketId());
@@ -154,18 +151,10 @@ public class OrderServiceImpl implements OrderService {
 		cancel.setStatus("0");
 		cancel.setTotalPrice(ticket.getPrice()*num);//总价
 		
-		//发起退票接口
-		ReqCancelOrderVO re=this.ziyoubao.cancelChildOfOrder(order.getOrderCode(), num, cancel.getCancelOrderCode());
-		if(re.getCode()!=0){
-			//抛出异常
-			throw new BusinessException(re.getDescription());
-		}
-		order.setStatus("1");
-		order.setRetreatBatchNo(re.getRetreatBatchNo());
-		cancel.setRetreatBatchNo(re.getRetreatBatchNo());
+		order.setStatus("1");//申请退款
 		this.cdao.update(order);
 		this.cancel.save(cancel);
-		return re;
+		return true;
 	}
 	
 	/* (non-Javadoc)
@@ -229,6 +218,7 @@ public class OrderServiceImpl implements OrderService {
 		return new PageDto<Order>(totalSize,offset,size,list);
 	}
 
+	@Transactional
 	@Override
 	public void payOrder(Long orderId) {
 		//1、付款后更新订单状态
@@ -239,7 +229,7 @@ public class OrderServiceImpl implements OrderService {
 		
 		order.setPayStatus("1");//已付款
 		order.setStatus("2");//已完成
-		order.setZiyoubaoSend(1);//已发送ziyoubao接口
+		order.setZiyoubaoCheckNo("321321321321");//考虑生成规则
 		this.odao.update(order);
 		
 		List<OrderChild> child=this.cdao.getAllByOid(orderId);
@@ -254,6 +244,39 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public Order findByIdAndUid(Long id, Long uid) {
 		return this.odao.findByIdAndUid(id, uid);
+	}
+
+	@Override
+	public boolean checkOrder(Long corderId, Integer num) {
+		OrderChild child=this.cdao.findById(corderId);
+		if(child==null){
+			throw new BusinessException("订单不存在");
+		}
+		if(num>child.getQuantity()){
+			throw new BusinessException("检票数量超过订单数量");
+		}
+		
+		Long count=this.checkDao.findCheckCount(corderId);
+		if(count==null)
+			count=0L;
+		
+		if(num>(child.getQuantity()-count)){
+			throw new BusinessException("检票数量超过订单数量");
+		}
+		
+		child.setStatus("4");//完成订单
+		if(count==child.getQuantity()-0){
+			child.setCheckStatus("2");//检票完成
+		}else{
+			child.setCheckStatus("1");//检票中
+		}
+		this.cdao.update(child);
+		//更新订单检票数量
+		Order order=this.odao.findById(child.getOrderId());
+		order.setCheckNum(order.getCheckNum()+num);
+		this.odao.update(order);
+		
+		return true;
 	}
 
 
