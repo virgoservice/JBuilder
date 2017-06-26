@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ramostear.jbuilder.entity.TicketGroup;
 import com.ramostear.jbuilder.kit.PageDto;
+import com.ramostear.jbuilder.kit.ReqDto;
+import com.ramostear.jbuilder.kit.Result;
 import com.ramostear.jbuilder.service.TicketGroupService;
 
 /**
@@ -36,8 +39,17 @@ public class TicketGroupController {
 	@Autowired
 	private TicketGroupService ticketGroupService;
 
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	public String list(ReqDto reqDto, Model model) {
+		int offset = reqDto.getPageNo();
+		int size = reqDto.getPageSize();
+
+		PageDto<TicketGroup> pageDto = ticketGroupService.findByPage(offset, size, "id", true, "");
+		model.addAttribute("pageDto", pageDto);
+		return "ticketGroup/index";
+	}
+
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	@ResponseBody
 	public String addOrEdit(TicketGroup ticketGroup) {
 		long id = ticketGroup.getId();
 		String name = ticketGroup.getName();
@@ -57,23 +69,32 @@ public class TicketGroupController {
 			ticketGroupService.add(ticketGroup);
 		}
 
-		return "success";
+		return "redirect:/admin/ticketGroup/index";
 	}
 
 	@RequestMapping(value = "/del", method = RequestMethod.POST)
 	@ResponseBody
 	public String delete(@RequestParam("id") Long id) {
+		Result result = new Result();
+		result.setSuccess(false);
 		if (id > 0L) {
 			ticketGroupService.delete(id);
+			result.setSuccess(true);
 		}
-		return "success";
+		return JSONObject.toJSONString(result);
 	}
 
-	@RequestMapping(value = "/list", method = RequestMethod.POST)
-	public String list(Model model, @RequestParam("pageNo") int pageNo, @RequestParam("pageSize") int pageSize) {
-		PageDto<TicketGroup> pageDto = ticketGroupService.findByPage(pageNo, pageSize, null, true, null);
-		model.addAttribute("pageDto", pageDto);
-		return "ticketGroup/list";
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public String edit(@RequestParam("id") Long id, Model model) {
+		TicketGroup tg = null;
+		if (id > 0L) {
+			tg = ticketGroupService.findById(id);
+		}
+		if (tg == null) {
+			tg = new TicketGroup();
+		}
+		model.addAttribute("ticketGroup", tg);
+		return "ticketGroup/add";
 	}
 
 }

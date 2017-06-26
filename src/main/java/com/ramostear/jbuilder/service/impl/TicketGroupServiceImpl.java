@@ -75,4 +75,9 @@ public class TicketGroupServiceImpl implements TicketGroupService {
 		return new PageDto<TicketGroup>(totalSize,offset,size,list);
 	}
 
+	@Override
+	public List<TicketGroup> findAll() {
+		return tdao.findAll();
+	}
+
 }

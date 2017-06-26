@@ -6,11 +6,9 @@
 	<resultMap type="com.ramostear.jbuilder.entity.ScenicSpot" id="resultMap">
 		<id column="id" property="id"/>
 		<result column="name" property="name"/>
-		
 	</resultMap>
-	
 
-	<insert id="save" parameterType="com.ramostear.jbuilder.entity.Article" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+	<insert id="save" parameterType="com.ramostear.jbuilder.entity.ScenicSpot" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
 		insert into order_scenic_spot
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="name != null">name</if>
@@ -20,7 +18,7 @@
 		</trim>
 	</insert>	
 	
-	<update id="update" parameterType="com.ramostear.jbuilder.entity.Article">
+	<update id="update" parameterType="com.ramostear.jbuilder.entity.ScenicSpot">
 		update order_scenic_spot
 		<set>
 			<if test="name != null">name=#{name}</if>

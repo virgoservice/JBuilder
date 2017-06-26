@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ramostear.jbuilder.entity.Article;
 import com.ramostear.jbuilder.kit.ReqDto;
 import com.ramostear.jbuilder.service.ArticleService;
-import com.ramostear.jbuilder.service.AttachmentService;
 import com.ramostear.jbuilder.util.QiniuFileUtil;
 
 /** 
@@ -35,9 +34,6 @@ public class ArticleController {
 
 	@Autowired
 	private ArticleService articleService;
-	
-	@Autowired
-	private AttachmentService attachmentService;
 	
 	@RequiresPermissions(value="article")
 	@RequestMapping(value="/index",method=RequestMethod.GET)

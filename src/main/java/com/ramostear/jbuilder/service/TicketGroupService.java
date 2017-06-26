@@ -9,6 +9,8 @@
 								                 limitations under the License. 
 */
 package com.ramostear.jbuilder.service;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import com.ramostear.jbuilder.entity.TicketGroup;
 import com.ramostear.jbuilder.kit.PageDto;
@@ -31,4 +33,5 @@ public interface TicketGroupService {
 	
 	public PageDto<TicketGroup> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("oderBy")String orderBy,@Param("order") boolean order,@Param("search")String search);
 
+	public List<TicketGroup> findAll();
 }

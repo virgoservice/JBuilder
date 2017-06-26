@@ -1,5 +1,5 @@
 <%@ page pageEncoding="UTF-8"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>  
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>  
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
 	String path = request.getContextPath();
@@ -25,6 +25,13 @@
   		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
  		<![endif]-->
 </head>
+
+	<style>
+	.error{
+		color:red;
+	}
+	</style>
+
 	<body class="hold-transition skin-blue sidebar-mini">
 		<div class="wrapper">
 
@@ -63,6 +70,7 @@
 					</div>
 				</nav>
 			</header>
+
 			<aside class="main-sidebar ">
 				<section class="sidebar">
 					<ul class="sidebar-menu">
@@ -100,10 +108,10 @@
 								<li>
 									<a href="<%=path %>/admin/ticket/index"><i class="fa fa-list-ul"></i>景区产品管理</a>
 								</li>
-								<li>
+								<li class="active">
 									<a href="<%=path %>/admin/ticketGroup/index"><i class="fa fa-list-ul"></i> 产品组管理</a>
 								</li>
-								<li  class="active">
+								<li>
 									<a href="<%=path %>/admin/scenic/index"><i class="fa fa-list-ul"></i>景区管理</a>
 								</li>
 							</ul>
@@ -183,45 +191,52 @@
 
 			<!-- Content Wrapper. Contains page content -->
 			<div class="content-wrapper">
+
 				<section class="content-header"  style="margin-bottom: 0;">
 					<div class="box box-solid" style="margin-bottom: 0;">
 						<div class="box-header with-border">
-							<h3 class="box-title text-bold">景区管理</h3>
+							<h3 class="box-title text-bold">
+								添加景点分组
+							</h3>
 						</div>
 
 						<div class="box-body" style="padding: 10px 0;">
-							<form action="#" method="post" id="form-scenic-add" class="form-horizontal form-inline">
-								<label class="control-label" style="margin-left: 30px; margin-right:15px;">景区名称:</label>
-								<input name="name" class="form-control input-sm" style="border-radius: 4px;" />	
-								<button type="button" id="btn-scenic-add" class="btn btn-primary btn-sm margin" style="margin-left: 20px;">添加</button>
-							</form>
-						</div>
-					</div>
-				</section>
+							<sf:form action="#" modelAttribute="ticketGroup" id="form-group-add" method="post">
+							<sf:hidden path="id"/>
+							<div class="row">
+								<div class="col-md-9">
+									<div class="form-group">
+										<label class="col-sm-2 control-label"><span style="color: red;">*</span>分组名称:</label>
+										<div class="col-sm-10">
+											<sf:input path="name" type="text" class="form-control" name="name" id="name"/>
+											<label></label>
+										</div>
+									</div>
+								</div>
+							</div>
 
-				<section class="content" id="goods-list">
-					<div class="box box-solid">
-						<div class="box-body" style="padding: 10px 0;">
-							<table class="table table-responsive">
-								<thead>
-									<tr>
-										<td>NO.</td>
-										<td>景区名称</td>
-										<td>操作</td>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${pageDto.items}" var="item">  
-									<tr>
-										<td>${item.id}</td>
-										<td>${item.name}</td>
-										<td>
-											<a href="javascript:;" onclick="del(this, ${item.id});">删除</a>
-										</td>
-									</tr>
-									</c:forEach>
-								</tbody>
-							</table>
+							<div class="row"></div>
+
+							<div class="row">
+								<div class="col-md-9">
+									<div class="form-group">
+										<label class="col-sm-2 control-label">分组描述:</label>
+										<div class="col-sm-10">
+											<sf:input path="description" type="text" class="form-control" name="description" id="description"/>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-8"></div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<sf:button type="submit" class="btn btn-primary btn-sm margin" style="margin-left: 20px;">确定</sf:button>
+									</div>
+								</div>
+							</div>
+							</sf:form>
 						</div>
 					</div>
 				</section>
@@ -235,10 +250,10 @@
 			</footer>
 			<div class="control-sidebar-bg"></div>
 		</div>
-		
- 		<input type="hidden" value="<%=path %>" id="ctx"/>
+
 <script src="<%=path %>/resources/admin/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script src="<%=path %>/resources/admin/plugins/jQueryUI/jquery-ui.min.js"></script>
+<script src="<%=path %>/resources/admin/plugins/jquery.validation/1.14.0/jquery.validate.min.js"></script>
 <script>
 	$.widget.bridge('uibutton', $.ui.button);
 </script>
@@ -247,29 +262,25 @@
 <script src="<%=path %>/resources/admin/plugins/fastclick/fastclick.js"></script>
 <script src="<%=path %>/resources/admin/dist/js/app.min.js"></script>
 <script type="text/javascript">
-$('#btn-scenic-add').click(function(){
-	var form = $("#form-scenic-add");
-	var name = $(form).find("input[name='name']").val();
-	if(name != ''){
-		$.post($("#ctx").val() + "/admin/scenic/add", {name:name}, function(data){
-			if(data.success){
-				window.location.reload();
+$(function(){
+	$("#form-group-add").validate({
+		rules:{
+			name:{
+				required:true,
 			}
-		}, "json");
-	}else{
-		alert("名称不能为空!");
-	}
-});
-
-function del(obj, id){
-	$.post($("#ctx").val() + "/admin/scenic/del", {id:id}, function(data){
-		if(data.success){
-			$(obj).parents("tr").remove();
-		}else{
-			alert(data.obj);
+		},
+		messages:{
+			name: {
+         		required: "名称不能为空",
+      		}
+		},
+		onkeyup:false,
+		onsubmit:true,
+        submitHandler:function(form) {
+        	form.submit();
 		}
-	}, "json");
-}
+	});
+});
 </script>
 </body>
 </html>

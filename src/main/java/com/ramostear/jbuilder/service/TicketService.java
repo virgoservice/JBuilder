@@ -10,6 +10,8 @@
 */
 package com.ramostear.jbuilder.service;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import com.ramostear.jbuilder.entity.Ticket;
 import com.ramostear.jbuilder.kit.PageDto;
@@ -30,7 +32,30 @@ public interface TicketService {
 	
 	public Ticket findById(Long id);
 	
-	public PageDto<Ticket> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("oderBy")String orderBy,@Param("order") boolean order,@Param("search")String search);
+	public List<Ticket> findAll();
 
+	public PageDto<Ticket> findByPage(
+			@Param("offset") int offset,
+			@Param("size") int size,
+			@Param("orderBy") String orderBy,
+			@Param("order") boolean order);
+
+	public PageDto<Ticket> findPageByCond(
+			@Param("offset") int offset,
+			@Param("size") int size,
+			@Param("oderBy") String orderBy,
+			@Param("order") boolean order, 
+			@Param("goodsCode") String goodsCode,
+			@Param("status") int status,
+			@Param("ticketName") String ticketName,
+			@Param("scenicName") String scenicName
+			);
+
+	public PageDto<Ticket> findPageByGroup(
+			@Param("offset") int offset,
+			@Param("size") int size,
+			@Param("oderBy") String orderBy,
+			@Param("order") boolean order,
+			@Param("groupId") int groupId);
 
 }

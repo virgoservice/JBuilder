@@ -29,9 +29,9 @@ public class ImageUtil {
 	 */
 	public static boolean generateImage(String imgStr, String imgFile){
 		
-		org.apache.commons.codec.binary.Base64 decoder = new org.apache.commons.codec.binary.Base64();
+//		org.apache.commons.codec.binary.Base64 decoder = new org.apache.commons.codec.binary.Base64();
 
-		byte[] b = decoder.decodeBase64(imgStr.getBytes());
+		byte[] b = org.apache.commons.codec.binary.Base64.decodeBase64(imgStr.getBytes());
 
 		String imgFilePath = imgFile;
 		OutputStream out;
@@ -69,8 +69,8 @@ public class ImageUtil {
 			e.printStackTrace();
 		}
 		// 对字节数组Base64编码
-		org.apache.commons.codec.binary.Base64 decoder = new org.apache.commons.codec.binary.Base64();
-		byte[] enbytes = decoder.encodeBase64Chunked(data);  
+//		org.apache.commons.codec.binary.Base64 decoder = new org.apache.commons.codec.binary.Base64();
+		byte[] enbytes = org.apache.commons.codec.binary.Base64.encodeBase64Chunked(data);  
 		return new String(enbytes);
 	}
 }
