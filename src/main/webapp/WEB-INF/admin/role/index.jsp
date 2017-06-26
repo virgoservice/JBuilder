@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ page pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
@@ -52,23 +53,12 @@
         </section>
         <section class="content">
             <div class="row" style="padding: 0 15px 10px 15px;">
-                <ul class="list-inline" style="float: left;">
-                    <li class="all active">
-                        <a href="#" class="current">
-                            全部 <span class="count">(10)</span>
-                        </a>|
-                    </li>
-                    <li class="all">
-                        <a href="#" class="current">
-                            管理员 <span class="count">(3)</span>
-                        </a>|
-                    </li>
-                    <li class="all">
-                        <a href="#" class="current">
-                            编辑 <span class="count">(7)</span>
-                        </a>
-                    </li>
-                </ul>
+            	<shiro:hasPermission name="role:add">
+					<a href="<%=path %>/admin/role/add" class="btn btn-primary btn-sm">新增</a>
+				</shiro:hasPermission>
+				<shiro:hasPermission name="role:delete">
+					<button type="button" class="btn btn-danger btn-sm" onclick="deleteBatch()">批量删除</button>
+				</shiro:hasPermission>
                 <form class="form-horizontal col-sm-3" method="post" style="float: right;" action="#">
                     <div class="input-group input-group-sm">
                         <input id="#" class="form-control" type="search"  value="" name="k" placeholder="请输入关键词"/>
@@ -77,20 +67,6 @@
 								</span>
                     </div>
                 </form>
-            </div>
-            <div class="row" style="padding: 0 15px 10px 15px;">
-                <div style="float: left;">
-                    <select class="form-control input-sm">
-                        <option value="">批量操作</option>
-                    </select>
-                </div>
-                <div style="float: left;">
-                    <form action="#" method="post">
-                        <input type="hidden" name="cid"/>
-                        <input type="hidden" name="keyword"/>
-                        <input type="submit"  class="btn btn-block btn-sm btn-default" value="筛选"/>
-                    </form>
-                </div>
             </div>
             <div id="role-table"></div>
         </section>
@@ -175,6 +151,51 @@
 				layer.close(index);
 			}
 		});
+	}
+	function deleteBatch(){
+		 var roleIds =[]; 
+		 var ids = $("tbody input[type=checkbox]:checked");
+		 for(var i=0;i<ids.length;i++){
+			 if(ids[i].checked){
+				 roleIds[i]=ids[i].value;
+			 }
+		 }
+		//alert(uids);
+		if(roleIds.length<=0){
+			layer.open({
+				title:false,
+				icon:5,
+				content:"没有选择任何删除数据",
+				offset:'15px'
+			});
+		}else{
+			layer.open({
+				title:false,
+				icon:2,
+				content:"改操作不可逆，确认删除吗?",
+				offset:'15px',
+				btn:['确认','取消'],
+				btnAlign:'r',
+				yes:function(index){
+					/* console.log(uids); */
+					$.ajax({
+						url:"<%=path %>/admin/role/deleteBatch",
+						type:"POST",
+						data:{
+							roleIds:roleIds.toString(),
+						},
+						contentType:"application/x-www-form-urlencoded",
+						encoding:"utf-8",
+						cache:false,
+					});
+					location.reload();
+					layer.close(index);
+				},
+				cancel:function(){
+					layer.close(index);
+				}
+			});
+		}
 	}
 </script>
 

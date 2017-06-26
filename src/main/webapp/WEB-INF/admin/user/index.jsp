@@ -6,7 +6,6 @@
 %>
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -55,7 +54,7 @@
 							<a href="<%=path %>/admin/user/add" class="btn btn-primary btn-sm">新增</a>
 						</shiro:hasPermission>
 						<shiro:hasPermission name="user:delete">
-							<button type="button" class="btn btn-danger btn-sm">批量删除</button>
+							<button type="button" class="btn btn-danger btn-sm" onclick="deleteBatch()">批量删除</button>
 						</shiro:hasPermission>
 						<form class="form-horizontal col-sm-3" method="post" style="float: right;" action="#">
 							<div class="input-group input-group-sm">
@@ -168,6 +167,51 @@
 						location.reload();
 					}
 				});
+			}
+			 function deleteBatch(){
+				 var uids =[]; 
+				 var ids = $("tbody input[type=checkbox]:checked");
+				 for(var i=0;i<ids.length;i++){
+					 if(ids[i].checked){
+						 uids[i]=ids[i].value;
+					 }
+				 }
+				//alert(uids);
+				if(uids.length<=0){
+					layer.open({
+						title:false,
+						icon:5,
+						content:"没有选择任何删除数据",
+						offset:'15px'
+					});
+				}else{
+					layer.open({
+						title:false,
+						icon:2,
+						content:"改操作不可逆，确认删除吗?",
+						offset:'15px',
+						btn:['确认','取消'],
+						btnAlign:'r',
+						yes:function(index){
+							/* console.log(uids); */
+							$.ajax({
+								url:"<%=path %>/admin/user/deleteBatch",
+								type:"POST",
+								data:{
+									userIds:uids.toString(),
+								},
+								contentType:"application/x-www-form-urlencoded",
+								encoding:"utf-8",
+								cache:false,
+							});
+							location.reload();
+							layer.close(index);
+						},
+						cancel:function(){
+							layer.close(index);
+						}
+					});
+				}
 			}
 		</script>
 	</body>

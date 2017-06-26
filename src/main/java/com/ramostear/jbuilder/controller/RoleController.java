@@ -18,6 +18,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,23 +47,24 @@ public class RoleController {
 	private RoleService roleService;
 	@Autowired
 	private PermissionService permissionService;
-
+	
+	@RequiresPermissions(value="role:index")
 	@RequestMapping(value="/index",method=RequestMethod.GET)
 	public String index(){
 		return "role/index";
 	}
-	
+	@RequiresPermissions(value="role:list")
 	@RequestMapping(value="/list",method=RequestMethod.GET)
 	public String list(ReqDto req, Model model){
 		model.addAttribute("list", roleService.findByPageDto(req.getPageNo(), req.getPageSize(), "createTime", true));
 		return "role/list";
 	}
-	
+	@RequiresPermissions(value="role:add")
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String add(Model model){
 		return "role/add";
 	}
-	
+	@RequiresPermissions(value="role:add")
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String add(Role role,Model model ,Long...permissionIds){
 		role.setCreateTime(new Date());
@@ -70,27 +72,34 @@ public class RoleController {
 		return "redirect:/admin/role/index";
 	}
 	
+	@RequiresPermissions(value="role:edit")
 	@RequestMapping(value="/edit",method=RequestMethod.GET)
 	public String edit(Long id,Model model){
 		model.addAttribute("role", roleService.findById(id));
 		return "role/edit";
 	}
-	
+	@RequiresPermissions(value="role:edit")
 	@RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String edit(Role role,Long...permissionIds){
 		roleService.update(role, permissionIds);
 		return "redirect:/admin/role/index";
 	}
-	
+	@RequiresPermissions(value="role:delete")
 	@RequestMapping(value="/del",method=RequestMethod.POST)
 	public void del(Long id,Model model){
 		roleService.delete(id);
 	}
-	
+	@RequiresPermissions(value="role:delete")
+	@RequestMapping(value="/deleteBatch",method=RequestMethod.POST)
+	public String deleteBatch(Long...roleIds){
+		roleService.delBatch(roleIds);
+		return "role/index";
+	}
 	/**
 	 * 获取所有的权限
 	 * @param response
 	 */
+	@RequiresPermissions(value={"role:add","role:edit"})
 	@RequestMapping(value="/allPerms",method=RequestMethod.GET)
 	public void allPerms(HttpServletResponse response){
 		List<Permission> plist = permissionService.findAll();
@@ -109,6 +118,7 @@ public class RoleController {
 			e.printStackTrace();
 		}
 	}
+	@RequiresPermissions(value="role:edit")
 	@RequestMapping(value="/checkedPerms",method=RequestMethod.GET)
 	public void checkedPerms(Long id,HttpServletResponse response){
 		List<Permission> allList = permissionService.findAll();
