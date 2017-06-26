@@ -40,6 +40,7 @@
 		<div class="wrapper">
 			<jsp:include page="../common/header.jsp" />
 			<jsp:include page="../common/menu.jsp" />
+			<!-- delete part -->
 			<header class="main-header">
 				<a href="#" class="logo">
 					<span class="logo-mini"><b>JBC</b></span>
