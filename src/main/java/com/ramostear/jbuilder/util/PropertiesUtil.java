@@ -28,6 +28,7 @@ public class PropertiesUtil {
 	
 	private static PropertiesUtil propUtil = null;
 	
+	@SuppressWarnings("unused")
 	private static Properties props = null;
 	
 	private static Map<String, Properties> propMap = null;

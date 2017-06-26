@@ -110,6 +110,7 @@
 				/admin/** = authc
 				/logout = logout
 				/unauthorized.jsp = authc
+				/order/** = authc
 			</value>
 		</property>
 	</bean>

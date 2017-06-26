@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ramostear.jbuilder.dao.OrderDao">
+
+
+	<resultMap type="com.ramostear.jbuilder.entity.Order" id="resultMap">
+		<id column="id" property="id"/>
+		
+		<result column="userId" property="userId"/>
+		<result column="certificateNo" property="certificateNo"/>
+		<result column="linkName" property="linkName"/>
+		<result column="linkMobile" property="linkMobile"/>
+		<result column="orderCode" property="orderCode"/>
+		<result column="orderPrice" property="orderPrice"/>
+		<result column="payMethod" property="payMethod"/>
+		<result column="payStatus" property="payStatus"/>
+		<result column="ziyoubaoStatus" property="ziyoubaoStatus"/>
+		<result column="ziyoubaoSend" property="ziyoubaoSend"/>
+		<result column="ziyoubaoCheckNo" property="ziyoubaoCheckNo"/>
+		
+		<result column="checkNum" property="checkNum"/>
+		<result column="returnNum" property="returnNum"/>
+		<result column="total" property="total"/>
+		<result column="status" property="status"/>
+		<result column="createTime" property="createTime"/>
+		<result column="retreatBatchNo" property="retreatBatchNo"/>
+		<result column="buyerRemark" property="buyerRemark"/>
+		<result column="sellerRemark" property="sellerRemark"/>
+		
+	</resultMap>
+	
+	<insert id="save" parameterType="com.ramostear.jbuilder.entity.Order" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert into order_order
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">userId,</if>
+			<if test="certificateNo != null">certificateNo,</if>
+			<if test="linkName != null">linkName,</if>
+			<if test="linkMobile != null">linkMobile,</if>
+			<if test="orderCode != null">orderCode,</if>
+			<if test="orderPrice != null">orderPrice,</if>
+			<if test="payMethod != null">payMethod,</if>
+			<if test="payStatus != null">payStatus,</if>
+			<if test="ziyoubaoStatus != null">ziyoubaoStatus,</if>
+			<if test="ziyoubaoSend != null">ziyoubaoSend,</if>
+			<if test="checkNum != null">checkNum,</if>
+			<if test="returnNum != null">returnNum,</if>
+			<if test="total != null">total,</if>
+			<if test="status != null">status,</if>
+			<if test="createTime != null">createTime,</if>
+			<if test="retreatBatchNo != null">retreatBatchNo,</if>
+			<if test="buyerRemark != null">buyerRemark,</if>
+			<if test="sellerRemark != null">sellerRemark,</if>
+			<if test="ziyoubaoCheckNo != null">ziyoubaoCheckNo</if>
+			
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			
+			<if test="userId != null">#{userId},</if>
+			<if test="certificateNo != null">#{certificateNo},</if>
+			<if test="linkName != null">#{linkName},</if>
+			<if test="linkMobile != null">#{linkMobile},</if>
+			<if test="orderCode != null">#{orderCode},</if>
+			<if test="orderPrice != null">#{orderPrice},</if>
+			<if test="payMethod != null">#{payMethod},</if>
+			<if test="payStatus != null">#{payStatus},</if>
+			
+			<if test="ziyoubaoStatus != null">#{ziyoubaoStatus},</if>
+			<if test="ziyoubaoSend != null">#{ziyoubaoSend},</if>
+			<if test="checkNum != null">#{checkNum},</if>
+			<if test="returnNum != null">#{returnNum},</if>
+			<if test="total != null">#{total},</if>
+			
+			<if test="ziyoubaoCheckNo != null">#{ziyoubaoCheckNo},</if>
+			<if test="status != null">#{status},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="buyerRemark != null">#{buyerRemark},</if>
+			<if test="retreatBatchNo != null">#{retreatBatchNo}</if>
+			<if test="sellerRemark != null">#{sellerRemark},</if>
+		</trim>
+	</insert>	
+	
+	<update id="update" parameterType="com.ramostear.jbuilder.entity.Order">
+		update order_order
+		<set>
+			
+			<if test="userId != null">userId=#{userId},</if>
+			<if test="certificateNo != null">certificateNo=#{certificateNo},</if>
+			<if test="linkName != null">linkName=#{linkName},</if>
+			<if test="linkMobile != null">linkMobile=#{linkMobile},</if>
+			<if test="orderCode != null">orderCode=#{orderCode},</if>
+			<if test="orderPrice != null">orderPrice=#{orderPrice},</if>
+			<if test="payMethod != null">payMethod=#{payMethod},</if>
+			<if test="payStatus != null">payStatus=#{payStatus},</if>
+			<if test="status != null">status=#{status},</if>
+			<if test="createTime != null">createTime=#{createTime},</if>
+			
+			<if test="ziyoubaoCheckNo != null">ziyoubaoCheckNo=#{ziyoubaoCheckNo},</if>
+			<if test="ziyoubaoStatus != null">ziyoubaoStatus=#{ziyoubaoStatus},</if>
+			<if test="ziyoubaoSend != null">ziyoubaoSend=#{ziyoubaoSend},</if>
+			<if test="checkNum != null">checkNum=#{checkNum},</if>
+			<if test="returnNum != null">returnNum=#{returnNum},</if>
+			<if test="total != null">total=#{total},</if>
+			
+			<if test="buyerRemark != null">buyerRemark=#{buyerRemark},</if>
+			<if test="sellerRemark != null">sellerRemark=#{sellerRemark},</if>
+			<if test="retreatBatchNo != null">retreatBatchNo=#{retreatBatchNo}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<select id="size" resultType="Long">
+		select count(*) from order_order
+	</select>
+	
+	
+	<delete id="delete" parameterType="Long">
+		delete from order_order 
+		where 
+		id = #{id}
+	</delete>
+
+	<select id="findById" parameterType="Long" resultMap="resultMap">
+		select * from order_order 
+		where 
+		id = #{id}
+	</select>
+	
+	<select id="findByIdAndUid" parameterType="Long" resultMap="resultMap">
+		select * from order_order 
+		where 
+		id = #{id}
+		and userId=#{uid}
+	</select>
+	
+	<select id="findByOrderCode" parameterType="String" resultMap="resultMap">
+		select * from order_order 
+		where 
+		orderCode = #{orderCode}
+	</select>
+	
+	<select id="findAll"  resultMap="resultMap">
+		select * from order_order
+	</select>
+	
+	<select id="findByPageByUid" resultMap="resultMap">
+		select * from order_order 
+		<if test="uid != null and uid!=''">
+			where userId = ${uid}
+		</if>
+		order by ${orderBy} 
+		<if test="order == true">
+			DESC
+		</if>
+		<if test="order == false">
+			ASC
+		</if>
+		limit #{offset},#{size}
+	</select>
+	
+	<select id="findByPage" resultMap="resultMap">
+		select * from order_order 
+		<if test="orderCode != null and orderCode!=''">
+			where orderCode like '%${orderCode}%'
+		</if>
+		order by ${orderBy} 
+		<if test="order == true">
+			DESC
+		</if>
+		<if test="order == false">
+			ASC
+		</if>
+		limit #{offset},#{size}
+	</select>
+	
+</mapper>

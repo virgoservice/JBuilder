@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ramostear.jbuilder.dao.OrderChildDao">
+
+
+	<resultMap type="com.ramostear.jbuilder.entity.OrderChild" id="resultMap">
+		<id column="id" property="id"/>
+		<result column="orderId" property="orderId"/>
+		<result column="ticketId" property="ticketId"/>
+		<result column="orderCode" property="orderCode"/>
+		<result column="price" property="price"/>
+		<result column="quantity" property="quantity"/>
+		<result column="totalPrice" property="totalPrice"/>
+		<result column="occDate" property="occDate"/>
+		<result column="goodsCode" property="goodsCode"/>
+		<result column="goodsName" property="goodsName"/>
+		<result column="remark" property="remark"/>
+		<result column="payStatus" property="payStatus"/>
+		<result column="returnStatus" property="returnStatus"/>
+		<result column="noticeStatus" property="noticeStatus"/>
+		<result column="status" property="status"/>
+		<result column="createTime" property="createTime"/>
+		<result column="retreatBatchNo" property="retreatBatchNo"/>
+		<result column="checkStatus" property="checkStatus"/>
+		<association property="order" column="orderId" select="findOrder"/>
+	</resultMap>
+
+	<insert id="save" parameterType="com.ramostear.jbuilder.entity.OrderChild" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert into order_order_child
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orderId != null">orderId,</if>
+			<if test="ticketId != null">ticketId,</if>
+			<if test="orderCode != null">orderCode,</if>
+			<if test="price != null">price,</if>
+			<if test="quantity != null">quantity,</if>
+			<if test="totalPrice != null">totalPrice,</if>
+			<if test="occDate != null">occDate,</if>
+			<if test="goodsCode != null">goodsCode,</if>
+			<if test="goodsName != null">goodsName,</if>
+			<if test="remark != null">remark,</if>
+			<if test="status != null">payStatus,</if>
+			<if test="status != null">returnStatus,</if>
+			<if test="status != null">noticeStatus,</if>
+			<if test="status != null">status,</if>
+			<if test="createTime != null">createTime,</if>
+			<if test="checkStatus != null">checkStatus,</if>
+			
+			<if test="retreatBatchNo != null">retreatBatchNo</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="orderId != null">#{orderId},</if>
+			<if test="ticketId != null">#{ticketId},</if>
+			<if test="orderCode != null">#{orderCode},</if>
+			<if test="price != null">#{price},</if>
+			<if test="quantity != null">#{quantity},</if>
+			<if test="totalPrice != null">#{totalPrice},</if>
+			<if test="occDate != null">#{occDate},</if>
+			<if test="goodsCode != null">#{goodsCode},</if>
+			<if test="goodsName != null">#{goodsName},</if>
+			<if test="remark != null">#{remark},</if>
+			<if test="status != null">#{payStatus},</if>
+			<if test="status != null">#{returnStatus},</if>
+			<if test="status != null">#{noticeStatus},</if>
+			<if test="status != null">#{status},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="checkStatus != null">#{checkStatus},</if>
+			<if test="retreatBatchNo != null">#{retreatBatchNo}</if>
+		</trim>
+	</insert>	
+	
+	<update id="update" parameterType="com.ramostear.jbuilder.entity.OrderChild">
+		update order_order_child
+		<set>
+			<if test="orderId != null">orderId=#{orderId},</if>
+			<if test="ticketId != null">ticketId=#{ticketId},</if>
+			<if test="orderCode != null">orderCode=#{orderCode},</if>
+			<if test="price != null">price=#{price},</if>
+			<if test="quantity != null">quantity=#{quantity},</if>
+			<if test="totalPrice != null">totalPrice=#{totalPrice},</if>
+			<if test="occDate != null">occDate=#{occDate},</if>
+			<if test="goodsCode != null">goodsCode=#{goodsCode},</if>
+			<if test="goodsName != null">goodsName=#{goodsName},</if>
+			<if test="payStatus != null">payStatus=#{payStatus},</if>
+			<if test="returnStatus != null">returnStatus=#{returnStatus},</if>
+			<if test="noticeStatus != null">noticeStatus=#{noticeStatus},</if>
+			<if test="status != null">status=#{status},</if>
+			<if test="createTime != null">createTime=#{createTime},</if>
+			<if test="checkStatus != null">checkStatus=#{checkStatus},</if>
+			<if test="retreatBatchNo != null">retreatBatchNo=#{retreatBatchNo},</if>
+			<if test="remark != null">remark=#{remark}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<select id="findOrder" parameterType="Long" resultType="com.ramostear.jbuilder.entity.Order">
+		select * from order_order 
+		where 
+		id = #{id}
+	</select>
+	
+	
+	<select id="size" resultType="Long">
+		select count(*) from order_order_child
+	</select>
+	
+	
+	<delete id="delete" parameterType="Long">
+		delete from order_order_child 
+		where 
+		id = #{id}
+	</delete>
+	
+	<delete id="deleteByPid" parameterType="Long">
+		delete from order_order_child 
+		where 
+		orderId = #{pid}
+	</delete>
+
+	<select id="findById" parameterType="Long" resultMap="resultMap">
+		select * from order_order_child 
+		where 
+		id = #{id}
+	</select>
+	
+	<select id="findByIdAndUid" parameterType="Long" resultMap="resultMap">
+		select * from order_order_child 
+		where 
+		id = #{id}
+		and userId=#{uid}
+	</select>
+	
+	<select id="findByOrderCode" parameterType="String" resultMap="resultMap">
+		select * from order_order_child 
+		where 
+		orderCode = #{orderCode}
+	</select>
+	
+	<select id="getAllByOid" parameterType="Long" resultMap="resultMap">
+		select * from order_order_child 
+		where 
+		orderId = #{oid}
+	</select>
+	
+	<select id="findAll"  resultMap="resultMap">
+		select * from order_order_child
+	</select>
+	
+	<select id="findCheckByPage" resultMap="resultMap">
+		select * from order_order_child where 1=1
+		<if test="orderCode != null and orderCode!=''">
+			and orderCode like '%${orderCode}%'
+		</if>
+		and checkStatus in (0,1)
+		order by ${orderBy} 
+		<if test="order == true">
+			DESC
+		</if>
+		<if test="order == false">
+			ASC
+		</if>
+		limit #{offset},#{size}
+	</select>
+	
+	<select id="checkPageSize" resultType="Long">
+		select count(*) from order_order_child where checkStatus in (0,1)
+	</select>
+</mapper>

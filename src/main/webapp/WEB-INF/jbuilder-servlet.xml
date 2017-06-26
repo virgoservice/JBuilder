@@ -47,7 +47,7 @@
         </property> 
 	</bean>
 	
-	<!-- 全局异常 -->
+	<!-- 全局异常
 	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
 			<props>
@@ -55,4 +55,6 @@
 			</props>
 		</property>
 	</bean>
+	 -->
+	 <bean id="exceptionResolver" class="com.ramostear.jbuilder.exception.ExceptionHandler"/>
 </beans>
