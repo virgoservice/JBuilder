@@ -12,24 +12,20 @@ package com.ramostear.jbuilder.service.impl;
 
 import java.util.Date;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.ramostear.jbuilder.dao.CancelOrderDao;
 import com.ramostear.jbuilder.dao.CheckTicketDao;
 import com.ramostear.jbuilder.dao.OrderChildDao;
 import com.ramostear.jbuilder.dao.OrderDao;
 import com.ramostear.jbuilder.dao.TicketDao;
 import com.ramostear.jbuilder.entity.CancelOrder;
-import com.ramostear.jbuilder.entity.CheckTicket;
 import com.ramostear.jbuilder.entity.Order; 
 import com.ramostear.jbuilder.entity.OrderChild;
 import com.ramostear.jbuilder.entity.Ticket;
 import com.ramostear.jbuilder.exception.BusinessException;
 import com.ramostear.jbuilder.kit.PageDto;
-import com.ramostear.jbuilder.service.CheckTicketService;
 import com.ramostear.jbuilder.service.OrderService;
 import com.ramostear.jbuilder.util.OrderCodeGenerator;
 
@@ -212,8 +208,8 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public PageDto<Order> findByPageByUid(int offset, int size, String orderBy,
-			boolean order, String uid) {
-		List<Order> list = odao.findByPage((offset-1)*size, size, orderBy, order,uid);
+			boolean order, Long uid) {
+		List<Order> list = odao.findByPageByUid((offset-1)*size, size, orderBy, order,uid);
 		Long totalSize = odao.size();
 		return new PageDto<Order>(totalSize,offset,size,list);
 	}
@@ -229,7 +225,7 @@ public class OrderServiceImpl implements OrderService {
 		
 		order.setPayStatus("1");//已付款
 		order.setStatus("2");//已完成
-		order.setZiyoubaoCheckNo("321321321321");//考虑生成规则
+		order.setZiyoubaoCheckNo(OrderCodeGenerator.getRandomCode());//辅助码
 		this.odao.update(order);
 		
 		List<OrderChild> child=this.cdao.getAllByOid(orderId);

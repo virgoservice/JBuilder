@@ -15,6 +15,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
@@ -36,6 +38,7 @@ import com.ramostear.jbuilder.service.OrderService;
  * @date: 2017年6月21日 上午11:06:00 
  * @email:361801580@qq.com 
  */
+@Transactional
 @Service("alipayService")
 public class AlipayServiceImpl implements AlipayService {
 	

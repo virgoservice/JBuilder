@@ -86,7 +86,7 @@ public interface OrderService {
 	 * @param orderCode
 	 * @return
 	 */
-	public PageDto<Order> findByPageByUid(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order,@Param("uid")String uid);
+	public PageDto<Order> findByPageByUid(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order,@Param("uid")Long uid);
 	
 
 }

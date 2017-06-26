@@ -10,6 +10,8 @@
 */
 package com.ramostear.jbuilder.util;
 
+import java.math.BigDecimal;
+
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 /** 
@@ -38,6 +40,11 @@ public class OrderCodeGenerator {
 		return title+getBase();
 	}
 	
+	public static String getRandomCode(){
+		Integer code=(int) (89999999*Math.random()+10000000);
+		return code+"";
+	}
+	
 	private static String getBase(){
 		long timestamp = System.currentTimeMillis(); 
 		
@@ -53,5 +60,7 @@ public class OrderCodeGenerator {
 		String s = String.format("%02d", sequence);
 		return datePrefix+s;
 	}
-	
+	public static void main(String[] args) {
+		
+	}
 }

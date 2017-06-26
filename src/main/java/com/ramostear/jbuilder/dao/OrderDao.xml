@@ -25,6 +25,9 @@
 		<result column="status" property="status"/>
 		<result column="createTime" property="createTime"/>
 		<result column="retreatBatchNo" property="retreatBatchNo"/>
+		<result column="buyerRemark" property="buyerRemark"/>
+		<result column="sellerRemark" property="sellerRemark"/>
+		
 	</resultMap>
 	
 	<insert id="save" parameterType="com.ramostear.jbuilder.entity.Order" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
@@ -46,6 +49,8 @@
 			<if test="status != null">status,</if>
 			<if test="createTime != null">createTime,</if>
 			<if test="retreatBatchNo != null">retreatBatchNo,</if>
+			<if test="buyerRemark != null">buyerRemark,</if>
+			<if test="sellerRemark != null">sellerRemark,</if>
 			<if test="ziyoubaoCheckNo != null">ziyoubaoCheckNo</if>
 			
 		</trim>
@@ -69,7 +74,9 @@
 			<if test="ziyoubaoCheckNo != null">#{ziyoubaoCheckNo},</if>
 			<if test="status != null">#{status},</if>
 			<if test="createTime != null">#{createTime},</if>
+			<if test="buyerRemark != null">#{buyerRemark},</if>
 			<if test="retreatBatchNo != null">#{retreatBatchNo}</if>
+			<if test="sellerRemark != null">#{sellerRemark},</if>
 		</trim>
 	</insert>	
 	
@@ -95,6 +102,8 @@
 			<if test="returnNum != null">returnNum=#{returnNum},</if>
 			<if test="total != null">total=#{total},</if>
 			
+			<if test="buyerRemark != null">buyerRemark=#{buyerRemark},</if>
+			<if test="sellerRemark != null">sellerRemark=#{sellerRemark},</if>
 			<if test="retreatBatchNo != null">retreatBatchNo=#{retreatBatchNo}</if>
 		</set>
 		where id = #{id}
@@ -136,7 +145,7 @@
 	
 	<select id="findByPageByUid" resultMap="resultMap">
 		select * from order_order 
-		<if test="orderCode != null and orderCode!=''">
+		<if test="uid != null and uid!=''">
 			where userId = ${uid}
 		</if>
 		order by ${orderBy} 

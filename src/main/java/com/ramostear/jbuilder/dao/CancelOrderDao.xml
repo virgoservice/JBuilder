@@ -101,8 +101,8 @@
 	
 	<select id="findByPage" resultMap="resultMap">
 		select * from order_cancel_order 
-		<if test="orderCode != null and orderCode!=''">
-			where CancelOrderCode like '%${orderCode}%'
+		<if test="status != null and status''">
+			where status = ${status}
 		</if>
 		order by ${orderBy} 
 		<if test="order == true">

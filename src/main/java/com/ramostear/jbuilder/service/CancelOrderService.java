@@ -39,6 +39,6 @@ public interface CancelOrderService {
 	
 	public List<CancelOrder> findAll();
 	
-	public PageDto<CancelOrder> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order,@Param("orderCode")String orderCode);
+	public PageDto<CancelOrder> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order,@Param("status")String status);
 
 }
