@@ -40,7 +40,7 @@
 		<div class="wrapper">
 			<jsp:include page="../common/header.jsp" />
 			<jsp:include page="../common/menu.jsp" />
-		
+			<!--delete part1  -->
 			<!-- Content Wrapper. Contains page content -->
 			<div class="content-wrapper">
 				<!-- Content Header (Page header) -->
