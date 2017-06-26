@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ page pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
@@ -50,23 +51,12 @@
 				</section>
 				<section class="content">
 					<div class="row" style="padding: 0 15px 10px 15px;">
-						<ul class="list-inline" style="float: left;">
-							<li class="all active">
-								<a href="#" class="current">
-									全部 <span class="count">(2)</span>
-								</a>|
-							</li>
-							<li class="all">
-								<a href="#" class="current">
-									管理员 <span class="count">(1)</span>
-								</a>|
-							</li>
-							<li class="all">
-								<a href="#" class="current">
-									注册用户 <span class="count">(1)</span>
-								</a>
-							</li>
-						</ul>
+						<shiro:hasPermission name="user:add">
+							<a href="<%=path %>/admin/user/add" class="btn btn-primary btn-sm">新增</a>
+						</shiro:hasPermission>
+						<shiro:hasPermission name="user:delete">
+							<button type="button" class="btn btn-danger btn-sm">批量删除</button>
+						</shiro:hasPermission>
 						<form class="form-horizontal col-sm-3" method="post" style="float: right;" action="#">
 							<div class="input-group input-group-sm">
 								<input id="#" class="form-control" type="search"  value="" name="k" placeholder="请输入关键词"/>
@@ -77,23 +67,6 @@
 						</form>
 					</div>
 					<div class="row" style="padding: 0 15px 10px 15px;">
-						<div style="float: left;">
-							<select class="form-control input-sm">
-								<option value="">批量操作</option>
-							</select>
-						</div>
-						<div style="float: left;">
-							<select class="form-control input-sm">
-								<option value="">将角色更为</option>
-							</select>
-						</div>
-						<div style="float: left;">
-							<form action="#" method="post">
-								<input type="hidden" name="cid"/>
-								<input type="hidden" name="keyword"/>
-								<input type="submit"  class="btn btn-block btn-sm btn-default" value="筛选"/>
-							</form>
-						</div>
 					</div>
 					<div id="user-table">
 						<!--异步填充内容  -->
