@@ -62,17 +62,26 @@ public class TicketServiceImpl implements TicketService {
 	public Ticket findById(Long id) {
 		return this.dao.findById(id);
 	}
-
-	/* (non-Javadoc)
-	 * @see com.ramostear.jbuilder.service.TicketService#findByPage(int, int, java.lang.String, boolean, java.lang.String)
-	 */
+	
 	@Override
-	public PageDto<Ticket> findByPage(int offset, int size, String orderBy,
-			boolean order, String search) {
-		
-		List<Ticket> list = this.dao.findByPage((offset-1)*size, size, orderBy, order,search);
-		Long totalSize = this.dao.size();
-		return new PageDto<Ticket>(totalSize,offset,size,list);
+	public List<Ticket> findAll() {
+		return dao.findAll();
+	}
+
+	@Override
+	public PageDto<Ticket> findByPage(int offset, int size, String orderBy, boolean order) {
+		return dao.findByPage(offset, size, orderBy, order);
+	}
+
+	@Override
+	public PageDto<Ticket> findPageByCond(int offset, int size, String orderBy, boolean order, String goodsCode,
+			int status, String ticketName, String scenicName) {
+		return dao.findPageByCond(offset, size, orderBy, order, goodsCode, status, ticketName, scenicName);
+	}
+
+	@Override
+	public PageDto<Ticket> findPageByGroup(int offset, int size, String orderBy, boolean order, int groupId) {
+		return dao.findPageByGroup(offset, size, orderBy, order, groupId);
 	}
 
 }

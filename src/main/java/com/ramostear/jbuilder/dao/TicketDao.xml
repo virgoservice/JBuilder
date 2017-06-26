@@ -3,8 +3,6 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ramostear.jbuilder.dao.TicketDao">
 
-
-	
 	<resultMap type="com.ramostear.jbuilder.entity.Ticket" id="resultMap">
 		<id column="id" property="id"/>
 		<result column="scenicId" property="scenicId"/>
@@ -24,9 +22,8 @@
 		<result column="sellout" property="sellout"/>
 		<result column="status" property="status"/>
 		<result column="description" property="description"/>
-		
 	</resultMap>
-	
+
 	<insert id="save" parameterType="com.ramostear.jbuilder.entity.Ticket" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
 		insert into order_ticket
 		<trim prefix="(" suffix=")" suffixOverrides=",">
@@ -68,7 +65,7 @@
 			<if test="description != null">#{description}</if>
 		</trim>
 	</insert>	
-	
+
 	<update id="update" parameterType="com.ramostear.jbuilder.entity.Ticket">
 		update order_ticket
 		<set>
@@ -92,11 +89,11 @@
 		</set>
 		where id = #{id}
 	</update>
-	
+
 	<select id="size" resultType="Long">
 		select count(*) from order_ticket
 	</select>
-	
+
 	<delete id="delete" parameterType="Long">
 		delete from order_ticket 
 		where 
@@ -108,15 +105,40 @@
 		where 
 		id = #{id}
 	</select>
-	
+
 	<select id="findAll"  resultMap="resultMap">
 		select * from order_ticket
 	</select>
-	
+
 	<select id="findByPage" resultMap="resultMap">
 		select * from order_ticket 
-		<if test="search != null and search!=''">
-			where name like '%${search}%'
+		order by ${orderBy} 
+		<if test="order == true">
+			DESC
+		</if>
+		<if test="order == false">
+			ASC
+		</if>
+		limit #{offset},#{size}
+	</select>
+
+	<select id="findPageByCond" resultMap="resultMap">
+		select t.id, t.scenicId, t.groupId, t.name, t.goodsCode, t.price, t.shopPrice, t.stock,
+			t.goodsType, t.groupTickets, t.beginDate, t.endDate, t.weekDate, t.checkTime,
+			t.stopCheckTime, t.sellout, t.status, t.description
+		from order_ticket t order_scenic_spot s
+		where t.scenicId = s.id	
+		<if test="goodsCode != null and goodsCode != ''">
+			and goodsCode = #{goodsCode}
+		</if>
+		<if test="status != null">
+			and status = #{status}
+		</if>
+		<if test="ticketName != null">
+			and t.name like %#{ticketName}%
+		</if>
+		<if test="scenicName != null and scenicName != ''">
+			and s.name like %#{scenicName}%
 		</if>
 		order by ${orderBy} 
 		<if test="order == true">
@@ -125,8 +147,25 @@
 		<if test="order == false">
 			ASC
 		</if>
-		
-		limit #{offset},#{size}
+		<if test="size != 0">
+			limit #{offset},#{size}
+		</if>
 	</select>
-	
+
+	<select id="findPageByGroup" resultMap="resultMap">
+		select * from order_ticket
+		where 
+		groupId = #{groupId}
+		order by ${orderBy} 
+		<if test="order == true">
+			DESC
+		</if>
+		<if test="order == false">
+			ASC
+		</if>
+		<if test="size != 0">
+			limit #{offset},#{size}
+		</if>
+	</select>
+
 </mapper>

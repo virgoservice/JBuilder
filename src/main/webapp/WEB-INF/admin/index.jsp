@@ -73,173 +73,125 @@
 					</div>
 				</nav>
 			</header>
-			<aside class="main-sidebar">
-				<section class="sidebar">
-					<ul class="sidebar-menu">
-						<li class="active treeview">
-							<a href="index.html">
-								<i class="fa fa-dashboard"></i> <span>JBuilder 面板</span>
-							</a>
-						</li>
-						<li class="treeview">
-							<a href="#">
-								<i class="fa fa-laptop"></i>
-								<span>内容</span>
-								<span class="pull-right-container">
-					              <i class="fa fa-angle-left pull-right"></i>
-					            </span>
-							</a>
-							<ul class="treeview-menu">
-								<li>
-									<a href="article_list.html"><i class="fa fa-align-justify"></i>所有文章</a>
-								</li>
-								<li>
-									<a href="article_add.html"><i class="fa fa-pencil-square-o"></i> 撰写文章</a>
-								</li>
-								<li>
-									<a href="category_list.html"><i class="fa fa-map-signs"></i> 所有栏目</a>
-								</li>
-								<li>
-									<a href="pages/UI/sliders.html"><i class="fa fa-safari"></i> 新建栏目</a>
-								</li>
-								<li>
-									<a href="pages/UI/timeline.html"><i class="fa fa-object-group"></i> 所有轮播</a>
-								</li>
-								<li>
-									<a href="pages/UI/modals.html"><i class="fa fa-object-ungroup"></i> 新建轮播</a>
-								</li>
-								<li>
-									<a href="pages/UI/timeline.html"><i class="fa fa-share-alt-square"></i> 所有友链</a>
-								</li>
-								<li>
-									<a href="pages/UI/modals.html"><i class="fa fa-share-alt"></i> 新建友链</a>
-								</li>
-							</ul>
-						</li>
-						<li class="treeview">
-							<a href="#">
-								<i class="fa fa-television"></i>
-								<span>页面</span>
-								<span class="pull-right-container">
-					              <i class="fa fa-angle-left pull-right"></i>
-					            </span>
-							</a>
-							<ul class="treeview-menu">
-								<li>
-									<a href="pages/UI/general.html"><i class="fa  fa-list-ol"></i> 所有页面</a>
-								</li>
-								<li>
-									<a href="pages/UI/icons.html"><i class="fa  fa-file-text"></i> 网站首页</a>
-								</li>
-								<li>
-									<a href="category_list.html"><i class="fa fa-list"></i> 栏目页面</a>
-								</li>
-								<li>
-									<a href="pages/UI/sliders.html"><i class="fa fa-th-large"></i> 文章页面</a>
-								</li>
-								<li>
-									<a href="pages/UI/timeline.html"><i class="fa  fa-search"></i> 搜索页面</a>
-								</li>
-							</ul>
-						</li>
-						<li class="treeview">
-							<a href="#">
-								<i class="fa fa-file-photo-o"></i>
-								<span>附件</span>
-								<span class="pull-right-container">
-					              <i class="fa fa-angle-left pull-right"></i>
-					            </span>
-							</a>
-							<ul class="treeview-menu">
-								<li>
-									<a href="./attachment/list"><i class="fa fa-copy"></i> 所有附件</a>
-								</li>
-								<li>
-									<a href="./attchment/add"><i class="fa  fa-upload"></i> 上传附件</a>
-								</li>
-							</ul>
-						</li>
-						<li class="treeview">
-							<a href="#">
-								<i class="fa  fa-user"></i>
-								<span>用户</span>
-								<span class="pull-right-container">
-					              <i class="fa fa-angle-left pull-right"></i>
-					            </span>
-							</a>
-							<ul class="treeview-menu">
-								<li>
-									<a href="user_list.html"><i class="fa fa-users"></i> 所有用户</a>
-								</li>
-								<li>
-									<a href="user_add.html"><i class="fa fa-user-plus"></i> 添加用户</a>
-								</li>
-								<li>
-									<a href="user_profilet.html"><i class="fa fa-clipboard"></i> 我的资料</a>
-								</li>
-							</ul>
-						</li>
-						<li class="treeview">
-							<a href="#">
-								<i class="fa fa-file-code-o"></i>
-								<span>模板</span>
-								<span class="pull-right-container">
-					              <i class="fa fa-angle-left pull-right"></i>
-					            </span>
-							</a>
-							<ul class="treeview-menu">
-								<li>
-									<a href="template_list.html"><i class="fa fa-clone"></i> 所有模板</a>
-								</li>
-								<li>
-									<a href="template_upload.html"><i class="fa  fa-hdd-o"></i> 安装模板</a>
-								</li>
-							</ul>
-						</li>
-						<li class="treeview">
-							<a href="#">
-								<i class="fa fa-puzzle-piece"></i>
-								<span>插件</span>
-								<span class="pull-right-container">
-					              <i class="fa fa-angle-left pull-right"></i>
-					            </span>
-							</a>
-							<ul class="treeview-menu">
-								<li>
-									<a href="./plugin/list"><i class="fa fa-dropbox"></i> 所有插件</a>
-								</li>
-								<li>
-									<a href="./plugin/add"><i class="fa  fa-retweet"></i> 安装插件</a>
-								</li>
-							</ul>
-						</li>
-						<li class="treeview">
-							<a href="#">
-								<i class="fa fa-gears"></i>
-								<span>设置</span>
-								<span class="pull-right-container">
-					              <i class="fa fa-angle-left pull-right"></i>
-					            </span>
-							</a>
-							<ul class="treeview-menu">
-								<li>
-									<a href="site_config.html"><i class="fa fa-gear"></i> 常规设置</a>
-								</li>
-								<li>
-									<a href="pages/UI/icons.html"><i class="fa  fa-heartbeat"></i> 所有角色</a>
-								</li>
-								<li>
-									<a href="pages/UI/buttons.html"><i class="fa fa-heart"></i> 新添角色</a>
-								</li>
-								<li>
-									<a href="pages/UI/timeline.html"><i class="fa fa-gavel"></i> SEO设置</a>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</section>
-				<!-- /.sidebar -->
-			</aside>
+					<aside class="main-sidebar ">
+			<section class="sidebar">
+				<ul class="sidebar-menu">
+					<li class=" treeview">
+						<a href="index.html">
+							<i class="fa fa-dashboard"></i> <span>JBuilder 面板</span>
+						</a>
+					</li>
+					<li class="treeview">
+						<a href="#">
+							<i class="fa fa-user"></i>
+							<span>个人信息</span>
+							<span class="pull-right-container">
+				              <i class="fa fa-angle-left pull-right"></i>
+				            </span>
+						</a>
+						<ul class="treeview-menu">
+							<li>
+								<a href="article_list.html"><i class="fa fa-list-ul"></i>已售订单列表</a>
+							</li>
+							<li>
+								<a href="article_add.html"><i class="fa fa-list-ul"></i> 到付订单列表</a>
+							</li>
+						</ul>
+					</li>
+					<li class="treeview active">
+						<a href="#">
+							<i class="fa fa-reorder"></i>
+							<span>产品管理</span>
+							<span class="pull-right-container">
+				              <i class="fa fa-angle-left pull-right"></i>
+				            </span>
+						</a>
+						<ul class="treeview-menu">
+							<li class="active">
+								<a href="<%=path %>/admin/ticket/index"><i class="fa fa-list-ul"></i>景区产品管理</a>
+							</li>
+							<li>
+								<a href="<%=path %>/admin/ticketGroup/index"><i class="fa fa-list-ul"></i> 产品组管理</a>
+							</li>
+							<li>
+								<a href="<%=path %>/admin/scenic/index"><i class="fa fa-list-ul"></i>景区管理</a>
+							</li>
+						</ul>
+					</li>
+					<li class="treeview ">
+						<a href="#">
+							<i class="fa fa-reorder"></i>
+							<span>订单管理</span>
+							<span class="pull-right-container">
+				              <i class="fa fa-angle-left pull-right"></i>
+				            </span>
+						</a>
+						<ul class="treeview-menu">
+							<li>
+								<a href="article_list.html"><i class="fa fa-list-ul"></i>已售订单列表</a>
+							</li>
+							<li>
+								<a href="article_add.html"><i class="fa fa-list-ul"></i> 到付订单列表</a>
+							</li>
+						</ul>
+					</li>
+					<li class="treeview ">
+						<a href="#">
+							<i class="fa fa-reorder"></i>
+							<span>游客管理</span>
+							<span class="pull-right-container">
+				              <i class="fa fa-angle-left pull-right"></i>
+				            </span>
+						</a>
+						<ul class="treeview-menu">
+							<li>
+								<a href="article_list.html"><i class="fa fa-list-ul"></i>已售订单列表</a>
+							</li>
+							<li>
+								<a href="article_add.html"><i class="fa fa-list-ul"></i> 到付订单列表</a>
+							</li>
+						</ul>
+					</li>
+					<li class="treeview ">
+						<a href="#">
+							<i class="fa fa-reorder"></i>
+							<span>角色管理</span>
+							<span class="pull-right-container">
+				              <i class="fa fa-angle-left pull-right"></i>
+				            </span>
+						</a>
+						<ul class="treeview-menu">
+							<li>
+								<a href="article_list.html"><i class="fa fa-list-ul"></i>已售订单列表</a>
+							</li>
+							<li>
+								<a href="article_add.html"><i class="fa fa-list-ul"></i> 到付订单列表</a>
+							</li>
+						</ul>
+					</li>
+					<li class="treeview ">
+						<a href="#">
+							<i class="fa fa-reorder"></i>
+							<span>用户管理</span>
+							<span class="pull-right-container">
+				              <i class="fa fa-angle-left pull-right"></i>
+				            </span>
+						</a>
+						<ul class="treeview-menu">
+							<li>
+								<a href="article_list.html"><i class="fa fa-list-ul"></i>已售订单列表</a>
+							</li>
+							<li>
+								<a href="article_add.html"><i class="fa fa-list-ul"></i> 到付订单列表</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+			<!-- /.sidebar -->
+		</aside>
+		
+		
 			<!-- Content Wrapper. Contains page content -->
 			<div class="content-wrapper">
 				<!-- Content Header (Page header) -->

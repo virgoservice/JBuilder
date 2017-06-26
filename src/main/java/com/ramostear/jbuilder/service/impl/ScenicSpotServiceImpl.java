@@ -74,4 +74,9 @@ public class ScenicSpotServiceImpl implements ScenicSpotService {
 		return new PageDto<ScenicSpot>(totalSize,offset,size,list);
 	}
 
+	@Override
+	public List<ScenicSpot> findAll() {
+		return sdao.findAll();
+	}
+
 }
