@@ -47,7 +47,7 @@ import com.ramostear.jbuilder.service.TicketService;
  * @email:361801580@qq.com 
  */
 @Controller
-@RequestMapping("/order/pay")
+@RequestMapping("/admin/order/pay")
 public class PayController {
 	
 	@Autowired
@@ -71,7 +71,7 @@ public class PayController {
 		//用户是否持有该定订单
 		User user=(User)session.getAttribute(SysConsts.LOGIN_USER);
 		
-		Order order=this.orderService.findByIdAndUid(orderId, 1L);
+		Order order=this.orderService.findByIdAndUid(orderId, user.getId());
 		if(order==null){
 			throw new BusinessException("订单不存在！");
 		}
@@ -161,8 +161,9 @@ public class PayController {
 	@RequestMapping(value="/refunds",method=RequestMethod.POST)
 	public String refunds(Long cancelOrderId,HttpSession session){
 		//考虑权限处理
+		User user=(User)session.getAttribute(SysConsts.LOGIN_USER);
 		
-		this.alipayService.AlipayRefunds(cancelOrderId);
+		this.alipayService.AlipayRefunds(cancelOrderId,user.getId());
 		return "success";
 	}
 }

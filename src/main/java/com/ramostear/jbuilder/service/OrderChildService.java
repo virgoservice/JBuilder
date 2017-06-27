@@ -13,6 +13,7 @@ package com.ramostear.jbuilder.service;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+
 import com.ramostear.jbuilder.entity.OrderChild;
 import com.ramostear.jbuilder.kit.PageDto;
 
@@ -34,6 +35,14 @@ public interface OrderChildService {
 	public List<OrderChild> getAllByOid(Long oid);
 	
 	//查询待检票列表
-	public PageDto<OrderChild> findCheckByPage(@Param("offset")int offset,@Param("size")int size,@Param("oderBy")String orderBy,@Param("order") boolean order,@Param("search")String search);
+	public PageDto<OrderChild> findCheckByPage(
+			@Param("offset")int offset,
+			@Param("size")int size,
+			@Param("oderBy")String orderBy,
+			@Param("order") boolean order,
+			@Param("orderCode")String orderCode,
+			@Param("hcode")String hcode,
+			@Param("linkMobile")String linkMobile,
+			@Param("status")String status);
 
 }

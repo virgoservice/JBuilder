@@ -12,9 +12,11 @@ package com.ramostear.jbuilder.service.impl;
 
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.ramostear.jbuilder.dao.CancelOrderDao;
 import com.ramostear.jbuilder.dao.CheckTicketDao;
 import com.ramostear.jbuilder.dao.OrderChildDao;
@@ -122,6 +124,7 @@ public class OrderServiceImpl implements OrderService {
 		num=Math.abs(num);
 		
 		OrderChild order=this.cdao.findById(id);
+		
 		Long count=this.cancel.findCancelCount(id);//申请取消数量
 		Long checkCount=this.checkDao.findCheckCount(id);//已检票数量
 		
@@ -131,6 +134,8 @@ public class OrderServiceImpl implements OrderService {
 		
 		if(count==null)
 			count=0L;
+		if(checkCount==null)
+			checkCount=0L;
 		
 		if(num>order.getQuantity()-count-checkCount){
 			throw new BusinessException("可退票数量不足！");
@@ -200,8 +205,9 @@ public class OrderServiceImpl implements OrderService {
 	 */
 	@Override
 	public PageDto<Order> findByPage(int offset, int size, String orderBy,
-			boolean order, String orderCode) {
-		List<Order> list = odao.findByPage((offset-1)*size, size, orderBy, order,orderCode);
+			boolean order, String orderCode,String linkMobile,String ticketType,String payStatus) {
+		
+		List<Order> list = odao.findByPage((offset-1)*size, size, orderBy, order,orderCode,linkMobile,ticketType,payStatus);
 		Long totalSize = odao.size();
 		return new PageDto<Order>(totalSize,offset,size,list);
 	}
@@ -244,6 +250,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public boolean checkOrder(Long corderId, Integer num) {
+		
 		OrderChild child=this.cdao.findById(corderId);
 		if(child==null){
 			throw new BusinessException("订单不存在");
@@ -251,6 +258,10 @@ public class OrderServiceImpl implements OrderService {
 		if(num>child.getQuantity()){
 			throw new BusinessException("检票数量超过订单数量");
 		}
+		/**
+		 * 这里考虑退票的数量？
+		 * Long count=this.cancel.findCancelCount(id);//申请取消数量
+		 */
 		
 		Long count=this.checkDao.findCheckCount(corderId);
 		if(count==null)
@@ -261,7 +272,7 @@ public class OrderServiceImpl implements OrderService {
 		}
 		
 		child.setStatus("4");//完成订单
-		if(count==child.getQuantity()-0){
+		if(count+num==child.getQuantity()-0){
 			child.setCheckStatus("2");//检票完成
 		}else{
 			child.setCheckStatus("1");//检票中

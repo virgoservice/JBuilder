@@ -10,6 +10,8 @@
 */
 package com.ramostear.jbuilder.service;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.ramostear.jbuilder.entity.CheckTicket;
@@ -30,6 +32,8 @@ public interface CheckTicketService {
 	public boolean delete(Long id);
 	
 	public CheckTicket findById(Long id);
+	
+	public List<CheckTicket> findByOid(Long Oid);
 	
 	public PageDto<CheckTicket> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("oderBy")String orderBy,@Param("order") boolean order,@Param("search")String search);
 

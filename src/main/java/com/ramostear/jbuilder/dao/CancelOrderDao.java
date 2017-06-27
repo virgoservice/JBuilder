@@ -43,6 +43,9 @@ public interface CancelOrderDao {
 	
 	public Long findCancelCount(Long id);
 	
-	public List<CancelOrder> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order,@Param("orderCode")String orderCode);
+	public Long findCancelResult(Long id);
+	public List<CancelOrder> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,
+			@Param("order")boolean order,@Param("status")String status,
+			@Param("orderCode")String orderCode,@Param("cancelOrderCode")String cancelOrderCode);
 
 }

@@ -86,8 +86,8 @@ public class CancelOrderServiceImpl implements CancelOrderService {
 	 */
 	@Override
 	public PageDto<CancelOrder> findByPage(int offset, int size, String orderBy,
-			boolean order, String orderCode) {
-		List<CancelOrder> list = cdao.findByPage((offset-1)*size, size, orderBy, order,orderCode);
+			boolean order, String status,String orderCode,String hcode) {
+		List<CancelOrder> list = cdao.findByPage((offset-1)*size, size, orderBy, order,status,orderCode,hcode);
 		Long totalSize = cdao.size();
 		return new PageDto<CancelOrder>(totalSize,offset,size,list);
 	}
@@ -95,6 +95,11 @@ public class CancelOrderServiceImpl implements CancelOrderService {
 	@Override
 	public CancelOrder findByRetreatBatchNo(String retreatBatchNo) {
 		return this.cdao.findByRetreatBatchNo(retreatBatchNo);
+	}
+
+	@Override
+	public Long findCancelResult(Long id) {
+		return this.cdao.findCancelResult(id);
 	}
 
 

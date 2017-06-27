@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.ramostear.jbuilder.dao.CheckTicketDao;
 import com.ramostear.jbuilder.entity.CheckTicket;
 import com.ramostear.jbuilder.kit.PageDto;
@@ -74,6 +75,11 @@ public class CheckTicketServiceImpl implements CheckTicketService {
 		List<CheckTicket> list = this.cdao.findByPage((offset-1)*size, size, orderBy, order,search);
 		Long totalSize = this.cdao.size();
 		return new PageDto<CheckTicket>(totalSize,offset,size,list);
+	}
+
+	@Override
+	public List<CheckTicket> findByOid(Long Oid) {
+		return this.cdao.findByOid(Oid);
 	}
 
 }

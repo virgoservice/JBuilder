@@ -31,10 +31,11 @@ public interface AlipayService {
 	/**
 	 * 退款
 	 * @param cancelOrderId 退款记录id
+	 * @param id 
 	 * @param returnNum	退款数量
 	 * @return
 	 */
-	public boolean AlipayRefunds(Long cancelOrderId);
+	public boolean AlipayRefunds(Long cancelOrderId, Long id);
 
 	
 }

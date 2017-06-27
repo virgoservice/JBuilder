@@ -29,7 +29,11 @@ public class CancelOrder {
 	private String status;
 	private String result;
 	private Date cancelDate;
+	private Date checkDate;
+	private Long checkMan;
 	private double totalPrice;
+	private OrderChild child;
+	private Order order;
 	
 	public CancelOrder() {
 		super();
@@ -107,6 +111,22 @@ public class CancelOrder {
 		this.cancelDate = cancelDate;
 	}
 
+	public Date getCheckDate() {
+		return checkDate;
+	}
+
+	public void setCheckDate(Date checkDate) {
+		this.checkDate = checkDate;
+	}
+
+	public Long getCheckMan() {
+		return checkMan;
+	}
+
+	public void setCheckMan(Long checkMan) {
+		this.checkMan = checkMan;
+	}
+
 	public double getTotalPrice() {
 		return totalPrice;
 	}
@@ -115,9 +135,26 @@ public class CancelOrder {
 		this.totalPrice = totalPrice;
 	}
 
+	public OrderChild getChild() {
+		return child;
+	}
+
+	public void setChild(OrderChild child) {
+		this.child = child;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
 	public CancelOrder(Long id, String cancelOrderCode, Long orderId,
 			Long childOrderId, String retreatBatchNo, Integer num,
-			String status, String result, Date cancelDate, double totalPrice) {
+			String status, String result, Date cancelDate, Date checkDate,
+			Long checkMan, double totalPrice, OrderChild child, Order order) {
 		super();
 		this.id = id;
 		this.cancelOrderCode = cancelOrderCode;
@@ -128,16 +165,15 @@ public class CancelOrder {
 		this.status = status;
 		this.result = result;
 		this.cancelDate = cancelDate;
+		this.checkDate = checkDate;
+		this.checkMan = checkMan;
 		this.totalPrice = totalPrice;
+		this.child = child;
+		this.order = order;
 	}
 
-	@Override
-	public String toString() {
-		return "CancelOrder [id=" + id + ", cancelOrderCode=" + cancelOrderCode
-				+ ", orderId=" + orderId + ", childOrderId=" + childOrderId
-				+ ", retreatBatchNo=" + retreatBatchNo + ", num=" + num
-				+ ", status=" + status + ", result=" + result + ", cancelDate="
-				+ cancelDate + ", totalPrice=" + totalPrice + "]";
-	}
+	
 
+	
+	
 }

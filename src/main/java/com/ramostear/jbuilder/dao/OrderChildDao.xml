@@ -151,7 +151,14 @@
 		<if test="orderCode != null and orderCode!=''">
 			and orderCode like '%${orderCode}%'
 		</if>
-		and checkStatus in (0,1)
+		<if test="hcode != null and hcode!=''">
+			and orderId in(select id from order_order where ziyoubaoCheckNo like '%${hcode}%')
+		</if>
+		<if test="linkMobile != null and linkMobile!=''">
+			and orderId in(select id from order_order where linkMobile like '%${linkMobile}%')
+		</if>
+		and checkStatus in (${status})
+		and payStatus=1
 		order by ${orderBy} 
 		<if test="order == true">
 			DESC

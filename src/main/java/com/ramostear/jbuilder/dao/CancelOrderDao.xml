@@ -12,9 +12,14 @@
 		<result column="num" property="num"/>
 		<result column="status" property="status"/>
 		<result column="cancelDate" property="cancelDate"/>
+		<result column="checkDate" property="checkDate"/>
+		<result column="checkMan" property="checkMan"/>
 		
 		<result column="result" property="result"/>
 		<result column="totalPrice" property="totalPrice"/>
+		
+		<association property="child" column="childOrderId" select="findOrder"/>
+		<association property="order" column="orderId" select="findOrder2"/>
 	</resultMap>
 	
 	<insert id="save" parameterType="com.ramostear.jbuilder.entity.CancelOrder" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
@@ -28,6 +33,9 @@
 			<if test="status != null">status,</if>
 			<if test="totalPrice != null">totalPrice,</if>
 			<if test="result != null">result,</if>
+			<if test="checkDate != null">checkDate,</if>
+			<if test="checkMan != null">checkMan,</if>
+			
 			<if test="cancelDate != null">cancelDate</if>
 		</trim>
 		<trim prefix="values(" suffix=")" suffixOverrides=",">
@@ -39,6 +47,8 @@
 			<if test="status != null">#{status},</if>
 			<if test="totalPrice != null">#{totalPrice},</if>
 			<if test="result != null">#{result},</if>
+			<if test="checkDate != null">#{checkDate},</if>
+			<if test="checkMan != null">#{checkMan},</if>
 			<if test="cancelDate != null">#{cancelDate}</if>
 		</trim>
 	</insert>	
@@ -54,6 +64,8 @@
 			<if test="status != null">status=#{status},</if>
 			<if test="result != null">result=#{result},</if>
 			<if test="totalPrice != null">totalPrice=#{totalPrice},</if>
+			<if test="checkDate != null">checkDate=#{checkDate},</if>
+			<if test="checkMan != null">checkMan=#{checkMan},</if>
 			<if test="cancelDate != null">cancelDate=#{cancelDate}</if>
 		</set>
 		where id = #{id}
@@ -95,15 +107,29 @@
  
 	</select>
 	
+	<select id="findCancelResult"  parameterType="Long"  resultType="Long">
+		select sum(t.num) from 
+		order_cancel_order t 
+		where t.childOrderId=#{id}
+		and result=1
+ 
+	</select>
+	
 	<select id="findAll"  resultMap="resultMap">
 		select * from order_cancel_order
 	</select>
-	
 	<select id="findByPage" resultMap="resultMap">
-		select * from order_cancel_order 
-		<if test="status != null and status''">
-			where status = ${status}
+		select * from order_cancel_order where 1=1
+		<if test="status != null and status !=''">
+			and status = ${status}
 		</if>
+		<if test="orderCode != null and orderCode !=''">
+			and orderId in ( select id from order_order where orderCode like '%${orderCode}%')
+		</if>
+		<if test="cancelOrderCode != null and cancelOrderCode !=''">
+			and cancelOrderCode like '%${cancelOrderCode}%' 
+		</if>
+		
 		order by ${orderBy} 
 		<if test="order == true">
 			DESC
@@ -112,6 +138,18 @@
 			ASC
 		</if>
 		limit #{offset},#{size}
+	</select>
+	
+	<select id="findOrder" parameterType="Long" resultType="com.ramostear.jbuilder.entity.OrderChild">
+		select * from order_order_child
+		where 
+		id = #{id}
+	</select>
+	
+	<select id="findOrder2" parameterType="Long" resultType="com.ramostear.jbuilder.entity.Order">
+		select * from order_order
+		where 
+		id = #{id}
 	</select>
 	
 </mapper>

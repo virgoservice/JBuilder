@@ -27,6 +27,7 @@
 		<result column="retreatBatchNo" property="retreatBatchNo"/>
 		<result column="buyerRemark" property="buyerRemark"/>
 		<result column="sellerRemark" property="sellerRemark"/>
+		<association property="list" column="id" select="findChild"/>
 		
 	</resultMap>
 	
@@ -159,10 +160,29 @@
 	</select>
 	
 	<select id="findByPage" resultMap="resultMap">
-		select * from order_order 
+		select * from order_order where 1=1
 		<if test="orderCode != null and orderCode!=''">
-			where orderCode like '%${orderCode}%'
+			and orderCode like '%${orderCode}%'
 		</if>
+		
+		<if test="linkMobile != null and linkMobile!=''">
+			and linkMobile like '%${linkMobile}%'
+		</if>
+		
+		<if test="payStatus != null and payStatus!=''">
+			and payStatus = ${payStatus}
+		</if>
+		
+		<if test="ticketType != null and ticketType!=''">
+			and id IN (
+				SELECT
+					orderId
+				FROM
+					order_order_child
+			where ticketId in (select id from order_ticket where groupId=${ticketType})
+			)
+		</if>
+		
 		order by ${orderBy} 
 		<if test="order == true">
 			DESC
@@ -171,6 +191,12 @@
 			ASC
 		</if>
 		limit #{offset},#{size}
+	</select>
+	
+	<select id="findChild" parameterType="Long" resultType="com.ramostear.jbuilder.entity.OrderChild">
+		select * from order_order_child 
+		where 
+		orderId = #{id}
 	</select>
 	
 </mapper>

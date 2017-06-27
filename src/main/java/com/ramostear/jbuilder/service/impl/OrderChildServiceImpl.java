@@ -59,8 +59,8 @@ public class OrderChildServiceImpl implements OrderChildService {
 
 	@Override
 	public PageDto<OrderChild> findCheckByPage(int offset, int size,
-			String orderBy, boolean order, String search) {
-		List<OrderChild> list = this.odao.findCheckByPage((offset-1)*size, size, orderBy, order,search);
+			String orderBy, boolean order, String orderCode,String hcode,String linkMobile,String status) {
+		List<OrderChild> list = this.odao.findCheckByPage((offset-1)*size, size, orderBy, order,orderCode,hcode,linkMobile,status);
 		Long totalSize = this.odao.checkPageSize();
 		return new PageDto<OrderChild>(totalSize,offset,size,list);
 	}

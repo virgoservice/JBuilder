@@ -27,6 +27,8 @@ public interface CheckTicketDao {
 	public CheckTicket findByName(String name);
 	
 	public List<CheckTicket> findAll();
+	
+	public List<CheckTicket> findByOid(Long oid);
 	//查询检票数量
 	public Long findCheckCount(Long coid);
 	

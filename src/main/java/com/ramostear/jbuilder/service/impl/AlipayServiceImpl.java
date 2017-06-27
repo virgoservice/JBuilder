@@ -10,6 +10,7 @@
 */
 package com.ramostear.jbuilder.service.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.request.AlipayTradeRefundRequest;
@@ -85,7 +87,7 @@ public class AlipayServiceImpl implements AlipayService {
 		
 		if(tradeStatus.equals("TRADE_FINISHED")){
 			//退款期限最长3个月。
-			//暂不处理
+			//订单完结通知暂不处理
 			
 		}else if (tradeStatus.equals("TRADE_SUCCESS")){
 			//更新订单信息
@@ -97,7 +99,7 @@ public class AlipayServiceImpl implements AlipayService {
 	}
 
 	@Override
-	public boolean AlipayRefunds(Long cancelOrderId) {
+	public boolean AlipayRefunds(Long cancelOrderId,Long userId) {
 		
 		AlipayClient alipayClient = AlipayManager.getIstance();
 		AlipayTradeRefundRequest request = new AlipayTradeRefundRequest();
@@ -120,6 +122,11 @@ public class AlipayServiceImpl implements AlipayService {
 			throw new BusinessException("订单不存在！");
 		}
 		
+		//已退票数量
+		//Long count = this.cancelOrderService.findCancelResult(child.getId());
+		if(cancel.getNum()+order.getCheckNum()+order.getReturnNum()>order.getTotal()){
+			throw new BusinessException("退票失败：退票数量不能大于已检票数量！");
+		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();  
 		map.put("out_trade_no", order.getOrderCode());
@@ -143,7 +150,9 @@ public class AlipayServiceImpl implements AlipayService {
 				//更改退单记录
 				if(cancel!=null){
 					cancel.setStatus("1");//已退款
-					cancel.setResult("success");
+					cancel.setResult("1");//退款通过
+					cancel.setCheckDate(new Date());
+					cancel.setCheckMan(userId);//审核人
 					this.cancelOrderService.update(cancel);
 				}
 				//更新订单退票数量
@@ -153,8 +162,10 @@ public class AlipayServiceImpl implements AlipayService {
 				System.out.println(response.getBody());
 				return true;
 			} else {
-				System.out.println(response.getBody());
-				throw new BusinessException("退款失败");
+				String res=response.getBody();
+				JSONObject obj=JSON.parseObject(res);
+				String mes=JSON.parseObject(obj.getString("alipay_trade_refund_response")).getString("sub_msg");
+				throw new BusinessException("退款失败:"+mes);
 			}
 		} catch (AlipayApiException e) {
 			e.printStackTrace();

@@ -33,12 +33,16 @@ public interface CancelOrderService {
 	
 	public Long size();
 	
+	public Long findCancelResult(Long id);
+	
 	public CancelOrder findById(Long id);
 	
 	public CancelOrder findByRetreatBatchNo(String retreatBatchNo);
 	
 	public List<CancelOrder> findAll();
 	
-	public PageDto<CancelOrder> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order,@Param("status")String status);
+	public PageDto<CancelOrder> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,
+			@Param("order")boolean order,@Param("status")String status,
+			@Param("orderCode")String orderCode,@Param("ziyoubaoCheckNo")String ziyoubaoCheckNo);
 
 }

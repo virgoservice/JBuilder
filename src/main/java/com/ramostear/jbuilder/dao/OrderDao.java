@@ -11,7 +11,9 @@
 package com.ramostear.jbuilder.dao;
 
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
+
 import com.ramostear.jbuilder.entity.Order;
 
 /** 
@@ -40,6 +42,14 @@ public interface OrderDao {
 	
 	public List<Order> findByPageByUid(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order,@Param("uid")Long uid);
 
-	public List<Order> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order,@Param("orderCode")String orderCode);
+	public List<Order> findByPage(
+			@Param("offset")int offset,
+			@Param("size")int size,
+			@Param("orderBy")String orderBy,
+			@Param("order")boolean order,
+			@Param("orderCode")String orderCode, 
+			@Param("linkMobile")String linkMobile,
+			@Param("ticketType")String ticketType, 
+			@Param("payStatus")String payStatus);
 
 }

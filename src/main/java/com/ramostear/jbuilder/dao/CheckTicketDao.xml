@@ -76,6 +76,11 @@
  
 	</select>
 	
+	<select id="findByOid"  resultMap="resultMap">
+		select * from order_check_ticket where orderId=#{oid}
+	</select>
+	
+	
 	<select id="findByPage" resultMap="resultMap">
 		select * from order_check_ticket 
 		
