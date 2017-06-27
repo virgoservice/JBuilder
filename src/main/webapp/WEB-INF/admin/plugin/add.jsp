@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%
+	String path = request.getContextPath();
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -109,6 +112,7 @@
 		<script src="<%=request.getContextPath() %>/resources/admin/bootstrap/js/bootstrap.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 		<script src="<%=request.getContextPath() %>/resources/admin/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+		<script src="<%=path%>/resources/admin/dist/js/common.js"></script>
 		<script type="text/javascript">
 		function add(url, id){
 			var formdata = $("#plugin-form").serialize();

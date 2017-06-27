@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ page pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
@@ -41,209 +42,8 @@
 
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-
-    <header class="main-header">
-        <a href="#" class="logo">
-            <span class="logo-mini"><b>J</b>BC</span>
-            <span class="logo-lg"><b>JBuilder</b></span>
-        </a>
-        <nav class="navbar navbar-static-top">
-            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                <span class="sr-only">Toggle navigation</span>
-            </a>
-            <div class="navbar-custom-menu">
-                <ul class="nav navbar-nav">
-                    <li class="dropdown user user-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="<%=path %>/resources/admin/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                            <span class="hidden-xs">谭朝红，&nbsp;你好！</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="user-header">
-                                <img src="<%=path %>/resources/admin/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                                <p>谭朝红 - 超级管理员</p>
-                            </li>
-                            <li class="user-footer">
-                                <div class="pull-left">
-                                    <a href="user_profilet.html" class="btn btn-default btn-flat">资料</a>
-                                </div>
-                                <div class="pull-right">
-                                    <a href="#" class="btn btn-default btn-flat">退出</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-    <aside class="main-sidebar">
-        <section class="sidebar">
-            <ul class="sidebar-menu">
-                <li class="treeview">
-                    <a href="index.html">
-                        <i class="fa fa-dashboard"></i> <span>JBuilder 面板</span>
-                    </a>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-laptop"></i>
-                        <span>内容</span>
-                        <span class="pull-right-container">
-					              <i class="fa fa-angle-left pull-right"></i>
-					            </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li>
-                            <a href="article_list.html" ><i class="fa fa-align-justify"></i>所有文章</a>
-                        </li>
-                        <li>
-                            <a href="article_add.html"><i class="fa fa-pencil-square-o"></i> 撰写文章</a>
-                        </li>
-                        <li>
-                            <a href="category_list.html"><i class="fa fa-map-signs"></i> 所有栏目</a>
-                        </li>
-                        <li>
-                            <a href="pages/UI/sliders.html"><i class="fa fa-safari"></i> 新建栏目</a>
-                        </li>
-                        <li>
-                            <a href="pages/UI/timeline.html"><i class="fa fa-object-group"></i> 所有轮播</a>
-                        </li>
-                        <li>
-                            <a href="pages/UI/modals.html"><i class="fa fa-object-ungroup"></i> 新建轮播</a>
-                        </li>
-                        <li>
-                            <a href="pages/UI/timeline.html"><i class="fa fa-share-alt-square"></i> 所有友链</a>
-                        </li>
-                        <li>
-                            <a href="pages/UI/modals.html"><i class="fa fa-share-alt"></i> 新建友链</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-television"></i>
-                        <span>页面</span>
-                        <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li>
-                            <a href="pages/UI/general.html"><i class="fa  fa-list-ol"></i> 所有页面</a>
-                        </li>
-                        <li>
-                            <a href="pages/UI/icons.html"><i class="fa  fa-file-text"></i> 网站首页</a>
-                        </li>
-                        <li>
-                            <a href="pages/UI/buttons.html"><i class="fa fa-list"></i> 栏目页面</a>
-                        </li>
-                        <li>
-                            <a href="pages/UI/sliders.html"><i class="fa fa-th-large"></i> 文章页面</a>
-                        </li>
-                        <li>
-                            <a href="pages/UI/timeline.html"><i class="fa  fa-search"></i> 搜索页面</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-file-photo-o"></i>
-                        <span>附件</span>
-                        <span class="pull-right-container">
-					            	<i class="fa fa-angle-left pull-right"></i>
-					            </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li>
-                            <a href="attachment_list.html"><i class="fa fa-copy"></i> 所有附件</a>
-                        </li>
-                        <li>
-                            <a href="attachment_upload.html"><i class="fa  fa-upload"></i> 上传附件</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class=" treeview">
-                    <a href="#">
-                        <i class="fa  fa-user"></i>
-                        <span>用户</span>
-                        <span class="pull-right-container">
-					            	<i class="fa fa-angle-left pull-right"></i>
-					            </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li >
-                            <a href="user_list.html"><i class="fa fa-users"></i> 所有用户</a>
-                        </li>
-                        <li>
-                            <a href="user_add.html"><i class="fa fa-user-plus"></i> 添加用户</a>
-                        </li>
-                        <li>
-                            <a href="user_profilet.html"><i class="fa fa-clipboard"></i> 我的资料</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-file-code-o"></i>
-                        <span>模板</span>
-                        <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li>
-                            <a href="pages/UI/general.html"><i class="fa fa-clone"></i> 所有模板</a>
-                        </li>
-                        <li>
-                            <a href="pages/UI/icons.html"><i class="fa  fa-hdd-o"></i> 安装模板</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-puzzle-piece"></i>
-                        <span>插件</span>
-                        <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li>
-                            <a href="pages/UI/general.html"><i class="fa fa-dropbox"></i> 所有插件</a>
-                        </li>
-                        <li>
-                            <a href="pages/UI/icons.html"><i class="fa  fa-retweet"></i> 安装插件</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="treeview active">
-                    <a href="#">
-                        <i class="fa fa-gears"></i>
-                        <span>设置</span>
-                        <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li>
-                            <a href="site_config.html"><i class="fa fa-gear"></i> 常规设置</a>
-                        </li>
-                        <li class="active">
-                            <a href="<%=path %>/admin/role/index"><i class="fa  fa-heartbeat"></i> 所有角色</a>
-                        </li>
-                        <li>
-                            <a href="<%=path %>/admin/role/add"><i class="fa fa-heart"></i> 新添角色</a>
-                        </li>
-                        <li>
-                            <a href="pages/UI/timeline.html"><i class="fa fa-gavel"></i> SEO设置</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </section>
-        <!-- /.sidebar -->
-    </aside>
+	<jsp:include page="../../common/header.jsp" />
+	<jsp:include page="../../common/menu.jsp" />
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -253,23 +53,12 @@
         </section>
         <section class="content">
             <div class="row" style="padding: 0 15px 10px 15px;">
-                <ul class="list-inline" style="float: left;">
-                    <li class="all active">
-                        <a href="#" class="current">
-                            全部 <span class="count">(10)</span>
-                        </a>|
-                    </li>
-                    <li class="all">
-                        <a href="#" class="current">
-                            管理员 <span class="count">(3)</span>
-                        </a>|
-                    </li>
-                    <li class="all">
-                        <a href="#" class="current">
-                            编辑 <span class="count">(7)</span>
-                        </a>
-                    </li>
-                </ul>
+            	<shiro:hasPermission name="role:add">
+					<a href="<%=path %>/admin/role/add" class="btn btn-primary btn-sm">新增</a>
+				</shiro:hasPermission>
+				<shiro:hasPermission name="role:delete">
+					<button type="button" class="btn btn-danger btn-sm" onclick="deleteBatch()">批量删除</button>
+				</shiro:hasPermission>
                 <form class="form-horizontal col-sm-3" method="post" style="float: right;" action="#">
                     <div class="input-group input-group-sm">
                         <input id="#" class="form-control" type="search"  value="" name="k" placeholder="请输入关键词"/>
@@ -279,29 +68,10 @@
                     </div>
                 </form>
             </div>
-            <div class="row" style="padding: 0 15px 10px 15px;">
-                <div style="float: left;">
-                    <select class="form-control input-sm">
-                        <option value="">批量操作</option>
-                    </select>
-                </div>
-                <div style="float: left;">
-                    <form action="#" method="post">
-                        <input type="hidden" name="cid"/>
-                        <input type="hidden" name="keyword"/>
-                        <input type="submit"  class="btn btn-block btn-sm btn-default" value="筛选"/>
-                    </form>
-                </div>
-            </div>
             <div id="role-table"></div>
         </section>
     </div>
-    <footer class="main-footer">
-        <div class="pull-right hidden-xs">
-            <b>Version</b> 2.4.0
-        </div>
-        <strong>Copyright &copy; 2017-2020 <a href="http://www.ramostear.com">Ramostear Studio</a>.</strong> All rights reserved.
-    </footer>
+    <jsp:include page="../../common/footer.jsp" />
     <div class="control-sidebar-bg"></div>
 </div>
 <!-- jQuery 2.2.3 -->
@@ -334,6 +104,7 @@
 <!-- AdminLTE App -->
 <script src="<%=path %>/resources/admin/dist/js/app.min.js"></script>
 <script src="<%=path %>/resources/admin/plugins/layer-v3.0.3/layer/layer.js"></script>
+<script src="<%=path%>/resources/admin/dist/js/common.js"></script>
 <script type="text/javascript">
 	query();
 	function query(pageNo,pageSize){
@@ -380,6 +151,51 @@
 				layer.close(index);
 			}
 		});
+	}
+	function deleteBatch(){
+		 var roleIds =[]; 
+		 var ids = $("tbody input[type=checkbox]:checked");
+		 for(var i=0;i<ids.length;i++){
+			 if(ids[i].checked){
+				 roleIds[i]=ids[i].value;
+			 }
+		 }
+		//alert(uids);
+		if(roleIds.length<=0){
+			layer.open({
+				title:false,
+				icon:5,
+				content:"没有选择任何删除数据",
+				offset:'15px'
+			});
+		}else{
+			layer.open({
+				title:false,
+				icon:2,
+				content:"改操作不可逆，确认删除吗?",
+				offset:'15px',
+				btn:['确认','取消'],
+				btnAlign:'r',
+				yes:function(index){
+					/* console.log(uids); */
+					$.ajax({
+						url:"<%=path %>/admin/role/deleteBatch",
+						type:"POST",
+						data:{
+							roleIds:roleIds.toString(),
+						},
+						contentType:"application/x-www-form-urlencoded",
+						encoding:"utf-8",
+						cache:false,
+					});
+					location.reload();
+					layer.close(index);
+				},
+				cancel:function(){
+					layer.close(index);
+				}
+			});
+		}
 	}
 </script>
 

@@ -485,11 +485,18 @@
 		    <version>1.1.0.Final</version>
 		</dependency>
 		
+		<!-- private maven repo -->
 		<dependency>
 		  <groupId>com.ramostear.svip</groupId>
 		  <artifactId>ramostear-ueditor</artifactId>
 		  <version>1.0.0</version>
 		</dependency>
+		<dependency>
+		  <groupId>com.ramostear.svip</groupId>
+		  <artifactId>alipay-sdk-java</artifactId>
+		  <version>20170307171631</version>
+		</dependency>
+		<!-- private repo end -->
 		
 		<dependency>
 		    <groupId>net.coobird</groupId>
