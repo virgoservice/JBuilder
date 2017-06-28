@@ -34,6 +34,13 @@ public interface UserService {
 	 */
 	public User add(User user,Long...roleIds);
 	/**
+	 * 添加前台的用户
+	 * @param user
+	 * @return
+	 */
+	public User add(User user);
+	
+	/**
 	 * 修改密码
 	 * @param managerId
 	 * @param newPassword

@@ -55,7 +55,10 @@
 		<servlet-name>verifyCodeServlet</servlet-name>
 		<url-pattern>/admin/verifyCode</url-pattern>
 	</servlet-mapping>
-	
+	<servlet-mapping>
+		<servlet-name>verifyCodeServlet</servlet-name>
+		<url-pattern>/member/verifyCode</url-pattern>
+	</servlet-mapping>
 	<!--日志记录  -->
 	<context-param>
 		<param-name>log4jConfigLocation</param-name>

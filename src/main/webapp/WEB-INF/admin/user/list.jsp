@@ -34,7 +34,7 @@
 					<c:forEach items="${list.items}" var="user">
 						<c:if test="${login_user.id != user.id }">
 							<tr>
-								<shiro:hasPermission name="ruser:delete">
+								<shiro:hasPermission name="user:delete">
 									<td><input type="checkbox" value="${user.id}"/></td>
 								</shiro:hasPermission>
 								<td>${user.id}</td>

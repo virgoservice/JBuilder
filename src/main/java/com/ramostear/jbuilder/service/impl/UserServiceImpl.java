@@ -204,5 +204,14 @@ public class UserServiceImpl implements UserService{
 		return user;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.ramostear.jbuilder.service.UserService#add(com.ramostear.jbuilder.entity.User)
+	 */
+	@Override
+	public User add(User user) {
+		userDao.save(user);
+		return user;
+	}
+
 
 }
