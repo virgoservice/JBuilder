@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ramostear.jbuilder.dao.TicketAttachmentDao">
+
+	<resultMap type="com.ramostear.jbuilder.entity.TicketAttachment" id="BaseResultMap">
+	    <id column="id" jdbcType="BIGINT" property="id" />
+	    <result column="ticketId" jdbcType="BIGINT" property="ticketId" />
+	    <result column="attachmentId" jdbcType="BIGINT" property="attachmentId" />
+	    <result column="attachmentUrl" jdbcType="VARCHAR" property="attachmentUrl" />
+	    <result column="showOrder" jdbcType="INTEGER" property="showOrder" />
+	    <result column="useof" jdbcType="INTEGER" property="useof" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, ticketId, attachmentId, attachmentUrl, showOrder, useof
+	</sql>
+
+	<select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from order_ticket_attachment
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		delete from order_ticket_attachment
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+
+	<insert id="save" parameterType="com.ramostear.jbuilder.entity.TicketAttachment">
+		insert into order_ticket_attachment
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="ticketId != null">ticketId,</if>
+			<if test="attachmentId != null">attachmentId,</if>
+			<if test="attachmentUrl != null">attachmentUrl,</if>
+			<if test="showOrder != null">showOrder,</if>
+			<if test="useof != null">useof,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="ticketId != null">
+				#{ticketId,jdbcType=BIGINT},
+			</if>
+			<if test="attachmentId != null">
+				#{attachmentId,jdbcType=BIGINT},
+			</if>
+			<if test="attachmentUrl != null">
+				#{attachmentUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="showOrder != null">
+				#{showOrder,jdbcType=INTEGER},
+			</if>
+			<if test="useof != null">
+				#{useof,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="update" parameterType="com.ramostear.jbuilder.entity.TicketAttachment">
+		update order_ticket_attachment
+		<set>
+			<if test="ticketId != null">ticketId = #{ticketId,jdbcType=BIGINT},</if>
+			<if test="attachmentId != null">attachmentId = #{attachmentId,jdbcType=BIGINT},</if>
+			<if test="attachmentUrl != null">attachmentUrl = #{attachmentUrl,jdbcType=VARCHAR},</if>
+			<if test="showOrder != null">showOrder = #{showOrder,jdbcType=INTEGER},</if>
+			<if test="useof != null">useof = #{useof,jdbcType=INTEGER},</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<select id="getCount" resultType="java.lang.Integer">
+		select count(*) from order_ticket_attachment
+		<where>
+			<if test="ticketId != null">ticketId = #{ticketId,jdbcType=BIGINT}</if>
+			<if test="attachmentId != null">and attachmentId = #{attachmentId,jdbcType=BIGINT}</if>
+			<if test="attachmentUrl != null">and attachmentUrl = #{attachmentUrl,jdbcType=VARCHAR}</if>
+			<if test="useof != null">and useof = #{useof,jdbcType=INTEGER}</if>
+		</where>
+	</select>
+
+	<select id="listByPage" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from order_ticket_attachment
+		<where>
+			<if test="ticketId != null">ticketId = #{ticketId,jdbcType=BIGINT}</if>
+			<if test="attachmentId != null">and attachmentId = #{attachmentId,jdbcType=BIGINT}</if>
+			<if test="attachmentUrl != null">and attachmentUrl = #{attachmentUrl,jdbcType=VARCHAR}</if>
+			<if test="useof != null">and useof = #{useof,jdbcType=INTEGER}</if>
+		</where>
+		<if test="orderBy != null">
+			order by ${orderBy}
+		</if>
+		<if test="orderBy == null">
+			order by "showOrder"
+		</if>
+		<if test="order == true">
+			DESC
+		</if>
+		<if test="order == false">
+			ASC
+		</if>
+		limit #{offset},#{pageSize}
+	</select>
+
+	<select id="listAll" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from order_ticket_attachment
+	</select>
+
+	<select id="getTotal" resultType="java.lang.Integer">
+		select count(*) from order_ticket_attachment
+	</select>
+
+</mapper>

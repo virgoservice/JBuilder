@@ -67,7 +67,8 @@ var validate = (function(){
         
         types.splice(0, 0, "notEmpty");
         
-        for(var type of types){
+//        for(var type of types){
+        for(var type in types){
             var msg = validate(value,type);
             if(!!msg){
                 this.result.push(title+msg);
