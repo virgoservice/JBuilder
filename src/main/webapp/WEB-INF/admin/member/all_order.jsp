@@ -739,7 +739,8 @@
 		<script> 
 			
 			function payOrder(orderId){
-				window.opener=window.open("<%=path %>/member/order/payTicket?orderId="+orderId);
+				window.opener=this.window;
+				window.open("<%=path %>/member/order/payTicket?orderId="+orderId);
 			}
 			
 			function cancelOrder(orderId){

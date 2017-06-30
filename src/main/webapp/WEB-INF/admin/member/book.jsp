@@ -589,7 +589,7 @@
 								<div class="order-js-box">
 									<div class="total">订单结算总额：<span class="totalprice" id="total3">${ticket.price }</span></div>
 									<div class="yz"> <input type="button" class="tj-btn" value="提交订单" onclick="save()"/> 
-									<input type="text" name="checkcode" id="checkcode" class="ma-text" /> <span class="pic"><img src="/captcha" onClick="this.src=this.src+'?math='+ Math.random()" width="80" height="32" /></span> <span class="bt">验证码：</span> </div>
+									<input type="text" name="checkcode" id="checkcode" class="ma-text" /> <span class="pic"><img src="<%=path %>/member/order/verifyCode?time='+Math.random()" onClick="this.src=this.src+'?math='+ Math.random()" width="80" height="32" /></span> <span class="bt">验证码：</span> </div>
 								</div>
 								<!--提交订单-->
 							</div>

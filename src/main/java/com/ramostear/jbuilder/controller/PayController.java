@@ -15,7 +15,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,8 +24,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
-import com.ramostear.jbuilder.consts.SysConsts;
-import com.ramostear.jbuilder.entity.User;
 import com.ramostear.jbuilder.kit.alipay.AlipayManager;
 import com.ramostear.jbuilder.service.AlipayService;
 import com.ramostear.jbuilder.service.OrderChildService;
@@ -102,8 +99,7 @@ public class PayController {
 	@ResponseBody
 	@RequestMapping(value="/reload",method=RequestMethod.GET,produces = "text/html;charset=utf-8")
 	public String reload(){
-		System.out.println("===========================================");
-		return "<script type='text/javascript'>window.close()</script>";
+		return "<script type='text/javascript'>window.opener.location.reload();window.close()</script>";
 	}
 	
 	

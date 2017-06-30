@@ -805,7 +805,8 @@
 		<!--订单中心用的js事件-->
 		<script>
 			function toPay(orderId){
-				window.opener=window.open("<%=path %>/member/order/payTicket?orderId="+orderId);
+				window.opener=this.window;
+				window.open("<%=path %>/member/order/payTicket?orderId="+orderId);
 			}
 			
 			function cancelOrder(orderId){

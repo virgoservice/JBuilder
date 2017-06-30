@@ -75,7 +75,12 @@ public class MemberOrderController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public Result add(Order order,HttpSession session){
+	public Result add(Order order,String checkcode,HttpSession session){
+		String code = (String)session.getAttribute(SysConsts.VERIFY_CODE);
+		if(!code.equals(checkcode)){
+			throw new BusinessException("验证码不正确！");
+		}
+		
 		Result result = new Result();
 		User user=(User)session.getAttribute(SysConsts.LOGIN_USER);
 		if(user==null)
