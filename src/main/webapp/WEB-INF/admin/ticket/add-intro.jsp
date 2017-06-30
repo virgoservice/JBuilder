@@ -6,7 +6,6 @@
 %>
 <!DOCTYPE html>
 <html>
-
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,6 +19,8 @@
 	<link rel="stylesheet" href="<%=path %>/resources/admin/dist/css/skins/_all-skins.min.css">
 	<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/datepicker/datepicker3.css">
 	<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/daterangepicker/daterangepicker.css">
+	<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/editormd/css/editormd.css" />
+	<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/h5fileupload/css/fileinput.css"/>
 	<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -64,6 +65,7 @@
 				</div>
 			</nav>
 		</header>
+
 		<aside class="main-sidebar ">
 			<section class="sidebar">
 				<ul class="sidebar-menu">
@@ -102,7 +104,7 @@
 								<a href="<%=path %>/admin/ticket/index"><i class="fa fa-list-ul"></i>景区产品管理</a>
 							</li>
 							<li>
-								<a href="<%=path %>/admin/ticketGroup/index"><i class="fa fa-list-ul"></i> 产品组管理</a>
+								<a href="<%=path %>/admin/group/index"><i class="fa fa-list-ul"></i> 产品组管理</a>
 							</li>
 							<li>
 								<a href="<%=path %>/admin/scenic/index"><i class="fa fa-list-ul"></i>景区管理</a>
@@ -184,42 +186,53 @@
 
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
-			<section class="content-header"  style="margin-bottom: 0;">
-				<div class="box box-solid" style="margin-bottom: 0;">
-					<div class="box-header with-border">
-						<h3 class="box-title text-bold">景区门票</h3>
+			<section class="content-header">
+				<h1>添加景点信息</h1>
+			</section>
+
+			<section class="content" style="z-index: 9999;">
+				<ul class="nav nav-tabs">
+					<li>
+						<a href="#tab_info" data-toggle="tab" aria-expanded="true" style="font-size:1.2em">票务信息</a>
+					</li>
+					<li>
+						<a href="#tab_image" data-toggle="tab" aria-expanded="false" style="font-size:1.2em">景点图片</a>
+					</li>
+					<li  class="active">
+						<a href="#tab_intro" data-toggle="tab" aria-expanded="false" style="font-size:1.2em">景点介绍</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane form-horizontal" id="tab_info">
+						<div class="box box-solid">
+							<!--  -->
+						</div>
 					</div>
-					<div class="box-body" style="padding: 10px 0;">
-						<form action="../search" method="post" id="form-ticket-search" class="form-horizontal form-inline">
-							<label class="control-label" style="margin-left: 15px;">商品名称:</label>
-							<input id="" name="ticketName" class="form-control input-sm" style="border-radius: 4px;" />	
-							<label class="control-label" style="margin-left: 15px;">商品编码: </label>
-							<input id="" name="goodsCode" class="form-control input-sm" style="border-radius: 4px;" />	
-							<label class="control-label" style="margin-left: 15px;">景区名称: </label>
-							<input id="" name="scenicName" class="form-control input-sm" style="border-radius: 4px;" />
-							<label class="control-label" style="margin-left: 15px;">状态: </label>
-							<select id="" name="status" class="form-control input-sm" style="border-radius: 4px;">
-								<option value="-1">全选</option>
-								<option value="1">启用</option>
-								<option value="0">禁用</option>
-							</select>
-							<button type="button" class="btn btn-primary btn-sm margin" style="margin-left: 20px;">查询</button>
+					<div class="tab-pane" id="tab_image">
+						<div class="box box-solid box-body">
+						<!--  -->
+						</div>
+					</div>
+					<div class="tab-pane active" id="tab_intro">
+						<div class="box box-solid">
+						<form action="./addIntro" method="post" id="ckeditor-form" >
+							<input type="hidden" id="ticketId" name="ticketId" value="${ticketId }" />
+							<div class="box-body">
+							<textarea id="TextArea1" name="content" class="ckeditor"></textarea>
+							</div>
+							<div class="box-footer">
+								<div class="row">
+									<div class="col-sm-10">
+									</div>
+									<div class="col-sm-2">
+										<button type="submit" class="btn btn-primary btn-default margin">确定</button>
+									</div>
+								</div>
+							</div>
 						</form>
+						</div>
 					</div>
 				</div>
-			</section>
-
-			<!-- group list -->
-			<section class="row content-header">
-				<div class="col-lg-12">
-				<c:forEach items="${groupList}" var="item">
-					<button class="btn btn-primary btn-sm" onClick="groupQuery(${item.id});">${item.name}</button>
-				</c:forEach>  
-				</div>
-			</section>
-
-			<!-- goods(ticket) list -->
-			<section class="content" id="goods-list">
 			</section>
 		</div>
 
@@ -232,7 +245,6 @@
 		<div class="control-sidebar-bg"></div>
 	</div>
 
-	<input type="hidden" value="<%=path %>" id="ctx"/>
 <script src="<%=path %>/resources/admin/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script src="<%=path %>/resources/admin/plugins/jQueryUI/jquery-ui.min.js"></script>
 <script>
@@ -242,178 +254,58 @@
 <script src="<%=path %>/resources/admin/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <script src="<%=path %>/resources/admin/plugins/fastclick/fastclick.js"></script>
 <script src="<%=path %>/resources/admin/dist/js/app.min.js"></script>
+<script src="<%=path %>/resources/admin/plugins/h5fileupload/js/fileinput.min.js" ></script>
+<script src="<%=path %>/resources/admin/dist/js/common.js"></script>
+<script src="<%=path %>/resources/admin/plugins/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
-$(function(){
-	query(1, 12);
-});
-
-function query(pageNo, pageSize){
-	// 先看是否有组被选中
-	var selectGroup = $("input[name='curGroup']").val();
-	if(selectGroup != null){
-		$.ajax({
-			url:"<%=path %>/admin/ticket/group",
-			type:"GET",
-			data:{
-				pageNo:pageNo,
-				pageSize:pageSize,
-				group:selectGroup
-			},
-			cache:false,
-			success:function(html){
-				$("#goods-list").html(html);
-			},
-			error:function(){
-			}
-		});		
-	}else{
-		//查看表单是否为空
-		var form = $("#form-ticket-search");
-		var ticketName = $(form).find("input[name='ticketName']").val();
-		var goodsCode = $(form).find("input[name='goodsCode']").val();
-		var scenicName = $(form).find("input[name='scenicName']").val();
-		var status = $(form).find("input[name='status']").val();
-		if(ticketName != "" || goodsCode != "" || scenicName !=""){			
-		alert(ticketName);
-			$.ajax({
-				url:"<%=path %>/admin/ticket/search",
-				type:"GET",
-				data:{
-					pageNo:pageNo,
-					pageSize:pageSize,
-					ticketName:ticketName,
-					goodsCode:goodsCode,
-					scenicName:scenicName,
-					status:status
-				},
-				cache:false,
-				success:function(html){
-					$("#goods-list").html(html);
-				},
-				error:function(){
-				}
-			});
-		}else{
-			$.ajax({
-				url:"<%=path %>/admin/ticket/list",
-				type:"GET",
-				data:{
-					pageNo:pageNo,
-					pageSize:pageSize,
-				},
-				cache:false,
-				success:function(html){
-					$("#goods-list").html(html);
-				},
-				error:function(){
-				}
-			});
-		}
-	}
-}
-
-function addGroup(){
-	var url = $("#ctx").val() + "/admin/ticketGroup/add";
-	window.location.href= url + "?id=0"
-}
-
-function add(){
-	var url = $("#ctx").val() + "/admin/ticket/add";
-	window.location.href= url;
-}
-
-function addTicket(){
-	
-}
-
-function editTicket(){
-	
-}
-
-function stop(){
-	
-}
+	$(function(){
+		CKEDITOR.replace("TextArea1", { toolbar:'Full', height:500 });
+        //示例2：工具栏为自定义类型
+/*         CKEDITOR.replace( 'editor1',
+        {
+			toolbar :
+			[
+			   //加粗     斜体，     下划线      穿过线      下标字        上标字
+			   ['Bold','Italic','Underline','Strike','Subscript','Superscript'],
+			   // 数字列表          实体列表            减小缩进    增大缩进
+			   ['NumberedList','BulletedList','-','Outdent','Indent'],
+			   //左对 齐             居中对齐          右对齐          两端对齐
+			   ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+			   //超链接  取消超链接 锚点
+			   ['Link','Unlink','Anchor'],
+			   //图片    flash    表格       水平线            表情       特殊字符        分页符
+			   ['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
+			   '/',
+			   // 样式       格式      字体    字体大小
+			   ['Styles','Format','Font','FontSize'],
+			   //文本颜色     背景颜色
+			   ['TextColor','BGColor'],
+			   //全屏           显示区块
+			   ['Maximize', 'ShowBlocks','-']
+			]
+	      }); */
+	});
 </script>
-
-<%-- <script type="text/javascript">
-    
-    function save(){
-    	//表单验证
-    	var detect = new Detect();
-	    detect.add('名称',$(":input[name='name']").val(),["nameLength"]);  
-	    detect.add('关键词',$(":input[name='keyword']").val(),["nameLength"]);
-	    detect.add('排序',$(":input[name='showOrder']").val(),["isNumber"]);
-	    var result=detect.getResult();
-	    if(result){
-	    	alert(result)
-	    	return;
-	    }
-    	
-    	var id=$(":input[name='id']").val();
-    	var formdata = id?$("#form").serialize():$("#form").serialize().replace('id=','')
-    	var orp=id?'edit':'add';
-    	
-    	$.ajax({
-			url:"<%=path %>/admin/category/"+orp,
-			type:"post",
-			contentType:"application/x-www-form-urlencoded",
-            encoding:"utf-8",
-			data:formdata,
-			success:function(html){
-				query();
-				remove();
-			},
-			error:function(){
-				
-			}
+<script type="text/javascript">
+	getExtraData = function() {
+    	return $("#ticketId").val();
+	};
+	$(function(){
+		$("#file").fileinput({
+			 language: 'zh',
+	         uploadUrl: '<%=path%>/admin/ticket/addImage',
+	         allowedFileExtensions : ['jpg', 'png','bmp','gif'],
+	         minFileCount:1,
+	         maxFileCount:10,
+             uploadExtraData: function(previewId, index) {   //额外参数的关键点
+                 var obj = {ticketId:"1", useof:"1"};
+                 console.log(obj);
+                 return obj;
+             }
+		}).on("fileuploaded",function(even,data){
+			var res = $.parseJSON(data.response);
 		});
-    }
-    
-    function edit(obj){
-    	window.location.href="<%=path %>/admin/article/edit?id="+obj.id;
-    }
-    
-    function del(id){
-    	$.ajax({
-			url:"<%=path %>/admin/article/delete",
-			type:"get",
-			data:{'id':id},
-			success:function(html){
-				query();
-			},
-			error:function(){
-				
-			}
-		});
-    }
-    
-    function query(pageNo,pageSize){
-    	$.ajax({
-			url:"<%=path %>/admin/article/list",
-			type:"GET",
-			data:{
-				pageNo:pageNo,
-				pageSize:pageSize,
-				search:$('#search').val()
-			},
-			cache:false,
-			success:function(html){
-				$("#table").html(html);
-			},
-			error:function(){
-				
-			}
-		});
-    }
-    
-    function remove(){
-    	$('#form')[0].reset();
-    	$('#id').val('');
-    }
-    
-    query();
-
-</script> --%>
+	});
+</script>
 </body>
-
 </html>
