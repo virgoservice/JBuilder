@@ -29,6 +29,8 @@ public interface OrderChildService {
 
 	public boolean update(OrderChild orderChild);
 	
+	public boolean delete(Long cid);
+	
 	public OrderChild findById(Long cid);
 	
 	//根据订单id查询所有子订单

@@ -88,6 +88,13 @@
 		id = #{id}
 	</select>
 	
+	<select id="findByCancelOrderId" parameterType="Long" resultMap="resultMap">
+		select * from order_cancel_order 
+		where 
+		childOrderId = #{cid}
+	</select>
+	
+	
 	<select id="findByOrderCode" parameterType="String" resultMap="resultMap">
 		select * from order_cancel_order 
 		where 

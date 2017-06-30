@@ -58,7 +58,7 @@ public class OrderServiceImpl implements OrderService {
 	 */ 
 	@Transactional
 	@Override
-	public boolean save(Order order,List<OrderChild> childOrders){
+	public Order save(Order order,List<OrderChild> childOrders){
 		
 		//校验订单金额是否正确
 		
@@ -68,6 +68,16 @@ public class OrderServiceImpl implements OrderService {
 				//异常,商品不存在
 				throw new BusinessException("您要订购的商品不存在！");
 			}
+			if(co.getQuantity()<1){
+				throw new BusinessException("您要订购的商品数量不正确！");
+			}
+			if(co.getOccDate().getTime()>temp.getEndDate().getTime()){
+				throw new BusinessException("使用日期不能在商品结束日期之后！");
+			}
+			if(co.getOccDate().getTime()<temp.getBeginDate().getTime()){
+				throw new BusinessException("使用日期不能在商品开始日期之前！");
+			}
+			
 			//生成子订单
 			co.setOrderCode(OrderCodeGenerator.getChildOrderCode());
 			co.setCreateTime(new Date());
@@ -93,7 +103,7 @@ public class OrderServiceImpl implements OrderService {
 			cdao.save(co);
 		}
 		
-		return true;
+		return order;
 	}
 
 	@Transactional
@@ -281,6 +291,10 @@ public class OrderServiceImpl implements OrderService {
 		//更新订单检票数量
 		Order order=this.odao.findById(child.getOrderId());
 		order.setCheckNum(order.getCheckNum()+num);
+		
+		if(count+num==child.getQuantity()-0){
+			order.setStatus("3");//订单完成
+		}
 		this.odao.update(order);
 		
 		return true;

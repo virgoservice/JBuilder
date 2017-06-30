@@ -37,6 +37,8 @@ public interface CancelOrderService {
 	
 	public CancelOrder findById(Long id);
 	
+	public List<CancelOrder> findByCancelOrderId(Long cid);
+	
 	public CancelOrder findByRetreatBatchNo(String retreatBatchNo);
 	
 	public List<CancelOrder> findAll();

@@ -65,4 +65,9 @@ public class OrderChildServiceImpl implements OrderChildService {
 		return new PageDto<OrderChild>(totalSize,offset,size,list);
 	}
 
+	@Override
+	public boolean delete(Long cid) {
+		return this.odao.delete(cid);
+	}
+
 }

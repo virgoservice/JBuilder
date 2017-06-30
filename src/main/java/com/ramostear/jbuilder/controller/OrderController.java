@@ -34,6 +34,7 @@ import com.ramostear.jbuilder.entity.User;
 import com.ramostear.jbuilder.exception.BusinessException;
 import com.ramostear.jbuilder.kit.ReqDto;
 import com.ramostear.jbuilder.kit.Result;
+import com.ramostear.jbuilder.service.AlipayService;
 import com.ramostear.jbuilder.service.CancelOrderService;
 import com.ramostear.jbuilder.service.CheckTicketService;
 import com.ramostear.jbuilder.service.OrderChildService;
@@ -69,55 +70,15 @@ public class OrderController {
 	private TicketGroupService ticketGroupService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private AlipayService alipayService;
 	
 	@RequestMapping(value="/index",method=RequestMethod.GET)
 	public String index(){
 		return "order/index";
 	}
 	
-	/**
-	 * 用户下单
-	 * @param model
-	 * @param order
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public Result add(Order order,HttpSession session){
-		Result result = new Result();
-		User user=(User)session.getAttribute(SysConsts.LOGIN_USER);
-		order.setUserId(user.getId());//用户id
-		//保存订单和子订单
-		boolean res=this.orderService.save(order, order.getList());
-		result.setSuccess(res);
-		
-		Map<String, Object> map = new HashMap<String, Object>();  
-		map.put("mes", "test message");
-		map.put("code", 0);
-		result.setObj(map);
-		
-		return result;
-	}
 	
-	/**
-	 * 用户订单记录
-	 * @param req
-	 * @param model
-	 * @param session
-	 * @param beginTime
-	 * @param endTime
-	 * @return
-	 */
-	@RequestMapping(value="/userList",method=RequestMethod.GET)
-	public String userList(ReqDto req,Model model,HttpSession session,String beginTime,String endTime){
-		
-		User user=(User)session.getAttribute(SysConsts.LOGIN_USER);
-		
-		model.addAttribute("list", this.orderService.findByPageByUid(req.getPageNo(), req.getPageSize(), "id", true,user.getId()));
-		
-		
-		return "";
-	}
 	
 	/**
 	 * 管理员订单记录
@@ -183,36 +144,7 @@ public class OrderController {
 	}
 	
 	
-	/**
-	 * 申请退票
-	 * @param orderId 子订单id
-	 * @param num	退票数量
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="/returnTicket",method=RequestMethod.POST)
-	public Result returnTicket(Long corderId,Integer num,HttpSession session){
-		User user=(User)session.getAttribute(SysConsts.LOGIN_USER);
-		//是否持有该订单
-		Long userId=user.getId();
-		
-		OrderChild child=this.orderChildService.findById(corderId);
-		if(child==null){
-			throw new BusinessException("订单不存在！");
-		}
-		Order order=this.orderService.findByIdAndUid(child.getOrderId(), userId);
-		if(order==null){
-			throw new BusinessException("订单不存在！");
-		}
-		
-		
-		boolean req=this.orderService.returnTicket(corderId,num);
-		
-		Result result = new Result();
-		result.setSuccess(req);
-		
-		return result;
-	}
+	
 	
 	/**
 	 * 编辑订单备注
@@ -402,6 +334,22 @@ public class OrderController {
 		model.addAttribute("order",this.orderService.findById(cancel.getOrderId()));
 		
 		return "order/tuipiao";
+	}
+	
+	/**
+	 * 管理员处理退款
+	 * @param orderId
+	 * @param session
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/refunds",method=RequestMethod.POST)
+	public String refunds(Long cancelOrderId,HttpSession session){
+		//考虑权限处理
+		User user=(User)session.getAttribute(SysConsts.LOGIN_USER);
+		
+		this.alipayService.AlipayRefunds(cancelOrderId,user.getId());
+		return "success";
 	}
 
 }

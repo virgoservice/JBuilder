@@ -39,6 +39,8 @@ public interface CancelOrderDao {
 	
 	public CancelOrder findByRetreatBatchNo(String retreatBatchNo);
 	
+	public List<CancelOrder> findByCancelOrderId(Long cid);
+	
 	public List<CancelOrder> findAll();
 	
 	public Long findCancelCount(Long id);

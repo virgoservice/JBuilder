@@ -25,6 +25,10 @@ public class AlipayManager {
 	public static String APP_ID="2016080500176853";
 	public static String NOTIFY_URL="http://103.44.145.245:15892/JBuilder/order/pay/payResultNotice";
 	
+	public static String RETURN_URL="http://103.44.145.245:15892/JBuilder/order/pay/reload";//付款后关闭当前页面并刷新父页面
+	public static String RETURN_LIST="http://103.44.145.245:15892/JBuilder/member/order/list";//付款后跳转到列表
+	
+	
 	private AlipayManager(){}
 
     private static volatile DefaultAlipayClient instance;  

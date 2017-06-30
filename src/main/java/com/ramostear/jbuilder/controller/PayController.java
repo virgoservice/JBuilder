@@ -12,7 +12,6 @@ package com.ramostear.jbuilder.controller;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,16 +23,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayApiException;
-import com.alipay.api.AlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
-import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.ramostear.jbuilder.consts.SysConsts;
-import com.ramostear.jbuilder.entity.Order;
-import com.ramostear.jbuilder.entity.OrderChild;
 import com.ramostear.jbuilder.entity.User;
-import com.ramostear.jbuilder.exception.BusinessException;
 import com.ramostear.jbuilder.kit.alipay.AlipayManager;
 import com.ramostear.jbuilder.service.AlipayService;
 import com.ramostear.jbuilder.service.OrderChildService;
@@ -47,7 +40,7 @@ import com.ramostear.jbuilder.service.TicketService;
  * @email:361801580@qq.com 
  */
 @Controller
-@RequestMapping("/admin/order/pay")
+@RequestMapping("/order/pay")
 public class PayController {
 	
 	@Autowired
@@ -58,52 +51,6 @@ public class PayController {
 	private OrderChildService orderChildService;
 	@Autowired
 	private AlipayService alipayService;
-
-	/**
-	 * 发起付款
-	 * @param orderId 主订单id
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="/payTicket",method=RequestMethod.GET,produces = "text/html;charset=utf-8")
-	public String payTicket(Long orderId,HttpSession session){
-		
-		//用户是否持有该定订单
-		User user=(User)session.getAttribute(SysConsts.LOGIN_USER);
-		
-		Order order=this.orderService.findByIdAndUid(orderId, user.getId());
-		if(order==null){
-			throw new BusinessException("订单不存在！");
-		}
-		
-		//如果有多个子订单把名称一起显示
-		String subject="";
-		List<OrderChild> list=this.orderChildService.getAllByOid(orderId);
-		for(OrderChild o:list){
-			subject+=o.getGoodsName()+" ";
-		}
-		
-		AlipayClient alipayClient = AlipayManager.getIstance();	
-		AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();
-		alipayRequest.setNotifyUrl(AlipayManager.NOTIFY_URL);
-		
-		Map<String, Object> map = new HashMap<String, Object>();  
-		map.put("out_trade_no", order.getOrderCode());
-		map.put("product_code", "FAST_INSTANT_TRADE_PAY");
-		map.put("total_amount", order.getOrderPrice());
-		map.put("subject", subject);
-		
-
-		alipayRequest.setBizContent(JSON.toJSONString(map));
-		String form = "";
-		try {
-			form = alipayClient.pageExecute(alipayRequest).getBody();
-		} catch (AlipayApiException e) {
-			e.printStackTrace();
-		}
-		System.out.println(form);
-		return form;
-	} 
 	
 	/**
 	 * 支付结果异步通知处理付款后业务
@@ -151,19 +98,14 @@ public class PayController {
 		return "success";
 	}
 	
-	/**
-	 * 管理员处理退款
-	 * @param orderId
-	 * @param session
-	 * @return
-	 */
+	
 	@ResponseBody
-	@RequestMapping(value="/refunds",method=RequestMethod.POST)
-	public String refunds(Long cancelOrderId,HttpSession session){
-		//考虑权限处理
-		User user=(User)session.getAttribute(SysConsts.LOGIN_USER);
-		
-		this.alipayService.AlipayRefunds(cancelOrderId,user.getId());
-		return "success";
+	@RequestMapping(value="/reload",method=RequestMethod.GET,produces = "text/html;charset=utf-8")
+	public String reload(){
+		System.out.println("===========================================");
+		return "<script type='text/javascript'>window.close()</script>";
 	}
+	
+	
+	
 }

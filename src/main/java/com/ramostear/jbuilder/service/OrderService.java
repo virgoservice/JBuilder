@@ -33,7 +33,7 @@ public interface OrderService {
 	 * @return
 	 * @throws Exception 
 	 */
-	public boolean save(Order order,List<OrderChild> childOrders);
+	public Order save(Order order,List<OrderChild> childOrders);
 	/**
 	 * 订单付款
 	 * @return

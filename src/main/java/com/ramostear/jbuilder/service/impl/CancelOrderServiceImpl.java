@@ -102,5 +102,10 @@ public class CancelOrderServiceImpl implements CancelOrderService {
 		return this.cdao.findCancelResult(id);
 	}
 
+	@Override
+	public List<CancelOrder> findByCancelOrderId(Long cid) {
+		return this.cdao.findByCancelOrderId(cid);
+	}
+
 
 }
