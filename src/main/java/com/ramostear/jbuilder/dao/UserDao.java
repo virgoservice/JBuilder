@@ -38,7 +38,11 @@ public interface UserDao {
 	
 	public Long size();
 	
+	public Long memberSize();
+	
 	public List<User> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order);
+	
+	public List<User> findMemberByPage(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order);
 	
 	public void deleteBach(@Param("userIds")Long...userIds);
 	

@@ -209,8 +209,21 @@ public class UserServiceImpl implements UserService{
 	 */
 	@Override
 	public User add(User user) {
+		passwordHelper.encryptPassword(user);
+		user.setCreateTime(new Date());
 		userDao.save(user);
 		return user;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ramostear.jbuilder.service.UserService#findMemberByPage(int, int, java.lang.String, boolean)
+	 */
+	@Override
+	public PageDto<User> findMemberByPage(int offset, int size, String orderBy,
+			boolean order) {
+		List<User> list = userDao.findMemberByPage((offset-1)*size, size, orderBy, order);
+		Long totalSize = userDao.memberSize();
+		return new PageDto<User>(totalSize,offset,size,list);
 	}
 
 

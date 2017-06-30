@@ -100,9 +100,13 @@
 		select count(*) from sys_user
 	</select>
 	
+	<select id="memberSize" resultType="Long">
+		select count(*) from sys_user where type="2"
+	</select>
+	
 	<select id="findByPage" resultType="User">
 		select <include refid="propSql"></include> 
-		from sys_user 
+		from sys_user  where type="1" 
 		order by ${orderBy} 
 		<if test="order == true">
 			DESC
@@ -112,7 +116,18 @@
 		</if>
 		limit #{offset},#{size}
 	</select>
-	
+	<select id="findMemberByPage" resultType="User">
+		select <include refid="propSql"></include> 
+		from sys_user  where type="2" 
+		order by ${orderBy} 
+		<if test="order == true">
+			DESC
+		</if>
+		<if test="order == false">
+			ASC
+		</if>
+		limit #{offset},#{size}
+	</select>
 	
 	<delete id="deleteBach">
 		delete from sys_user 

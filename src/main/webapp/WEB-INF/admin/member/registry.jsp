@@ -525,16 +525,16 @@
 						})
 					</script>
 					<div class="reg-cont-box">
-						<form id="phonefrm" method="post" action="#">
+						<form id="phonefrm" method="post" action="<%=path %>/member/registry">
 							<ul id="phone_reg">
 								<li> 
 									<span class="bt-sp">登录帐号</span> 
-									<input type="text" class="reg-text w230" id="mobile" name="mobile" placeholder="请输入手机号" /> 
+									<input type="text" class="reg-text w230" id="username" name="username" value="${username}" placeholder="请输入手机号" /> 
 									<span class="msg_contain"></span> 
 								</li>
 								<li> 
 									<span class="bt-sp">验证码</span> 
-									<input type="text" class="reg-text w105" id="p_checkcode" name="p_checkcode" /> 
+									<input type="text" class="reg-text w105" id="verifyCode" name="verifyCode" /> 
 									<span class="reg-yzm"><img src="<%=path %>/member/verifyCode" style='cursor: pointer;' alt='请输入图片验证码' onclick="this.src='<%=path %>/member/verifyCode?time='+Math.random()" width="114" height="31"/></span> 
 									<span class="reg-change">
 										<a href="javascript:;">换一张</a>
@@ -543,13 +543,13 @@
 								</li>
 								<li> 
 									<span class="bt-sp">密码</span> 
-									<input type="password" name="password1" id="password1" class="reg-text w230" placeholder="请输入登录密码" /> 
+									<input type="password" name="password" id="password" class="reg-text w230" placeholder="请输入登录密码" /> 
 									<span class="msg_contain"></span> 
 									<span class="complex_contain"></span> 
 								</li>
 								<li> 
 									<span class="bt-sp">确认密码</span> 
-									<input type="password" name="password2" id="password2" class="reg-text w230" placeholder="请再次输入登录密码" /> 
+									<input type="password" name="password1" id="password1" class="reg-text w230" placeholder="请再次输入登录密码" /> 
 									<span class="msg_contain"></span> 
 								</li>
 								<li> </li>
@@ -559,9 +559,9 @@
 							<a href="javascript:;">立即注册</a>
 						</div>
 					</div>
-					<div class="reg-tig-box">
-						<p>已有账号，
-							<a href="<%=path %>/member/login">立即登录</a>
+					<div class="reg-tig-box" style="margin-top:100px;">
+						<p style="color:red; margin-bottom:50px;">${msg}</p>
+						<p>已有账号,<a href="<%=path %>/member/login">立即登录</a>
 						</p>
 					</div>
 				</div>
@@ -579,114 +579,7 @@
 				$('.reg-change').click(function() {
 					$(this).parents('li').first().find('img').trigger('click');
 				})
-				//发送短信验证码
-				$('.sendmsg').click(function() {
-					var mobile = $("#mobile").val();
-					var regPartton = /^1[3-8]+\d{9}$/;
-					if(!regPartton.test(mobile)) {
-						layer.alert('请输入正确的手机号码', {
-							icon: 5
-						});
-						return false;
-					}
-					var pcode = $("#p_checkcode").val();
-					if(pcode == '') {
-						layer.alert('请填写验证码', {
-							icon: 5
-						});
-						return false;
-					}
-					var t = this;
-					t.disabled = true;
-					//发送次数判断
-					var sendnum = $.cookie('sendnum') ? $.cookie('sendnum') : 0;
-					if(sendnum > 3) {
-						layer.alert("验证码发送请求过于频繁,请过15分钟后再试", {
-							icon: 5
-						});
-						return false;
-					}
-					if(sendnum != 0) {
-						$.cookie('sendnum', sendnum++);
-					} else {
-						$.cookie('sendnum', 1, {
-							expires: 1 / 96
-						});
-					}
-					var token = "c95bddfff159fe12a7d41ae692b50a8f";
-					var url = SITEURL + 'member/register/ajax_send_msgcode';
-					$.post(url, {
-						mobile: mobile,
-						token: token,
-						pcode: pcode
-					}, function(data) {
-						if(data.status) {
-							var t = this;
-							t.disabled = true;
-							code_timeout(60);
-							return false;
-						} else {
-							t.attr("disabled", false);
-							layer.alert(data.msg, {
-								icon: 5
-							});
-							return false;
-						}
-					}, 'json');
-				})
 				//发送邮箱验证码
-				$('.sendemail').click(function() {
-					var email = $("#email").val();
-					var regPartton = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-					if(!regPartton.test(email)) {
-						layer.alert('请输入正确的邮箱', {
-							icon: 5
-						});
-						return false;
-					}
-					var pcode = $("#e_checkcode").val();
-					if(pcode == '') {
-						layer.alert('请填写验证码', {
-							icon: 5
-						});
-						return false;
-					}
-					var t = this;
-					t.disabled = true;
-					var token = "c95bddfff159fe12a7d41ae692b50a8f";
-					var url = SITEURL + "member/register/ajax_send_emailcode";
-					var sendnum = $.cookie('email_sendnum') ? $.cookie('email_sendnum') : 0;
-					if(sendnum > 3) {
-						layer.alert('验证码发送请求过于频繁,请过15分钟后再试', {
-							icon: 5
-						});
-						t.attr("disabled", false);
-						return false;
-					}
-					if(sendnum != 0) {
-						$.cookie('email_sendnum', sendnum++);
-					} else {
-						$.cookie('email_sendnum', 1, {
-							expires: 1 / 96
-						});
-					}
-					$.post(url, {
-						email: email,
-						token: token,
-						pcode: pcode
-					}, function(data) {
-						if(data.status) {
-							email_code_timeout(60);
-							return false;
-						} else {
-							t.attr("disabled", false);
-							layer.alert(data.msg, {
-								icon: 5
-							});
-							return false;
-						}
-					}, 'json');
-				});
 				/*手机注册验证开始*/
 				jQuery.validator.addMethod("mobile", function(value, element) {
 					var pattern = /^1+\d{10}$/;
@@ -694,64 +587,41 @@
 				}, "请输入正确的手机号");
 				$("#phonefrm").validate({
 					rules: {
-						'mobile': {
+						'username': {
 							required: true,
 							mobile: true,
-							remote: {
-								url: SITEURL + 'member/register/ajax_reg_checkmobile',
-								type: 'post'
-							}
 						},
-						'password1': {
+						'password': {
 							required: true,
 							minlength: 6
 						},
-						'password2': {
+						'password1': {
 							required: true,
-							equalTo: '#password1'
+							equalTo: '#password'
 						},
-						'p_checkcode': {
+						'verifyCode': {
 							required: true,
-							remote: {
-								url: SITEURL + 'pub/ajax_check_code',
-								type: 'post',
-								data: {
-									checkcode: function() {
-										return $("#p_checkcode").val();
-									}
-								}
-							}
 						},
 						'msgcode': {
 							required: true,
-							remote: {
-								url: SITEURL + 'member/register/ajax_check_msgcode',
-								type: 'post',
-								data: {
-									mobile: function() {
-										return $("#mobile").val();
-									}
-								}
-							}
 						},
 						agreement: {
 							required: true
 						}
 					},
 					messages: {
-						'mobile': {
+						'username': {
 							required: '手机号不能为空',
-							remote: '该手机号已被注册,您可以<a href="http://www.situcms.com/member/login">直接登陆</a>'
 						},
-						'password1': {
+						'password': {
 							required: '密码不能为空',
 							minlength: '密码不得小于6位'
 						},
-						'password2': {
+						'password1': {
 							required: '密码前后不一致',
 							equalTo: '密码前后不一致'
 						},
-						'p_checkcode': {
+						'verifyCode': {
 							required: '验证码不能为空',
 							remote: '验证码错误'
 						},
@@ -778,149 +648,18 @@
 						set_pwd_safe('#phonefrm', '#password1');
 						$(element).valid();
 					},
-					submitHandler: function(form) {
+					<%-- submitHandler: function(form) {
 						var frmdata = $("#phonefrm").serialize();
 						$.ajax({
 							type: 'POST',
-							url: SITEURL + 'member/register/ajax_doreg',
+							url: '<%=path %>/member/registry',
 							data: frmdata,
-							dataType: 'json',
-							success: function(data) {
-								if(data.status) {
-									var url = $("#backurl").val();
-									$('body').append(data.js); //同步登陆js
-									layer.msg(data.msg, {
-										icon: 6,
-										time: 1000
-									})
-									setTimeout(function() {
-										window.open(url, '_self');
-									}, 500);
-								} else {
-									layer.msg(data.msg, {
-										icon: 5,
-										time: 1000
-									})
-								}
+							async:false,
+							success:function(data){
+								window.location.href="<%=path %>/member/login";
 							}
 						})
-					}
-				});
-				//邮箱注册验证
-				$("#emailfrm").validate({
-					rules: {
-						'email': {
-							required: true,
-							email: true,
-							remote: {
-								url: SITEURL + 'member/register/ajax_check_email',
-								type: 'post'
-							}
-						},
-						'e_password1': {
-							required: true,
-							minlength: 6
-						},
-						'e_password2': {
-							required: true,
-							equalTo: '#e_password1'
-						},
-						'e_checkcode': {
-							required: true,
-							remote: {
-								url: SITEURL + 'pub/ajax_check_code',
-								type: 'post',
-								data: {
-									checkcode: function() {
-										return $("#e_checkcode").val();
-									}
-								}
-							}
-						},
-						e_email_code: {
-							required: true,
-							remote: {
-								url: SITEURL + 'member/register/ajax_check_email_code',
-								type: 'post',
-								data: {
-									email: function() {
-										return $("#email").val();
-									}
-								}
-							}
-						},
-						'e_agreement': {
-							required: true
-						}
-					},
-					messages: {
-						'email': {
-							required: '邮箱不能为空',
-							email: '邮箱格式错误',
-							remote: '该邮箱已经被注册,您可以<a href="http://www.situcms.com/member/login">直接登陆</a>'
-						},
-						'e_password1': {
-							required: '密码不能为空',
-							minlength: '密码不得小于6位'
-						},
-						'e_password2': {
-							required: '密码前后不一致',
-							equalTo: '密码前后不一致'
-						},
-						'e_email_code': {
-							required: '邮箱验证码不能为空',
-							remote: '验证码错误'
-						},
-						'e_checkcode': {
-							required: '验证码不能为空',
-							remote: '验证码错误'
-						},
-						'e_agreement': {
-							required: '请先同意网站服务条款'
-						}
-					},
-					errorPlacement: function(error, element) {
-						$(element).parents('li:first').find('.msg_contain').html(error);
-						$(element).parents('li:first').find('.msg_contain').addClass('reg-error-txt').removeClass('reg-pass-ico');
-					},
-					success: function(msg, element) {
-						$(element).parents('li:first').find('.msg_contain').html('');
-						$(element).parents('li:first').find('.msg_contain').addClass('reg-pass-ico').removeClass('reg-error-txt');
-						if($(element).is('#e_password1')) {
-							set_pwd_safe('#emailfrm', '#e_password1');
-						}
-					},
-					onkeyup: function(element, event) {
-						set_pwd_safe('#emailfrm', '#e_password1');
-						$(element).valid();
-					},
-					submitHandler: function(form) {
-						var frmdata = $("#emailfrm").serialize();
-						$.ajax({
-							type: 'POST',
-							url: SITEURL + 'member/register/ajax_doreg',
-							data: frmdata,
-							dataType: 'json',
-							success: function(data) {
-								if(data.status) {
-									var url = $("#backurl").val();
-									$('body').append(data.js); //同步登陆js
-									layer.msg(data.msg, {
-										icon: 6,
-										time: 1000
-									})
-									setTimeout(function() {
-										window.open(url, '_self');
-									}, 500);
-								} else {
-									layer.msg(data.msg, {
-										icon: 5,
-										time: 1000
-									})
-								}
-							}
-						})
-					}
+					} --%>
 				});
 			})
 			//密码强度
@@ -947,30 +686,6 @@
 					html = "<span class='reg-pw-intensity gao'>高</span>";
 					obj.html(html);
 					return false;
-				}
-			}
-			//短信发送倒计时
-			function code_timeout(v) {
-				if(v > 0) {
-					$('.sendmsg').val((--v) + '秒后重发');
-					setTimeout(function() {
-						code_timeout(v)
-					}, 1000);
-				} else {
-					$('.sendmsg').val('重发验证码');
-					$('.sendmsg').attr("disabled", false);
-				}
-			}
-			//邮箱发送倒计时
-			function email_code_timeout(v) {
-				if(v > 0) {
-					$('.sendemail').val((--v) + '秒后重发');
-					setTimeout(function() {
-						email_code_timeout(v)
-					}, 1000);
-				} else {
-					$('.sendemail').val('重发验证码');
-					$('.sendemail')[0].disabled = false;
 				}
 			}
 		</script>

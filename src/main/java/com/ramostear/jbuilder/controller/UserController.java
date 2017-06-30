@@ -28,7 +28,7 @@ import com.ramostear.jbuilder.service.UserService;
  * @email:ramostear@163.com 
  */
 @Controller
-@RequestMapping("/admin/user")
+@RequestMapping("/admin")
 public class UserController {
 
 	@Autowired
@@ -36,24 +36,24 @@ public class UserController {
 	@Autowired
 	private RoleService roleService;
 	
-	@RequestMapping(value="/index",method=RequestMethod.GET)
+	@RequestMapping(value="/user/index",method=RequestMethod.GET)
 	public String index(){
 		return "user/index";
 	}
 	
-	@RequestMapping(value="/list",method=RequestMethod.GET)
+	@RequestMapping(value="/user/list",method=RequestMethod.GET)
 	public String list(User user,ReqDto req,Model model){
 		model.addAttribute("list", userService.findByPage(req.getPageNo(), req.getPageSize(), "createTime", true));
 		return "user/list";
 	}
 	
-	@RequestMapping(value="/add",method=RequestMethod.GET)
+	@RequestMapping(value="/user/add",method=RequestMethod.GET)
 	public String add(Model model){
 		model.addAttribute("roles", roleService.findAll());
 		return "user/add";
 	}
 	
-	@RequestMapping(value="/add",method=RequestMethod.POST)
+	@RequestMapping(value="/user/add",method=RequestMethod.POST)
 	public String add(User user,Model model,Long...roleIds){
 		user.setStatus(1);	//默认启用
 		user.setType(1);	//0：来宾用户；1：管理员；2：注册用户
@@ -61,7 +61,7 @@ public class UserController {
 		return "user/index";
 	}
 	
-	@RequestMapping(value="/edit",method=RequestMethod.GET)
+	@RequestMapping(value="/user/edit",method=RequestMethod.GET)
 	public String edit(Model model,Long id){
 		model.addAttribute("roles", roleService.findAll())
 			 .addAttribute("userRole", userService.findRoleIdsById(id))
@@ -69,13 +69,13 @@ public class UserController {
 		return "user/edit";
 	}
 	
-	@RequestMapping(value="/edit",method=RequestMethod.POST)
+	@RequestMapping(value="/user/edit",method=RequestMethod.POST)
 	public String edit(User user,Model model,Long...roleIds){
 		userService.update(user, roleIds);
 		return "user/index";
 	}
 	
-	@RequestMapping(value="/delete",method=RequestMethod.POST)
+	@RequestMapping(value="/user/delete",method=RequestMethod.POST)
 	public String delete(Long id){
 		User user = userService.findById(id);
 		if(user!=null){
@@ -84,13 +84,13 @@ public class UserController {
 		return "user/index";
 	}
 	
-	@RequestMapping(value="/deleteBatch",method=RequestMethod.POST)
+	@RequestMapping(value="/user/deleteBatch",method=RequestMethod.POST)
 	public String deleteBatch(Long...userIds){
 		userService.delBatch(userIds);
 		return "user/index";
 	}
 	
-	@RequestMapping(value="/profile",method=RequestMethod.GET)
+	@RequestMapping(value="/user/profile",method=RequestMethod.GET)
 	public String profile(Long id,Model model){
 		User user = userService.findById(id);
 		if(user!=null){
@@ -100,7 +100,7 @@ public class UserController {
 		}
 		return "user/profile";
 	}
-	@RequestMapping(value="/changeStatus",method=RequestMethod.POST)
+	@RequestMapping(value="/user/changeStatus",method=RequestMethod.POST)
 	public String changeStatus(Long id){
 		User u = userService.findById(id);
 		User user = new User();
@@ -114,4 +114,19 @@ public class UserController {
 		userService.updateUser(user);
 		return "user/index";
 	}
+	
+	/**
+	 * 游客管理模块
+	 */
+	@RequestMapping(value="/member/index")
+	public String memberindex(){
+		
+		return "user/member/index";
+	}
+	
+	@RequestMapping(value="/member/list",method=RequestMethod.GET)
+	public String memberlist(User user,ReqDto req,Model model){
+		model.addAttribute("list", userService.findMemberByPage(req.getPageNo(), req.getPageSize(), "createTime", true));
+		return "user/member/list";
+	} 
 }

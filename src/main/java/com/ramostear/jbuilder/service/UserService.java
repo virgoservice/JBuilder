@@ -127,4 +127,6 @@ public interface UserService {
 	 */
 	public PageDto<User> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("oderBy")String orderBy,@Param("order") boolean order);
 	
+	public PageDto<User> findMemberByPage(@Param("offset")int offset,@Param("size")int size,@Param("oderBy")String orderBy,@Param("order") boolean order);
+	
 }

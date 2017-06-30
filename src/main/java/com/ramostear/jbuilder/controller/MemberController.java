@@ -116,10 +116,24 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/registry",method=RequestMethod.POST)
-	public String registry(User user,Model model){
+	public String registry(User user,String verifyCode ,Model model,HttpSession session){
+		String code = (String)session.getAttribute(SysConsts.VERIFY_CODE);
+		if(verifyCode == null|| verifyCode.trim().equals("")||!verifyCode.equalsIgnoreCase(code)){
+			model.addAttribute("msg", "验证码不正确，请核对后登录！");
+			return "member/registry";
+		}
 		//1.先判断数据库中该用户是否已经存在，如果已经存在，则不予注册
-		
-		
+		User u = userService.findByName(user.getUsername());
+		if(u!=null){
+			model.addAttribute("msg", "该用户已经被注册！")
+			.addAttribute("username", user.getUsername());
+			return "member/registry";
+		}
+		//2.如果用户没有被注册
+		user.setType(2); 	//设置用户类型为注册用户
+		user.setStatus(1);  //启用该用户
+		user.setNickname(user.getUsername());
+		userService.add(user);
 		return "redirect:/member/login";
 	}
 	
