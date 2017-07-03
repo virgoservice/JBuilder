@@ -40,7 +40,7 @@ public interface OrderDao {
 	
 	public List<Order> findAll();
 	
-	public List<Order> findByPageByUid(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order,@Param("uid")Long uid);
+	public List<Order> findByPageByUid(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order,@Param("uid")Long uid,@Param("payStatus")String payStatus);
 
 	public List<Order> findByPage(
 			@Param("offset")int offset,

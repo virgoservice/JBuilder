@@ -562,7 +562,10 @@
 					</script>
 					<div class="user-order-box">
 						<div class="user-home-box">
-							<div class="tabnav"> <span class="on" data-type="all">全部订单</span> <span data-type="unpay">未付款订单</span> </div>
+							<div class="tabnav"> 
+							<a href="<%=path %>/member/order/list"><span <c:if test='${pay==null }'>class="on"</c:if> data-type="all">全部订单</span> </a>
+							<a href="<%=path %>/member/order/payList"><span <c:if test='${pay==1 }'>class="on"</c:if> data-type="unpay">未付款订单</span></a>
+							 </div>
 							<!-- 订单切换 -->
 							<div class="user-home-order">
 								<div class="order-list">
@@ -580,7 +583,7 @@
 											<tr>
 												<td height="114">
 													<div class="con">
-														<dl> <dt><a href="http://www.situcms.com/spots/show_27.html" target="_blank"><img src="http://www.situcms.com/uploads/2016/0222/c9b3521f90742f41963a23b9024d827b_110x80.jpg" width="110" height="80" alt="四川泸沽湖(四川泸沽湖门票)"></a></dt>
+														<dl> <dt><a href="" target="_blank"><img src="http://www.situcms.com/uploads/2016/0222/c9b3521f90742f41963a23b9024d827b_110x80.jpg" width="110" height="80" alt="四川泸沽湖(四川泸沽湖门票)"></a></dt>
 															<dd>
 																<a class="tit" href="<%=path %>/member/order/detail?orderid=${item.id}" target="_blank">${item.list[0].goodsName }</a>
 																<p>订单编号：${item.orderCode }</p>

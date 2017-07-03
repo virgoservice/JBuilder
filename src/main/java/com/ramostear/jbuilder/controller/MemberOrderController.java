@@ -181,7 +181,7 @@ public class MemberOrderController {
 	 * @return
 	 */
 	@RequestMapping(value="/list",method=RequestMethod.GET)
-	public String userList(ReqDto req,Model model,HttpSession session,String payStatus){
+	public String userList(ReqDto req,Model model,HttpSession session){
 		
 		User user=(User)session.getAttribute(SysConsts.LOGIN_USER);
 		
@@ -189,12 +189,29 @@ public class MemberOrderController {
 			user=new User();
 			user.setId(9L);
 		
-		model.addAttribute("list", this.orderService.findByPageByUid(req.getPageNo(), req.getPageSize(), "id", true,user.getId()));
-		
+		model.addAttribute("list", this.orderService.findByPageByUid(req.getPageNo(), req.getPageSize(), "id", true,user.getId(),null));
 		
 		return "member/all_order";
 	}
 	
+	/**
+	 * 用户订单已付款记录
+	 * @return
+	 */
+	@RequestMapping(value="/payList",method=RequestMethod.GET)
+	public String payList(ReqDto req,Model model,HttpSession session){
+		
+		User user=(User)session.getAttribute(SysConsts.LOGIN_USER);
+		
+		if(user==null)
+			user=new User();
+			user.setId(9L);
+		
+		model.addAttribute("list", this.orderService.findByPageByUid(req.getPageNo(), req.getPageSize(), "id", true,user.getId(),"0"));
+		
+		model.addAttribute("pay",1);
+		return "member/all_order";
+	}
 	/**
 	 * 订单详情
 	 * @param orderid

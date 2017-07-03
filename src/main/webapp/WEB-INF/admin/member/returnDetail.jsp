@@ -592,13 +592,14 @@
 														
 														</span>
 														</td><td>
+														<c:if test="${item.status==1 }">
 														<c:if test="${item.result==0 }">
 															审核未通过<br/>如有疑问请联系客服
 														</c:if>
 														<c:if test="${item.result==1 }">
 															审核通过<br/>已退款
 														</c:if>
-														
+														</c:if>
 														</td>
 														
 														

@@ -155,6 +155,10 @@
 		<if test="uid != null and uid!=''">
 			where userId = ${uid}
 		</if>
+		<if test="payStatus != null and payStatus !=''">
+			and payStatus = ${payStatus}
+		</if>
+		
 		order by ${orderBy} 
 		<if test="order == true">
 			DESC

@@ -240,8 +240,8 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public PageDto<Order> findByPageByUid(int offset, int size, String orderBy,
-			boolean order, Long uid) {
-		List<Order> list = odao.findByPageByUid((offset-1)*size, size, orderBy, order,uid);
+			boolean order, Long uid,String payStatus) {
+		List<Order> list = odao.findByPageByUid((offset-1)*size, size, orderBy, order,uid,payStatus);
 		Long totalSize = odao.size();
 		return new PageDto<Order>(totalSize,offset,size,list);
 	}
