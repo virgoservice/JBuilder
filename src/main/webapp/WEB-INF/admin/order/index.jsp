@@ -95,9 +95,9 @@
 													<tbody>
 														<tr class="bg-gray-light">
 															<td rowspan="1"></td>
-															<td>订单编号：${item.orderCode}</td>
-															<td>辅助检票号：${item.ziyoubaoCheckNo}</td>
-															<td>成交时间：<fmt:formatDate value="${item.createTime}" type="both" /></td>
+															<td width="20%">订单编号：${item.orderCode}</td>
+															<td width="15%">辅助检票号：${item.ziyoubaoCheckNo}</td>
+															<td>成交时间：<fmt:formatDate value="${item.payDate}" type="both" /></td>
 															<td>联系人：${item.linkName}</td>
 															<td>电话：${item.linkMobile}</td>
 														</tr>

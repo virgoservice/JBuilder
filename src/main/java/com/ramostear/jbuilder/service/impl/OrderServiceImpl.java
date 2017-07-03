@@ -23,11 +23,13 @@ import com.ramostear.jbuilder.dao.OrderChildDao;
 import com.ramostear.jbuilder.dao.OrderDao;
 import com.ramostear.jbuilder.dao.TicketDao;
 import com.ramostear.jbuilder.entity.CancelOrder;
+import com.ramostear.jbuilder.entity.InvalidDate;
 import com.ramostear.jbuilder.entity.Order; 
 import com.ramostear.jbuilder.entity.OrderChild;
 import com.ramostear.jbuilder.entity.Ticket;
 import com.ramostear.jbuilder.exception.BusinessException;
 import com.ramostear.jbuilder.kit.PageDto;
+import com.ramostear.jbuilder.service.InvalidDateService;
 import com.ramostear.jbuilder.service.OrderService;
 import com.ramostear.jbuilder.util.OrderCodeGenerator;
 
@@ -51,6 +53,8 @@ public class OrderServiceImpl implements OrderService {
 	private CancelOrderDao cancel;
 	@Autowired
 	private CheckTicketDao checkDao;
+	@Autowired
+	private InvalidDateService invalidDateServicel;
 
 	/**
 	 * 保存订单和子订单
@@ -76,6 +80,15 @@ public class OrderServiceImpl implements OrderService {
 			}
 			if(co.getOccDate().getTime()<temp.getBeginDate().getTime()){
 				throw new BusinessException("使用日期不能在商品开始日期之前！");
+			}
+			
+			//验证无效日期
+			List<InvalidDate> vaList=this.invalidDateServicel.findByTId(temp.getId());
+			Long tempDate=co.getOccDate().getTime();
+			for( InvalidDate item : vaList){
+				if(tempDate>=item.getBeginDate().getTime()&&tempDate<=item.getEndDate().getTime()){
+					throw new BusinessException("您选择的使用日期不在允许范围内！");
+				}
 			}
 			
 			//生成子订单
@@ -163,6 +176,9 @@ public class OrderServiceImpl implements OrderService {
 		cancel.setTotalPrice(ticket.getPrice()*num);//总价
 		
 		order.setStatus("1");//申请退款
+		Order o=order.getOrder();
+		o.setStatus("1");
+		this.odao.update(o);
 		this.cdao.update(order);
 		this.cancel.save(cancel);
 		return true;
@@ -241,6 +257,7 @@ public class OrderServiceImpl implements OrderService {
 		
 		order.setPayStatus("1");//已付款
 		order.setStatus("2");//已完成
+		order.setPayDate(new Date());//付款时间
 		order.setZiyoubaoCheckNo(OrderCodeGenerator.getRandomCode());//辅助码
 		this.odao.update(order);
 		
@@ -277,7 +294,7 @@ public class OrderServiceImpl implements OrderService {
 		if(count==null)
 			count=0L;
 		
-		if(num>(child.getQuantity()-count)){
+		if(num>(child.getQuantity()-count-child.getOrder().getReturnNum())){
 			throw new BusinessException("检票数量超过订单数量");
 		}
 		

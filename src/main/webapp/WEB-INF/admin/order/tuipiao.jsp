@@ -74,14 +74,14 @@
 			
 			
 			$.ajax({
-				url:"<%=path %>/admin/order/pay/refunds",
+				url:"<%=path %>/admin/order/refunds",
 				type:"POST",
 				data:{
 					cancelOrderId:id
 				},
 				cache:false,
 				success:function(data){
-					if(data.success){
+					if(data=="success"){
 						showMes("退票成功！");
 					}else{
 						showMes(data.errorMsg,2);

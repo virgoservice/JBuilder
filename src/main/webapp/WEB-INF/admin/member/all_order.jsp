@@ -569,11 +569,11 @@
 									<table width="100%" border="0" body_strong="ryimVs">
 										<tbody>
 											<tr>
-												<th width="55%" height="38" bgcolor="#fbfbfb" scope="col">订单信息</th>
+												<th width="45%" height="38" bgcolor="#fbfbfb" scope="col">订单信息</th>
 												<th width="15%" height="38" bgcolor="#fbfbfb" scope="col">订单金额</th>
-												<th width="15%" height="38" bgcolor="#fbfbfb" scope="col">订单票数</th>
-												<th width="15%" height="38" bgcolor="#fbfbfb" scope="col">订单状态</th>
-												<th width="15%" height="38" bgcolor="#fbfbfb" scope="col">订单操作</th>
+												<th width="10%" height="38" bgcolor="#fbfbfb" scope="col">订单票数</th>
+												<th width="10%" height="38" bgcolor="#fbfbfb" scope="col">订单状态</th>
+												<th width="10%" height="38" bgcolor="#fbfbfb" scope="col">订单操作</th>
 											</tr>
 											<c:forEach items="${list.items}" var="item">  
 											
@@ -611,7 +611,7 @@
 														<a class="now-fk" href="#" onclick="payOrder(${item.id })">立即付款</a>
 														<a class="now-fk" style="background:#ccc;cursor:pointer" onclick="cancelOrder(${item.id })">取消</a>
 													</c:if>
-													<c:if test="${item.payStatus==1}">
+													<c:if test="${item.payStatus==1&&item.total-item.returnNum-item.checkNum>0}">
 														<a class="now-fk" href="#" onclick="returnTicket(${item.list[0].id },${item.total-item.checkNum })">申请退票</a>
 													</c:if>
 													<c:if test="${item.list[0].status==1||item.list[0].returnStatus==1}">

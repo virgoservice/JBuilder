@@ -14,6 +14,8 @@
 		<result column="orderCode" property="orderCode"/>
 		<result column="orderPrice" property="orderPrice"/>
 		<result column="payMethod" property="payMethod"/>
+		<result column="payDate" property="payDate"/>
+		
 		<result column="payStatus" property="payStatus"/>
 		<result column="ziyoubaoStatus" property="ziyoubaoStatus"/>
 		<result column="ziyoubaoSend" property="ziyoubaoSend"/>
@@ -42,6 +44,8 @@
 			<if test="orderPrice != null">orderPrice,</if>
 			<if test="payMethod != null">payMethod,</if>
 			<if test="payStatus != null">payStatus,</if>
+			<if test="payDate != null">payDate,</if>
+			
 			<if test="ziyoubaoStatus != null">ziyoubaoStatus,</if>
 			<if test="ziyoubaoSend != null">ziyoubaoSend,</if>
 			<if test="checkNum != null">checkNum,</if>
@@ -64,6 +68,7 @@
 			<if test="orderCode != null">#{orderCode},</if>
 			<if test="orderPrice != null">#{orderPrice},</if>
 			<if test="payMethod != null">#{payMethod},</if>
+			<if test="payDate != null">#{payDate},</if>
 			<if test="payStatus != null">#{payStatus},</if>
 			
 			<if test="ziyoubaoStatus != null">#{ziyoubaoStatus},</if>
@@ -92,6 +97,7 @@
 			<if test="orderCode != null">orderCode=#{orderCode},</if>
 			<if test="orderPrice != null">orderPrice=#{orderPrice},</if>
 			<if test="payMethod != null">payMethod=#{payMethod},</if>
+			<if test="payDate != null">payDate=#{payDate},</if>
 			<if test="payStatus != null">payStatus=#{payStatus},</if>
 			<if test="status != null">status=#{status},</if>
 			<if test="createTime != null">createTime=#{createTime},</if>

@@ -555,7 +555,14 @@
 											<tr>
 												<td height="40"> <span>
 													<input type="hidden" name="list[0].ticketId" value="${ticket.id }">
-													<input type="text" class="inputdate" id="inputdate" name="list[0].occDate" value="2017/06/29"/>
+													<input id=wdate class="Wdate" name="list[0].occDate" type="text" 
+													onfocus="WdatePicker({skin:'default',
+													disabledDays:[${ticket.weekDate}],
+													disabledDates:[${dlist}],
+													minDate:'<fmt:formatDate value="${ticket.beginDate}" type="both" />',
+													maxDate:'<fmt:formatDate value="${ticket.endDate}" type="both" />'})" 
+													onchange="modifyOther(this)"/>
+									
 												
 												</span> </td>
 												<td>
@@ -647,7 +654,7 @@
 									</li>
 								</ul>
 								<ul class="ul-list">
-									<li>使用日期：<span class="usedate">2017-06-29</span></li>
+									<li>使用日期：<span class="usedate" id="other"></span></li>
 									<li>数量：<span class="dingnum">1</span></li>
 									<li>单价：<i class="currency_sy">￥</i>${ticket.price }</li>
 								</ul>
@@ -744,7 +751,7 @@
 			</div>
 		</div>
 		<script type="text/javascript" src="<%=path %>/resources/index/res/js/layer/layer.js"></script>
-		<script type="text/javascript" src="<%=path %>/resources/index/min/js/datepicker/WdatePicker.js"></script>
+		<script type="text/javascript" src="<%=path %>/resources/index/plugins/My97DatePicker/WdatePicker.js"></script>
 		<div id="calendar"></div>
 		
 		<script type="text/javascript">
@@ -810,6 +817,11 @@
 				});
 			}
 			 
+			
+			function modifyOther(obj){
+				$("#other").html(obj.value);
+			}
+			
 		</script>
 	</body>
 

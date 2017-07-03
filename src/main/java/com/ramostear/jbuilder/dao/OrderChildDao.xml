@@ -159,6 +159,7 @@
 		</if>
 		and checkStatus in (${status})
 		and payStatus=1
+		and quantity - (select t.checkNum+t.returnNum from order_order t where t.id=orderId)>0
 		order by ${orderBy} 
 		<if test="order == true">
 			DESC

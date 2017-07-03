@@ -29,6 +29,7 @@ public class Order {
 	private double orderPrice;
 	private String payMethod;
 	private String payStatus;
+	private Date payDate;
 	private String status;
 	private Date createTime;
 	private String retreatBatchNo;
@@ -113,6 +114,14 @@ public class Order {
 
 	public void setPayStatus(String payStatus) {
 		this.payStatus = payStatus;
+	}
+
+	public Date getPayDate() {
+		return payDate;
+	}
+
+	public void setPayDate(Date payDate) {
+		this.payDate = payDate;
 	}
 
 	public String getStatus() {
@@ -213,11 +222,11 @@ public class Order {
 
 	public Order(Long id, Long userId, String certificateNo, String linkName,
 			String linkMobile, String orderCode, double orderPrice,
-			String payMethod, String payStatus, String status, Date createTime,
-			String retreatBatchNo, Integer ziyoubaoStatus, Integer checkNum,
-			Integer returnNum, Integer total, Integer ziyoubaoSend,
-			String ziyoubaoCheckNo, String buyerRemark, String sellerRemark,
-			List<OrderChild> list) {
+			String payMethod, String payStatus, Date payDate, String status,
+			Date createTime, String retreatBatchNo, Integer ziyoubaoStatus,
+			Integer checkNum, Integer returnNum, Integer total,
+			Integer ziyoubaoSend, String ziyoubaoCheckNo, String buyerRemark,
+			String sellerRemark, List<OrderChild> list) {
 		super();
 		this.id = id;
 		this.userId = userId;
@@ -228,6 +237,7 @@ public class Order {
 		this.orderPrice = orderPrice;
 		this.payMethod = payMethod;
 		this.payStatus = payStatus;
+		this.payDate = payDate;
 		this.status = status;
 		this.createTime = createTime;
 		this.retreatBatchNo = retreatBatchNo;
@@ -245,5 +255,7 @@ public class Order {
 	public Order() {
 		super();
 	}
+
+	
 	
 }

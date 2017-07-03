@@ -574,7 +574,7 @@
 													<th width="15%" scope="col">退款金额</th>
 													<th width="10%" scope="col">退票数量</th>
 													<th width="15%" scope="col">审核状态</th>
-													<th width="15%" scope="col">退款状态</th>
+													<th width="15%" scope="col">审核结果</th>
 												</tr>
 												<c:forEach items="${cancel}" var="item">  
 													<tr>
@@ -593,10 +593,10 @@
 														</span>
 														</td><td>
 														<c:if test="${item.result==0 }">
-															未退款
+															审核未通过<br/>如有疑问请联系客服
 														</c:if>
 														<c:if test="${item.result==1 }">
-															已退款
+															审核通过<br/>已退款
 														</c:if>
 														
 														</td>

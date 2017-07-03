@@ -1,5 +1,6 @@
 package com.ramostear.jbuilder.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.ramostear.jbuilder.consts.SysConsts;
 import com.ramostear.jbuilder.entity.CancelOrder;
+import com.ramostear.jbuilder.entity.InvalidDate;
 import com.ramostear.jbuilder.entity.Order;
 import com.ramostear.jbuilder.entity.OrderChild;
 import com.ramostear.jbuilder.entity.Ticket;
@@ -29,12 +31,14 @@ import com.ramostear.jbuilder.kit.Result;
 import com.ramostear.jbuilder.kit.alipay.AlipayManager;
 import com.ramostear.jbuilder.service.CancelOrderService;
 import com.ramostear.jbuilder.service.CheckTicketService;
+import com.ramostear.jbuilder.service.InvalidDateService;
 import com.ramostear.jbuilder.service.OrderChildService;
 import com.ramostear.jbuilder.service.OrderService;
 import com.ramostear.jbuilder.service.ScenicSpotService;
 import com.ramostear.jbuilder.service.TicketGroupService;
 import com.ramostear.jbuilder.service.TicketService;
 import com.ramostear.jbuilder.service.UserService;
+import com.ramostear.jbuilder.util.DateUtil;
 
 /**
  * 
@@ -66,6 +70,8 @@ public class MemberOrderController {
 	private TicketGroupService ticketGroupService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private InvalidDateService invalidDateServicel;
 	
 	/**
 	 * 用户下单
@@ -77,7 +83,7 @@ public class MemberOrderController {
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public Result add(Order order,String checkcode,HttpSession session){
 		String code = (String)session.getAttribute(SysConsts.VERIFY_CODE);
-		if(!code.equals(checkcode)){
+		if(checkcode==null||!code.toLowerCase().equals(checkcode.toLowerCase())){
 			throw new BusinessException("验证码不正确！");
 		}
 		
@@ -144,8 +150,24 @@ public class MemberOrderController {
 		if(ticket==null){
 			throw new BusinessException("商品不存在！");
 		}
-		model.addAttribute("ticket",ticket);
 		
+		//存储无效日期
+		List<InvalidDate> inList=this.invalidDateServicel.findByTId(ticId);
+		
+		StringBuffer sb=new StringBuffer();
+		
+		for(InvalidDate item :inList){
+			
+			List<Date> dlist=DateUtil.getBetweenDates(item.getBeginDate(), item.getEndDate());
+			
+			for(Date d :dlist){
+				sb.append(",\'"+DateUtil.getDateYYYYMMDD(d)+"\'");
+			}
+		} 
+		
+		model.addAttribute("ticket",ticket);
+		model.addAttribute("dlist",sb.substring(1, sb.length()));
+		System.out.println(sb.substring(1, sb.length()));
 		return "member/book";
 	}
 	

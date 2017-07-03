@@ -11,7 +11,10 @@
 package com.ramostear.jbuilder.util;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /** 
  * @Desc: () 
@@ -26,4 +29,28 @@ public class DateUtil {
 	    String dateNowStr = sdf.format(date);
 	    return dateNowStr;
 	}
+	
+	/**
+	 * 获取两个日期之间的日期,包含开始和结束时间
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	public static List<Date> getBetweenDates(Date start, Date end) {
+	    List<Date> result = new ArrayList<Date>();
+	    result.add(start);
+	    Calendar tempStart = Calendar.getInstance();
+	    tempStart.setTime(start);
+	    tempStart.add(Calendar.DAY_OF_YEAR, 1);
+	    
+	    Calendar tempEnd = Calendar.getInstance();
+	    tempEnd.setTime(end);
+	    while (tempStart.before(tempEnd)) {
+	        result.add(tempStart.getTime());
+	        tempStart.add(Calendar.DAY_OF_YEAR, 1);
+	    }
+	    result.add(end);
+	    return result;
+	}
+	
 }

@@ -51,7 +51,7 @@
 							<td>手机号</td><td>${child.order.linkMobile }</td>
 						</tr>
 						<tr>
-							<td>可检票量</td><td>${child.order.total-child.order.checkNum }</td>
+							<td>可检票量</td><td>${child.order.total-child.order.checkNum-child.order.returnNum }</td>
 						</tr>
 					</table>
 					<div class="row">

@@ -12,6 +12,8 @@ package com.ramostear.jbuilder.entity;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 /** 
  * @Desc: () 
  * @author: 赖生龙 
@@ -27,6 +29,7 @@ public class OrderChild {
 	private double price;
 	private Integer quantity;
 	private double totalPrice;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date occDate;
 	private String goodsCode;
 	private String goodsName;
