@@ -8,16 +8,20 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>用户登陆-贵州古城文化旅游开发有限公司</title>
+		<title>会员中心</title>
 		<link rel="icon" href="<%=path %>/resources/index/img/icon.ico" type="image/x-icon" />
 		<link rel="shortcut icon" href="<%=path %>/resources/index/img/icon.ico" type="image/x-icon"/>
-		<link type="text/css" href="<%=path %>/resources/index/min/-f=-res-css-user.css,-res-css-base.css,-res-css-extend.css"  rel="stylesheet" />
-		<script type="text/javascript" src="<%=path %>/resources/index/min/-f=-res-js-jquery.min.js,-res-js-base.js,-res-js-common.js,-res-js-jquery.validate.js,-res-js-jquery.md5.js" ></script>
+		<script>
+			window.SITEURL = "/";
+			window.CURRENCY_SYMBOL = "￥";
+		</script>
+		<link type="text/css" href="<%=path %>/resources/index/min/-f=-res-css-user.css,-res-css-base.css,-res-css-extend.css" rel="stylesheet" />
+		<script type="text/javascript" src="<%=path %>/resources/index/min/-f=-res-js-jquery.min.js,-res-js-base.js,-res-js-common.js"></script>
 	</head>
 
-	<body bottom_float=roZ19j>
-		<link type="text/css" href="<%=path %>/resources/index/min/-f=-res-css-header.css"  rel="stylesheet" />
-		<link type="text/css" href="<%=path %>/resources/index/res/css/skin.css"  rel="stylesheet" />
+	<body>
+		<link type="text/css" href="<%=path %>/resources/index/min/-f=-res-css-header.css" rel="stylesheet" />
+		<link type="text/css" href="<%=path %>/resources/index/res/css/skin.css" rel="stylesheet" />
 		<div class="web-top">
 			<div class="wm-1200">
 				<div class="notice-txt">
@@ -59,7 +63,7 @@
 		<div class="st-header">
 			<div class="wm-1200">
 				<div class="st-logo">
-					<a href="index.htm"  title="贵州古城文化旅游开发股份有限公司官方网站">
+					<a href="<%=path %>/index.html"  title="贵州古城文化旅游开发股份有限公司官方网站">
 						<img src="<%=path %>/resources/index/img/logo.png"  alt="贵州古城文化旅游开发股份有限公司官方网站" />
 					</a>
 				</div>
@@ -145,52 +149,55 @@
 					<div class="global-bt">旅游导航</div>
 					<div class="global-list" style="display: none;">
 						<div class="gl-list-tabbox">
-							<h3> <strong><em><img src="<%=path %>/resources/index/uploads/main/allimg/20161116/20161116145458_20x20.png"  /></em><a href="javascript:;"target="_blank">产品功能</a></strong> <p>   <a href=""  target="_blank">邮轮</a>  <a href=""  target="_blank">游记</a>  <a href=""  target="_blank">结伴</a>  <a href=""  target="_blank">团购</a>  <a href=""  target="_blank">私人定制</a>  </p> <i class="arrow-rig"></i> </h3>
+							<h3> <strong><em><img src="http://www.situcms.com/uploads/main/allimg/20161116/20161116145458_20x20.png" /></em><a href="javascript:;"target="_blank">产品功能</a></strong> <p>   <a href="/ship/" target="_blank">邮轮</a>  <a href="/notes/" target="_blank">游记</a>  <a href="/jieban/" target="_blank">结伴</a>  <a href="/tuan/" target="_blank">团购</a>  <a href="/customize/" target="_blank">私人定制</a>  </p> <i class="arrow-rig"></i> </h3>
 							<div class="tabcon-item">
 								<div class="item-list">
-									<dl> <dt><a href=""  target="_blank">邮轮</a></dt>
+									<dl> <dt><a href="/ship/" target="_blank">邮轮</a></dt>
 										<dd> </dd>
 									</dl>
-									<dl> <dt><a href=""  target="_blank">游记</a></dt>
+									<dl> <dt><a href="/notes/" target="_blank">游记</a></dt>
 										<dd> </dd>
 									</dl>
-									<dl class="clear"> <dt><a href=""  target="_blank">结伴</a></dt>
+									<dl class="clear"> <dt><a href="/jieban/" target="_blank">结伴</a></dt>
 										<dd> </dd>
 									</dl>
-									<dl> <dt><a href=""  target="_blank">团购</a></dt>
+									<dl> <dt><a href="/tuan/" target="_blank">团购</a></dt>
 										<dd> </dd>
 									</dl>
-									<dl class="clear"> <dt><a href=""  target="_blank">私人定制</a></dt>
+									<dl class="clear"> <dt><a href="/customize/" target="_blank">私人定制</a></dt>
 										<dd> </dd>
 									</dl>
-									<dl> <dt><a href=""  target="_blank">活动</a></dt>
+									<dl> <dt><a href="/campaign/" target="_blank">活动</a></dt>
 										<dd> </dd>
 									</dl>
-									<dl class="clear"> <dt><a href=""  target="_blank">特产</a></dt>
+									<dl class="clear"> <dt><a href="/techan/" target="_blank">特产</a></dt>
 										<dd> </dd>
 									</dl>
-									<dl> <dt><a href=""  target="_blank">积分俱乐部</a></dt>
+									<dl> <dt><a href="/member/club/" target="_blank">积分俱乐部</a></dt>
 										<dd> </dd>
 									</dl>
-									<dl class="clear"> <dt><a href=""  target="_blank">夺宝</a></dt>
+									<dl class="clear"> <dt><a href="/duobao/" target="_blank">夺宝</a></dt>
+										<dd> </dd>
+									</dl>
+									<dl> <dt><a href="/insurance/" target="_blank">保险</a></dt>
 										<dd> </dd>
 									</dl>
 								</div>
 								<div class="ad-box">
-									<a href="javascript:;" target="_blank"><img src="<%=path %>/resources/index/uploads/2016/0614/9bfc143523607fb073e9c2505da6af4e.png"  title="" width="980" height="100"></a>
+									<a href="javascript:;" target="_blank"><img src="http://www.situcms.com/uploads/2016/0614/9bfc143523607fb073e9c2505da6af4e.png" title="" width="980" height="100"></a>
 								</div>
 							</div>
 						</div>
 						<div class="gl-list-tabbox">
-							<h3> <strong><em><img src="<%=path %>/resources/index/uploads/main/allimg/20161116/20161116145528_20x20.png"  /></em><a href=""  target="_blank">国内旅游</a></strong> <p>   <a href=""  target="_blank"><span style='color:#FF6600'>四川</span></a>  <a href="javascript:;" target="_blank"><span style='color:#FF6600'>西藏</span></a>  </p> <i class="arrow-rig"></i> </h3>
+							<h3> <strong><em><img src="http://www.situcms.com/uploads/main/allimg/20161116/20161116145528_20x20.png" /></em><a href="/lines/" target="_blank">国内旅游</a></strong> <p>   <a href="/sichuan1/" target="_blank"><span style='color:#FF6600'>四川</span></a>  <a href="javascript:;" target="_blank"><span style='color:#FF6600'>西藏</span></a>  </p> <i class="arrow-rig"></i> </h3>
 							<div class="tabcon-item">
 								<div class="item-list">
-									<dl> <dt><a href=""  target="_blank"><span style='color:#FF6600'>四川</span></a></dt>
+									<dl> <dt><a href="/sichuan1/" target="_blank"><span style='color:#FF6600'>四川</span></a></dt>
 										<dd>
-											<a href=""  target="_blank"><span style='color:#000000'>九寨沟</span></a>
-											<a href=""  target="_blank"><span style='color:#000000'>峨眉山</span></a>
-											<a href=""  target="_blank"><span style='color:#000000'>稻城亚丁</span></a>
-											<a href=""  target="_blank"><span style='color:#000000'>蜀南竹海</span></a>
+											<a href="/jiuzhaigou/" target="_blank"><span style='color:#000000'>九寨沟</span></a>
+											<a href="/emeileshan/" target="_blank"><span style='color:#000000'>峨眉山</span></a>
+											<a href="/daochengyading/" target="_blank"><span style='color:#000000'>稻城亚丁</span></a>
+											<a href="/shunanzhuhai/" target="_blank"><span style='color:#000000'>蜀南竹海</span></a>
 										</dd>
 									</dl>
 									<dl> <dt><a href="javascript:;" target="_blank"><span style='color:#FF6600'>西藏</span></a></dt>
@@ -203,12 +210,12 @@
 									</dl>
 								</div>
 								<div class="ad-box">
-									<a href="javascript:;" target="_blank"><img src="<%=path %>/resources/index/uploads/2016/0614/2f5a635683781849c933d21e13684026.png"  title="" width="980" height="100"></a>
+									<a href="javascript:;" target="_blank"><img src="http://www.situcms.com/uploads/2016/0614/2f5a635683781849c933d21e13684026.png" title="" width="980" height="100"></a>
 								</div>
 							</div>
 						</div>
 						<div class="gl-list-tabbox">
-							<h3> <strong><em><img src="<%=path %>/resources/index/uploads/main/allimg/20161116/20161116145554_20x20.png"  /></em><a href="#" target="_blank">出境旅游</a></strong> <p>   <a href="#" target="_blank"><span style='color:#FF6600'>美洲</span></a>  <a href="javascript:;" target="_blank"><span style='color:#FF6600'>欧洲</span></a>  <a href="javascript:;" target="_blank"><span style='color:#FF6600'>澳洲</span></a>  </p> <i class="arrow-rig"></i> </h3>
+							<h3> <strong><em><img src="http://www.situcms.com/uploads/main/allimg/20161116/20161116145554_20x20.png" /></em><a href="#" target="_blank">出境旅游</a></strong> <p>   <a href="#" target="_blank"><span style='color:#FF6600'>美洲</span></a>  <a href="javascript:;" target="_blank"><span style='color:#FF6600'>欧洲</span></a>  <a href="javascript:;" target="_blank"><span style='color:#FF6600'>澳洲</span></a>  </p> <i class="arrow-rig"></i> </h3>
 							<div class="tabcon-item">
 								<div class="item-list">
 									<dl> <dt><a href="#" target="_blank"><span style='color:#FF6600'>美洲</span></a></dt>
@@ -237,33 +244,33 @@
 									</dl>
 								</div>
 								<div class="ad-box">
-									<a href="javascript:;" target="_blank"><img src="<%=path %>/resources/index/uploads/2016/0614/2f5a635683781849c933d21e13684026.png"  title="" width="980" height="100"></a>
+									<a href="javascript:;" target="_blank"><img src="http://www.situcms.com/uploads/2016/0614/2f5a635683781849c933d21e13684026.png" title="" width="980" height="100"></a>
 								</div>
 							</div>
 						</div>
 						<div class="gl-list-tabbox">
-							<h3> <strong><em><img src="<%=path %>/resources/index/uploads/main/allimg/20161116/20161116145618_20x20.png"  /></em><a href=""  target="_blank">主题旅游</a></strong> <p>   <a href=""  target="_blank"><span style='color:#996600'>亲子游</span></a>  <a href=""  target="_blank">蜜月游</a>  </p> <i class="arrow-rig"></i> </h3>
+							<h3> <strong><em><img src="http://www.situcms.com/uploads/main/allimg/20161116/20161116145618_20x20.png" /></em><a href="/lines/" target="_blank">主题旅游</a></strong> <p>   <a href="/lines/" target="_blank"><span style='color:#996600'>亲子游</span></a>  <a href="/lines/" target="_blank">蜜月游</a>  </p> <i class="arrow-rig"></i> </h3>
 							<div class="tabcon-item">
 								<div class="item-list">
-									<dl> <dt><a href=""  target="_blank"><span style='color:#996600'>亲子游</span></a></dt>
+									<dl> <dt><a href="/lines/" target="_blank"><span style='color:#996600'>亲子游</span></a></dt>
 										<dd>
 											<a href="javascript:;" target="_blank">夏令营</a>
 										</dd>
 									</dl>
-									<dl> <dt><a href=""  target="_blank">蜜月游</a></dt>
+									<dl> <dt><a href="/lines/" target="_blank">蜜月游</a></dt>
 										<dd> </dd>
 									</dl>
 								</div>
 								<div class="ad-box">
-									<a href="javascript:;" target="_blank"><img src="<%=path %>/resources/index/uploads/2016/0614/163df1f9caf22dbe0ce43857fb115eef.png"  title="" width="980" height="100"></a>
+									<a href="javascript:;" target="_blank"><img src="http://www.situcms.com/uploads/2016/0614/163df1f9caf22dbe0ce43857fb115eef.png" title="" width="980" height="100"></a>
 								</div>
 							</div>
 						</div>
 						<div class="gl-list-tabbox">
-							<h3> <strong><em><img src="<%=path %>/resources/index/uploads/main/allimg/20161116/20161116145644_20x20.png"  /></em><a href=""  target="_blank">周边旅游</a></strong> <p>   <a href=""  target="_blank">九寨沟</a>  <a href="javascript:;" target="_blank">峨眉山</a>  <a href="javascript:;" target="_blank">西岭雪山</a>  </p> <i class="arrow-rig"></i> </h3>
+							<h3> <strong><em><img src="http://www.situcms.com/uploads/main/allimg/20161116/20161116145644_20x20.png" /></em><a href="/hotels/" target="_blank">周边旅游</a></strong> <p>   <a href="null" target="_blank">九寨沟</a>  <a href="javascript:;" target="_blank">峨眉山</a>  <a href="javascript:;" target="_blank">西岭雪山</a>  </p> <i class="arrow-rig"></i> </h3>
 							<div class="tabcon-item">
 								<div class="item-list">
-									<dl> <dt><a href=""  target="_blank">九寨沟</a></dt>
+									<dl> <dt><a href="null" target="_blank">九寨沟</a></dt>
 										<dd> </dd>
 									</dl>
 									<dl> <dt><a href="javascript:;" target="_blank">峨眉山</a></dt>
@@ -274,23 +281,23 @@
 									</dl>
 								</div>
 								<div class="ad-box">
-									<a href="javascript:;" target="_blank"><img src="<%=path %>/resources/index/uploads/2016/0614/163df1f9caf22dbe0ce43857fb115eef.png"  title="" width="980" height="100"></a>
+									<a href="javascript:;" target="_blank"><img src="http://www.situcms.com/uploads/2016/0614/163df1f9caf22dbe0ce43857fb115eef.png" title="" width="980" height="100"></a>
 								</div>
 							</div>
 						</div>
 						<div class="gl-list-tabbox">
-							<h3> <strong><em><img src="<%=path %>/resources/index/res/images/usernav.png"  /></em><a href=""  target="_blank">海岛游</a></strong> <p>   <a href=""  target="_blank">普吉岛</a>  <a href=""  target="_blank">苏梅岛</a>  </p> <i class="arrow-rig"></i> </h3>
+							<h3> <strong><em><img src="http://www.situcms.com/res/images/usernav.png" /></em><a href="/spots/" target="_blank">海岛游</a></strong> <p>   <a href="/spots/" target="_blank">普吉岛</a>  <a href="/spots/" target="_blank">苏梅岛</a>  </p> <i class="arrow-rig"></i> </h3>
 							<div class="tabcon-item">
 								<div class="item-list">
-									<dl> <dt><a href=""  target="_blank">普吉岛</a></dt>
+									<dl> <dt><a href="/spots/" target="_blank">普吉岛</a></dt>
 										<dd> </dd>
 									</dl>
-									<dl> <dt><a href=""  target="_blank">苏梅岛</a></dt>
+									<dl> <dt><a href="/spots/" target="_blank">苏梅岛</a></dt>
 										<dd> </dd>
 									</dl>
 								</div>
 								<div class="ad-box">
-									<a href="javascript:;" target="_blank"><img src="<%=path %>/resources/index/uploads/2016/0614/163df1f9caf22dbe0ce43857fb115eef.png"  title="" width="980" height="100"></a>
+									<a href="javascript:;" target="_blank"><img src="http://www.situcms.com/uploads/2016/0614/163df1f9caf22dbe0ce43857fb115eef.png" title="" width="980" height="100"></a>
 								</div>
 							</div>
 						</div>
@@ -316,71 +323,71 @@
 				<div class="st-menu">
 					<ul class="clearfix">
 						<li>
-							<a href="index.htm" >首页<s></s></a>
+							<a href="/">首页<s></s></a>
 						</li>
 						<li class="nav_header_1"> <i class="st-new-ico"></i><s></s> <s></s>
-							<a href=""  title="成都周边旅游线路">线路 <i class="st-arrow-ico"></i> </a>
+							<a href="http://www.situcms.com/lines/" title="成都周边旅游线路">线路 <i class="st-arrow-ico"></i> </a>
 							<div class="down-nav">
 								<div class="sub-list">
-									<a href="" >周边游</a>
-									<a href="" >自驾游</a>
-									<a href="" >省内特价游</a>
+									<a href="/lines/jiuzhaigou/">周边游</a>
+									<a href="/lines/jiuzhaigou-0-0-0-0-0-142-1">自驾游</a>
+									<a href="/emeileshan/">省内特价游</a>
 								</div>
 							</div>
 						</li>
 						<li class="nav_header_12"> <s></s>
-							<a href=""  title="旅游目的地">目的地 </a>
+							<a href="http://www.situcms.com/destination/" title="旅游目的地">目的地 </a>
 						</li>
 						<li class="nav_header_2"> <s></s>
-							<a href=""  title="九寨沟酒店">酒店 </a>
+							<a href="http://www.situcms.com/hotels/" title="九寨沟酒店">酒店 </a>
 						</li>
 						<li class="nav_header_3"> <s></s>
-							<a href=""  title="九寨沟旅游租车">租车 <i class="st-arrow-ico"></i> </a>
+							<a href="http://www.situcms.com/cars/" title="九寨沟旅游租车">租车 <i class="st-arrow-ico"></i> </a>
 							<div class="down-nav">
 								<div class="sub-list">
-									<a href="" >越野租车</a>
-									<a href="" >商务租车</a>
-									<a href="" >旅游大巴租车</a>
+									<a href="/cars/all-1-0-0-1">越野租车</a>
+									<a href="/cars/all-2-0-0-1">商务租车</a>
+									<a href="/cars/all-3-0-0-1">旅游大巴租车</a>
 								</div>
 							</div>
 						</li>
 						<li class="nav_header_5"> <s></s>
-							<a href=""  title="成都周边旅游景点">景点 <i class="st-arrow-ico"></i> </a>
+							<a href="http://www.situcms.com/spots/" title="成都周边旅游景点">景点 <i class="st-arrow-ico"></i> </a>
 							<div class="down-nav">
 								<div class="sub-list">
-									<a href="" >四川景点</a>
-									<a href="" >国内景点</a>
-									<a href="" >出境景点</a>
+									<a href="/spots/jiuzhaigou/">四川景点</a>
+									<a href="/spots/emeileshan/">国内景点</a>
+									<a href="/spots/jiuzhaigou-0-0-5-1">出境景点</a>
 								</div>
 							</div>
 						</li>
 						<li class="nav_header_4"> <s></s>
-							<a href=""  title="九寨沟旅游攻略">攻略 </a>
+							<a href="http://www.situcms.com/raiders/" title="九寨沟旅游攻略">攻略 </a>
 						</li>
 						<li class="nav_header_8"> <s></s>
-							<a href=""  title="签证">签证 <i class="st-arrow-ico"></i> </a>
+							<a href="http://www.situcms.com/visa/" title="签证">签证 <i class="st-arrow-ico"></i> </a>
 							<div class="down-nav">
 								<div class="sub-list">
-									<a href="" >商务签证</a>
-									<a href="" >旅游签证</a>
+									<a href="/visa/taiguo/">商务签证</a>
+									<a href="/visa/taiguo-0-0-6-1">旅游签证</a>
 								</div>
 							</div>
 						</li>
 						<li class="nav_header_106"> <s></s>
-							<a href=""  title="导游">导游 </a>
+							<a href="http://www.situcms.com/guide/" title="导游">导游 </a>
 						</li>
 						<li class="nav_header_"> <i class="st-jian-ico"></i><s></s> <s></s>
-							<a href=""  title="九寨沟子站">九寨沟子站 </a>
+							<a href="http://jiuzhaigou.situcms.com/" title="九寨沟子站">九寨沟子站 </a>
 						</li>
 						<li class="nav_header_"> <i class="st-hot-ico"></i><s></s> <s></s>
-							<a href=""  title="供应商">供应商 </a>
+							<a href="/plugins/supplier/pc/login" title="供应商">供应商 </a>
 						</li>
 					</ul>
 				</div>
 			</div>
 		</div>
 		<!--主导航-->
-		<script type="text/javascript" src="<%=path %>/resources/index/min/-f=-res-js-SuperSlide.min.js" ></script>
+		<script type="text/javascript" src="<%=path %>/resources/index/min/-f=-res-js-SuperSlide.min.js"></script>
 		<script>
 			var SITEURL = "/";
 			$(function() {
@@ -431,11 +438,30 @@
 				//导航的选中状态
 				$(".st-menu a").each(function() {
 					var url = window.location.href;
-					url = url.replace('http://www.situcms.com/member/index.php', '');
-					url = url.replace('http://www.situcms.com/member/index.html', '');
+					url = url.replace('index.php', '');
+					url = url.replace('index.html', '');
 					var ulink = $(this).attr("href");
 					if(url == ulink) {
 						$(this).parents("li:first").addClass('active');
+					}
+				})
+				//登陆状态
+				$.ajax({
+					type: "POST",
+					async: false,
+					url: SITEURL + "member/login/ajax_is_login",
+					dataType: 'json',
+					success: function(data) {
+						if(data.status) {
+							$txt = '<a class="dl" style="padding:0" href="javascript:;">你好,</a>';
+							$txt += '<a class="dl" href="http://www.situcms.com/member/">' + data.user.nickname + '</a>';
+							$txt += '<a class="dl" href="http://www.situcms.com/member/login/loginout">退出</a>';
+							//$txt+= '<a class="dl" href="/member">个人中心</a>';
+						} else {
+							$txt = '<a class="dl" href="http://www.situcms.com/member/login">登录</a>';
+							$txt += '<a class="zc" href="http://www.situcms.com/member/register">免费注册</a>';
+						}
+						$("#loginstatus").html($txt);
 					}
 				})
 				//二级导航
@@ -469,6 +495,16 @@
 						if(sub_list_right > nav_right) {
 							$(this).children(".down-nav").children(".sub-list").css("left", nav_right - sub_list_width);
 						}
+						// alert(nav_left);
+						/*  var offsetRight = windowWidth-offsetLeft;
+						  var side_width = (windowWidth - 1200)/2;
+						  if(sub_list_width > offsetRight){
+						      $(this).children(".down-nav").children(".sub-list").css({"right":side_width,"left":offsetLeft-sub_list_width/2+liWidth,"width":"auto"});
+						  }
+						  if(side_width > offsetLeft-sub_list_width/2+liWidth){
+						      $(this).children(".down-nav").children(".sub-list").css({"right":side_width,"left":side_width,"width":"auto"});
+						  }
+						  */
 					}, function() {
 						$(this).removeClass("this-hover");
 					});
@@ -484,42 +520,133 @@
 				}
 			})
 		</script>
-		<div class="st-userlogin-box" style="background: url('<%=path %>/resources/index/res/images/user-login-bg.jpg')/*tpa=http://www.situcms.com/res/images/user-login-bg.jpg*/ center top no-repeat;">
-			<div class="st-login-wp">
-				<div class="st-admin-box">
-					<form id="loginfrm" method="post" action="<%=path %>/member/login">
-						<div class="login-account-key">
-							<ul>
-								<li class="number"> 
-									<span class="tb"></span> 
-									<input type="text" class="np-box" name="username" id="username" placeholder="请输入手机号或邮箱" /> 
-								</li>
-								<li class="password">
-									 <span class="tb"></span> 
-									 <input type="password" class="np-box" name="password" id="password" placeholder="请输入登录密码" /> 
-								</li>
-								<li style="margin-top:10px;">
-									<input type="text" name="verifyCode" id="verifyCode" placeholder="请输入验证码" style="width: 118px;height: 36px; float: left; border-radius:4px;border:1px solid #F8F8F8;">
-									<img src="<%=path %>/member/verifyCode"style='cursor: pointer;' alt='请输入图片验证码' onclick="this.src='<%=path %>/member/verifyCode?time='+Math.random()" />
-								</li>
-								<li class="forget"> 
-									<span class="login_err"></span>
-									<a href="#" >忘记密码？</a>
-								</li>
-								<li class="dl-btn">
-									<a href="javascript:;" class="btn_login">登 录</a>
-								</li>
-								<li class="now-zc">您还没有账号？
-									<a href="<%=path %>/member/registry" >立刻注册</a>
-								</li>
-							</ul>
+		<div class="big">
+			<div class="wm-1200">
+				<div class="st-guide">
+					<a href="/">首页</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;会员中心 </div>
+				<!--面包屑-->
+				<div class="st-main-page">
+					<div class="user-side-menu">
+						<ul>
+							<li>
+								<a id="nav_index" href="<%=path %>/member/index"><i class="st-user-icon user-home-icon"></i>会员首页</a>
+							</li>
+							<li>
+								<a class="side-menu-group" href="javascript:;"> <i class="st-user-icon user-order-icon"></i>我的订单<i class="arrow-icon"></i> </a>
+								<div class="son">
+									<a id="nav_allorder" href="/member/order/all">全部订单</a>
+									<a id="nav_spotorder" href="/member/order/plugin_list?typeid=5">景点订单</a>
+								</div>
+							</li>
+							<li>
+								<a class="side-menu-group" href="javascript:;"> <i class="st-user-icon user-center-icon"></i>个人中心<i class="arrow-icon"></i> </a>
+								<div class="son">
+									<a id="nav_userinfo" href="/member/index/userinfo">个人资料</a>
+									<a id="nav_safecenter" href="/member/index/safecenter">账号安全</a>
+									<a id="nav_userbind" href="/member/index/userbind">账号绑定</a>
+									<a id="nav_consignees_address" href="/member/index/address">收货地址</a>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<script>
+						$(function() {
+							$(".side-menu-group").on("click", function() {
+								if(!$(this).hasClass("up")) {
+									$(this).addClass("up").next(".son").addClass("hide");
+								} else {
+									$(this).removeClass("up").next(".son").removeClass("hide");
+								}
+							})
+						})
+					</script>
+					<div class="user-cont-box">
+						<div class="personal-data">
+							<h3 class="gr-tit">个人资料</h3>
+							<dl> <dt>头&nbsp;&nbsp;像：</dt>
+								<dd>
+									<div class="head-pic">
+										<img id="face" src="<%=path %>/resources/index/res/images/member_nopic.png">
+										<span class="upload">编辑头像</span>
+									</div> 
+									<input type="hidden" id="litpic" value="/res/images/member_nopic.png"> 
+								</dd>
+							</dl>
+							<dl> 
+								<dt>昵&nbsp;&nbsp;称：</dt>
+								<dd> 
+									<input type="text" class="msg-text" id="nickname" value="ramostear">
+									<span class="star-ico">*</span> 
+								</dd>
+							</dl>
+							<dl> <dt>性&nbsp;&nbsp;别：</dt>
+								<dd> <span class="sex"><a href="javascript:;">男</a><a href="javascript:;">女</a></span> <input type="hidden" name="sex" id="sex" value="保密"> </dd>
+							</dl>
+							<dl> <dt>出生年月：</dt>
+								<dd> <input type="text" class="default-text" id="birth_date" name="birth_date" placeholder="年/月/日" value=""> </dd>
+							</dl>
+							<dl> <dt>籍&nbsp;&nbsp;贯：</dt>
+								<dd> <input type="text" class="default-text" name="native_place" id="native_place" value=""> </dd>
+							</dl>
+							<dl> <dt>常住地址：</dt>
+								<dd> <input type="text" class="default-text" name="address" id="address" value=""> </dd>
+							</dl>
+							<dl> <dt>手机号：</dt>
+								<dd> <span class="phone-num">未绑定</span>
+									<a class="revise" href="/member/index/modify_phone?change=1">绑定手机&gt;</a>
+								</dd>
+							</dl>
+							<dl> <dt>E-mail：</dt>
+								<dd> <span class="mail">ramostear@163.com</span>
+									<a class="revise" href="/member/index/modify_email?change=1">更换邮箱&gt;</a>
+								</dd>
+							</dl>
+							<dl> <dt>微信号：</dt>
+								<dd> <input type="text" class="default-text" name="wechat" id="wechat" value=""> </dd>
+							</dl>
+							<dl> <dt>星&nbsp;&nbsp;座：</dt>
+								<dd>
+									<select name="constellation" id="constellation" class="drop-down" style="width: 65px;">
+										<option value="水瓶座">水瓶座</option>
+										<option value="双鱼座">双鱼座</option>
+										<option value="白羊座">白羊座</option>
+										<option value="金牛座">金牛座</option>
+										<option value="双子座">双子座</option>
+										<option value="巨蟹座">巨蟹座</option>
+										<option value="狮子座">狮子座</option>
+										<option value="处女座">处女座</option>
+										<option value="天秤座">天秤座</option>
+										<option value="天蝎座">天蝎座</option>
+										<option value="射手座">射手座</option>
+										<option value="魔羯座">魔羯座</option>
+									</select>
+								</dd>
+							</dl>
+							<dl> <dt>Q&nbsp;&nbsp;Q：</dt>
+								<dd> <input type="text" class="default-text" name="qq" id="qq" value=""> </dd>
+							</dl>
+							<dl> <dt>个性签名：</dt>
+								<dd> <textarea name="signature" id="signature" class="default-textarea"></textarea> </dd>
+							</dl>
+							<hr>
+							<div class="save-revise">
+								<a href="javascript:;" class="saveinfo">保存修改</a>
+							</div>
+							<div class="success-out-box" style=" display:none">
+								<div class="box-con">
+									<h3><img src="/res/images/success-ico.png">个人资料修改成功！</h3>
+									<a href="javascript:;" class="close_success">确 定</a>
+								</div>
+							</div>
+							<!--修改成功弹出框-->
 						</div>
-					</form>
+					</div>
 				</div>
 			</div>
 		</div>
-		<link type="text/css" href="<%=path %>/resources/index/min/-f=-res-css-footer.css"  rel="stylesheet" />
-		<link type="text/css" href="<%=path %>/resources/index/res/css/skin.css"  rel="stylesheet" />
+		<script type="text/javascript" src="<%=path %>/resources/index/min/-f=-res-js-layer-layer.js"></script>
+		<link type="text/css" href="<%=path %>/resources/index/min/-f=-res-css-footer.css" rel="stylesheet"/>
+		<link type="text/css" href="<%=path %>/resources/index/res/css/skin.css" rel="stylesheet" />
 		<div class="st-brand">
 			<div class="wm-1200">
 				<div class="st-serve">
@@ -592,8 +719,8 @@
 				<!--底部导航-->
 				<div class="st-foot-edit">
 					<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-						<img src="<%=path %>/resources/index/uploads/arcimgs73241402466888.jpg" title="1.jpg" alt="" style="float: none;" />
-						<img src="<%=path %>/resources/index/uploads/arcimgs59811402466888.jpg" title="2.jpg" alt="" style="float: none;" /><br/></p>
+						<img src="uploads/arcimgs73241402466888.jpg" title="1.jpg" alt="" style="float: none;" />
+						<img src="uploads/arcimgs59811402466888.jpg" title="2.jpg" alt="" style="float: none;" /><br/></p>
 					<p>​<br/></p>
 				</div>
 				<!--网站底部介绍-->
@@ -613,23 +740,57 @@
 				</p>
 			</div>
 		</div>
-		<script src="<%=path %>/resources/index/plugins/qq_kefu/public/js/qqkefu.js" ></script>
-		<script type="text/javascript" src="<%=path %>/resources/index/min/-f=-res-js-layer-layer.js" ></script>
+		<script src="<%=path %>/resources/index/plugins/qq_kefu/public/js/qqkefu.js"></script>
 		<script>
 			$(function() {
-				document.onkeydown = function(e) {
-					var ev = document.all ? window.event : e;
-					if(ev.keyCode == 13) {
-						$(".btn_login").trigger('click');
+				$("#nav_index").addClass('on');
+				$(".user-msg-tj li").click(function() {
+					var url = $(this).attr('data-url');
+					if(url != '') {
+						location.href = url;
 					}
-				}
-
-				//登陆
-				$(".btn_login").click(function() {
-					$("#loginfrm").submit();
 				})
+			})
+		</script>
+		<!--订单中心用的js事件-->
+		<script>
+			$(function() {
+				//取消订单
+				$(".cancel_order").click(function() {
+					var orderid = $(this).attr('data-orderid');
+					var url = SITEURL + 'member/order/ajax_order_cancel';
+					layer.confirm('确定取消订单吗？', {
+						icon: 3,
+						btn: ['放弃', '确定'], //按钮
+						btn1: function() {
+							layer.closeAll();
+						},
+						btn2: function() {
+							$.getJSON(url, {
+								orderid: orderid
+							}, function(data) {
+								if(data.status) {
+									layer.msg('取消订单成功', {
+										icon: 6,
+										time: 1000
+									});
+									setTimeout(function() {
+										location.reload()
+									}, 1000);
+								} else {
+									layer.msg('取消订单失败', {
+										icon: 5,
+										time: 1000
+									});
+								}
+							})
+						},
+						cancel: function() {
+							layer.closeAll();
+						}
+					})
 				})
-				
+			})
 		</script>
 	</body>
 
