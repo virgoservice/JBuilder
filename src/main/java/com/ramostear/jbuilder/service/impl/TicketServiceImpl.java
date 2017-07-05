@@ -70,18 +70,33 @@ public class TicketServiceImpl implements TicketService {
 
 	@Override
 	public PageDto<Ticket> findByPage(int offset, int size, String orderBy, boolean order) {
-		return dao.findByPage(offset, size, orderBy, order);
+		long total = dao.size();
+		int pageNo = offset;
+		offset = ((pageNo -1 >= 0)? pageNo-1 : pageNo) * size;
+		List<Ticket> ticketList = dao.findByPage(offset, size, orderBy, order);
+		PageDto<Ticket> pageDto = new PageDto<Ticket>(total, pageNo, size, ticketList);
+		return pageDto;
 	}
 
 	@Override
 	public PageDto<Ticket> findPageByCond(int offset, int size, String orderBy, boolean order, String goodsCode,
 			int status, String ticketName, String scenicName) {
-		return dao.findPageByCond(offset, size, orderBy, order, goodsCode, status, ticketName, scenicName);
+		long total = dao.getTotalByCond(goodsCode, status, ticketName, scenicName);
+		int pageNo = offset;
+		offset = ((pageNo -1 >= 0)? pageNo-1 : pageNo) * size;
+		List<Ticket> ticketList = dao.findPageByCond(offset, size, orderBy, order, goodsCode, status, ticketName, scenicName);
+		PageDto<Ticket> pageDto = new PageDto<Ticket>(total, pageNo, size, ticketList);
+		return pageDto;
 	}
 
 	@Override
 	public PageDto<Ticket> findPageByGroup(int offset, int size, String orderBy, boolean order, int groupId) {
-		return dao.findPageByGroup(offset, size, orderBy, order, groupId);
+		long total = dao.getTotalByGroup(groupId);
+		int pageNo = offset;
+		offset = ((pageNo -1 >= 0)? pageNo-1 : pageNo) * size;
+		List<Ticket> ticketList = dao.findPageByGroup(offset, size, orderBy, order, groupId);
+		PageDto<Ticket> pageDto = new PageDto<Ticket>(total, pageNo, size, ticketList);
+		return pageDto;
 	}
 
 }

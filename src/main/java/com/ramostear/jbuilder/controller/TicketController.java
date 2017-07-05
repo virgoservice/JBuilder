@@ -12,6 +12,7 @@ package com.ramostear.jbuilder.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,11 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -72,16 +70,16 @@ public class TicketController {
 	@Autowired
 	private TicketAttachmentService ticketAttachmentService;
 	
-	/**
-	 * 表单提交日期绑定      
-	 * @return 
-	 */
-	@InitBinder
-	public void initBinder(WebDataBinder binder){
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		dateFormat.setLenient(false);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-	}
+//	/**
+//	 * 表单提交日期绑定      
+//	 * @return 
+//	 */
+//	@InitBinder
+//	public void initBinder(WebDataBinder binder){
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		dateFormat.setLenient(false);
+//		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+//	}
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String index() {
@@ -90,7 +88,7 @@ public class TicketController {
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(ReqDto reqDto, Model model) {
-		PageDto<Ticket> pageDto = null;
+		PageDto<Ticket> pageDto = new PageDto<Ticket>();
 		int offset = reqDto.getPageNo();
 		int size = reqDto.getPageSize();
 
@@ -145,19 +143,61 @@ public class TicketController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-//	@ResponseBody
-	public String addOrEdit(Ticket ticket, Model model) {
+	public String addOrEdit(Model model, HttpServletRequest request) {
 		Result result = new Result();
 		result.setSuccess(true);
-		long id = ticket.getId();
-		Ticket tmp = ticketService.findById(id);
+
+		Long id = Long.parseLong(request.getParameter("id"));
+		Long scenicId = Long.parseLong(request.getParameter("scenicId"));
+		Long groupId = Long.parseLong(request.getParameter("groupId"));
+		String name = request.getParameter("name");
+		double price = Double.parseDouble(request.getParameter("price"));
+		double shopPrice = Double.parseDouble(request.getParameter("shopPrice"));
+		Integer stock = Integer.parseInt(request.getParameter("stock"));
+		Integer goodsType = Integer.parseInt(request.getParameter("goodsType"));
+		boolean groupTickets = Boolean.parseBoolean(request.getParameter("groupTickets"));
+
+		Integer status = Integer.parseInt(request.getParameter("status"));
+		String weekDate = request.getParameter("weekDate");
+
+		String beginDateStr = request.getParameter("beginDate");
+		String endDateStr = request.getParameter("endDate");
+		String checkTimeStr = request.getParameter("checkTime");
+		String stopCheckTimeStr = request.getParameter("stopCheckTime");
+
+		Date beginDate = null;
+		Date endDate = null;
+		Date checkTime = null;
+		Date stopCheckTime = null;
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm");
+		try {
+			beginDate = sdf.parse(beginDateStr);
+			endDate = sdf.parse(endDateStr);
+			checkTime = sdf2.parse(checkTimeStr);
+			stopCheckTime = sdf2.parse(stopCheckTimeStr);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		Integer sellout = 0;
+		String goodsCode = new Date().toString();
+
+		Ticket ticket = new Ticket(id, scenicId, groupId, name, goodsCode, price, shopPrice, stock, goodsType,
+				groupTickets, beginDate, endDate, weekDate, checkTime, stopCheckTime, sellout, status, null);
+
+		Ticket tmp = null;
+		if (id > 0L) {
+			tmp = ticketService.findById(id);
+		}
 		if (tmp != null) {
-			ticketService.update(ticket);
+			ticketService.update(tmp);// TODO
 		} else {
+			ticket.setGoodsCode(goodsCode);
 			ticketService.add(ticket);
 		}
 
-//		return JSONObject.toJSONString(result);
 		System.out.println("ticketId === " + ticket.getId());
 		model.addAttribute("ticketId", ticket.getId());
 		return "ticket/add-image";
@@ -197,6 +237,7 @@ public class TicketController {
 			TicketAttachment ta = new TicketAttachment();
 			ta.setAttachmentUrl(attach.getUrl());
 			ta.setAttachmentId(attach.getId());
+			ta.setTicketId((long)ticketId);
 			if (useof == TicketAttachment.USE_LIST) {
 				ta.setUseof(TicketAttachment.USE_LIST);
 			} else if (useof == TicketAttachment.USE_ILLU) {
@@ -329,9 +370,6 @@ public class TicketController {
 			model.addAttribute("scenicList", scenicList);
 		}
 
-		
-		
-		
 		return "";
 	}
 

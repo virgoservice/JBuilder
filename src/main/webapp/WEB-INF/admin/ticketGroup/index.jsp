@@ -218,7 +218,7 @@
 										<td colspan="5">
 											<input type="checkbox"/>全选
 											<button class="btn btn-primary btn-sm" style="margin-left:30px;">批量删除</button>
-											<button class="btn btn-primary btn-sm" style="margin-left:15px;">新增分组</button>	
+											<button class="btn btn-primary btn-sm" style="margin-left:15px;" onclick="addGroup();">新增分组</button>	
 										</td>
 									</tr>
 									<tr>
@@ -238,7 +238,7 @@
 										<td>${item.description }</td>
 										<td>
 											<a href="javascript:;" onclick="edit(${item.id});">修改</a>
-											<a href="javascript:;" onclick="del(${item.id});">删除</a>
+											<a href="javascript:;" onclick="del(this, ${item.id});">删除</a>
 										</td>
 									</tr>
 									</c:forEach>
@@ -280,7 +280,7 @@
 <script type="text/javascript">
 function query(pageNo, pageSize){
 	$.ajax({
-		url:"<%=path %>/admin/ticketGroup/list",
+		url: $("ctx").val() + "/admin/ticketGroup/list",
 		type:"GET",
 		data:{
 			pageNo:pageNo,
@@ -293,6 +293,26 @@ function query(pageNo, pageSize){
 		error:function(){
 		}
 	});		
+}
+
+function addGroup(){
+	var url = $("#ctx").val() + "/admin/ticketGroup/add";
+	window.location.href= url + "?id=0"
+}
+
+function edit(id){
+	var url = $("#ctx").val() + "/admin/ticketGroup/add";
+	window.location.href= url + "?id=" + id;
+}
+
+function del(obj, id){
+	$.post($("#ctx").val() + "/admin/ticketGroup/del", {id:id}, function(data){
+		if(data.success){
+			$(obj).parents("tr").remove();
+		}else{
+			alert(data.obj);
+		}
+	}, "json");
 }
 </script>
 </body>

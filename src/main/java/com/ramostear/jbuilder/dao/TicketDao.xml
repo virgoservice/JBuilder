@@ -22,7 +22,12 @@
 		<result column="sellout" property="sellout"/>
 		<result column="status" property="status"/>
 		<result column="description" property="description"/>
+		<association property="cover" column="id" select="findCover"/>
 	</resultMap>
+
+	<select id="findCover"  resultType="java.lang.String" parameterType="java.lang.Long">
+		select attachmentUrl from order_ticket_attachment where ticketId=#{id} ORDER BY showOrder LIMIT 0,1
+	</select>
 
 	<insert id="save" parameterType="com.ramostear.jbuilder.entity.Ticket" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
 		insert into order_ticket
@@ -152,6 +157,24 @@
 		</if>
 	</select>
 
+	<select id="getTotalByCond" resultMap="resultMap">
+		select COUNT(*)
+		from order_ticket t order_scenic_spot s
+		where t.scenicId = s.id	
+		<if test="goodsCode != null and goodsCode != ''">
+			and goodsCode = #{goodsCode}
+		</if>
+		<if test="status != null">
+			and status = #{status}
+		</if>
+		<if test="ticketName != null">
+			and t.name like %#{ticketName}%
+		</if>
+		<if test="scenicName != null and scenicName != ''">
+			and s.name like %#{scenicName}%
+		</if>
+	</select>
+
 	<select id="findPageByGroup" resultMap="resultMap">
 		select * from order_ticket
 		where 
@@ -166,6 +189,12 @@
 		<if test="size != 0">
 			limit #{offset},#{size}
 		</if>
+	</select>
+
+	<select id="getTotalByGroup" resultMap="resultMap">
+		select COUNT(*) from order_ticket
+		where 
+		groupId = #{groupId}
 	</select>
 
 </mapper>

@@ -20,11 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ramostear.jbuilder.entity.ScenicSpot;
-import com.ramostear.jbuilder.entity.Ticket;
 import com.ramostear.jbuilder.kit.PageDto;
 import com.ramostear.jbuilder.kit.Result;
 import com.ramostear.jbuilder.service.ScenicSpotService;
-import com.ramostear.jbuilder.service.TicketService;
 
 /**
  * @description: 对应景区
@@ -39,9 +37,7 @@ public class ScenicSpotController {
 
 	@Autowired
 	private ScenicSpotService scenicSpotService;
-	@Autowired
-	private TicketService ticketService;
-	
+
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String list(Model model) {
 		PageDto<ScenicSpot> scenicPageDto = null;
@@ -67,17 +63,20 @@ public class ScenicSpotController {
 	@RequestMapping(value = "/del", method = RequestMethod.POST)
 	public String delete(@RequestParam("id")Long id) {
 		Result result = new Result();
-		result.setSuccess(false);
-		Ticket ticket = null;
+		result.setSuccess(true);
+		result.setObj(new String("已经除"));
+		int ticketCount = 0; 
 		if (id > 0) {
-			ticket = ticketService.findById(id);
+			ticketCount = scenicSpotService.containTickets(id);
 		}
 
-		if (null == ticket) {
-			scenicSpotService.delete(id);
+		if(ticketCount >= 1){
 			result.setSuccess(false);
-			result.setObj(new String("不能被删除"));
+			result.setObj(new String("不能被删除,请先删除相关产品"));
+		}else{
+			scenicSpotService.delete(id);
 		}
+
 		return JSONObject.toJSONString(result);
 	}
 

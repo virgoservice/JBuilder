@@ -37,4 +37,11 @@ public interface ScenicSpotDao {
 	
 	public List<ScenicSpot> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order,@Param("search")String search);
 
+	/**
+	 * 指定的scenic下所包含的tikcet数量
+	 * @param id
+	 * @return
+	 */
+	public int containTickets(Long id);
+
 }

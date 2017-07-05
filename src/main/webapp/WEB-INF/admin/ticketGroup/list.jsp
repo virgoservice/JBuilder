@@ -21,7 +21,7 @@
 						</th>
 						<th colspan="4">
 							<button class="btn btn-primary btn-sm">批量删除</button>
-							<button class="btn btn-primary btn-sm">新增分组</button>	
+							<button class="btn btn-primary btn-sm" onclick="addGroup();">新增分组</button>	
 						</th>
 					</tr>
 					<tr>
@@ -33,7 +33,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${list.items}" var="item">
+					<c:forEach items="${pageDto.items}" var="item">
 					<tr>
 						<td><input type="checkbox" value="${item.id }"  name="checkbox"/></td>
 						<td>${item.id }</td>
@@ -41,7 +41,7 @@
 						<td>${item.description }</td>
 						<td>
 							<a href="javascript:;" onclick="edit(${item.id});">修改</a>
-							<a href="javascript:;" onclick="del(${item.id});">删除</a>
+							<a href="javascript:;" onclick="del(this, ${item.id});">删除</a>
 						</td>
 					</tr>
 					</c:forEach>

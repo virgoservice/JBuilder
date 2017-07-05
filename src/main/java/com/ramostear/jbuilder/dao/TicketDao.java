@@ -15,7 +15,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.ramostear.jbuilder.entity.Ticket;
-import com.ramostear.jbuilder.kit.PageDto;
 
 /** 
  * @Desc: () 
@@ -37,13 +36,13 @@ public interface TicketDao {
 
 	public List<Ticket> findAll();
 
-	public PageDto<Ticket> findByPage(
+	public List<Ticket> findByPage(
 			@Param("offset") int offset,
 			@Param("size") int size,
 			@Param("orderBy") String orderBy,
 			@Param("order") boolean order);
 
-	public PageDto<Ticket> findPageByCond(
+	public List<Ticket> findPageByCond(
 			@Param("offset") int offset,
 			@Param("size") int size,
 			@Param("oderBy") String orderBy,
@@ -54,11 +53,20 @@ public interface TicketDao {
 			@Param("scenicName") String scenicName
 			);
 
-	public PageDto<Ticket> findPageByGroup(
+	public Long getTotalByCond(
+			@Param("goodsCode") String goodsCode,
+			@Param("status") int status,
+			@Param("ticketName") String ticketName,
+			@Param("scenicName") String scenicName);
+
+	public List<Ticket> findPageByGroup(
 			@Param("offset") int offset,
 			@Param("size") int size,
 			@Param("oderBy") String orderBy,
 			@Param("order") boolean order,
+			@Param("groupId") int groupId);
+	
+	public Long getTotalByGroup(
 			@Param("groupId") int groupId);
 
 }
