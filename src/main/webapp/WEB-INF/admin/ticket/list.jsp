@@ -68,7 +68,6 @@
 					</tbody>
 				</table>
 			</div>
-
 			<div class="box-footer">
 				<div class="row">
 					<div class="col-sm-5"></div>
