@@ -131,21 +131,26 @@
 		select t.id, t.scenicId, t.groupId, t.name, t.goodsCode, t.price, t.shopPrice, t.stock,
 			t.goodsType, t.groupTickets, t.beginDate, t.endDate, t.weekDate, t.checkTime,
 			t.stopCheckTime, t.sellout, t.status, t.description
-		from order_ticket t order_scenic_spot s
+		from order_ticket t, order_scenic_spot s
 		where t.scenicId = s.id	
 		<if test="goodsCode != null and goodsCode != ''">
 			and goodsCode = #{goodsCode}
 		</if>
-		<if test="status != null">
+		<if test="status > -1">
 			and status = #{status}
 		</if>
-		<if test="ticketName != null">
-			and t.name like %#{ticketName}%
+		<if test="ticketName != null and ticketName !=''">
+			and t.name like '%${ticketName}%'
 		</if>
 		<if test="scenicName != null and scenicName != ''">
-			and s.name like %#{scenicName}%
+			and s.name like '%${scenicName}%'
 		</if>
-		order by ${orderBy} 
+		<if test="orderBy != null">
+			order by ${orderBy} 
+		</if>
+		<if test="orderBy == null">
+			order by t.id 
+		</if>
 		<if test="order == true">
 			DESC
 		</if>
@@ -157,21 +162,21 @@
 		</if>
 	</select>
 
-	<select id="getTotalByCond" resultMap="resultMap">
+	<select id="getTotalByCond" resultType="java.lang.Long">
 		select COUNT(*)
-		from order_ticket t order_scenic_spot s
+		from order_ticket t, order_scenic_spot s
 		where t.scenicId = s.id	
 		<if test="goodsCode != null and goodsCode != ''">
 			and goodsCode = #{goodsCode}
 		</if>
-		<if test="status != null">
+		<if test="status > -1">
 			and status = #{status}
 		</if>
-		<if test="ticketName != null">
-			and t.name like %#{ticketName}%
+		<if test="ticketName != null and ticketName != ''">
+			and t.name like '%${ticketName}%'
 		</if>
 		<if test="scenicName != null and scenicName != ''">
-			and s.name like %#{scenicName}%
+			and s.name like '%${scenicName}%'
 		</if>
 	</select>
 
@@ -191,7 +196,7 @@
 		</if>
 	</select>
 
-	<select id="getTotalByGroup" resultMap="resultMap">
+	<select id="getTotalByGroup" resultType="java.lang.Long">
 		select COUNT(*) from order_ticket
 		where 
 		groupId = #{groupId}

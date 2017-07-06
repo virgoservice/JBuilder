@@ -20,6 +20,7 @@
 	<link rel="stylesheet" href="<%=path %>/resources/admin/dist/css/skins/_all-skins.min.css">
 	<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/datepicker/datepicker3.css">
 	<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/daterangepicker/daterangepicker.css">
+	<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/layer-v3.0.3/layer/skin/default/layer.css" />
 	<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -47,11 +48,11 @@
 							<input id="" name="scenicName" class="form-control input-sm" style="border-radius: 4px;" />
 							<label class="control-label" style="margin-left: 15px;">状态: </label>
 							<select id="" name="status" class="form-control input-sm" style="border-radius: 4px;">
-								<option value="-1">全选</option>
+								<option value="-1" selected="selected">全选</option>
 								<option value="1">启用</option>
 								<option value="0">禁用</option>
 							</select>
-							<button type="button" class="btn btn-primary btn-sm margin" style="margin-left: 20px;">查询</button>
+							<button type="button" class="btn btn-primary btn-sm margin" style="margin-left: 20px;" onclick="query(1,12);">查询</button>
 						</form>
 					</div>
 				</div>
@@ -61,7 +62,7 @@
 			<section class="row content-header">
 				<div class="col-lg-12">
 				<c:forEach items="${groupList}" var="item">
-					<button class="btn btn-primary btn-sm" onClick="groupQuery(${item.id});">${item.name}</button>
+					<button class="btn btn-primary btn-sm" onClick="query(1, 12, '${item.id}');">${item.name}</button>
 				</c:forEach>  
 				</div>
 			</section>
@@ -85,6 +86,7 @@
 <script src="<%=path %>/resources/admin/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <script src="<%=path %>/resources/admin/plugins/fastclick/fastclick.js"></script>
 <script src="<%=path %>/resources/admin/dist/js/app.min.js"></script>
+<script type="text/javascript" src="<%=path %>/resources/admin/plugins/layer-v3.0.3/layer/layer.js" ></script>
 <!--菜单栏选中脚本  -->
 <script src="<%=path%>/resources/admin/dist/js/common.js"></script>
 <script type="text/javascript">
@@ -92,17 +94,38 @@ $(function(){
 	query(1, 12);
 });
 
-function query(pageNo, pageSize){
+function query(pageNo, pageSize, group){
 	// 先看是否有组被选中
-	var selectGroup = $("input[name='curGroup']").val();
-	if(selectGroup != null){
+	if(typeof(group) != "undefined"){
+		groupQuery(pageNo, pageSize, group);
+		return ;
+	}
+
+	var curGroup = $("input[name='curGroup']").val();
+	if(curGroup != null){
+		groupQuery(pageNo, pageSize, curGroup);
+		return ;
+	}
+
+	//查看表单是否为空
+	var form = $("#form-ticket-search");
+	var ticketName = $(form).find("input[name='ticketName']").val();
+	var goodsCode = $(form).find("input[name='goodsCode']").val();
+	var scenicName = $(form).find("input[name='scenicName']").val();
+	var status = $(form).find("select[name='status']").val();
+	if(ticketName != "" || goodsCode != "" || scenicName !=""){
+		searchQuery(pageNo, pageSize, ticketName, goodsCode, scenicName, status);
+		return ;
+	}
+
+	//default
+	{
 		$.ajax({
-			url:"<%=path %>/admin/ticket/group",
+			url: $("#ctx").val() + "/admin/ticket/list",
 			type:"GET",
 			data:{
 				pageNo:pageNo,
 				pageSize:pageSize,
-				group:selectGroup
 			},
 			cache:false,
 			success:function(html){
@@ -110,51 +133,47 @@ function query(pageNo, pageSize){
 			},
 			error:function(){
 			}
-		});		
-	}else{
-		//查看表单是否为空
-		var form = $("#form-ticket-search");
-		var ticketName = $(form).find("input[name='ticketName']").val();
-		var goodsCode = $(form).find("input[name='goodsCode']").val();
-		var scenicName = $(form).find("input[name='scenicName']").val();
-		var status = $(form).find("input[name='status']").val();
-		if(ticketName != "" || goodsCode != "" || scenicName !=""){			
-		alert(ticketName);
-			$.ajax({
-				url:"<%=path %>/admin/ticket/search",
-				type:"GET",
-				data:{
-					pageNo:pageNo,
-					pageSize:pageSize,
-					ticketName:ticketName,
-					goodsCode:goodsCode,
-					scenicName:scenicName,
-					status:status
-				},
-				cache:false,
-				success:function(html){
-					$("#goods-list").html(html);
-				},
-				error:function(){
-				}
-			});
-		}else{
-			$.ajax({
-				url:"<%=path %>/admin/ticket/list",
-				type:"GET",
-				data:{
-					pageNo:pageNo,
-					pageSize:pageSize,
-				},
-				cache:false,
-				success:function(html){
-					$("#goods-list").html(html);
-				},
-				error:function(){
-				}
-			});
-		}
+		});
 	}
+}
+
+function searchQuery(pageNo, pageSize, ticketName, goodsCode, scenicName, status){
+	$.ajax({
+		url: $("#ctx").val() + "/admin/ticket/search",
+		type:"GET",
+		data:{
+			pageNo:pageNo,
+			pageSize:pageSize,
+			ticketName:ticketName,
+			goodsCode:goodsCode,
+			scenicName:scenicName,
+			status:status
+		},
+		cache:false,
+		success:function(html){
+			$("#goods-list").html(html);
+		},
+		error:function(){
+		}
+	});
+}
+
+function groupQuery(pageNo, pageSize, group){
+	$.ajax({
+		url: $("#ctx").val() + "/admin/ticket/group",
+		type:"GET",
+		data:{
+			pageNo:pageNo,
+			pageSize:pageSize,
+			group:group
+		},
+		cache:false,
+		success:function(html){
+			$("#goods-list").html(html);
+		},
+		error:function(){
+		}
+	});		
 }
 
 function addGroup(){
@@ -162,103 +181,37 @@ function addGroup(){
 	window.location.href= url + "?id=0"
 }
 
-function add(){
+function addTicket(){
 	var url = $("#ctx").val() + "/admin/ticket/add";
 	window.location.href= url;
 }
 
-function addTicket(){
-	
+function del(obj, id){
+	var url = $("#ctx").val() + "/admin/ticket/del";
+	layer.confirm('确认要删除吗？',function(index){
+		$(obj).parents("tr").remove();
+		$.post(url, {"id":id}, null);
+		layer.close(index);
+	});
 }
 
-function editTicket(){
-	
+function editTicket(id){
+	var url = $("#ctx").val() + "/admin/ticket/edit";
+	window.location.href= url + "?id=" + id;
 }
 
-function stop(){
-	
+function stop(obj, id, status){
+	var url = $("#ctx").val() + "/admin/ticket/stop";
+	$.post(url, {"id":id, "status":status}, null);
+	if(status == 1){
+		$(obj).parents("tr").find(".status").html("已禁用");
+		$(obj).parents("tr").find(".stop").html("启用");
+	}else{
+		$(obj).parents("tr").find(".status").html("已启用");
+		$(obj).parents("tr").find(".stop").html("禁用");
+	}
 }
 </script>
-
-<%-- <script type="text/javascript">
-    
-    function save(){
-    	//表单验证
-    	var detect = new Detect();
-	    detect.add('名称',$(":input[name='name']").val(),["nameLength"]);  
-	    detect.add('关键词',$(":input[name='keyword']").val(),["nameLength"]);
-	    detect.add('排序',$(":input[name='showOrder']").val(),["isNumber"]);
-	    var result=detect.getResult();
-	    if(result){
-	    	alert(result)
-	    	return;
-	    }
-    	
-    	var id=$(":input[name='id']").val();
-    	var formdata = id?$("#form").serialize():$("#form").serialize().replace('id=','')
-    	var orp=id?'edit':'add';
-    	
-    	$.ajax({
-			url:"<%=path %>/admin/category/"+orp,
-			type:"post",
-			contentType:"application/x-www-form-urlencoded",
-            encoding:"utf-8",
-			data:formdata,
-			success:function(html){
-				query();
-				remove();
-			},
-			error:function(){
-				
-			}
-		});
-    }
-    
-    function edit(obj){
-    	window.location.href="<%=path %>/admin/article/edit?id="+obj.id;
-    }
-    
-    function del(id){
-    	$.ajax({
-			url:"<%=path %>/admin/article/delete",
-			type:"get",
-			data:{'id':id},
-			success:function(html){
-				query();
-			},
-			error:function(){
-				
-			}
-		});
-    }
-    
-    function query(pageNo,pageSize){
-    	$.ajax({
-			url:"<%=path %>/admin/article/list",
-			type:"GET",
-			data:{
-				pageNo:pageNo,
-				pageSize:pageSize,
-				search:$('#search').val()
-			},
-			cache:false,
-			success:function(html){
-				$("#table").html(html);
-			},
-			error:function(){
-				
-			}
-		});
-    }
-    
-    function remove(){
-    	$('#form')[0].reset();
-    	$('#id').val('');
-    }
-    
-    query();
-
-</script> --%>
 </body>
 
 </html>

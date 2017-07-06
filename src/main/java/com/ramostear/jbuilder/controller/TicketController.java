@@ -15,8 +15,10 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -69,7 +71,7 @@ public class TicketController {
 	private ScenicSpotService scenicSpotService;
 	@Autowired
 	private TicketAttachmentService ticketAttachmentService;
-	
+
 //	/**
 //	 * 表单提交日期绑定      
 //	 * @return 
@@ -82,7 +84,10 @@ public class TicketController {
 //	}
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public String index() {
+	public String index(Model model) {
+		List<TicketGroup> groupList = new ArrayList<TicketGroup>();
+		groupList = ticketGroupService.findAll();
+		model.addAttribute("groupList", groupList);
 		return "ticket/index";
 	}
 
@@ -92,10 +97,8 @@ public class TicketController {
 		int offset = reqDto.getPageNo();
 		int size = reqDto.getPageSize();
 
-		List<TicketGroup> groupList = ticketGroupService.findAll();
 		pageDto = ticketService.findByPage(offset, size, "scenicId", true);
 		model.addAttribute("pageDto", pageDto);
-		model.addAttribute("groupList", groupList == null ? groupList : new ArrayList<TicketGroup>());
 		return "ticket/list";
 	}
 
@@ -134,11 +137,24 @@ public class TicketController {
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public String edit(Model model, @RequestParam("id") long id) {
 		Ticket ticket = ticketService.findById(id);
-		if (ticket != null) {
-			ticket = new Ticket();
-		}
 
+		List<TicketAttachment> imgList = new ArrayList<TicketAttachment>();
+		List<ScenicSpot> scenicList = new ArrayList<ScenicSpot>();
+		List<TicketGroup> groupList = new ArrayList<TicketGroup>();
+
+		scenicList = scenicSpotService.findAll();
+		model.addAttribute("scenicList", scenicList);
+		groupList = ticketGroupService.findAll();
+		model.addAttribute("scenicList", groupList);
+		if(ticket != null){
+			imgList = ticketAttachmentService.listByPage(ticket.getId(), null, null,
+					TicketAttachment.USE_LIST, "showOrder", true, 0, 10);
+		}else{
+			ticket = new Ticket();//直接创建一个新的
+		}
+		model.addAttribute("imgList", imgList);
 		model.addAttribute("ticket", ticket);
+
 		return "ticket/edit";
 	}
 
@@ -182,7 +198,13 @@ public class TicketController {
 		}
 
 		Integer sellout = 0;
-		String goodsCode = new Date().toString();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		String year = String.valueOf(calendar.get(Calendar.YEAR)%100);
+		String month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
+		String day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+		String hour = String.valueOf(calendar.get(Calendar.HOUR_OF_DAY));
+		String goodsCode = "T" + scenicId + year + month + day + hour + "" + new Random().nextInt(1000000);
 
 		Ticket ticket = new Ticket(id, scenicId, groupId, name, goodsCode, price, shopPrice, stock, goodsType,
 				groupTickets, beginDate, endDate, weekDate, checkTime, stopCheckTime, sellout, status, null);
@@ -210,6 +232,23 @@ public class TicketController {
 		result.setSuccess(true);
 		if (id > 0L) {
 			ticketService.delete(id);
+		}
+		return JSONObject.toJSONString(result);
+	}
+
+	@RequestMapping(value = "/stop", method = RequestMethod.POST)
+	@ResponseBody
+	public String stop(@RequestParam("id") Long id) {
+		Result result = new Result();
+		result.setSuccess(false);
+		if (id > 0L) {
+			Ticket t = ticketService.findById(id);
+			if(t != null){
+				int status = t.getStatus();
+				t.setStatus(status == 1? 0 : 1);
+				ticketService.update(t);
+				result.setSuccess(true);
+			}
 		}
 		return JSONObject.toJSONString(result);
 	}
@@ -338,9 +377,6 @@ public class TicketController {
 	}
 
 	protected Attachment saveAttachment(MultipartFile file){
-
-		//是否需要进行图片处理
-
 		String url = QiniuFileUtil.upload(file);
 		// System.out.println(">>>> add url = " + url);
 		Attachment attach = new Attachment();
@@ -359,18 +395,6 @@ public class TicketController {
 			return attach;
 		}
 		return null;
-	}
-
-	public String edit(Model model){
-		// 修改图片 add / delete ticketAttach
-		// 修改内容介绍
-
-		List<ScenicSpot> scenicList = scenicSpotService.findAll();
-		if(scenicList != null){
-			model.addAttribute("scenicList", scenicList);
-		}
-
-		return "";
 	}
 
 }

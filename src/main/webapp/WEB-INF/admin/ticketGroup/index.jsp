@@ -156,13 +156,12 @@ function edit(id){
 }
 
 function del(obj, id){
-	$.post($("#ctx").val() + "/admin/ticketGroup/del", {id:id}, function(data){
-		if(data.success){
-			$(obj).parents("tr").remove();
-		}else{
-			alert(data.obj);
-		}
-	}, "json");
+	var url = $("#ctx").val() + "/admin/ticketGroup/del";
+	layer.confirm('确认要删除吗？',function(index){
+		$.post(url, {"id":id}, null);
+		$(obj).parents("tr").remove();
+		layer.close(index);
+	});
 }
 </script>
 </body>

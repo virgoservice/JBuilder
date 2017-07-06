@@ -20,7 +20,7 @@
 								<input type="checkbox"/>全选
 							</td>
 							<td colspan="8">
-								<button class="btn btn-primary btn-sm" onclick="add();">新增</button>
+								<button class="btn btn-primary btn-sm" onclick="addTicket();">新增</button>
 								<button class="btn btn-primary btn-sm" onclick="addGroup();">新增分组</button>
 							</td>
 						</tr>
@@ -47,21 +47,21 @@
 								<fmt:formatDate value="${item.beginDate}" type="both" /><br/>
 								<fmt:formatDate value="${item.endDate}" type="both" />
 							</td>
-							<td>
+							<td class="status">
 								<c:if test="${item.status==0}">
-									禁用
+									已禁用
 								</c:if>
 								<c:if test="${item.status==1}">
-									启用
+									已启用
 								</c:if>
 							</td>
 							<td>
-								<a href="#">禁用</a>
-								<a href="#">修改</a>
-								<a href="#">购买规则</a>
-								<a href="#">分组</a>
-								<a href="#">删除</a>
-								<a href="#">复制</a>
+								<a href="javascript:;" class="stop" onclick="stop(this, ${item.id}, ${item.status});">禁用</a>
+								<a href="javascript:;" onclick="editTicket(${item.id});">修改</a>
+								<a href="javascript:;">购买规则</a>
+								<a href="javascript:;" onclick="grouping();">分组</a>
+								<a href="javascript:;" onclick="del(this, ${item.id});">删除</a>
+								<a href="javascript:;">复制</a>
 							</td>
 						</tr>
 						</c:forEach>

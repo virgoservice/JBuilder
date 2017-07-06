@@ -45,7 +45,7 @@ public interface TicketDao {
 	public List<Ticket> findPageByCond(
 			@Param("offset") int offset,
 			@Param("size") int size,
-			@Param("oderBy") String orderBy,
+			@Param("orderBy") String orderBy,
 			@Param("order") boolean order, 
 			@Param("goodsCode") String goodsCode,
 			@Param("status") int status,
@@ -62,7 +62,7 @@ public interface TicketDao {
 	public List<Ticket> findPageByGroup(
 			@Param("offset") int offset,
 			@Param("size") int size,
-			@Param("oderBy") String orderBy,
+			@Param("orderBy") String orderBy,
 			@Param("order") boolean order,
 			@Param("groupId") int groupId);
 	

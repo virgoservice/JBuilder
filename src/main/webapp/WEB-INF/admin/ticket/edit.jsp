@@ -20,7 +20,6 @@
 	<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/datepicker/datepicker3.css">
 	<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/timepicker/bootstrap-timepicker.min.css">
 	<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/daterangepicker/daterangepicker.css">
-	<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/editormd/css/editormd.css" />
 	<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/h5fileupload/css/fileinput.css"/>
 	<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -53,7 +52,7 @@
 					<div class="tab-pane form-horizontal active" id="tab_info">
 						<div class="box box-solid">
 							<form action="#" id="form" method="post">
-							<input type="hidden" name="id" id="id" value="0" />
+							<input type="hidden" name="id" id="id" value="${ticket.id }" />
 							<div class="box-body">
 								<div class="row">
 									<div class="col-md-9">
@@ -63,14 +62,14 @@
 											</label>
 											<div class="col-sm-9">
 												<select  class="form-control" name="scenicId" id="scenicId">
-												<option value="16428">高过河风景区</option>
-												<option value="16731">舞阳河风景区</option>
-												<option value="16735">大型舞蹈史诗《古韵镇远》</option>
-												<option value="17403">舞阳河测试</option>
-												<option value="17404">高过河测试</option>
-												<option value="17405">古韵镇远测试</option>
-												<option value="22175">铁溪风景区</option>
-												<option value="22182">青龙洞</option>
+												<c:forEach items="${scenicList}" var="scenic">
+												<c:if test="${scenic.id eq ticket.scenicId }">
+													<option value="${scenic.id }" selected="selected">${scenic.name}</option>
+												</c:if>
+												<c:if test="${scenic.id ne ticket.scenicId }">
+													<option value="${scenic.id }">${scenic.name}</option>
+												</c:if>
+												</c:forEach>
 												</select>
 											</div>
 										</div>
@@ -80,7 +79,7 @@
 												<span style="color:red;">*</span><span>groupId</span>
 											</label>
 											<div class="col-sm-9">
-												<input type="text" id="groupId" name="groupId" value="3"  class="form-control"/>
+												<input type="text" id="groupId" name="groupId" value="${ticket.groupId }"  class="form-control"/>
 											</div>
 										</div>
 
@@ -89,7 +88,7 @@
 												<span style="color:red;">*</span><span>门票名称</span>
 											</label>
 											<div class="col-sm-9">
-												<input type="text" id="name" name="name" value=""  class="form-control" placeholder=""/>
+												<input type="text" id="name" name="name" value="${ticket.name}"  class="form-control" placeholder=""/>
 											</div>
 										</div>
 										
@@ -103,21 +102,21 @@
 										<div class="form-group">
 											<label for="_goodsCode" class="col-sm-3 control-label">商品编号</label>
 											<div class="col-sm-9">
-												<input type="text" class="form-control" name="goodsCode" id="goodsCode"  value=""/>
+												<input type="text" class="form-control" name="goodsCode" id="goodsCode"  value="${ticket.goodsCode }"/>
 											</div>
 										</div>
 
 										<div class="form-group">
 											<label for="_price" class="col-sm-3 control-label">门票原价</label>
 											<div class="col-sm-9">
-												<input type="text" class="form-control" name="price" id="price"  value="0.00"/>
+												<input type="text" class="form-control" name="price" id="price"  value="${ticket.price }"/>
 											</div>
 										</div>
 
 										<div class="form-group">
 											<label for="_shopPrice" class="col-sm-3 control-label">线上特价</label>
 											<div class="col-sm-9">
-												<input type="text" class="form-control" name="shopPrice" id="shopPrice"  value="0.00"/>
+												<input type="text" class="form-control" name="shopPrice" id="shopPrice"  value="${ticket.shopPrice}"/>
 											</div>
 										</div>
 
@@ -126,7 +125,7 @@
 												<span style="color:red;">*</span><span>库存</span>
 											</label>
 											<div class="col-sm-9">
-												<input type="text" id="stock" name="stock" value="0" />
+												<input type="text" id="stock" name="stock" value="${ticket.stock}" />
 											</div>
 										</div>
 
@@ -136,8 +135,16 @@
 											</label>
 											<div class="col-sm-9">
 												<select id="goodsType" class="form-control" name="goodsType" >
-													<option value="1" selected="selected">成人票</option>
-													<option value="2">儿童票</option>
+													<option value="1" 
+												<c:if test="${ticket.goodsType eq 1}">
+													selected="selected"
+												</c:if>
+													>成人票</option>
+													<option value="2"
+												<c:if test="${ticket.goodsType eq 1}">
+													selected="selected"
+												</c:if>
+													>儿童票</option>
 													<option value="3">特价票</option>
 													<option value="4">测试票</option>
 												</select>
@@ -262,19 +269,66 @@
 						</div>
 					</div>
 					<div class="tab-pane" id="tab_image">
+						<div class="box box-solid">
+							<div class="box-body">
+								<ul class="list-unstyled col-xs-12">
+									<c:forEach items="${imgList }"  begin="0" end="4" var="ticketAttachment">
+					 				<li class="col-xs-2 margin-bottom">
+					 					<img src="${ticketAttachment.url }" class="img-thumbnail img-responsive"/>
+					 				</li>
+						 			</c:forEach>
+								</ul>
+								<ul class="list-unstyled col-xs-12">
+									<c:forEach items="${imgList }"  begin="5" end="9" var="ticketAttachment">
+					 				<li class="col-xs-2 margin-bottom">
+					 					<img src="${ticketAttachment.url }" class="img-thumbnail img-responsive"/>
+					 				</li>
+						 			</c:forEach>
+								</ul>
+							</div>
+							<div class="box-footer">
+								<form action="../addImage" method="post" class="form-horizontal" style="padding: 0 15px 0 15px;" id="article-form">
+								<input type="hidden" id="ticketId" name="ticketId" value="${ticketId }" />
+								<input type="hidden" id="useof" name="useof" value="1" />
+					 			<div class="form-group">
+					 				<input type="file" id="file" name="file" multiple="multiple"/>
+					 			</div>
+					 			<p class="text-center" style="color:#808080;font-size: 16px;">最大上传文件大小为100MB</p>
+					 			</form>
+							</div>
+							<div class="row">
+								<div class="col-sm-10">
+								</div>
+								<div class="col-sm-2">
+									<button type="button" class="btn btn-primary btn-default margin" onclick="finishAddImage()">确定</button>
+								</div>
+							</div>
+						</div>
+						</div>
 					</div>
 					<div class="tab-pane" id="tab_intro">
+						<div class="box box-solid">
+							<form action="./addIntro" method="post" id="ckeditor-form" >
+								<input type="hidden" id="ticketId" name="ticketId" value="${ticketId }" />
+								<div class="box-body">
+								<textarea id="TextArea1" name="content" class="ckeditor"></textarea>
+								</div>
+								<div class="box-footer">
+									<div class="row">
+										<div class="col-sm-10">
+										</div>
+										<div class="col-sm-2">
+											<button type="submit" class="btn btn-primary btn-default margin">确定</button>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
 					</div>
-				</div>
-			</section>
+				</section>
 		</div>
 
-		<footer class="main-footer">
-			<div class="pull-right hidden-xs">
-				<b>技术支持</b> <a href="#">贵州桃李云科技有限公司</a>
-			</div>
-			<strong>Copyright &copy; 2017-2020 <a href="http://www.gogc.cn">贵州古城文化旅游开发股份有限公司</a>.</strong> All rights reserved.
-		</footer>
+		<jsp:include page="../../common/footer.jsp"/>
 		<div class="control-sidebar-bg"></div>
 	</div>
 
@@ -291,6 +345,58 @@
 <script src="<%=path %>/resources/admin/plugins/timepicker/bootstrap-timepicker.min.js"></script>
 <script src="<%=path %>/resources/admin/dist/js/app.min.js"></script>
 <script src="<%=path %>/resources/admin/dist/js/common.js"></script>
+<script src="<%=path %>/resources/admin/plugins/h5fileupload/js/fileinput.min.js" ></script>
+<script src="<%=path %>/resources/admin/dist/js/common.js"></script>
+<script src="<%=path %>/resources/admin/plugins/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+	$(function(){
+		CKEDITOR.replace("TextArea1", { toolbar:'Full', height:500 });
+        //示例2：工具栏为自定义类型
+/*         CKEDITOR.replace( 'editor1',
+        {
+			toolbar :
+			[
+			   //加粗     斜体，     下划线      穿过线      下标字        上标字
+			   ['Bold','Italic','Underline','Strike','Subscript','Superscript'],
+			   // 数字列表          实体列表            减小缩进    增大缩进
+			   ['NumberedList','BulletedList','-','Outdent','Indent'],
+			   //左对 齐             居中对齐          右对齐          两端对齐
+			   ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+			   //超链接  取消超链接 锚点
+			   ['Link','Unlink','Anchor'],
+			   //图片    flash    表格       水平线            表情       特殊字符        分页符
+			   ['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
+			   '/',
+			   // 样式       格式      字体    字体大小
+			   ['Styles','Format','Font','FontSize'],
+			   //文本颜色     背景颜色
+			   ['TextColor','BGColor'],
+			   //全屏           显示区块
+			   ['Maximize', 'ShowBlocks','-']
+			]
+	      }); */
+	});
+	
+	function finishAddImage(){
+		window.location.href="<%=path%>" + "/admin/ticket/addIntro?ticketId=" + $("#ticketId").val();
+	}
+</script>
+<script type="text/javascript">
+	$(function(){
+		var ticketId = $("#ticketId").val();
+		console.log(ticketId);
+		$("#file").fileinput({
+			 language: 'zh',
+	         uploadUrl: '<%=path%>/admin/ticket/addImage',
+	         allowedFileExtensions : ['jpg', 'png','bmp','gif'],
+	         minFileCount:1,
+	         maxFileCount:10,
+             uploadExtraData:{ticketId:ticketId, useof:"2"}
+		}).on("fileuploaded",function(even,data){
+			var res = $.parseJSON(data.response);
+		});
+	});
+</script>
 <script type="text/javascript">
     $(function () {
         $("#beginDate").datepicker({
