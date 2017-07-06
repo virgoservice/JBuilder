@@ -1,6 +1,7 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>  
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%
 	String path = request.getContextPath();
 %>
@@ -34,7 +35,7 @@
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 			<section class="content-header">
-				<h1>添加景点信息</h1>
+				<h1>编辑景点信息</h1>
 			</section>
 			<section class="content" style="z-index: 9999;">
 				<ul class="nav nav-tabs">
@@ -51,7 +52,7 @@
 				<div class="tab-content">
 					<div class="tab-pane form-horizontal active" id="tab_info">
 						<div class="box box-solid">
-							<form action="#" id="form" method="post">
+							<form action="./add" id="form" method="post">
 							<input type="hidden" name="id" id="id" value="${ticket.id }" />
 							<div class="box-body">
 								<div class="row">
@@ -91,7 +92,7 @@
 												<input type="text" id="name" name="name" value="${ticket.name}"  class="form-control" placeholder=""/>
 											</div>
 										</div>
-										
+<!-- 										
 								 		<div class="form-group">
 											<label for="_nameEn" class="col-sm-3 control-label">英文名称</label>
 											<div class="col-sm-9">
@@ -105,6 +106,7 @@
 												<input type="text" class="form-control" name="goodsCode" id="goodsCode"  value="${ticket.goodsCode }"/>
 											</div>
 										</div>
+										 -->
 
 										<div class="form-group">
 											<label for="_price" class="col-sm-3 control-label">门票原价</label>
@@ -135,16 +137,8 @@
 											</label>
 											<div class="col-sm-9">
 												<select id="goodsType" class="form-control" name="goodsType" >
-													<option value="1" 
-												<c:if test="${ticket.goodsType eq 1}">
-													selected="selected"
-												</c:if>
-													>成人票</option>
-													<option value="2"
-												<c:if test="${ticket.goodsType eq 1}">
-													selected="selected"
-												</c:if>
-													>儿童票</option>
+													<option value="1">成人票</option>
+													<option value="2">儿童票</option>
 													<option value="3">特价票</option>
 													<option value="4">测试票</option>
 												</select>
@@ -156,19 +150,25 @@
 												<span style="color:red;">*</span><span>团体票</span>
 											</label>
 											<div class="col-sm-9">
+												<c:if test="${ticket.groupTickets eq false}">
 												<input type="radio" id="groupTickets" name="groupTickets" checked="checked" value="0" />否
 												<input type="radio" id="groupTickets" name="groupTickets" value="1" />是
+												</c:if>
+												<c:if test="${ticket.groupTickets eq true}">
+												<input type="radio" id="groupTickets" name="groupTickets" value="0" />否
+												<input type="radio" id="groupTickets" name="groupTickets" checked="checked" value="1" />是
+												</c:if>
 											</div>
 										</div>
 
 										<div class="form-group">
 											<label for="_beginDate" class="col-sm-3 control-label">生效日期</label>
 											<div class="col-sm-3">
-												<input class="datepicker" type="text" name="beginDate" id="beginDate"  value="2017-06-28"/>
+												<input class="datepicker" type="text" name="beginDate" id="beginDate" value="<fmt:formatDate type="DATE" value='${ticket.beginDate}' pattern='yyyy-MM-dd'/>" />
 											</div>
 											<label for="_endDate" class="col-sm-2 control-label">截止日期</label>
 											<div class="col-sm-3">
-												<input class="datepicker" type="text" name="endDate" id="endDate"  value="2017-06-28"/>
+												<input class="datepicker" type="text" name="endDate" id="endDate" value="<fmt:formatDate type="DATE" value='${ticket.endDate}' pattern='yyyy-MM-dd'/>" />
 											</div>
 										</div>
 
@@ -176,13 +176,13 @@
 											<label for="_checkTime" class="col-sm-3 control-label">开始检票时间</label>
 											<div class="col-sm-3">
 												<div class="input-group bootstrap-timepicker timepicker">
-										            <input id="checkTime" name="checkTime" type="text" class="form-control input-small datepicker">
+										            <input id="checkTime" name="checkTime" type="text" class="form-control input-small datepicker" value="<fmt:formatDate type="TIME" value='${ticket.checkTime}' pattern='HH:mm'/>" />
 										        </div>
 											</div>
 											<label for="_stopCheckTime" class="col-sm-2 control-label">停止检票时间</label>
 											<div class="col-sm-3">
 										        <div class="input-group bootstrap-timepicker timepicker">
-										            <input id="stopCheckTime" name="stopCheckTime" type="text" class="form-control input-small datepicker">
+										            <input id="stopCheckTime" name="stopCheckTime" type="text" class="form-control input-small datepicker" value="<fmt:formatDate type="TIME" value='${ticket.stopCheckTime}' pattern='HH:mm'/>" />
 										        </div>
 											</div>
 										</div>
@@ -236,18 +236,24 @@
 										<div class="form-group">
 											<label for="_status" class="col-sm-3 control-label">启用/禁用</label>
 											<div class="col-sm-9">
+												<c:if test="${ticket.status eq 0}">
+												<input type="radio" name="status" id="status" checked="checked" value="0"/>禁用
+												<input type="radio" name="status" id="status" value="1"/>启用
+												</c:if>
+												<c:if test="${ticket.status eq 1}">
 												<input type="radio" name="status" id="status" value="0"/>禁用
 												<input type="radio" name="status" id="status" checked="checked" value="1"/>启用
+												</c:if>
 											</div>
 										</div>
-
+<!-- 
 										<div class="form-group">
 											<label for="_description" class="col-sm-3 control-label">description</label>
 											<div class="col-sm-9">
 												<input type="text" class="form-control" name="description" id="description"  value=""/>
 											</div>
 										</div>
-										<!-- <div class="form-group">
+										<div class="form-group">
 											<label for="_description" class="col-sm-3 control-label">sellout</label>
 											<div class="col-sm-9">
 												<input type="text" class="form-control" name="sellout" id="sellout"  value=""/>
@@ -274,42 +280,41 @@
 								<ul class="list-unstyled col-xs-12">
 									<c:forEach items="${imgList }"  begin="0" end="4" var="ticketAttachment">
 					 				<li class="col-xs-2 margin-bottom">
-					 					<img src="${ticketAttachment.url }" class="img-thumbnail img-responsive"/>
+					 					<img src="${ticketAttachment.attachmentUrl }?imageView2/2/h/250" class="img-thumbnail img-responsive"/>
 					 				</li>
 						 			</c:forEach>
 								</ul>
 								<ul class="list-unstyled col-xs-12">
 									<c:forEach items="${imgList }"  begin="5" end="9" var="ticketAttachment">
 					 				<li class="col-xs-2 margin-bottom">
-					 					<img src="${ticketAttachment.url }" class="img-thumbnail img-responsive"/>
+					 					<img src="${ticketAttachment.attachmentUrl }?imageView2/2/h/250" class="img-thumbnail img-responsive"/>
 					 				</li>
 						 			</c:forEach>
 								</ul>
 							</div>
-							<div class="box-footer">
-								<form action="../addImage" method="post" class="form-horizontal" style="padding: 0 15px 0 15px;" id="article-form">
-								<input type="hidden" id="ticketId" name="ticketId" value="${ticketId }" />
-								<input type="hidden" id="useof" name="useof" value="1" />
-					 			<div class="form-group">
-					 				<input type="file" id="file" name="file" multiple="multiple"/>
-					 			</div>
-					 			<p class="text-center" style="color:#808080;font-size: 16px;">最大上传文件大小为100MB</p>
-					 			</form>
-							</div>
-							<div class="row">
-								<div class="col-sm-10">
+								<div class="box-footer">
+									<form action="../addImage" method="post" class="form-horizontal" style="padding: 0 15px 0 15px;" id="article-form">
+									<%-- <input type="hidden" id="ticketId" name="ticketId" value="${ticketId }" /> --%>
+									<input type="hidden" id="useof" name="useof" value="1" />
+						 			<div class="form-group">
+						 				<input type="file" id="file" name="file" multiple="multiple"/>
+						 			</div>
+						 			<p class="text-center" style="color:#808080;font-size: 16px;">最大上传文件大小为100MB</p>
+						 			</form>
 								</div>
-								<div class="col-sm-2">
-									<button type="button" class="btn btn-primary btn-default margin" onclick="finishAddImage()">确定</button>
+								<div class="row">
+									<div class="col-sm-10">
+									</div>
+									<div class="col-sm-2">
+										<button type="button" class="btn btn-primary btn-default margin" onclick="finishAddImage()">确定</button>
+									</div>
 								</div>
 							</div>
-						</div>
-						</div>
 					</div>
 					<div class="tab-pane" id="tab_intro">
 						<div class="box box-solid">
 							<form action="./addIntro" method="post" id="ckeditor-form" >
-								<input type="hidden" id="ticketId" name="ticketId" value="${ticketId }" />
+								<input type="hidden" id="ticketId" name="ticketId" value="${ticket.id}" />
 								<div class="box-body">
 								<textarea id="TextArea1" name="content" class="ckeditor"></textarea>
 								</div>
@@ -325,7 +330,8 @@
 							</form>
 						</div>
 					</div>
-				</section>
+				</div>
+			</section>
 		</div>
 
 		<jsp:include page="../../common/footer.jsp"/>
@@ -399,12 +405,12 @@
 </script>
 <script type="text/javascript">
     $(function () {
+    	$("#goodsType").find("option:eq(${ticket.goodsType} -1)").attr('selecetd', 'selected');
         $("#beginDate").datepicker({
             language: "zh-CN",
             autoclose: true,//选中之后自动隐藏日期选择框
             clearBtn: true,//清除按钮
             todayBtn: true,//今日按钮
-            startDate: "2017-01-01",
             format: "yyyy-mm-dd"
         });
         $("#endDate").datepicker({
@@ -412,7 +418,6 @@
             autoclose: true,//选中之后自动隐藏日期选择框
             clearBtn: true,//清除按钮
             todayBtn: true,//今日按钮
-            startDate: "2017-01-01",
             format: "yyyy-mm-dd"
         });
 

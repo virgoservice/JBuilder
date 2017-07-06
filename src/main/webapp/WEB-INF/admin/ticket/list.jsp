@@ -44,8 +44,11 @@
 							<td>${item.name}</td>
 							<td>${item.goodsCode}</td>
 							<td>
-								<fmt:formatDate value="${item.beginDate}" type="both" /><br/>
-								<fmt:formatDate value="${item.endDate}" type="both" />
+								<fmt:formatDate value="${item.beginDate}" pattern="yyyy-MM-dd" type="DATE" />
+								<fmt:formatDate value="${item.checkTime}" pattern="HH:mm" type="TIME" />
+								<br/>
+								<fmt:formatDate value="${item.endDate}" pattern="yyyy-MM-dd" type="DATE" />
+								<fmt:formatDate value="${item.stopCheckTime}" pattern="HH:mm" type="TIME" />
 							</td>
 							<td class="status">
 								<c:if test="${item.status==0}">
@@ -58,8 +61,7 @@
 							<td>
 								<a href="javascript:;" class="stop" onclick="stop(this, ${item.id}, ${item.status});">禁用</a>
 								<a href="javascript:;" onclick="editTicket(${item.id});">修改</a>
-								<a href="javascript:;">购买规则</a>
-								<a href="javascript:;" onclick="grouping();">分组</a>
+								<a href="javascript:;" onclick="grouping(${item.id}, ${item.groupId});">分组</a>
 								<a href="javascript:;" onclick="del(this, ${item.id});">删除</a>
 								<a href="javascript:;">复制</a>
 							</td>

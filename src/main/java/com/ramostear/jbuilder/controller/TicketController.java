@@ -140,12 +140,12 @@ public class TicketController {
 
 		List<TicketAttachment> imgList = new ArrayList<TicketAttachment>();
 		List<ScenicSpot> scenicList = new ArrayList<ScenicSpot>();
-		List<TicketGroup> groupList = new ArrayList<TicketGroup>();
+//		List<TicketGroup> groupList = new ArrayList<TicketGroup>();
 
 		scenicList = scenicSpotService.findAll();
 		model.addAttribute("scenicList", scenicList);
-		groupList = ticketGroupService.findAll();
-		model.addAttribute("scenicList", groupList);
+//		groupList = ticketGroupService.findAll();
+//		model.addAttribute("groupList", groupList);
 		if(ticket != null){
 			imgList = ticketAttachmentService.listByPage(ticket.getId(), null, null,
 					TicketAttachment.USE_LIST, "showOrder", true, 0, 10);
@@ -233,6 +233,7 @@ public class TicketController {
 		if (id > 0L) {
 			ticketService.delete(id);
 		}
+		//TODO
 		return JSONObject.toJSONString(result);
 	}
 
@@ -250,6 +251,23 @@ public class TicketController {
 				result.setSuccess(true);
 			}
 		}
+		return JSONObject.toJSONString(result);
+	}
+	
+	@RequestMapping(value = "/grouping", method = RequestMethod.POST)
+	@ResponseBody
+	public String grouping(@RequestParam("ticketId") Long ticketId, @RequestParam("groupId")Long groupId) {
+		Result result = new Result();
+		result.setSuccess(false);
+		if(ticketId > 0 && groupId > 0){
+			Ticket t = ticketService.findById(ticketId);
+			if(t != null){
+				t.setGroupId(groupId);
+				ticketService.update(t);
+				result.setSuccess(true);
+			}
+		}
+
 		return JSONObject.toJSONString(result);
 	}
 

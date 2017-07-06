@@ -93,13 +93,13 @@
 												<input type="text" id="name" name="name" value=""  class="form-control" placeholder=""/>
 											</div>
 										</div>
-										
+<!-- 										
 								 		<div class="form-group">
 											<label for="_nameEn" class="col-sm-3 control-label">英文名称</label>
 											<div class="col-sm-9">
 												<input type="text" class="form-control" name="nameEn" id="nameEn"  value=""/>
 											</div>
-										</div>
+										</div> -->
 
 										<div class="form-group">
 											<label for="_price" class="col-sm-3 control-label">门票原价</label>
