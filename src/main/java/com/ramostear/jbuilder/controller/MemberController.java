@@ -82,26 +82,26 @@ public class MemberController {
 				.addAttribute("username", username)
 				.addAttribute("password", password).
 				addAttribute("verifyCode", verifyCode);
-				return "member/login";
+				return "login";
 			}catch (LockedAccountException e){
 				model.addAttribute("msg", "<i class=\"fa  fa-bell\"></i> 用户已被锁定，请联系管理员！")
 				.addAttribute("username", username)
 				.addAttribute("password", password).
 				addAttribute("verifyCode", verifyCode);
-				return "member/login";
+				return "login";
 			}
 			catch (AuthenticationException e) {
 				model.addAttribute("msg", "<i class=\"fa  fa-bell\"></i> 用户名或密码不正确！")
 				.addAttribute("username", username)
 				.addAttribute("password", password).
 				addAttribute("verifyCode", verifyCode);
-				return "member/login";
+				return "login";
 			}
 		}
 		if(currUser.isAuthenticated()){
 			User user = userService.findByName(username);
 			session.setAttribute(SysConsts.LOGIN_USER, user);
-			return "redirect:/member/index";
+			return "redirect:/member/userinfo";
 		}
 		return "member/login";
 	}
@@ -136,20 +136,5 @@ public class MemberController {
 		userService.add(user);
 		return "redirect:/member/login";
 	}
-	
-	@RequestMapping(value="/index",method=RequestMethod.GET)
-	public String index(HttpSession session,Model model){
-		User member = (User) session.getAttribute(SysConsts.LOGIN_USER);
-		model.addAttribute("member", member);
-		//TODO 游客订单功能还没有实现
-		return "member/index";
-	}
-	@RequestMapping(value="/userinfo",method=RequestMethod.GET)
-	public String userinfo(HttpSession session,Model model){
-		User member = (User) session.getAttribute(SysConsts.LOGIN_USER);
-		model.addAttribute("member", member);
-		return "member/userinfo";
-	}
-	
 	
 }

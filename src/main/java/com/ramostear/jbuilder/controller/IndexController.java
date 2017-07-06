@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ramostear.jbuilder.entity.Ticket;
 import com.ramostear.jbuilder.entity.TicketAttachment;
+import com.ramostear.jbuilder.kit.ReqDto;
 import com.ramostear.jbuilder.service.TicketAttachmentService;
 import com.ramostear.jbuilder.service.TicketService;
 import com.ramostear.jbuilder.service.UserService;
@@ -65,6 +66,20 @@ public class IndexController {
 		model.addAttribute("ticket", t);
 
 		return "index/detail";
+	}
+	
+	/**
+	 * 更多景区
+	 * @param req
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/spotsList",method=RequestMethod.GET)
+	public String spotsList(ReqDto req,Model model){
+		
+		model.addAttribute("list", this.ticketService.findByPageMember(req.getPageNo(), req.getPageSize(), "id", true));
+		
+		return "member/spots_more";
 	}
 
 }

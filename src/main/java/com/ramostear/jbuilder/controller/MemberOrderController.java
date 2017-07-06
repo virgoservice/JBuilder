@@ -89,9 +89,7 @@ public class MemberOrderController {
 		
 		Result result = new Result();
 		User user=(User)session.getAttribute(SysConsts.LOGIN_USER);
-		if(user==null)
-			user=new User();
-			user.setId(9L);
+		
 		order.setUserId(user.getId());//用户id
 		//保存订单和子订单
 		Order res=this.orderService.save(order, order.getList());
@@ -114,9 +112,7 @@ public class MemberOrderController {
 		Result result = new Result();
 		
 		User user=(User)session.getAttribute(SysConsts.LOGIN_USER);
-		if(user==null)
-			user=new User();
-			user.setId(9L);
+		
 			
 		Order order=this.orderService.findByIdAndUid(orderId, user.getId());
 		if(order==null){
@@ -166,8 +162,10 @@ public class MemberOrderController {
 		} 
 		
 		model.addAttribute("ticket",ticket);
-		model.addAttribute("dlist",sb.substring(1, sb.length()));
-		System.out.println(sb.substring(1, sb.length()));
+		if(sb.length()!=0){
+			model.addAttribute("dlist",sb.substring(1, sb.length()));
+		}
+		
 		return "member/book";
 	}
 	
@@ -177,7 +175,7 @@ public class MemberOrderController {
 	 * @param model
 	 * @param session
 	 * @param beginTime
-	 * @param endTime
+	 * @param endTime 
 	 * @return
 	 */
 	@RequestMapping(value="/list",method=RequestMethod.GET)
@@ -185,9 +183,6 @@ public class MemberOrderController {
 		
 		User user=(User)session.getAttribute(SysConsts.LOGIN_USER);
 		
-		if(user==null)
-			user=new User();
-			user.setId(9L);
 		
 		model.addAttribute("list", this.orderService.findByPageByUid(req.getPageNo(), req.getPageSize(), "id", true,user.getId(),null));
 		
@@ -203,9 +198,7 @@ public class MemberOrderController {
 		
 		User user=(User)session.getAttribute(SysConsts.LOGIN_USER);
 		
-		if(user==null)
-			user=new User();
-			user.setId(9L);
+		
 		
 		model.addAttribute("list", this.orderService.findByPageByUid(req.getPageNo(), req.getPageSize(), "id", true,user.getId(),"0"));
 		
@@ -221,9 +214,7 @@ public class MemberOrderController {
 	public String detail(Model model,Long orderid,HttpSession session){
 		
 		User user=(User)session.getAttribute(SysConsts.LOGIN_USER);
-		if(user==null)
-			user=new User();
-			user.setId(9L);
+		
 		
 		Order order=this.orderService.findByIdAndUid(orderid, user.getId());
 		if(order==null){
@@ -254,9 +245,7 @@ public class MemberOrderController {
 	public Result returnTicket(Long corderId,Integer num,HttpSession session){
 		
 		User user=(User)session.getAttribute(SysConsts.LOGIN_USER);
-		if(user==null)
-			user=new User();
-			user.setId(9L);
+		
 		//是否持有该订单
 		Long userId=user.getId();
 		
@@ -289,9 +278,7 @@ public class MemberOrderController {
 	public String returnTicketMes(Model model,Long corderId,HttpSession session){
 		
 		User user=(User)session.getAttribute(SysConsts.LOGIN_USER);
-		if(user==null)
-			user=new User();
-			user.setId(9L);
+		
 		
 		//是否持有该订单
 		Long userId=user.getId();
@@ -324,9 +311,7 @@ public class MemberOrderController {
 		
 		//用户是否持有该定订单
 		User user=(User)session.getAttribute(SysConsts.LOGIN_USER);
-		if(user==null)
-			user=new User();
-			user.setId(9L);
+		
 			
 		Order order=this.orderService.findByIdAndUid(orderId, user.getId());
 		if(order==null){
@@ -379,9 +364,7 @@ public class MemberOrderController {
 		
 		//用户是否持有该定订单
 		User user=(User)session.getAttribute(SysConsts.LOGIN_USER);
-		if(user==null)
-			user=new User();
-			user.setId(9L);
+		
 		
 		Order order=this.orderService.findByIdAndUid(orderId, user.getId());
 		
@@ -394,4 +377,6 @@ public class MemberOrderController {
 		return "member/payment";
 	}
 	
+	
+
 }

@@ -13,7 +13,9 @@ package com.ramostear.jbuilder.service;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+
 import com.ramostear.jbuilder.entity.Ticket;
+import com.ramostear.jbuilder.kit.MemberPageDto;
 import com.ramostear.jbuilder.kit.PageDto;
 
 /** 
@@ -34,6 +36,12 @@ public interface TicketService {
 	
 	public List<Ticket> findAll();
 
+	public MemberPageDto<Ticket> findByPageMember(
+			@Param("offset") int offset,
+			@Param("size") int size,
+			@Param("orderBy") String orderBy,
+			@Param("order") boolean order);
+	
 	public PageDto<Ticket> findByPage(
 			@Param("offset") int offset,
 			@Param("size") int size,

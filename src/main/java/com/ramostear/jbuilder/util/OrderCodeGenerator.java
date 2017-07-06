@@ -9,9 +9,6 @@
 								                 limitations under the License. 
 */
 package com.ramostear.jbuilder.util;
-
-import java.math.BigDecimal;
-
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 /** 

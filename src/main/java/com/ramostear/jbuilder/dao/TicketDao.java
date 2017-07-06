@@ -37,7 +37,7 @@ public interface TicketDao {
 
 	public List<Ticket> findAll();
 
-	public PageDto<Ticket> findByPage(
+	public List<Ticket> findByPage(
 			@Param("offset") int offset,
 			@Param("size") int size,
 			@Param("orderBy") String orderBy,

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import com.ramostear.jbuilder.dao.TicketDao;
 import com.ramostear.jbuilder.entity.Ticket;
+import com.ramostear.jbuilder.kit.MemberPageDto;
 import com.ramostear.jbuilder.kit.PageDto;
 import com.ramostear.jbuilder.service.TicketService;
 
@@ -70,7 +71,9 @@ public class TicketServiceImpl implements TicketService {
 
 	@Override
 	public PageDto<Ticket> findByPage(int offset, int size, String orderBy, boolean order) {
-		return dao.findByPage(offset, size, orderBy, order);
+		List<Ticket> list = this.dao.findByPage((offset-1)*size, size, orderBy, order);
+		Long totalSize = this.dao.size();
+		return new PageDto<Ticket>(totalSize,offset,size,list);
 	}
 
 	@Override
@@ -82,6 +85,14 @@ public class TicketServiceImpl implements TicketService {
 	@Override
 	public PageDto<Ticket> findPageByGroup(int offset, int size, String orderBy, boolean order, int groupId) {
 		return dao.findPageByGroup(offset, size, orderBy, order, groupId);
+	}
+
+	@Override
+	public MemberPageDto<Ticket> findByPageMember(int offset, int size,
+			String orderBy, boolean order) {
+		List<Ticket> list = this.dao.findByPage((offset-1)*size, size, orderBy, order);
+		Long totalSize = this.dao.size();
+		return new MemberPageDto<Ticket>(totalSize,offset,size,list);
 	}
 
 }
