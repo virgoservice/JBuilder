@@ -40,7 +40,7 @@ public class TicketGroupController {
 	private TicketGroupService ticketGroupService;
 
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public String list(ReqDto reqDto, Model model) {
+	public String index(ReqDto reqDto, Model model) {
 		int offset = reqDto.getPageNo();
 		int size = reqDto.getPageSize();
 
@@ -49,24 +49,36 @@ public class TicketGroupController {
 		return "ticketGroup/index";
 	}
 
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public String list(ReqDto reqDto, Model model) {
+		int offset = reqDto.getPageNo();
+		int size = reqDto.getPageSize();
+		
+		PageDto<TicketGroup> pageDto = ticketGroupService.findByPage(offset, size, "id", true, "");
+		model.addAttribute("pageDto", pageDto);
+		return "ticketGroup/list";
+	}
+
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String addOrEdit(TicketGroup ticketGroup) {
 		long id = ticketGroup.getId();
 		String name = ticketGroup.getName();
+		String description = ticketGroup.getDescription();
 		if (name == null || name.trim().length() == 0) {
-			return "parameter error";
+			return "ticketGroup/add";
 		}
 
 		TicketGroup tmp = null;
 		tmp = ticketGroupService.findById(id);
 		if (tmp != null) {
-			tmp.setId(id);
+			tmp.setName(name);
+			tmp.setDescription(description);
 			ticketGroupService.update(tmp);
 		} else {
 			tmp = new TicketGroup();
 			tmp.setName(name);
-			tmp.setDescription(ticketGroup.getDescription());
-			ticketGroupService.add(ticketGroup);
+			tmp.setDescription(description);
+			ticketGroupService.add(tmp);
 		}
 
 		return "redirect:/admin/ticketGroup/index";
@@ -76,16 +88,15 @@ public class TicketGroupController {
 	@ResponseBody
 	public String delete(@RequestParam("id") Long id) {
 		Result result = new Result();
-		result.setSuccess(false);
+		result.setSuccess(true);
 		if (id > 0L) {
 			ticketGroupService.delete(id);
-			result.setSuccess(true);
 		}
 		return JSONObject.toJSONString(result);
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String edit(@RequestParam("id") Long id, Model model) {
+	public String edit(Long id, Model model) {
 		TicketGroup tg = null;
 		if (id > 0L) {
 			tg = ticketGroupService.findById(id);

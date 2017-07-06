@@ -79,4 +79,9 @@ public class ScenicSpotServiceImpl implements ScenicSpotService {
 		return sdao.findAll();
 	}
 
+	@Override
+	public int containTickets(Long id) {
+		return sdao.containTickets(id);
+	}
+
 }

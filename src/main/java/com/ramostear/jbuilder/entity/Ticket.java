@@ -12,6 +12,9 @@ package com.ramostear.jbuilder.entity;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+
 /** 
  * @Desc: () 
  * @author: 赖生龙 
@@ -25,25 +28,34 @@ public class Ticket {
 	private Long groupId;
 	private String name;
 	private String goodsCode;
+	@NumberFormat(pattern = "##,###.##")
 	private double price;
+	@NumberFormat(pattern = "##,###.##")
 	private double shopPrice;
 	private Integer stock;
 	private Integer goodsType;
 	private boolean groupTickets; 
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date beginDate;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date endDate;
 	private String weekDate;
+	@DateTimeFormat(pattern="hh:mm")
 	private Date checkTime;
+	@DateTimeFormat(pattern="hh:mm")
 	private Date stopCheckTime;
 	private Integer sellout;
 	private Integer status;
+
+	/**
+	 * 详细描述
+	 */
 	private String description;
-	
-	
-	
-	public Ticket() {
-		super();
-	}
+	/**
+	 * 封面图片
+	 */
+	private String cover;
+
 	public Long getId() {
 		return id;
 	}
@@ -152,6 +164,15 @@ public class Ticket {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public String getCover() {
+		return cover;
+	}
+
+	public void setCover(String cover) {
+		this.cover = cover;
+	}
+
 	public Ticket(Long id, Long scenicId, Long groupId, String name,
 			String goodsCode, double price, double shopPrice, Integer stock,
 			Integer goodsType, boolean groupTickets, Date beginDate,
@@ -177,7 +198,19 @@ public class Ticket {
 		this.status = status;
 		this.description = description;
 	}
-	
-	
-	
+
+	public Ticket() {
+		super();
+	}
+
+	@Override
+	public String toString() {
+		return "Ticket [id=" + id + ", scenicId=" + scenicId + ", groupId=" + groupId + ", name=" + name
+				+ ", goodsCode=" + goodsCode + ", price=" + price + ", shopPrice=" + shopPrice + ", stock=" + stock
+				+ ", goodsType=" + goodsType + ", groupTickets=" + groupTickets + ", beginDate=" + beginDate
+				+ ", endDate=" + endDate + ", weekDate=" + weekDate + ", checkTime=" + checkTime + ", stopCheckTime="
+				+ stopCheckTime + ", sellout=" + sellout + ", status=" + status + ", description=" + description
+				+ ", cover=" + cover + "]";
+	}
+
 }

@@ -37,4 +37,11 @@ public interface ScenicSpotService {
 	public PageDto<ScenicSpot> findByPage(@Param("offset") int offset, @Param("size") int size,
 			@Param("oderBy") String orderBy, @Param("order") boolean order, @Param("search") String search);
 
+	/**
+	 * 指定景区包含的ticket数量
+	 * @param id
+	 * @return
+	 */
+	public int containTickets(Long id);
+
 }

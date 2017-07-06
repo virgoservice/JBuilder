@@ -253,13 +253,6 @@
 												<input type="text" class="form-control" name="nameEn" id="nameEn"  value=""/>
 											</div>
 										</div>
-										
-										<div class="form-group">
-											<label for="_goodsCode" class="col-sm-3 control-label">商品编号</label>
-											<div class="col-sm-9">
-												<input type="text" class="form-control" name="goodsCode" id="goodsCode"  value=""/>
-											</div>
-										</div>
 
 										<div class="form-group">
 											<label for="_price" class="col-sm-3 control-label">门票原价</label>
@@ -388,12 +381,12 @@
 											</div>
 										</div>
 
-										<div class="form-group">
+<!-- 										<div class="form-group">
 											<label for="_description" class="col-sm-3 control-label">description</label>
 											<div class="col-sm-9">
 												<input type="text" class="form-control" name="description" id="description"  value=""/>
 											</div>
-										</div>
+										</div> -->
 										<!-- <div class="form-group">
 											<label for="_description" class="col-sm-3 control-label">sellout</label>
 											<div class="col-sm-9">
@@ -447,7 +440,7 @@
 <script src="<%=path %>/resources/admin/dist/js/common.js"></script>
 <script type="text/javascript">
     $(function () {
-/*         $("#beginDate").datepicker({
+         $("#beginDate").datepicker({
             language: "zh-CN",
             autoclose: true,//选中之后自动隐藏日期选择框
             clearBtn: true,//清除按钮
@@ -462,9 +455,9 @@
             todayBtn: true,//今日按钮
             startDate: "2017-01-01",
             format: "yyyy-mm-dd"
-        }); */
+        });
 
-/*         $("#checkTime").timepicker({
+        $("#checkTime").timepicker({
             minuteStep: 1,
             showSeconds: false,
             showMeridian: false,
@@ -475,7 +468,7 @@
             showSeconds: false,
             showMeridian: false,
             defaultTime: false
-        }); */
+        });
     });
 </script>
 </body>
