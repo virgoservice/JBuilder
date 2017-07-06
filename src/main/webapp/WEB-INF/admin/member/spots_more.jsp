@@ -542,15 +542,31 @@
 								<div class="list-child">
 									<div class="lc-image-text">
 										<div class="pic">
-											<a href=  target="_blank" title="九寨沟珍珠滩">
-											<img src=""/>
+											<a href="<%=path %>/detail/${item.id}"  target="_blank" title="九寨沟珍珠滩">
+											<img  src="${item.cover}" width="200px" height="150"/>
 											</a>
 										</div>
 										<div class="text">
 											<p class="bt">
-												<a href=  target="_blank" title="">${item.name} </a>
+												<a href="<%=path %>/detail/${item.id}"  target="_blank" title="">${item.name} </a>
 											</p>
-											<p class="js">${item.description}</p>
+											<p class="js"></p>
+											<p class="attr"> <span>游玩日期：<fmt:formatDate value="${item.beginDate }" type="date" />  至   <fmt:formatDate value="${item.endDate }" type="date" /></span> </p>
+											
+											<c:if test="${item.weekDate != ""&& item.weekDate != null }">
+											<p class="ads">
+											本票
+											<c:if test="${item.weekDate.indexOf('0')>-1 }"> 周日</c:if>
+											<c:if test="${item.weekDate.indexOf('1')>-1 }"> 周一</c:if>
+											<c:if test="${item.weekDate.indexOf('2')>-1 }"> 周二</c:if>
+											<c:if test="${item.weekDate.indexOf('3')>-1 }"> 周三</c:if>
+											<c:if test="${item.weekDate.indexOf('4')>-1 }"> 周四</c:if>
+											<c:if test="${item.weekDate.indexOf('5')>-1 }"> 周五</c:if>
+											<c:if test="${item.weekDate.indexOf('6')>-1 }"> 周六</c:if>
+											不可用。
+											</p>
+											</c:if>
+											
 											<!-- 
 											<p class="attr"> <span>销量：-</span> <span>满意度：-</span> <span>推荐：-</span> </p>
 											<p class="js">推荐理由：-</p>
