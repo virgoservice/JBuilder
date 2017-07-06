@@ -81,6 +81,8 @@
 		<!-- Bootstrap 3.3.6 -->
 		<script src="<%=path %>/resources/admin/bootstrap/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="<%=path %>/resources/admin/plugins/layer-v3.0.3/layer/layer.js" ></script>
+		<!--菜单选中脚本  -->
+		<script src="<%=path%>/resources/admin/dist/js/common.js"></script>
 		<!-- AdminLTE App -->
 		
 		<script type="text/javascript">

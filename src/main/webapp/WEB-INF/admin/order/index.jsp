@@ -201,6 +201,8 @@
 		<script src="<%=path %>/resources/admin/plugins/fastclick/fastclick.js"></script>
 		<!-- AdminLTE App -->
 		<script src="<%=path %>/resources/admin/dist/js/app.min.js"></script>
+		<!--菜单选中脚本  -->
+		<script src="<%=path%>/resources/admin/dist/js/common.js"></script>
 		<!-- AdminLTE for demo purposes -->
 		<script type="text/javascript" src="<%=path %>/resources/admin/plugins/layer-v3.0.3/layer/layer.js" ></script>
 		<script type="text/javascript">
