@@ -542,9 +542,11 @@
 									<dl class="pm-list"> <dt>产品名称：</dt>
 										<dd>${ticket.name }</dd>
 									</dl>
+									<!-- 
 									<dl class="pm-list"> <dt>门票类型：</dt>
 										<dd>${ticket.goodsType }</dd>
 									</dl>
+									 -->
 									<div class="table-msg">
 										<table width="100%" border="0" class="people_info" strong_margin=lkhmVs>
 											<tr>
@@ -601,44 +603,7 @@
 								<!--提交订单-->
 							</div>
 							<div class="clear"></div>
-						<div class="booking-need-term">
-							<div class="term-tit"><strong>我已阅读预定须知，同意则提交订单</strong></div>
-							<div class="term-block">
-								<p style="white-space: normal;"><strong><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">预订限制</span></strong></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">* 本产品不接受75岁以上(含)客人预订，敬请原谅。</span></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">* 70周岁（含）以上老年人预订出行需确保身体健康适宜旅游，并有18周岁以上家属或朋友（因服务能力所限无法接待及限制接待的人除外）全程陪同出行。</span></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">* 本产品不接受18周岁以下(含)的客人单独报名出游，敬请谅解！</span></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">* 报价是按照2成人入住1间房计算的价格，本产品不接受拼房,如您的订单产生单房，请在预订时选择单房差，携程将向您收取相应的费用。由于12岁以下儿童费用为不占床、不含早餐之报价，若儿童需占床含早，请在预订时选择单房差。</span></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">预订说明</span></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">* 请您在预订时务必提供准确、完整的信息（姓名、性别、证件号码、国籍、联系方式、是否成人或儿童等），以免产生预订错误，影响出行。如因客人提供错误个人信息而造成损失，我社不承担任何责任。</span></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">* 本产品目的地海拔较高，有严重高血压、心脏病等疾病的客人及老年客人，请根据自身条件，遵医嘱，谨慎决定是否出行。</span></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">* 儿童门票不接受预订，请自行在景区购买。</span></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;"><br/></span></p>
-								<p style="white-space: normal;"><strong><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">产品说明</span></strong></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">* 本线路在不影响您行程的情况下，部分行程段可能会和其他线路合并用车、共同游玩，具体以当天陪同工作人员协调安排为准。</span></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">* 团队中可能会有入住不同酒店的其他携程团友一同出行，如涉及不同酒店客人的接送事宜，当地司导人员会根据团队实际情况进行合理安排，敬请理解、配合，谢谢。</span></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">* 本产品行程实际出行中，在不减少景点且征得客人同意的前提下，导游、司机可能会根据天气、交通等情况，对您的行程进行适当调整（如调整景点游览顺序等），以确保行程顺利进行。如因不可抗力等因素确实无法执行原行程计划，对于因此而造成的费用变更，我社实行多退少补，敬请配合。</span></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">* 行程中的赠送项目，如因交通、天气等不可抗因素导致不能赠送的、或因您个人原因不能参观的，费用不退，敬请谅解。</span></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">* 持老年证、军官证、学生证等优惠证件的游客可享受景区门票优惠政策，具体以出行当日景区公布政策为准。请具备条件的游客携带好相关证件，届时由导游统一安排，按打包行程中客人已享的优惠价格，现场退还差价门票优惠（4月1日-11月15日）：半票九寨单次退50元/人，黄龙退50元/人,免票九寨单次退100元/人，黄龙退100元/人。九寨沟为免票的客人，景区内保险费10元/人，18周岁以下无优惠票退还。</span></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">* 当地酒店条件有限，请勿以城市标准衡量。酒店定时供应热水及空调，敬请理解！</span></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">* 因当地经济条件有限，交通、酒店服务及设施、餐饮等方面与发达城市相比会有一定的差距，敬请谅解。</span></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;"><br/></span></p>
-								<p style="white-space: normal;"><strong><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">违约条款</span></strong></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">* 旅行社违约：<br/>行程前7日至4日，退还全额旅游费用，支付旅游费用总额10％的违约金。<br/>行程前3日至1日，退还全额旅游费用，支付旅游费用总额15％的违约金。<br/>行程开始当日，退还全额旅游费用，支付旅游费用总额20％的违约金。<br/></span></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">* 旅游者违约：<br/>在行程前解除合同的，机（车、船）票费用按实结算后，其余必要的费用扣除标准为：<br/>行程前7日至4日，收取旅游费用总额10％的违约金。<br/>行程前3日至1日，收取旅游费用总额20％的违约金。<br/>行程开始当日，收取旅游费用总额30％的违约金。<br/></span></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;"><br/></span></p>
-								<p style="white-space: normal;"><strong><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">出行须知</span></strong></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">* 最晚在出行前1天，导游或我司工作人员会短信联系您，告知导游、司机联系方式及其他具体出行事宜，请保持手机畅通。如您在时间之前仍未接到通知，请速来电咨询电话。</span></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">* 在旅游旺季或者其他一些特殊情况下，为了保证您的行程游览不受影响，行程的出发时间可能会提早（具体出发时间以导游通知为准），导致您不能正常享用酒店早餐。我们建议您跟酒店协调打包早餐或者自备早餐，敬请谅解。</span></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">* 请在导游约定的时间到达上车地点集合，切勿迟到，以免耽误其他游客行程。若因迟到导致无法随车游览，责任自负，敬请谅解。</span></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">* 为普及旅游安全知识及旅游文明公约，使您的旅程顺利圆满完成</span><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">服液等。不建议您到当地购买相关产品。</span></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">* 逢周末和节假日出行，可能因景区、道路交通拥堵等原因造成回程时间延误，为避免造成不必要的损失，不建议客人预订返程当天的大交通（如飞机、火车、轮船等）。</span></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">* 旅游团队用餐，旅行社按承诺标准确保餐饮卫生及餐食数量，但不同地区餐食口味有差异，不一定满足游客口味需求，敬请见谅。</span></p>
-								<p style="white-space: normal;"><span style="font-family: 微软雅黑, &quot;Microsoft YaHei&quot;;">* 在旅游行程中，个别景点景区、餐厅、休息区等场所存在商场等购物场所，上述场所非旅行社安排的指定购物场所。携程提醒旅游者根据自身需要，理性消费并索要必要票据。如产生消费争议，请自行承担相关责任义务，由此带来的不便，敬请谅解！</span></p>
-								<div style="white-space: normal;">
-									<h5></h5></div>
-							</div>
-						</div>
+						
 					</div>
 					<div class="st-sidebox">
 						<div class="side-order-box">
@@ -646,7 +611,8 @@
 							<div class="show-con">
 								<ul class="ul-cp">
 									<li>
-										<a class="pic" href="http://www.situcms.com/spots/show_130.html"><img src="uploads/2016/1229/5994efc163e76d27e69cc9d00e2a2190_283x193.jpg" alt="花湖"></a>
+										<a class="pic" href="http://www.situcms.com/spots/show_130.html">
+										<img src="${ticket.cover }" alt="花湖"></a>
 									</li>
 									<li>
 										<a class="txt" href="http://www.situcms.com/spots/show_130.html">${ticket.name }</a>
@@ -774,6 +740,7 @@
 			function updateMes(){
 				var num=$("#dingnum").val();
 				var total=Number(num)*Number(tempPirce); 
+				total=total.toFixed(2);
 				$("#total").html(total);
 				$("#total2").html(total);
 				$("#total3").html(total);
