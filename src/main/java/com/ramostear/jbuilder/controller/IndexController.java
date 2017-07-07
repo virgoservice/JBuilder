@@ -142,10 +142,10 @@ public class IndexController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/spotsList",method=RequestMethod.GET)
-	public String spotsList(ReqDto req,Model model){
+	@RequestMapping(value="/spotsList/{groupId}",method=RequestMethod.GET)
+	public String spotsList(ReqDto req,Model model,@PathVariable Long groupId){
 		
-		model.addAttribute("list", this.ticketService.findByPageMember(req.getPageNo(), req.getPageSize(), "id", true));
+		model.addAttribute("list", this.ticketService.findByPageMember(req.getPageNo(), req.getPageSize(), "id", true,groupId));
 		
 		return "member/spots_more";
 	}

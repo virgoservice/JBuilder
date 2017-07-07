@@ -57,6 +57,8 @@ public class MemberFilter implements Filter{
 			return;
 		}
 		if(null == member){
+			
+			
 			response.sendRedirect(request.getContextPath()+"/member/login");
 			return;
 		}else{

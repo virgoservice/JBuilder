@@ -693,7 +693,7 @@
 							<span >${sc.value.name}</span> 
 						</c:forEach>
 						
-						<a href="<%=path %>/spotsList" class="more">更多线路</a>
+						<a href="<%=path %>/spotsList/${tgMap.get(group.ticketGroup).id}" class="more">更多线路</a>
 					</div>
 					
 					<!--循环分组内景区的tab-->

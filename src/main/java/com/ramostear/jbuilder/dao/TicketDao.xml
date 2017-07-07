@@ -98,6 +98,10 @@
 	<select id="size" resultType="Long">
 		select count(*) from order_ticket
 	</select>
+	
+	<select id="sizeMember" resultType="Long" parameterType="Long">
+		select count(*) from order_ticket where groupId = #{groupId}
+	</select>
 
 	<delete id="delete" parameterType="Long">
 		delete from order_ticket 
@@ -126,6 +130,22 @@
 		</if>
 		limit #{offset},#{size}
 	</select>
+	
+	<select id="findByPageMember" resultMap="resultMap">
+		select * from order_ticket 
+		<if test="groupId != null and groupId != ''">
+			where groupId = ${groupId}
+		</if>
+		order by ${orderBy} 
+		<if test="order == true">
+			DESC
+		</if>
+		<if test="order == false">
+			ASC
+		</if>
+		limit #{offset},#{size}
+	</select>
+	
 
 	<select id="findPageByCond" resultMap="resultMap">
 		select t.id, t.scenicId, t.groupId, t.name, t.goodsCode, t.price, t.shopPrice, t.stock,
