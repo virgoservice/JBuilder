@@ -7,6 +7,13 @@
 		<id column="id" property="id"/>
 		<result column="name" property="name"/>
 	</resultMap>
+	
+	
+	<resultMap type="com.ramostear.jbuilder.entity.ScenicSpot" id="memberResultMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<association property="ticketList" column="id" select="findTicket"/>
+	</resultMap>
 
 	<insert id="save" parameterType="com.ramostear.jbuilder.entity.ScenicSpot" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
 		insert into order_scenic_spot
@@ -66,6 +73,22 @@
 		select COUNT(*) from order_ticket
 		where 
 		scenicId = #{id}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<select id="findTicket" parameterType="Long" resultType="com.ramostear.jbuilder.entity.Ticket">
+		select * from order_ticket 
+		where 
+		groupId = #{id}
+		limit 6 
 	</select>
 	
 </mapper>
