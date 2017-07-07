@@ -40,7 +40,9 @@ public interface TicketService {
 			@Param("offset") int offset,
 			@Param("size") int size,
 			@Param("orderBy") String orderBy,
-			@Param("order") boolean order);
+			@Param("order") boolean order,
+			@Param("groupId") Long groupId
+			);
 	
 	public PageDto<Ticket> findByPage(
 			@Param("offset") int offset,

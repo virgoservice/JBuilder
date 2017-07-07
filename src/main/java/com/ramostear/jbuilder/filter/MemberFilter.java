@@ -57,8 +57,9 @@ public class MemberFilter implements Filter{
 			return;
 		}
 		if(null == member){
+			
+			
 			response.sendRedirect(request.getContextPath()+"/member/login");
-			chain.doFilter(request, response);
 			return;
 		}else{
 			chain.doFilter(request, response);

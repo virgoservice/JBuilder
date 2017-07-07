@@ -322,7 +322,7 @@
 				<div class="st-menu">
 					<ul class="clearfix">
 						<li>
-							<a href="index.htm" >首页<s></s></a>
+							<a href="<%=path %>" >首页<s></s></a>
 						</li>
 						<li class="nav_header_1"> <i class="st-new-ico"></i><s></s> <s></s>
 							<a href=  title="成都周边旅游线路">线路 <i class="st-arrow-ico"></i> </a>
@@ -520,7 +520,7 @@
 		<div class="big">
 			<div class="wm-1200">
 				<div class="st-guide">
-					<a href="#"  title="首页">首页</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;
+					<a href="<%=path %>"  title="首页">首页</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;
 					<a href="#"  title="景点">更多景点</a>
 					</div>
 				<!--面包屑-->
@@ -553,7 +553,7 @@
 											<p class="js"></p>
 											<p class="attr"> <span>游玩日期：<fmt:formatDate value="${item.beginDate }" type="date" />  至   <fmt:formatDate value="${item.endDate }" type="date" /></span> </p>
 											
-											<c:if test="${item.weekDate != ""&& item.weekDate != null }">
+											<c:if test="${item.weekDate != '' && item.weekDate != null }">
 											<p class="ads">
 											本票
 											<c:if test="${item.weekDate.indexOf('0')>-1 }"> 周日</c:if>
