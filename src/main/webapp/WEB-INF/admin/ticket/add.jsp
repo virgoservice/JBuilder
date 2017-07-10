@@ -59,29 +59,29 @@
 								<div class="row">
 									<div class="col-md-9">
 										<div class="form-group">
-											<label for="_author" class="col-sm-3 control-label">
+											<label for="_scenicId" class="col-sm-3 control-label">
 												<span style="color:red;">*</span><span>所属景区</span>
 											</label>
 											<div class="col-sm-9">
 												<select  class="form-control" name="scenicId" id="scenicId">
-												<option value="16428">高过河风景区</option>
-												<option value="16731">舞阳河风景区</option>
-												<option value="16735">大型舞蹈史诗《古韵镇远》</option>
-												<option value="17403">舞阳河测试</option>
-												<option value="17404">高过河测试</option>
-												<option value="17405">古韵镇远测试</option>
-												<option value="22175">铁溪风景区</option>
-												<option value="22182">青龙洞</option>
+													<c:forEach items="${scenicList}" var="scenic">
+														<option value="${scenic.id }">${scenic.name}</option>
+													</c:forEach>
 												</select>
 											</div>
 										</div>
 
 										<div class="form-group">
-											<label for="_author" class="col-sm-3 control-label">
-												<span style="color:red;">*</span><span>groupId</span>
+											<label for="_groupId" class="col-sm-3 control-label">
+												<span style="color:red;">*</span><span>选择分组</span>
 											</label>
 											<div class="col-sm-9">
-												<input type="text" id="groupId" name="groupId" value="3"  class="form-control"/>
+												<select class="form-control" id="groupId" name="groupId">
+														<option value="0">不分组</option>
+													<c:forEach items="${groupList}" var="item">
+														<option value="${item.id }">${item.name}</option>
+													</c:forEach>
+												</select>
 											</div>
 										</div>
 
@@ -177,46 +177,17 @@
 										<div class="form-group">
 											<label for="_con" class="col-sm-3 control-label">有效星期</label>
 											<div class="col-sm-9">
-<!-- 												<input type="checkbox" id="weekDate" name="weekDate" value="1" checked="checked">每周一
-												<input type="checkbox" id="weekDate" name="weekDate" value="2" checked="checked">每周二
-												<input type="checkbox" id="weekDate" name="weekDate" value="3" checked="checked">每周三
-												<input type="checkbox" id="weekDate" name="weekDate" value="4" checked="checked">每周四
-												<input type="checkbox" id="weekDate" name="weekDate" value="5" checked="checked">每周五
-												<input type="checkbox" id="weekDate" name="weekDate" value="6" checked="checked">每周六
-												<input type="checkbox" id="weekDate" name="weekDate" value="7" checked="checked">每周日 -->
-												<select id="weekDate" class="form-control" name="weekDate">
-													<option value="1" selected="selected">每周一</option>
-													<option value="2" >每周二</option>
-													<option value="3" >每周三</option>
-													<option value="4" >每周四</option>
-													<option value="5" >每周五</option>
-													<option value="6" >每周六</option>
-													<option value="7" >每周日</option>
-													
-												</select>
-												<!-- <div class="btn-group">
-												<button type="button" class="multiselect dropdown-toggle btn" data-toggle="dropdown">
-												每周日, 每周一, 每周二, 每周三, 每周四, 每周五, 每周六
-												<b class="caret"></b>
-												</button>
-												<ul class="multiselect-container dropdown-menu">
-													<li>
-														<label class="checkbox"><input type="checkbox" value="1"> 每周日</label></a></li>
-													<li>
-														<label class="checkbox"><input type="checkbox" value="2"> 每周一</label></a></li>
-													<li>
-														<label class="checkbox"><input type="checkbox" value="3"> 每周二</label></a></li>
-													<li>
-														<label class="checkbox"><input type="checkbox" value="4"> 每周三</label></a></li>
-													<li>
-														<label class="checkbox"><input type="checkbox" value="5"> 每周四</label></a></li>
-													<li>
-														<label class="checkbox"><input type="checkbox" value="6"> 每周五</label></a></li>
-													<li>
-														<label class="checkbox"><input type="checkbox" value="7"> 每周六</label></a></li>
-												</ul>
+												<div class="form-control" id="multi-select-weekDay" style="padding-bottom:30px;" >
+													<input type="checkbox" name="weekDate" value="0" checked="checked">每周日
+													<input type="checkbox" name="weekDate" value="1" checked="checked">每周一
+													<input type="checkbox" name="weekDate" value="2" checked="checked">每周二
+													<input type="checkbox" name="weekDate" value="3" checked="checked">每周三
+													<input type="checkbox" name="weekDate" value="4" checked="checked">每周四
+													<input type="checkbox" name="weekDate" value="5" checked="checked">每周五
+													<input type="checkbox" name="weekDate" value="6" checked="checked">每周六
+													<a class="btn btn-default btn-xs" href="javascript:void(0);" onclick="clearWeekDate();">清空</a>
+													<a class="btn btn-info btn-xs" href="javascript:void(0);" onclick="checkWeekDate();">全选</a>
 												</div>
-												<button type="button" id="weekDay-toggle" class="btn btn-small">全不选</button> -->
 											</div>
 										</div>
 
@@ -249,6 +220,7 @@
 									</div>
 									<div class="col-sm-2">
 										<button type="submit" class="btn btn-primary btn-default margin">确定</button>
+										<a href="<%=path %>/admin/ticket/index" class="btn btn-default margin">返回列表</a>
 									</div>
 								</div>
 							</div>
@@ -263,12 +235,7 @@
 			</section>
 		</div>
 
-		<footer class="main-footer">
-			<div class="pull-right hidden-xs">
-				<b>技术支持</b> <a href="#">贵州桃李云科技有限公司</a>
-			</div>
-			<strong>Copyright &copy; 2017-2020 <a href="http://www.gogc.cn">贵州古城文化旅游开发股份有限公司</a>.</strong> All rights reserved.
-		</footer>
+		<jsp:include page="../../common/footer.jsp"/>
 		<div class="control-sidebar-bg"></div>
 	</div>
 
@@ -317,6 +284,14 @@
             defaultTime: false
         });
     });
+
+	function clearWeekDate(){
+		$("#multi-select-weekDay").find("input:checkbox").removeAttr("checked");
+	}
+	
+	function checkWeekDate(){
+		$("#multi-select-weekDay").find("input:checkbox").prop({checked:true});
+	}
 </script>
 </body>
 </html>

@@ -553,7 +553,7 @@
 											<p class="js"></p>
 											<p class="attr"> <span>游玩日期：<fmt:formatDate value="${item.beginDate }" type="date" />  至   <fmt:formatDate value="${item.endDate }" type="date" /></span> </p>
 											
-											<c:if test="${item.weekDate != '' && item.weekDate != null }">
+											<c:if test="${item.weekDate != null && item.weekDate != '' }">
 											<p class="ads">
 											本票
 											<c:if test="${item.weekDate.indexOf('0')>-1 }"> 周日</c:if>

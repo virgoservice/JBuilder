@@ -77,10 +77,22 @@
 
 										<div class="form-group">
 											<label for="_author" class="col-sm-3 control-label">
-												<span style="color:red;">*</span><span>groupId</span>
+												<span style="color:red;">*</span><span>选择分组</span>
 											</label>
 											<div class="col-sm-9">
-												<input type="text" id="groupId" name="groupId" value="${ticket.groupId }"  class="form-control"/>
+												<select class="form-control" id="groupId" name="groupId">
+														<option value="0">不分组</option>
+													<c:forEach items="${groupList}" var="item">
+														<c:choose>
+														    <c:when test="${item.id eq ticket.groupId }">
+																<option value="${item.id }" selected="selected">${item.name}</option>
+														    </c:when>
+														    <c:otherwise>
+																<option value="${item.id }">${item.name}</option>
+														    </c:otherwise>
+														</c:choose>
+													</c:forEach>
+												</select>
 											</div>
 										</div>
 
@@ -190,46 +202,17 @@
 										<div class="form-group">
 											<label for="_con" class="col-sm-3 control-label">有效星期</label>
 											<div class="col-sm-9">
-<!-- 												<input type="checkbox" id="weekDate" name="weekDate" value="1" checked="checked">每周一
-												<input type="checkbox" id="weekDate" name="weekDate" value="2" checked="checked">每周二
-												<input type="checkbox" id="weekDate" name="weekDate" value="3" checked="checked">每周三
-												<input type="checkbox" id="weekDate" name="weekDate" value="4" checked="checked">每周四
-												<input type="checkbox" id="weekDate" name="weekDate" value="5" checked="checked">每周五
-												<input type="checkbox" id="weekDate" name="weekDate" value="6" checked="checked">每周六
-												<input type="checkbox" id="weekDate" name="weekDate" value="7" checked="checked">每周日 -->
-												<select id="weekDate" class="form-control" name="weekDate">
-													<option value="1" selected="selected">每周一</option>
-													<option value="2" >每周二</option>
-													<option value="3" >每周三</option>
-													<option value="4" >每周四</option>
-													<option value="5" >每周五</option>
-													<option value="6" >每周六</option>
-													<option value="7" >每周日</option>
-													
-												</select>
-												<!-- <div class="btn-group">
-												<button type="button" class="multiselect dropdown-toggle btn" data-toggle="dropdown">
-												每周日, 每周一, 每周二, 每周三, 每周四, 每周五, 每周六
-												<b class="caret"></b>
-												</button>
-												<ul class="multiselect-container dropdown-menu">
-													<li>
-														<label class="checkbox"><input type="checkbox" value="1"> 每周日</label></a></li>
-													<li>
-														<label class="checkbox"><input type="checkbox" value="2"> 每周一</label></a></li>
-													<li>
-														<label class="checkbox"><input type="checkbox" value="3"> 每周二</label></a></li>
-													<li>
-														<label class="checkbox"><input type="checkbox" value="4"> 每周三</label></a></li>
-													<li>
-														<label class="checkbox"><input type="checkbox" value="5"> 每周四</label></a></li>
-													<li>
-														<label class="checkbox"><input type="checkbox" value="6"> 每周五</label></a></li>
-													<li>
-														<label class="checkbox"><input type="checkbox" value="7"> 每周六</label></a></li>
-												</ul>
+												<div class="form-control" id="multi-select-weekDay" style="padding-bottom:30px;" >
+													<input type="checkbox" name="weekDate" value="0">每周日
+													<input type="checkbox" name="weekDate" value="1">每周一
+													<input type="checkbox" name="weekDate" value="2">每周二
+													<input type="checkbox" name="weekDate" value="3">每周三
+													<input type="checkbox" name="weekDate" value="4">每周四
+													<input type="checkbox" name="weekDate" value="5">每周五
+													<input type="checkbox" name="weekDate" value="6">每周六
+													<a class="btn btn-default btn-xs" href="javascript:void(0);" onclick="clearWeekDate();">清空</a>
+													<a class="btn btn-info btn-xs" href="javascript:void(0);" onclick="checkWeekDate();">全选</a>
 												</div>
-												<button type="button" id="weekDay-toggle" class="btn btn-small">全不选</button> -->
 											</div>
 										</div>
 
@@ -268,6 +251,7 @@
 									</div>
 									<div class="col-sm-2">
 										<button type="submit" class="btn btn-primary btn-default margin">确定</button>
+										<a href="<%=path %>/admin/ticket/index" class="btn btn-default margin">返回列表</a>
 									</div>
 								</div>
 							</div>
@@ -307,6 +291,7 @@
 									</div>
 									<div class="col-sm-2">
 										<button type="button" class="btn btn-primary btn-default margin" onclick="finishAddImage()">确定</button>
+										<a href="<%=path %>/admin/ticket/index" class="btn btn-default margin">返回列表</a>
 									</div>
 								</div>
 							</div>
@@ -324,6 +309,7 @@
 										</div>
 										<div class="col-sm-2">
 											<button type="submit" class="btn btn-primary btn-default margin">确定</button>
+											<a href="<%=path %>/admin/ticket/index" class="btn btn-default margin">返回列表</a>
 										</div>
 									</div>
 								</div>
@@ -338,6 +324,8 @@
 		<div class="control-sidebar-bg"></div>
 	</div>
 
+<input type="hidden" id="ctx" value="<%=path %>" />
+<input type="hidden" id="ticket-week" value="${ticket.weekDate }" />
 <script src="<%=path %>/resources/admin/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script src="<%=path %>/resources/admin/plugins/jQueryUI/jquery-ui.min.js"></script>
 <script>
@@ -357,30 +345,6 @@
 <script type="text/javascript">
 	$(function(){
 		CKEDITOR.replace("TextArea1", { toolbar:'Full', height:500 });
-        //示例2：工具栏为自定义类型
-/*         CKEDITOR.replace( 'editor1',
-        {
-			toolbar :
-			[
-			   //加粗     斜体，     下划线      穿过线      下标字        上标字
-			   ['Bold','Italic','Underline','Strike','Subscript','Superscript'],
-			   // 数字列表          实体列表            减小缩进    增大缩进
-			   ['NumberedList','BulletedList','-','Outdent','Indent'],
-			   //左对 齐             居中对齐          右对齐          两端对齐
-			   ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-			   //超链接  取消超链接 锚点
-			   ['Link','Unlink','Anchor'],
-			   //图片    flash    表格       水平线            表情       特殊字符        分页符
-			   ['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
-			   '/',
-			   // 样式       格式      字体    字体大小
-			   ['Styles','Format','Font','FontSize'],
-			   //文本颜色     背景颜色
-			   ['TextColor','BGColor'],
-			   //全屏           显示区块
-			   ['Maximize', 'ShowBlocks','-']
-			]
-	      }); */
 	});
 	
 	function finishAddImage(){
@@ -433,7 +397,47 @@
             showMeridian: false,
             defaultTime: false
         });
+        
+        //
+        var weekDateStr = $("#ticket-week").val();
+        var array = weekDateStr.split(",");
+        for(var i = 0; i < array.length; i++){
+        	console.log(array[i]);
+			$("#multi-select-weekDay").find("input:checkbox:eq(" + array[i] + ")").prop({checked:true});
+        }
     });
+    
+	function clearWeekDate(){
+		$("#multi-select-weekDay").find("input:checkbox").removeAttr("checked");
+	}
+	
+	function checkWeekDate(){
+		$("#multi-select-weekDay").find("input:checkbox").prop({checked:true});
+	}
 </script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#multiselect_weekday").multiselect({
+		buttonText: function(a) {
+			if(a.length == 0) {
+				return '未选中 <b class="caret"></b>'
+			} else {
+				var b = "";
+				a.each(function() {
+					b += $(this).text() + ", "
+				});
+				if(a.length != 7) {
+					$("#weekDay-toggle").text("全选")
+				} else {
+					$("#weekDay-toggle").text("全不选")
+				}
+				return b.substr(0, b.length - 2) + ' <b class="caret"></b>'
+			}
+		}
+	});
+});
+</script>
+
+
 </body>
 </html>

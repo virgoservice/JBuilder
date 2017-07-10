@@ -76,13 +76,6 @@
 		<div class="control-sidebar-bg"></div>
 	</div>
 
-	<!-- 分组弹框 -->
-	<div id="grouping-box" >	
-		<c:forEach items="${groupList}" var="item">
-		<input type="radio" name="groupId" value="${item.id}" />${item.name }<br>
-		</c:forEach>
-	</div>
-
 	<input type="hidden" value="<%=path %>" id="ctx"/>
 <script src="<%=path %>/resources/admin/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script src="<%=path %>/resources/admin/plugins/jQueryUI/jquery-ui.min.js"></script>

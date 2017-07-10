@@ -36,11 +36,11 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${pageDto.items}" var="item">  
+						<c:forEach items="${pageDto.items}" var="item"> 
 						<tr>
 							<td><input type="checkbox" value="${item.id}"/></td>
 							<td>${item.id}</td>
-							<td>${item.scenicId}</td>
+							<td class="scenic-name">${item.scenicId}</td>
 							<td>${item.name}</td>
 							<td>${item.goodsCode}</td>
 							<td>
@@ -61,9 +61,7 @@
 							<td>
 								<a href="javascript:;" class="stop" onclick="stop(this, ${item.id}, ${item.status});">禁用</a>
 								<a href="javascript:;" onclick="editTicket(${item.id});">修改</a>
-								<a href="javascript:;" onclick="grouping(${item.id}, ${item.groupId});">分组</a>
 								<a href="javascript:;" onclick="del(this, ${item.id});">删除</a>
-								<a href="javascript:;">复制</a>
 							</td>
 						</tr>
 						</c:forEach>
@@ -74,28 +72,6 @@
 				<div class="row">
 					<div class="col-sm-5"></div>
 					<div class="col-sm-7">
-						<!-- <div class="dataTables_paginate paging_simple_numbers pull-right">
-							<ul class="pagination">
-								<li class="paginate_button previous disabled">
-									<a href="#">上一页</a>
-								</li>
-								<li class="paginate_button active">
-									<a href="#">1</a>
-								</li>
-								<li class="paginate_button">
-									<a href="#">2</a>
-								</li>
-								<li class="paginate_button">
-									<a href="#">3</a>
-								</li>
-								<li class="paginate_button">
-									<a href="#">4</a>
-								</li>
-								<li class="paginate_button next">
-									<a href="#">下一页</a>
-								</li>
-							</ul>
-						</div> -->
 						${pageDto.pageStr}
 					</div>
 				</div>
@@ -106,10 +82,14 @@
 		</div>	
 	
 <script type="text/javascript">
-	
+
+$(function (){
+
 	/*全选*/
-	$("table thead th input:checkbox").on("click" , function(){
-		$(this).closest("table").find("tr > td:first-child input:checkbox").prop("checked",$("table thead th input:checkbox").prop("checked"));
+	$("table thead tr td input:checkbox").on("click" , function(){
+		alert("click");
+		$(this).closest("table").find("tr > td:first-child input:checkbox").prop("checked", true);
     });
+});
 </script>
 
