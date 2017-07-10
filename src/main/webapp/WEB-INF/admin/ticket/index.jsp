@@ -63,7 +63,7 @@
 				<div class="col-lg-12">
 				<c:forEach items="${groupList}" var="item">
 					<button class="btn btn-primary btn-sm" onClick="query(1, 12, '${item.id}');">${item.name}</button>
-				</c:forEach>  
+				</c:forEach>
 				</div>
 			</section>
 
@@ -176,6 +176,25 @@ function groupQuery(pageNo, pageSize, group){
 	});		
 }
 
+function grouping(ticketId, groupId){
+	$("#grouping-box").find("ul li input:eq(" + (ticketId -1)+ ")").attr("chcked", "checked");
+
+	layer.open({
+		type:1,
+		title:'选择分组',
+		offset:'c',
+		shade:0.8,
+		area:['50%','60%'],
+		btn:['确认', '关闭'],
+		content: $("#grouping-box"),
+		end:function(){
+		},
+		cancel:function(index){
+			layer.close(index);
+		}
+	});
+}
+
 function addGroup(){
 	var url = $("#ctx").val() + "/admin/ticketGroup/add";
 	window.location.href= url + "?id=0"
@@ -200,10 +219,16 @@ function editTicket(id){
 	window.location.href= url + "?id=" + id;
 }
 
+var statusCache = null;
 function stop(obj, id, status){
 	var url = $("#ctx").val() + "/admin/ticket/stop";
 	$.post(url, {"id":id, "status":status}, null);
-	if(status == 1){
+	if(statusCache == null){
+		statusCache = status;
+	}else{
+		statusCache ^= status; 
+	}
+	if(statusCache == 1){
 		$(obj).parents("tr").find(".status").html("已禁用");
 		$(obj).parents("tr").find(".stop").html("启用");
 	}else{

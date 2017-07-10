@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -88,6 +87,10 @@ public class TicketController {
 		List<TicketGroup> groupList = new ArrayList<TicketGroup>();
 		groupList = ticketGroupService.findAll();
 		model.addAttribute("groupList", groupList);
+		
+		List<ScenicSpot> scenicList = new ArrayList<ScenicSpot>();
+		scenicList = scenicSpotService.findAll();
+		model.addAttribute("scenicList", scenicList);
 		return "ticket/index";
 	}
 
@@ -129,6 +132,13 @@ public class TicketController {
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String add(Model model) {
+		List<TicketGroup> groupList = new ArrayList<TicketGroup>();
+		groupList = ticketGroupService.findAll();
+		model.addAttribute("groupList", groupList);
+		
+		List<ScenicSpot> scenicList = new ArrayList<ScenicSpot>();
+		scenicList = scenicSpotService.findAll();
+		model.addAttribute("scenicList", scenicList);
 		Ticket ticket = new Ticket();
 		model.addAttribute("ticket", ticket);
 		return "ticket/add";
@@ -145,7 +155,7 @@ public class TicketController {
 		scenicList = scenicSpotService.findAll();
 		model.addAttribute("scenicList", scenicList);
 		groupList = ticketGroupService.findAll();
-		model.addAttribute("scenicList", groupList);
+		model.addAttribute("groupList", groupList);
 		if(ticket != null){
 			imgList = ticketAttachmentService.listByPage(ticket.getId(), null, null,
 					TicketAttachment.USE_LIST, "showOrder", true, 0, 10);
@@ -174,7 +184,15 @@ public class TicketController {
 		boolean groupTickets = Boolean.parseBoolean(request.getParameter("groupTickets"));
 
 		Integer status = Integer.parseInt(request.getParameter("status"));
-		String weekDate = request.getParameter("weekDate");
+		String[] weekDateArray = request.getParameterValues("weekDate");
+		System.out.println(weekDateArray);
+		String weekDate = "0,1,2,3,4,5,6";
+		if(weekDateArray != null){
+			weekDate = "";
+			for(int i= 0 ; i < weekDateArray.length; i++){
+				weekDate += weekDateArray[i] + ",";
+			}
+		}
 
 		String beginDateStr = request.getParameter("beginDate");
 		String endDateStr = request.getParameter("endDate");
@@ -204,7 +222,7 @@ public class TicketController {
 		String month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
 		String day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
 		String hour = String.valueOf(calendar.get(Calendar.HOUR_OF_DAY));
-		String goodsCode = "T" + scenicId + year + month + day + hour + "" + new Random().nextInt(1000000);
+		String goodsCode = "T" + scenicId + year + month + day + hour + "" + (int) (8999*Math.random()+1000);
 
 		Ticket ticket = new Ticket(id, scenicId, groupId, name, goodsCode, price, shopPrice, stock, goodsType,
 				groupTickets, beginDate, endDate, weekDate, checkTime, stopCheckTime, sellout, status, null);
@@ -214,7 +232,10 @@ public class TicketController {
 			tmp = ticketService.findById(id);
 		}
 		if (tmp != null) {
-			ticketService.update(tmp);// TODO
+			System.out.println(weekDate);
+			
+			ticket.setId(tmp.getId());
+			ticketService.update(ticket);// TODO
 		} else {
 			ticket.setGoodsCode(goodsCode);
 			ticketService.add(ticket);
@@ -233,6 +254,7 @@ public class TicketController {
 		if (id > 0L) {
 			ticketService.delete(id);
 		}
+		//TODO
 		return JSONObject.toJSONString(result);
 	}
 
@@ -250,6 +272,23 @@ public class TicketController {
 				result.setSuccess(true);
 			}
 		}
+		return JSONObject.toJSONString(result);
+	}
+	
+	@RequestMapping(value = "/grouping", method = RequestMethod.POST)
+	@ResponseBody
+	public String grouping(@RequestParam("ticketId") Long ticketId, @RequestParam("groupId")Long groupId) {
+		Result result = new Result();
+		result.setSuccess(false);
+		if(ticketId > 0 && groupId > 0){
+			Ticket t = ticketService.findById(ticketId);
+			if(t != null){
+				t.setGroupId(groupId);
+				ticketService.update(t);
+				result.setSuccess(true);
+			}
+		}
+
 		return JSONObject.toJSONString(result);
 	}
 
