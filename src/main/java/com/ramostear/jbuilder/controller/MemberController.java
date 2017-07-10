@@ -51,6 +51,14 @@ public class MemberController {
 		return "member/login";
 	}
 	
+	@RequestMapping(value="/logout",method=RequestMethod.GET)
+	public String logout(HttpSession session){
+		session.removeAttribute(SysConsts.LOGIN_USER);
+		Subject subject = SecurityUtils.getSubject();
+		subject.logout();
+		return "redirect:/index";
+	}
+	
 	/**
 	 * 用户登录界面，登录成功后跳转到用户的个人中心，进行详细信息的浏览
 	 * @param username

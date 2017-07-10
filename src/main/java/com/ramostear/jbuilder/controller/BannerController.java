@@ -83,16 +83,12 @@ public class BannerController {
 	@RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String eidt(Banner banner,MultipartFile file){
 		String url="";
-		if(banner.getImage()==null&&file!=null){
+		if(banner.getImage()==null&&!file.isEmpty()){
 			url = QiniuFileUtil.upload(file);
-		}else{
-			Banner temp=this.bannerService.findById(banner.getId());
-			if(temp!=null&&temp.getImage()!=banner.getImage()){
-				url = QiniuFileUtil.upload(file);
-			}
+			banner.setImage(url);
 		}
 		
-		banner.setImage(url);
+		
 		bannerService.update(banner);
 		return "banner/index";
 	}

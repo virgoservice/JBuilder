@@ -10,6 +10,7 @@
 */
 package com.ramostear.jbuilder.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
@@ -33,6 +34,8 @@ public interface BannerService {
 	public boolean delete(Long id);
 	
 	public Banner findById(Long id);
+	
+	public List<Banner> findAll();
 	
 	public Banner findByName(String name);
 	

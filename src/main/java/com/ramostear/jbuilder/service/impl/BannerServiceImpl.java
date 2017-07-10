@@ -58,4 +58,9 @@ public class BannerServiceImpl implements BannerService {
 		return new PageDto<Banner>(totalSize,offset,size,list);
 	}
 
+	@Override
+	public List<Banner> findAll() {
+		return this.bdao.findAll();
+	}
+
 }

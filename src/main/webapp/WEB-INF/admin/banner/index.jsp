@@ -51,23 +51,10 @@
         </section>
         <section class="content">
             <div class="row" style="padding: 0 15px 10px 15px;">
-                <ul class="list-inline" style="float: left;">
-                    <li class="all active">
-                        <a href="#" class="current">
-                            全部 <span class="count">(0)</span>
-                        </a>|
-                    </li>
-                    <li class="all">
-                        <a href="#" class="current">
-                            已启用 <span class="count">(0)</span>
-                        </a>|
-                    </li>
-                    <li class="all">
-                        <a href="#" class="current">
-                            未启用 <span class="count">(0)</span>
-                        </a>
-                    </li>
-                </ul>
+                <shiro:hasPermission name="user:add">
+					<a href="<%=path %>/admin/banner/add" class="btn btn-primary btn-sm">新增</a>
+				</shiro:hasPermission>
+				
                 <form class="form-horizontal col-sm-3" method="post" style="float: right;" action="#">
                     <div class="input-group input-group-sm">
                         <input id="search" class="form-control" type="search" value="" name="k" placeholder="请输入关键词">
@@ -85,10 +72,7 @@
                     </button>
                 </div>
                  -->
-                <div style="float: left;">
-                    <select class="form-control input-sm">
-                        <option value="">全部分类</option>
-                    </select>
+                <div style="float: left;">;
                 </div>
             </div>
             <div id="table"></div>

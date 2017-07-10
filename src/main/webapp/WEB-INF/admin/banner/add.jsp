@@ -68,11 +68,11 @@
                                     <div class="form-group">
                                         <label for="tel" class="col-sm-2 control-label">标题</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="title" value="${banner.name}">
+                                            <input type="text" class="form-control" name="title" value="${banner.title}">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="QQ" class="col-sm-2 control-label">alt提示</label>
+                                        <label for="QQ" class="col-sm-2 control-label">跳转地址(填门票ID)</label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control" name="alt" value="${banner.alt}">
                                         </div>

@@ -102,6 +102,11 @@
 	<select id="sizeMember" resultType="Long" parameterType="Long">
 		select count(*) from order_ticket where groupId = #{groupId}
 	</select>
+	
+	<select id="sizeSearch" resultType="String" parameterType="Long">
+		select count(*) from order_ticket where name like '%#{name}%'
+	</select>
+	
 
 	<delete id="delete" parameterType="Long">
 		delete from order_ticket 
@@ -145,6 +150,23 @@
 		</if>
 		limit #{offset},#{size}
 	</select>
+	
+	<select id="findByPageSearch" resultMap="resultMap">
+		select * from order_ticket 
+		<if test="name != null and name != ''">
+			where name like '%${name}%'
+		</if>
+		order by ${orderBy} 
+		<if test="order == true">
+			DESC
+		</if>
+		<if test="order == false">
+			ASC
+		</if>
+		limit #{offset},#{size}
+	</select>
+	
+	
 	
 
 	<select id="findPageByCond" resultMap="resultMap">

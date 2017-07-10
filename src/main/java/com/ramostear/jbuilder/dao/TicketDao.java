@@ -34,6 +34,8 @@ public interface TicketDao {
 	
 	public Long sizeMember(Long groupId);
 	
+	public Long sizeSearch(String name);
+	
 	public Ticket findById(Long id);
 
 	public List<Ticket> findAll();
@@ -45,6 +47,8 @@ public interface TicketDao {
 			@Param("order") boolean order
 			);
 	
+
+	
 	public List<Ticket> findByPageMember(
 			@Param("offset") int offset,
 			@Param("size") int size,
@@ -53,6 +57,13 @@ public interface TicketDao {
 			@Param("groupId") Long groupId
 			);
 	
+	public List<Ticket> findByPageSearch(
+			@Param("offset") int offset,
+			@Param("size") int size,
+			@Param("orderBy") String orderBy,
+			@Param("order") boolean order,
+			@Param("name") String name
+			);
 
 	public List<Ticket> findPageByCond(
 			@Param("offset") int offset,

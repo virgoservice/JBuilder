@@ -108,4 +108,12 @@ public class TicketServiceImpl implements TicketService {
 		return new MemberPageDto<Ticket>(totalSize,offset,size,list);
 	}
 
+	@Override
+	public MemberPageDto<Ticket> findByPageSearch(int offset, int size,
+			String orderBy, boolean order, String name) {
+		List<Ticket> list = this.dao.findByPageSearch((offset-1)*size, size, orderBy, order,name);
+		Long totalSize = (long) list.size();//this.dao.sizeSearch(name);
+		return new MemberPageDto<Ticket>(totalSize,offset,size,list);
+	}
+
 }

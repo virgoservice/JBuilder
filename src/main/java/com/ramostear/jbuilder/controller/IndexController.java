@@ -11,10 +11,9 @@
 package com.ramostear.jbuilder.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.HashMap; 
 import java.util.List;
-import java.util.Map;
+import java.util.Map; 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,17 +21,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON; 
 import com.ramostear.jbuilder.entity.ScenicSpot;
 import com.ramostear.jbuilder.entity.Ticket;
 import com.ramostear.jbuilder.entity.TicketAttachment;
-import com.ramostear.jbuilder.entity.TicketGroup;
-import com.ramostear.jbuilder.kit.ReqDto;
+import com.ramostear.jbuilder.entity.TicketGroup; 
+import com.ramostear.jbuilder.kit.PageDto;
+import com.ramostear.jbuilder.kit.ReqDto; 
 import com.ramostear.jbuilder.service.ScenicSpotService;
 import com.ramostear.jbuilder.service.TicketAttachmentService;
 import com.ramostear.jbuilder.service.TicketGroupService;
 import com.ramostear.jbuilder.service.TicketService;
 import com.ramostear.jbuilder.service.UserService;
+import com.ramostear.jbuilder.service.impl.BannerServiceImpl;
 
 /**
  * @Desc: ()
@@ -53,6 +56,8 @@ public class IndexController {
 	private ScenicSpotService scenicSpotService;
 	@Autowired
 	private TicketGroupService ticketGroupService;
+	@Autowired
+	private BannerServiceImpl bannerService;
 	
 	@RequestMapping(value = { "/", "", "/index", "/index.html", "/index.htm" }, method = RequestMethod.GET)
 	public String index(Model model) {
@@ -110,6 +115,10 @@ public class IndexController {
         	
         	list.add(showMap);
         }
+        
+        //轮播图
+        
+        model.addAttribute("banner",bannerService.findAll());
         model.addAttribute("tgMap",tgMap);
         model.addAttribute("list",list);
         
@@ -149,5 +158,77 @@ public class IndexController {
 		
 		return "member/spots_more";
 	}
+	
+	@RequestMapping(value="/spotsSearch/{name}",method=RequestMethod.GET)
+	public String spotsSearch(ReqDto req,Model model,@PathVariable String name){
+		
+		if(name==null)
+			name="%";
+		
+		model.addAttribute("search",name);
+		model.addAttribute("list", this.ticketService.findByPageSearch(req.getPageNo(), req.getPageSize(), "id", true, name));
+		
+		return "member/ticket_search";
+	}
+	
+	/**
+	 * 获取头部菜单
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getMenu",method=RequestMethod.GET,produces = "text/json;charset=UTF-8")
+	public String add(){
+		
+		List<Ticket> tlist=this.ticketService.findAll();
+		List<TicketGroup> tgList = this.ticketGroupService.findAll();
+		List<ScenicSpot> sclist = this.scenicSpotService.findAll();
+		
+		Map<Long,TicketGroup> tgMap=new HashMap<>();
+        for(TicketGroup entity : tgList){
+        	tgMap.put(entity.getId(),entity);
+        }
+        
+        Map<Long,ScenicSpot> scMap=new HashMap<>();
+        for(ScenicSpot entity : sclist){
+        	scMap.put(entity.getId(),entity);
+        }
+		
+        List<Map<String,Object>> list=new ArrayList<Map<String,Object>>();
+        
+        for(TicketGroup entity : tgList){
+        	
+        	Map<String,Object> showMap=new HashMap<>();
+        	Map<Long,ScenicSpot> forscMap=new HashMap<>(); 
+        	
+        	showMap.put("ticketGroup", tgMap.get(entity.getId()));
+        	showMap.put("forscMap", forscMap);
+        	
+        	//找出分组中的景区
+        	for(Ticket tEntity : tlist){
+        		
+        		Long tempScId=tEntity.getScenicId();
+        		
+        		//不在当前分组
+        		if(entity.getId()!=tEntity.getGroupId())
+        			continue;
+        		
+        		//已经存在此景区
+        		if(forscMap.containsKey(tempScId)){
+        			continue;
+        		}
+        		 
+        		forscMap.put(tempScId, scMap.get(tempScId));
+        	}
+        	if(forscMap.size()==0)
+        		continue;
+        	
+        	list.add(showMap);
+        }
+        
+        
+
+		return JSON.toJSON(list).toString();
+	}
+    
 
 }

@@ -36,35 +36,9 @@
 					<a class="dl" href="login.htm">登录</a>
 					<a class="zc" href="register.htm">免费注册</a>
 				</span>
-				<a class="dd" href="" ><i></i>订单查询</a>
-				<dl class="dh"> <dt><i></i>网站导航</dt>
-					<dd>
-						<a href=""  title="成都周边旅游线路">线路</a>
-						<a href=""  title="旅游目的地">目的地</a>
-						<a href=""  title="九寨沟酒店">酒店</a>
-						<a href=""  title="九寨沟旅游租车">租车</a>
-						<a href=""  title="成都周边旅游景点">景点</a>
-						<a href=""  title="九寨沟旅游攻略">攻略</a>
-						<a href=""  title="签证">签证</a>
-						<a href=""  title="">导游</a>
-						<a href=""  title="九寨沟子站">九寨沟子站</a>
-						<a href=""  title="供应商">供应商</a>
-					</dd>
-				</dl>
+				
 			</div>
-			<div class="scroll-order">
-				<ul>
-					<li>背包客3小时前评论了
-						<a href=""  target="_blank">西安兵马俑+华山+明城墙+高家大院+永兴坊+回民街双飞4日跟团游</a>
-					</li>
-					<li>背包客6分钟前评论了
-						<a href=""  target="_blank">九寨沟星宇国际大酒店</a>
-					</li>
-					<li>背包客3小时前评论了
-						<a href=""  target="_blank">云南昆明+大理+丽江+洱海+玉龙雪山6日5晚跟团游</a>
-					</li>
-				</ul>
-			</div>
+			
 		</div>
 	</div>
 	<!--顶部-->
@@ -911,7 +885,7 @@
 											<td> <span class="fk-way">在线支付</span> </td>
 											<td> </td>
 											<td>
-												<a class="booking-btn" href="javascript:;" data-suitid="18">预订</a>
+												<a class="booking-btn" href="<%=path%>/member/order/toBook?ticId=${ticket.id}" data-suitid="18">预订</a>
 											</td>
 										</tr>
 										<tr style="display: none">
