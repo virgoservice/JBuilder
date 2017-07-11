@@ -177,7 +177,7 @@ public class IndexController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/getMenu",method=RequestMethod.GET,produces = "text/json;charset=UTF-8")
-	public String add(){
+	public String getMenu(){
 		
 		List<Ticket> tlist=this.ticketService.findAll();
 		List<TicketGroup> tgList = this.ticketGroupService.findAll();
@@ -229,6 +229,30 @@ public class IndexController {
 
 		return JSON.toJSON(list).toString();
 	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/getSider",method=RequestMethod.GET,produces = "text/json;charset=UTF-8")
+	public String getSider(){
+		
+		List<Ticket> tlist=this.ticketService.findTop5();
+		List<ScenicSpot> sclist = this.scenicSpotService.findAll();
+
+        Map<Long,Object> scMap=new HashMap<>();
+        
+        for(int i=0;i<sclist.size();i++){
+        	scMap.put(sclist.get(i).getId(),sclist.get(i));
+        	if(i>=4)
+        		break;
+        }
+        Map<String,Object> ret=new HashMap();
+        ret.put("tlist", tlist);
+        ret.put("scMap", scMap);
+        
+		return JSON.toJSON(ret).toString();
+	}
+	
+	
     
 
 }

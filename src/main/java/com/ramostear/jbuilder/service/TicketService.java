@@ -35,6 +35,8 @@ public interface TicketService {
 	public Ticket findById(Long id);
 	
 	public List<Ticket> findAll();
+	
+	public List<Ticket> findTop5();
 
 	public MemberPageDto<Ticket> findByPageMember(
 			@Param("offset") int offset,

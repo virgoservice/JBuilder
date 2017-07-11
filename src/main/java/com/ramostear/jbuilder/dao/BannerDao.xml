@@ -63,7 +63,7 @@
 	</select>
 	
 	<select id="findAll"  resultMap="resultMap">
-		select * from sys_banner
+		select * from sys_banner where status=1
 	</select>
 	
 	<select id="findByPage" resultMap="resultMap">

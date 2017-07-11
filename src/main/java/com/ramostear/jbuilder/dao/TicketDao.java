@@ -39,6 +39,8 @@ public interface TicketDao {
 	public Ticket findById(Long id);
 
 	public List<Ticket> findAll();
+	
+	public List<Ticket> findTop5();
 
 	public List<Ticket> findByPage(
 			@Param("offset") int offset,

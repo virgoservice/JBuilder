@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <%@ page pageEncoding="UTF-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>  
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>  
 
 <%
 	String path = request.getContextPath();
@@ -51,7 +52,7 @@
         </section>
         <section class="content">
             <div class="row" style="padding: 0 15px 10px 15px;">
-                <shiro:hasPermission name="user:add">
+                <shiro:hasPermission name="banner:add">
 					<a href="<%=path %>/admin/banner/add" class="btn btn-primary btn-sm">新增</a>
 				</shiro:hasPermission>
 				
@@ -72,7 +73,7 @@
                     </button>
                 </div>
                  -->
-                <div style="float: left;">;
+                <div style="float: left;">
                 </div>
             </div>
             <div id="table"></div>
@@ -173,6 +174,20 @@
     
     
     query();
+    
+    let change=id=>{
+    	$.ajax({
+			url:"<%=path %>/admin/banner/change",
+			type:"post",
+			data:{'id':id},
+			success:function(data){
+				window.location.reload();
+			},
+			error:function(){
+				
+			}
+		});
+    }
 </script>
 </body>
 

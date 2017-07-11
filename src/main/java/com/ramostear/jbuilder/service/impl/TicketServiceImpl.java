@@ -116,4 +116,9 @@ public class TicketServiceImpl implements TicketService {
 		return new MemberPageDto<Ticket>(totalSize,offset,size,list);
 	}
 
+	@Override
+	public List<Ticket> findTop5() {
+		return this.dao.findTop5();
+	}
+
 }

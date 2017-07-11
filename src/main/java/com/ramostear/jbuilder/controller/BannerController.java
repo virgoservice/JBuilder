@@ -40,7 +40,7 @@ public class BannerController {
 	private BannerServiceImpl bannerService;
 	
 
-	@RequiresPermissions(value="banner")
+	@RequiresPermissions(value="banner:index")
 	@RequestMapping(value="/index",method=RequestMethod.GET)
 	public String index(){
 		return "banner/index";
@@ -80,8 +80,24 @@ public class BannerController {
 	}
 	
 	@RequiresPermissions(value="banner:edit")
+	@RequestMapping(value="/change",method=RequestMethod.POST)
+	public String change(Long id){
+		Banner banner=this.bannerService.findById(id);
+		if(banner!=null){
+			if(banner.getStatus()==1){
+				banner.setStatus(0);
+			}else{
+				banner.setStatus(1);
+			}
+			this.bannerService.update(banner);
+		}
+		
+		return "banner/index";
+	}
+	
+	@RequiresPermissions(value="banner:edit")
 	@RequestMapping(value="/edit",method=RequestMethod.POST)
-	public String eidt(Banner banner,MultipartFile file){
+	public String edit(Banner banner,MultipartFile file){
 		String url="";
 		if(banner.getImage()==null&&!file.isEmpty()){
 			url = QiniuFileUtil.upload(file);
@@ -92,6 +108,7 @@ public class BannerController {
 		bannerService.update(banner);
 		return "banner/index";
 	}
+	
 	
 	@RequiresPermissions(value="banner:delete")
 	@RequestMapping(value="/delete",method=RequestMethod.GET)

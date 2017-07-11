@@ -123,6 +123,11 @@
 	<select id="findAll"  resultMap="resultMap">
 		select * from order_ticket
 	</select>
+	
+	<select id="findTop5"  resultMap="resultMap">
+		select * from order_ticket order by id  desc limit 5
+	</select>
+	
 
 	<select id="findByPage" resultMap="resultMap">
 		select * from order_ticket 

@@ -26,11 +26,26 @@
 						<td>${item.title}</td>
 						<td>${item.alt}</td>
 						<td>${item.showOrder}</td>
-						<td>${item.status}</td>
+						<td>
+						<c:if test="${item.status==0 }">
+							已停用
+						</c:if>
+						<c:if test="${item.status==1 }">
+							已启用
+						</c:if>
+						</td>
 						<td>
 						<shiro:hasPermission name="banner:edit">  
 						<a href="#" onclick="edit(${item.id})">编辑</a>
 							| 
+						<c:if test="${item.status==0 }">
+							<a href="#" onclick="change(${item.id})">启用</a>
+							| 
+						</c:if>
+						<c:if test="${item.status==1 }">
+							<a href="#" onclick="change(${item.id})">停用</a>
+							| 
+						</c:if>
 						</shiro:hasPermission>
 						<a href="#" onclick="edit(${item.id})">查看</a> 
 						<shiro:hasPermission name="banner:delete">  
