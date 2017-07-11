@@ -109,7 +109,7 @@ public class MemberController {
 		if(currUser.isAuthenticated()){
 			User user = userService.findByName(username);
 			session.setAttribute(SysConsts.LOGIN_USER, user);
-			return "redirect:/member/userinfo";
+			return "redirect:/member/index";
 		}
 		return "member/login";
 	}
@@ -145,4 +145,13 @@ public class MemberController {
 		return "redirect:/member/login";
 	}
 	
+	@RequestMapping(value="/userinfo",method=RequestMethod.GET)
+	public String userinfo(){
+		return "member/userinfo";
+	}
+	
+	@RequestMapping(value="/index",method=RequestMethod.GET)
+	public String index(){
+		return "member/index";
+	}
 }

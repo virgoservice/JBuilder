@@ -17,6 +17,7 @@
 		</script>
 		<link type="text/css" href="<%=path %>/resources/index/min/-f=-res-css-user.css,-res-css-base.css,-res-css-extend.css" rel="stylesheet" />
 		<script type="text/javascript" src="<%=path %>/resources/index/min/-f=-res-js-jquery.min.js,-res-js-base.js,-res-js-common.js"></script>
+		<script type="text/javascript" src="<%=path %>/resources/index/min/-f=-res-js-jquery.min.js,-res-js-base.js,-res-js-common.js,-res-js-jquery.validate.js,-res-js-jquery.md5.js" ></script>
 	</head>
 
 	<body>
@@ -207,40 +208,6 @@
 		<link type="text/css" href="<%=path %>/resources/index/res/css/skin.css" rel="stylesheet" />
 		<jsp:include page="../index/footer.jsp" />
 		<!--帮助 扫码-->
-		<div class="st-footer">
-			<div class="wm-1200">
-				<div class="st-foot-menu">
-					<a href="" target="_blank" rel="nofollow">关于我们</a>
-					<a href="" target="_blank" rel="nofollow">联系我们</a>
-					<a href="" target="_blank" rel="nofollow">我们的优势</a>
-					<a href="" target="_blank" rel="nofollow">支付方式</a>
-					<a href="" target="_blank" rel="nofollow">法律声明</a>
-				</div>
-				<!--底部导航-->
-				<div class="st-foot-edit">
-					<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-						<img src="uploads/arcimgs73241402466888.jpg" title="1.jpg" alt="" style="float: none;" />
-						<img src="uploads/arcimgs59811402466888.jpg" title="2.jpg" alt="" style="float: none;" /><br/></p>
-					<p>​<br/></p>
-				</div>
-				<!--网站底部介绍-->
-				<div class="support">技术支持：
-					<a href="http://www.seelecloud.com" target="_blank">贵州塞拉科技有限公司</a>
-				</div>
-				<p>
-					<script>
-						var _hmt = _hmt || [];
-						(function() {
-							var hm = document.createElement("script");
-							hm.src = "../hm.baidu.com/hm.js-d7f82c70ba24c58dbd6b23553c88ed03.js" ;
-							var s = document.getElementsByTagName("script")[0];
-							s.parentNode.insertBefore(hm, s);
-						})();
-					</script>
-				</p>
-			</div>
-		</div>
-		<script src="<%=path %>/resources/index/plugins/qq_kefu/public/js/qqkefu.js"></script>
 		<script>
 			$(function() {
 				$("#nav_index").addClass('on');
