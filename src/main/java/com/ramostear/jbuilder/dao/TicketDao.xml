@@ -26,7 +26,7 @@
 	</resultMap>
 
 	<select id="findCover"  resultType="java.lang.String" parameterType="java.lang.Long">
-		select attachmentUrl from order_ticket_attachment where ticketId=#{id} ORDER BY showOrder LIMIT 0,1
+		select attachmentUrl from order_ticket_attachment where ticketId=#{id} ORDER BY showOrder DESC LIMIT 0,1
 	</select>
 
 	<insert id="save" parameterType="com.ramostear.jbuilder.entity.Ticket" useGeneratedKeys="true" keyColumn="id" keyProperty="id">

@@ -187,7 +187,7 @@ public class TicketController {
 		Integer status = Integer.parseInt(request.getParameter("status"));
 		String[] weekDateArray = request.getParameterValues("weekDate");
 		System.out.println(weekDateArray);
-		String weekDate = "0,1,2,3,4,5,6";
+		String weekDate = "";
 		if(weekDateArray != null){
 			weekDate = "";
 			for(int i= 0 ; i < weekDateArray.length; i++){
@@ -344,6 +344,8 @@ public class TicketController {
 			} else if (useof == TicketAttachment.USE_COVER) {
 				ta.setUseof(TicketAttachment.USE_COVER);
 			}
+
+			ta.setShowOrder(1);//暂不处理
 			ticketAttachmentService.save(ta);
 			result.setSuccess(true);
 			result.setObj(new String(attach.getUrl()));
@@ -353,6 +355,28 @@ public class TicketController {
 	}
 	
 	//TODO 更新删除不再使用的图片, 调整图片显示顺序
+	@RequestMapping(value = "/editImage", method = RequestMethod.POST)
+	@ResponseBody
+	public String editImage(int taId, int showOrder, int isDel){
+		Result result = new Result();
+		result.setSuccess(false);
+		if(taId > 0){
+			TicketAttachment ta = ticketAttachmentService.findById((long)taId);
+			if(ta != null){
+				if(isDel == 2){
+					ticketAttachmentService.delete(ta.getId());
+					result.setSuccess(true);
+					result.setObj("删除成功");
+				}else if(isDel == 1 && showOrder > 0){
+					ta.setShowOrder(showOrder);
+					ticketAttachmentService.update(ta);
+					result.setSuccess(true);
+					result.setObj("修改成功");
+				}
+			}
+		}
+		return JSONObject.toJSONString(result);
+	}
 
 	@RequestMapping(value = "/addIntro", method = RequestMethod.GET)
 	public String addIntroduce(Model model, int ticketId) {
