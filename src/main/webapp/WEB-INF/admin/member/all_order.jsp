@@ -227,7 +227,7 @@
 															<dd>
 																<a class="tit" href="<%=path %>/member/order/detail?orderid=${item.id}" target="_blank">${item.list[0].goodsName }</a>
 																<p>订单编号：${item.orderCode }</p>
-																<p>下单时间：${item.list[0].ticketId}==<fmt:formatDate value="${item.createTime}" type="both" /></p>
+																<p>下单时间：${item.list[0].ticketId}<fmt:formatDate value="${item.createTime}" type="both" /></p>
 															</dd>
 														</dl>
 													</div>
