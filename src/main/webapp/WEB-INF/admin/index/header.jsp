@@ -40,7 +40,7 @@
 						<ul class="st-down-select searchmodel" id="menu2">
 						</ul>
 					</div>
-					<input type="text" id="st-top-search" value="${search }" class="st-txt searchkeyword" placeholder="输入目的地" /> 
+					<input type="text" id="searchInput" value="${search }" class="st-txt searchkeyword" placeholder="输入目的地" /> 
 					<input type="button" value="搜索" class="st-btn" onclick="search()"/> 
 					
 				</div>
@@ -145,7 +145,7 @@
 			});
 			
 			function search(){
-				var str=$("#st-top-search").val();
+				var str=$("#searchInput").val();
 				if(str==""){
 					alert("请输入关键字搜索！")
 					return;
