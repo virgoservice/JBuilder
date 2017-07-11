@@ -103,6 +103,11 @@ $('#btn-scenic-add').click(function(){
 	if(name != ''){
 		$.post($("#ctx").val() + "/admin/scenic/add", {name:name}, function(data){
 			if(data.success){
+				$(':input','#form-scenic-add')
+				 .not(':button, :submit, :reset, :hidden')
+				 .val('')
+				 .removeAttr('checked')
+				 .removeAttr('selected');
 				window.location.reload();
 			}
 		}, "json");

@@ -105,7 +105,7 @@ public class TicketController {
 		return "ticket/list";
 	}
 
-	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public String listBySearch(ReqDto reqDto, Model model, @RequestParam("ticketName") String ticketName,
 			@RequestParam("goodsCode") String goodsCode, @RequestParam("scenicName") String scenicName,
 			@RequestParam("status") int status) {
@@ -118,7 +118,7 @@ public class TicketController {
 		return "ticket/list";
 	}
 
-	@RequestMapping(value = "/group", method = RequestMethod.GET)
+	@RequestMapping(value = "/group", method = RequestMethod.POST)
 	public String listByGroup(ReqDto reqDto, Model model, int group) {
 		PageDto<Ticket> pageDto = null;
 		int offset = reqDto.getPageNo();
@@ -165,6 +165,7 @@ public class TicketController {
 		model.addAttribute("imgList", imgList);
 		model.addAttribute("ticket", ticket);
 
+		model.addAttribute("todo", "tab-info");
 		return "ticket/edit";
 	}
 
@@ -242,8 +243,25 @@ public class TicketController {
 		}
 
 		System.out.println("ticketId === " + ticket.getId());
-		model.addAttribute("ticketId", ticket.getId());
-		return "ticket/add-image";
+		//model.addAttribute("ticketId", ticket.getId());
+		
+		List<TicketAttachment> imgList = new ArrayList<TicketAttachment>();
+		List<ScenicSpot> scenicList = new ArrayList<ScenicSpot>();
+		List<TicketGroup> groupList = new ArrayList<TicketGroup>();
+
+		scenicList = scenicSpotService.findAll();
+		model.addAttribute("scenicList", scenicList);
+		groupList = ticketGroupService.findAll();
+		model.addAttribute("groupList", groupList);
+		if(ticket != null){
+			imgList = ticketAttachmentService.listByPage(ticket.getId(), null, null,
+					TicketAttachment.USE_LIST, "showOrder", true, 0, 10);
+		}
+		model.addAttribute("imgList", imgList);
+		model.addAttribute("ticket", ticket);
+		
+		model.addAttribute("todo", "tab-image");
+		return "ticket/edit";
 	}
 
 	@RequestMapping(value = "/del", method = RequestMethod.POST)
@@ -251,10 +269,30 @@ public class TicketController {
 	public String delete(@RequestParam("id") Long id) {
 		Result result = new Result();
 		result.setSuccess(true);
+		Ticket ticket = null;
 		if (id > 0L) {
+			ticket = ticketService.findById(id);
 			ticketService.delete(id);
 		}
-		//TODO
+
+		// 删除相关联的图片
+		if (ticket != null) {
+			List<TicketAttachment> taList = ticketAttachmentService.listByPage(ticket.getId(), null, null, null, "id",
+					true, 0, 100);//100张应该够了吧,再多我也不想管了
+			if (taList != null) {
+				for(TicketAttachment ta : taList){
+					if(ta.getAttachmentId() != null && ta.getAttachmentId() > 0){
+						Attachment attachment = attachmentService.findById(ta.getAttachmentId());
+						if (attachment != null) {
+							QiniuFileUtil.deleteQiniuFile(attachment.getUrl());// 不晓得会不会发生异常
+							attachmentService.delete(attachment.getId());
+						}
+					}
+					ticketAttachmentService.delete(ta.getId());
+				}
+			}
+		}
+
 		return JSONObject.toJSONString(result);
 	}
 
@@ -272,23 +310,6 @@ public class TicketController {
 				result.setSuccess(true);
 			}
 		}
-		return JSONObject.toJSONString(result);
-	}
-	
-	@RequestMapping(value = "/grouping", method = RequestMethod.POST)
-	@ResponseBody
-	public String grouping(@RequestParam("ticketId") Long ticketId, @RequestParam("groupId")Long groupId) {
-		Result result = new Result();
-		result.setSuccess(false);
-		if(ticketId > 0 && groupId > 0){
-			Ticket t = ticketService.findById(ticketId);
-			if(t != null){
-				t.setGroupId(groupId);
-				ticketService.update(t);
-				result.setSuccess(true);
-			}
-		}
-
 		return JSONObject.toJSONString(result);
 	}
 
@@ -330,16 +351,41 @@ public class TicketController {
 
 		return JSONObject.toJSONString(result);
 	}
+	
+	//TODO 更新删除不再使用的图片, 调整图片显示顺序
 
 	@RequestMapping(value = "/addIntro", method = RequestMethod.GET)
 	public String addIntroduce(Model model, int ticketId) {
-		model.addAttribute("ticketId", ticketId);
-		return "ticket/add-intro";
+		if(ticketId < 1){
+			return "ticket/add";
+		}
+		Ticket ticket = ticketService.findById((long)ticketId);
+		if(ticket == null){
+			return "ticket/add";
+		}
+
+		List<TicketAttachment> imgList = new ArrayList<TicketAttachment>();
+		List<ScenicSpot> scenicList = new ArrayList<ScenicSpot>();
+		List<TicketGroup> groupList = new ArrayList<TicketGroup>();
+		imgList = ticketAttachmentService.listByPage(ticket.getId(), null, null,
+				TicketAttachment.USE_LIST, "showOrder", true, 0, 10);
+		scenicList = scenicSpotService.findAll();
+		groupList = ticketGroupService.findAll();
+		if(ticket != null){
+			imgList = ticketAttachmentService.listByPage(ticket.getId(), null, null,
+					TicketAttachment.USE_LIST, "showOrder", true, 0, 10);
+		}
+		model.addAttribute("scenicList", scenicList);
+		model.addAttribute("groupList", groupList);
+		model.addAttribute("imgList", imgList);
+		model.addAttribute("ticket", ticket);
+		
+		model.addAttribute("todo", "tab-intro");
+		return "ticket/edit";
 	}
 
 	@RequestMapping(value = "/addIntro", method = RequestMethod.POST)
-	public String addDescription(@RequestParam("content") String content, @RequestParam("ticketId") int ticketId) {
-		System.out.println(content);
+	public String addIntro(@RequestParam("content") String content, @RequestParam("ticketId") int ticketId) {
 		if (ticketId > 0) {
 			Ticket t = ticketService.findById((long) ticketId);
 			if (t != null) {
@@ -355,20 +401,40 @@ public class TicketController {
 						imgList.add(m.group(1));
 					}
 				}
+
+				// 下面两个动作用异步来做就好了
+				List<TicketAttachment> taList = ticketAttachmentService.listByPage(t.getId(), null, null, TicketAttachment.USE_ILLU, "id",
+						true, 0, 100);//100张应该够了吧,再多我也不想管了
+				if (taList != null) {
+					for(TicketAttachment ta : taList){
+						if(imgList.contains(ta.getAttachmentUrl())){
+							imgList.remove(ta.getAttachmentUrl());
+						}else{
+							QiniuFileUtil.deleteQiniuFile(ta.getAttachmentUrl());// 不晓得会不会发生异常
+							attachmentService.delete(ta.getAttachmentId());
+							ticketAttachmentService.delete(ta.getId());
+						}
+					}
+				}
+
 				for (String url : imgList) {
-					System.out.println(url);
+					//System.out.println(url);
 					if (null != url && !"".equals(url)) {
-						TicketAttachment ta = new TicketAttachment();
-						ta.setTicketId((long) ticketId);
-						ta.setAttachmentUrl(url);
-						ta.setUseof(TicketAttachment.USE_ILLU);
-						ticketAttachmentService.save(ta);
+						Attachment attach = attachmentService.findByUrl(url);
+						if(attach != null){
+							TicketAttachment ta = new TicketAttachment();
+							ta.setAttachmentId(attach.getId());// 这么做似乎很麻烦,也是为了方便删除
+							ta.setTicketId((long) ticketId);
+							ta.setAttachmentUrl(url);
+							ta.setUseof(TicketAttachment.USE_ILLU);
+							ticketAttachmentService.save(ta);
+						}
 					}
 				}
 				return "redirect:/admin/ticket/index";
 			}
 		}
-		return "ticket/add";//TODO
+		return "ticket/add";
 	}
 
 	@RequestMapping(value = "/addIllus", method = RequestMethod.POST)

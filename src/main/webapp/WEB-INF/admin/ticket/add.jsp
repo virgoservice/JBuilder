@@ -228,8 +228,10 @@
 						</div>
 					</div>
 					<div class="tab-pane" id="tab_image">
+						<p>请先保存票务信息</p>
 					</div>
 					<div class="tab-pane" id="tab_intro">
+						<p>请先保存票务信息</p>
 					</div>
 				</div>
 			</section>

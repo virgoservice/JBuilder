@@ -55,67 +55,17 @@
 					</div>
 				</section>
 
-				<section class="content">
+				<section class="content" id="group-list">
 					<!--  -->
-					
-					<div class="box box-solid">
-						<div class="box-body" style="padding: 10px 0;">
-							<table class="table table-responsive">
-								<thead>
-									<tr>
-										<td colspan="5">
-											<input type="checkbox"/>全选
-											<button class="btn btn-primary btn-sm" style="margin-left:30px;">批量删除</button>
-											<button class="btn btn-primary btn-sm" style="margin-left:15px;" onclick="addGroup();">新增分组</button>	
-										</td>
-									</tr>
-									<tr>
-										<td></td>
-										<td>NO.</td>
-										<td>名称</td>
-										<td>描述</td>
-										<td>操作</td>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${pageDto.items}" var="item">
-									<tr>
-										<td><input type="checkbox" value="${item.id }"/></td>
-										<td>${item.id }</td>
-										<td>${item.name }</td>
-										<td>${item.description }</td>
-										<td>
-											<a href="javascript:;" onclick="edit(${item.id});">修改</a>
-											<a href="javascript:;" onclick="del(this, ${item.id});">删除</a>
-										</td>
-									</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
-						<div class="box-footer">
-							<div class="row">
-								<div class="col-sm-5">
-								</div>
-								<div class="col-sm-7">
-									${pageDto.pageStr}
-								</div>
-							</div>
-						</div>
-					</div>	
 				</section>
 
 			</div>
-			<footer class="main-footer">
-				<div class="pull-right hidden-xs">
-					<b>技术支持</b> <a href="#">贵州桃李云科技有限公司</a>
-				</div>
-				<strong>Copyright &copy; 2017-2020 <a href="http://www.gogc.cn">贵州古城文化旅游开发股份有限公司</a>.</strong> All rights reserved.
-			</footer>
+
+			<jsp:include page="../../common/footer.jsp"/>
 			<div class="control-sidebar-bg"></div>
 		</div>
 
- 		<input type="hidden" value="<%=path %>" id="ctx"/>
+<input type="hidden" value="<%=path %>" id="ctx"/>
 <script src="<%=path %>/resources/admin/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script src="<%=path %>/resources/admin/plugins/jQueryUI/jquery-ui.min.js"></script>
 <script>
@@ -125,12 +75,16 @@
 <script src="<%=path %>/resources/admin/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <script src="<%=path %>/resources/admin/plugins/fastclick/fastclick.js"></script>
 <script src="<%=path %>/resources/admin/dist/js/app.min.js"></script>
+<script type="text/javascript" src="<%=path %>/resources/admin/plugins/layer-v3.0.3/layer/layer.js" ></script>
 <!--菜单选中脚本  -->
 <script src="<%=path%>/resources/admin/dist/js/common.js"></script>
 <script type="text/javascript">
+$(function (){
+	query(1,12);
+});
 function query(pageNo, pageSize){
 	$.ajax({
-		url: $("ctx").val() + "/admin/ticketGroup/list",
+		url: $("#ctx").val() + "/admin/ticketGroup/list",
 		type:"GET",
 		data:{
 			pageNo:pageNo,
@@ -138,7 +92,7 @@ function query(pageNo, pageSize){
 		},
 		cache:false,
 		success:function(html){
-			$("#goods-list").html(html);
+			$("#group-list").html(html);
 		},
 		error:function(){
 		}
@@ -161,6 +115,29 @@ function del(obj, id){
 		$.post(url, {"id":id}, null);
 		$(obj).parents("tr").remove();
 		layer.close(index);
+	});
+}
+
+function batchDel(){
+	var ids = new Array();
+	var items = document.getElementsByName("checkbox");
+	for(var i=1;i<items.length;i++){
+	    if(items[i].checked){
+	        ids.push(items[i].value);
+	    }
+	}
+	if(ids.length < 1){
+		layer.msg("必须选择至少一条记录", 1);
+		return ;
+	}
+	var url = $("#ctx").val() + "/admin/ticketGroup/del";
+	layer.confirm('确认要删除吗？',function(index){
+		for(var i=0;i<ids.length;i++){
+			var id = ids[i];
+			$.post(url, {"id":id}, null);
+		}
+		query($("#page-no").val(), $("#page-size").val());// 总有点毛病啊
+		layer.close();
 	});
 }
 </script>

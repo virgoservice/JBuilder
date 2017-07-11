@@ -39,18 +39,41 @@
 			</section>
 			<section class="content" style="z-index: 9999;">
 				<ul class="nav nav-tabs">
+					<c:if test="${todo == 'tab-info'}">
 					<li class="active">
 						<a href="#tab_info" data-toggle="tab" aria-expanded="true" style="font-size:1.2em">票务信息</a>
 					</li>
+					</c:if>
+					<c:if test="${todo != 'tab-info'}">
+					<li>
+						<a href="#tab_info" data-toggle="tab" aria-expanded="false" style="font-size:1.2em">票务信息</a>
+					</li>
+					</c:if>
+
+					<c:if test="${todo == 'tab-image'}">
+					<li class="active">
+						<a href="#tab_image" data-toggle="tab" aria-expanded="true" style="font-size:1.2em">景点图片</a>
+					</li>
+					</c:if>
+					<c:if test="${todo != 'tab-image'}">
 					<li>
 						<a href="#tab_image" data-toggle="tab" aria-expanded="false" style="font-size:1.2em">景点图片</a>
 					</li>
+					</c:if>
+
+					<c:if test="${todo == 'tab-intro'}">
+					<li class="active">
+						<a href="#tab_intro" data-toggle="tab" aria-expanded="true" style="font-size:1.2em">景点介绍</a>
+					</li>
+					</c:if>
+					<c:if test="${todo != 'tab-intro'}">
 					<li>
 						<a href="#tab_intro" data-toggle="tab" aria-expanded="false" style="font-size:1.2em">景点介绍</a>
 					</li>
+					</c:if>
 				</ul>
 				<div class="tab-content">
-					<div class="tab-pane form-horizontal active" id="tab_info">
+					<div class="tab-pane form-horizontal" id="tab_info">
 						<div class="box box-solid">
 							<form action="./add" id="form" method="post">
 							<input type="hidden" name="id" id="id" value="${ticket.id }" />
@@ -258,6 +281,7 @@
 							</form>
 						</div>
 					</div>
+
 					<div class="tab-pane" id="tab_image">
 						<div class="box box-solid">
 							<div class="box-body">
@@ -276,32 +300,32 @@
 						 			</c:forEach>
 								</ul>
 							</div>
-								<div class="box-footer">
-									<form action="../addImage" method="post" class="form-horizontal" style="padding: 0 15px 0 15px;" id="article-form">
-									<%-- <input type="hidden" id="ticketId" name="ticketId" value="${ticketId }" /> --%>
-									<input type="hidden" id="useof" name="useof" value="1" />
-						 			<div class="form-group">
-						 				<input type="file" id="file" name="file" multiple="multiple"/>
-						 			</div>
-						 			<p class="text-center" style="color:#808080;font-size: 16px;">最大上传文件大小为100MB</p>
-						 			</form>
+							<div class="box-footer">
+								<form action="../addImage" method="post" class="form-horizontal" style="padding: 0 15px 0 15px;" id="article-form">
+								<input type="hidden" id="useof" name="useof" value="1" />
+					 			<div class="form-group">
+					 				<input type="file" id="file" name="file" multiple="multiple"/>
+					 			</div>
+					 			<p class="text-center" style="color:#808080;font-size: 16px;">最大上传文件大小为100MB</p>
+					 			</form>
+							</div>
+							<div class="row">
+								<div class="col-sm-10">
 								</div>
-								<div class="row">
-									<div class="col-sm-10">
-									</div>
-									<div class="col-sm-2">
-										<button type="button" class="btn btn-primary btn-default margin" onclick="finishAddImage()">确定</button>
-										<a href="<%=path %>/admin/ticket/index" class="btn btn-default margin">返回列表</a>
-									</div>
+								<div class="col-sm-2">
+									<button type="button" class="btn btn-primary btn-default margin" onclick="finishAddImage()">确定</button>
+									<a href="<%=path %>/admin/ticket/index" class="btn btn-default margin">返回列表</a>
 								</div>
 							</div>
+						</div>
 					</div>
+
 					<div class="tab-pane" id="tab_intro">
 						<div class="box box-solid">
 							<form action="./addIntro" method="post" id="ckeditor-form" >
 								<input type="hidden" id="ticketId" name="ticketId" value="${ticket.id}" />
 								<div class="box-body">
-								<textarea id="TextArea1" name="content" class="ckeditor"></textarea>
+								<textarea id="TextArea1" name="content" class="ckeditor">${ticket.description}</textarea>
 								</div>
 								<div class="box-footer">
 									<div class="row">
@@ -324,6 +348,7 @@
 		<div class="control-sidebar-bg"></div>
 	</div>
 
+<input type="hidden" id="tab-todo" value="${todo}" />
 <input type="hidden" id="ctx" value="<%=path %>" />
 <input type="hidden" id="ticket-week" value="${ticket.weekDate }" />
 <script src="<%=path %>/resources/admin/plugins/jQuery/jquery-2.2.3.min.js"></script>
@@ -343,6 +368,7 @@
 <script src="<%=path %>/resources/admin/dist/js/common.js"></script>
 <script src="<%=path %>/resources/admin/plugins/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
+	/* 更新景点介绍内容 */
 	$(function(){
 		CKEDITOR.replace("TextArea1", { toolbar:'Full', height:500 });
 	});
@@ -352,6 +378,7 @@
 	}
 </script>
 <script type="text/javascript">
+	/* 更新景点图片 */
 	$(function(){
 		var ticketId = $("#ticketId").val();
 		console.log(ticketId);
@@ -368,6 +395,7 @@
 	});
 </script>
 <script type="text/javascript">
+	/* 初始化时间操作 */
     $(function () {
     	$("#goodsType").find("option:eq(${ticket.goodsType} -1)").attr('selecetd', 'selected');
         $("#beginDate").datepicker({
@@ -417,24 +445,15 @@
 </script>
 <script type="text/javascript">
 $(document).ready(function() {
-	$("#multiselect_weekday").multiselect({
-		buttonText: function(a) {
-			if(a.length == 0) {
-				return '未选中 <b class="caret"></b>'
-			} else {
-				var b = "";
-				a.each(function() {
-					b += $(this).text() + ", "
-				});
-				if(a.length != 7) {
-					$("#weekDay-toggle").text("全选")
-				} else {
-					$("#weekDay-toggle").text("全不选")
-				}
-				return b.substr(0, b.length - 2) + ' <b class="caret"></b>'
-			}
-		}
-	});
+	/* 设置tab panel*/
+	var tabPanel = $("#tab-todo").val();
+	if(tabPanel == "tab-info"){
+		$("#tab_info").addClass("active");
+	}else if(tabPanel == "tab-image"){
+		$("#tab_image").addClass("active");
+	}else if(tabPanel == "tab-intro"){
+		$("#tab_intro").addClass("active");
+	}
 });
 </script>
 

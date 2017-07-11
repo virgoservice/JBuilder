@@ -61,6 +61,7 @@
 			<!-- group list -->
 			<section class="row content-header">
 				<div class="col-lg-12">
+					<button class="btn btn-primary btn-sm" onClick="queryAll();">全部</button>
 				<c:forEach items="${groupList}" var="item">
 					<button class="btn btn-primary btn-sm" onClick="query(1, 12, '${item.id}');">${item.name}</button>
 				</c:forEach>
@@ -90,7 +91,25 @@
 <!--菜单栏选中脚本  -->
 <script src="<%=path%>/resources/admin/dist/js/common.js"></script>
 <script type="text/javascript">
+
+/* 获取scenic name*/
+var scenicData = null;
+
 $(function(){
+	scenicData = null;
+	$.get($("#ctx").val()+"/admin/scenic/scenicData",
+			null,
+			function(data){
+				if(data != null){
+					scenicData = new Array(); 
+					for(var i = 0; i < data.length; i++){
+						scenicData[data[i].id] = data[i].name;
+						//console.log(data[i].id +" "+ data[i].name);
+					}
+				}
+			},
+			"json");
+
 	query(1, 12);
 });
 
@@ -102,7 +121,7 @@ function query(pageNo, pageSize, group){
 	}
 
 	var curGroup = $("input[name='curGroup']").val();
-	if(curGroup != null){
+	if(curGroup != null && curGroup != ""){
 		groupQuery(pageNo, pageSize, curGroup);
 		return ;
 	}
@@ -137,10 +156,20 @@ function query(pageNo, pageSize, group){
 	}
 }
 
+function queryAll(){
+	$("input[name='curGroup']").val('');
+	$(':input','#form-ticket-search')
+	 .not(':button, :submit, :reset, :hidden')
+	 .val('')
+	 .removeAttr('checked')
+	 .removeAttr('selected');
+	query(1, 12);
+}
+
 function searchQuery(pageNo, pageSize, ticketName, goodsCode, scenicName, status){
 	$.ajax({
 		url: $("#ctx").val() + "/admin/ticket/search",
-		type:"GET",
+		type:"POST",
 		data:{
 			pageNo:pageNo,
 			pageSize:pageSize,
@@ -161,7 +190,7 @@ function searchQuery(pageNo, pageSize, ticketName, goodsCode, scenicName, status
 function groupQuery(pageNo, pageSize, group){
 	$.ajax({
 		url: $("#ctx").val() + "/admin/ticket/group",
-		type:"GET",
+		type:"POST",
 		data:{
 			pageNo:pageNo,
 			pageSize:pageSize,
@@ -174,25 +203,6 @@ function groupQuery(pageNo, pageSize, group){
 		error:function(){
 		}
 	});		
-}
-
-function grouping(ticketId, groupId){
-	$("#grouping-box").find("ul li input:eq(" + (ticketId -1)+ ")").attr("chcked", "checked");
-
-	layer.open({
-		type:1,
-		title:'选择分组',
-		offset:'c',
-		shade:0.8,
-		area:['50%','60%'],
-		btn:['确认', '关闭'],
-		content: $("#grouping-box"),
-		end:function(){
-		},
-		cancel:function(index){
-			layer.close(index);
-		}
-	});
 }
 
 function addGroup(){

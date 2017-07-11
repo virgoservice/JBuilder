@@ -21,7 +21,7 @@
 	href="<%=path %>/resources/admin/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
 	<!-- Ionicons -->
 <link rel="stylesheet"
-	href="<%=path %>/resources/admin/ionicons-2.0.1/css/ionicons.min.css">
+	href="<%=path %>/resources/admin/plugins/ionicons-2.0.1/css/ionicons.min.css">
 	<!-- Theme style -->
 <link rel="stylesheet"
 	href="<%=path %>/resources/admin/dist/css/AdminLTE.min.css">

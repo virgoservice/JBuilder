@@ -8,7 +8,7 @@
 
 						<!--/member model-->
 						<!--new tuan start-->
-						<script type="text/javascript" src="min/-f=-res-js-tuan.js" ></script>
+						<script type="text/javascript" src="<%=path %>/resources/index/min/-f=-res-js-tuan.js" ></script>
 						<div class="side-other-box">
 							<h3>热门推荐</h3>
 							<div class="other-con">
