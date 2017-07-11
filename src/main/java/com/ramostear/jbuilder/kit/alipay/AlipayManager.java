@@ -10,6 +10,7 @@
 */
 package com.ramostear.jbuilder.kit.alipay;
 import com.alipay.api.DefaultAlipayClient;
+import com.ramostear.jbuilder.consts.SysConsts;
 
 /** 
  * @Desc: () 
@@ -23,10 +24,10 @@ public class AlipayManager {
 	public static String ALIPAY_PUB_KEY="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2Bm41AxydGPsIx3jBshT1gXMi04ajgNKeZm2X5yDcLZ/iaglTPqCtR+0iZ3GJT11rFpjXurHqx3c5ExrfjJEP94o/z9K/UjQQxfkhbYMR+MAP3CrExxWCZzOTGnCjDFmEJmAlJypU64V//F+D3aY0/alhXCrrCDAsIuxfPeSCcr2knyxmcItPXr/rZ8R31BV917UjyBWa9P5b1Fi471e3hLs2QLLTdrKdK3l637b0NmU/RZYIsqqcvtXmjZBxdgGjruGhPZMyUohkqZQjwSc4k0am0RKNAKO6aTfgXHQFXAwrYdg5TKPfkh8Rg+ZDa6LjjbRVvKDlYG1cvfMU6OyPQIDAQAB";
 	public static String SERVER_RUL="https://openapi.alipaydev.com/gateway.do";
 	public static String APP_ID="2016080500176853";
-	public static String NOTIFY_URL="http://103.44.145.245:15892/JBuilder/order/pay/payResultNotice";
 	
-	public static String RETURN_URL="http://103.44.145.245:15892/JBuilder/order/pay/reload";//付款后关闭当前页面并刷新父页面
-	public static String RETURN_LIST="http://103.44.145.245:15892/JBuilder/member/order/list";//付款后跳转到列表
+	public static String NOTIFY_URL=SysConsts.BASE_PATH+"/order/pay/payResultNotice";
+	public static String RETURN_URL=SysConsts.BASE_PATH+"/order/pay/reload";//付款后关闭当前页面并刷新父页面
+	public static String RETURN_LIST=SysConsts.BASE_PATH+"/member/order/list";//付款后跳转到列表
 	
 	
 	private AlipayManager(){}

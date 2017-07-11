@@ -13,10 +13,7 @@
 		<title>预订</title>
 		<link rel="icon" href="<%=path %>/resources/index/img/icon.ico" type="image/x-icon" />
 		<link rel="shortcut icon" href="<%=path %>/resources/index/img/icon.ico" type="image/x-icon"/>
-		<script>
-			window.SITEURL = "/";
-			window.CURRENCY_SYMBOL = "￥";
-		</script>
+
 		<link type="text/css" href="<%=path %>/resources/index/min/-f=plugins-spot-public-css-scenic.css" rel="stylesheet" />
 		<link type="text/css" href="<%=path %>/resources/index/min/-f=res-css-base.css,res-css-extend.css,res-css-stcalendar.css" rel="stylesheet" />
 		<script type="text/javascript" src="<%=path %>/resources/index/min/-f=res-js-jquery.min.js,-res-js-base.js,-res-js-common.js,-res-js-SuperSlide.min.js,-res-js-jquery.validate.js,-res-js-jquery.validate.addcheck.js" ></script>
@@ -80,7 +77,7 @@
 													
 													<span class="sub-btn" onclick="add()">+</span> </div>
 												</td>
-												<td><span class="price suit-totalprice" id="total">${ticket.price }</span></td>
+												<td><span class="price suit-totalprice" id="total">￥${ticket.price }</span></td>
 											</tr>
 										</table>
 									</div>
@@ -102,7 +99,7 @@
 									</dl>
 								</div>
 								<div class="order-js-box">
-									<div class="total">订单结算总额：<span class="totalprice" id="total3">${ticket.price }</span></div>
+									<div class="total">订单结算总额：<span class="totalprice" id="total3">￥${ticket.price }</span></div>
 									<div class="yz"> <input type="button" class="tj-btn" value="提交订单" onclick="save()"/> 
 									<input type="text" name="checkcode" id="checkcode" class="ma-text" /> <span class="pic"><img src="<%=path %>/member/order/verifyCode?time='+Math.random()" onClick="this.src=this.src+'?math='+ Math.random()" width="80" height="32" /></span> <span class="bt">验证码：</span> </div>
 								</div>
@@ -130,7 +127,7 @@
 									<li>数量：<span class="dingnum">1</span></li>
 									<li>单价：<i class="currency_sy">￥</i>${ticket.price }</li>
 								</ul>
-								<div class="total-price">订单总额：<span class="totalprice" id="total2">${ticket.price }</span></div>
+								<div class="total-price">订单总额：<span class="totalprice" id="total2">￥${ticket.price }</span></div>
 							</div>
 						</div>
 					</div>
@@ -166,9 +163,9 @@
 				var num=$("#dingnum").val();
 				var total=Number(num)*Number(tempPirce); 
 				total=total.toFixed(2);
-				$("#total").html(total);
-				$("#total2").html(total);
-				$("#total3").html(total);
+				$("#total").html("￥"+total);
+				$("#total2").html("￥"+total);
+				$("#total3").html("￥"+total);
 			}
 			
 			function save(){

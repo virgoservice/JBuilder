@@ -10,6 +10,11 @@
 */
 package com.ramostear.jbuilder.consts;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
 /** 
  * @Desc: () 
  * @author: 谭朝红 
@@ -22,7 +27,8 @@ public class SysConsts {
 	 * 系统当前的登录用户
 	 */
 	public static final String LOGIN_USER = "login_user";
-
+	
+	public static final String BASE_PATH=getBasePath();
 	/**
 	 * 系统菜单
 	 */
@@ -31,4 +37,11 @@ public class SysConsts {
 	 * 验证码信息
 	 */
 	public static final String VERIFY_CODE = "verify_code";
+	
+    private static String getBasePath(){
+        ServletRequestAttributes attrs = (ServletRequestAttributes)RequestContextHolder.currentRequestAttributes();
+        HttpServletRequest request = attrs.getRequest();
+        final String path = request.getScheme()+"://"+request.getServerName()+":"+(request.getServerPort()==80?"":request.getServerPort())+request.getContextPath();
+        return path;
+    }
 }
