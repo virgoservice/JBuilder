@@ -10,6 +10,9 @@
 */
 package com.ramostear.jbuilder.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -78,6 +81,14 @@ public class ScenicSpotController {
 		}
 
 		return JSONObject.toJSONString(result);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/scenicData", method = RequestMethod.GET)
+	public List<ScenicSpot> getScenicData() {
+		List<ScenicSpot> scenicList = new ArrayList<ScenicSpot>();
+		scenicList = scenicSpotService.findAll();
+		return scenicList;
 	}
 
 }

@@ -20,16 +20,16 @@
 							<input type="checkbox" name="checkbox"/>全选
 						</th>
 						<th colspan="4">
-							<button class="btn btn-primary btn-sm">批量删除</button>
+							<button class="btn btn-primary btn-sm" onclick="batchDel()">批量删除</button>
 							<button class="btn btn-primary btn-sm" onclick="addGroup();">新增分组</button>	
 						</th>
 					</tr>
 					<tr>
-						<td></td>
-						<td>NO.</td>
-						<td>名称</td>
-						<td>描述</td>
-						<td>操作</td>
+						<th></th>
+						<th>NO.</th>
+						<th>名称</th>
+						<th>描述</th>
+						<th>操作</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -58,13 +58,15 @@
 			</div>
 		</div>
 	</div>
-	
+
+<input type="hidden" value="${pageDto.pageNo }" id="page-no"/>
+<input type="hidden" value="${pageDto.pageSize }" id="page-size"/>
 <script type="text/javascript">
 $(function (){
 	
 	/*全选*/
-	$("table thead th input:checkbox").on("click" , function(){
-		$(this).closest("table").find("tr > td:first-child input:checkbox").prop("checked",$("table thead th input:checkbox").prop("checked"));
+	$("table thead tr th input:checkbox").on("click" , function(){
+		$(this).closest("table").find("tr > td:first-child input:checkbox").prop("checked", $("table thead tr th input:checkbox").prop("checked"));
     });
 });
 </script>

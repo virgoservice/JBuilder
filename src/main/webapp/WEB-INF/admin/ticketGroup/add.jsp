@@ -88,12 +88,7 @@
 				</section>
 			</div>
 
-			<footer class="main-footer">
-				<div class="pull-right hidden-xs">
-					<b>技术支持</b> <a href="#">贵州桃李云科技有限公司</a>
-				</div>
-				<strong>Copyright &copy; 2017-2020 <a href="http://www.gogc.cn">贵州古城文化旅游开发股份有限公司</a>.</strong> All rights reserved.
-			</footer>
+			<jsp:include page="../../common/footer.jsp"/>
 			<div class="control-sidebar-bg"></div>
 		</div>
 

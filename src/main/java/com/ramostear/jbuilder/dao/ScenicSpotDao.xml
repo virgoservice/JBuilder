@@ -69,7 +69,7 @@
 		limit #{offset},#{size}
 	</select>
 
-	<select id="contain" parameterType="Long" resultType="int">
+	<select id="containTickets" parameterType="Long" resultType="int">
 		select COUNT(*) from order_ticket
 		where 
 		scenicId = #{id}

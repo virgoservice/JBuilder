@@ -16,23 +16,23 @@
 				<table class="table table-responsive">
 					<thead>
 						<tr>
-							<td>											
+							<th>											
 								<input type="checkbox"/>全选
-							</td>
-							<td colspan="8">
+							</th>
+							<th colspan="8">
 								<button class="btn btn-primary btn-sm" onclick="addTicket();">新增</button>
 								<button class="btn btn-primary btn-sm" onclick="addGroup();">新增分组</button>
-							</td>
+							</th>
 						</tr>
 						<tr>
-							<td></td>
-							<td>NO.</td>
-							<td>景区名称</td>
-							<td>商品名称</td>
-							<td>商品编码</td>
-							<td>有效期</td>
-							<td>状态</td>
-							<td>操作</td>
+							<th></th>
+							<th>NO.</th>
+							<th>景区名称</th>
+							<th>商品名称</th>
+							<th>商品编码</th>
+							<th>有效期</th>
+							<th>状态</th>
+							<th>操作</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -86,10 +86,20 @@
 $(function (){
 
 	/*全选*/
-	$("table thead tr td input:checkbox").on("click" , function(){
-		alert("click");
-		$(this).closest("table").find("tr > td:first-child input:checkbox").prop("checked", true);
+	$("table thead tr th input:checkbox").on("click" , function(){
+		$(this).closest("table").find("tr > td:first-child input:checkbox").prop("checked", $("table thead tr th input:checkbox").prop("checked"));
     });
+
+	/* 替换景区名称*/
+	$(".scenic-name").each(function (){
+		//console.log($(this).text());
+		var id = $(this).text();
+		if(scenicData[id] != null){
+			$(this).text(scenicData[id]);
+		}else{
+			$(this).text("null");
+		}
+	});
 });
 </script>
 
