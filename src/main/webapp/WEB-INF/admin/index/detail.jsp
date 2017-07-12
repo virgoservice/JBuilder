@@ -94,7 +94,6 @@
 							<span class="on">门票信息</span>
 							<span>景点介绍</span>
 							<span>客户评价</span>
-							<span>我要咨询</span>
 						</div>
 						<div class="tabbox-list">
 							<!--  ---------------  门票信息    ------ -->
@@ -165,6 +164,19 @@
 	<link type="text/css" href="<%=path %>/resources/index/res/css/skin.css"  rel="stylesheet" />
 	<link type="text/css" href="<%=path %>/resources/index/min/-f=-res-js-floatmenu-floatmenu.css"  rel="stylesheet" />
 	<script type="text/javascript" src="<%=path %>/resources/index/min/-f=-res-js-floatmenu-floatmenu.js" ></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		//内容切换
+		$.floatMenu({
+			menuContain: '.tabnav-list',
+			tabItem: 'span',
+			chooseClass: 'on',
+			contentContain: '.tabbox-list',
+			itemClass: '.tabcon-list'
+		});
+	});
+	</script>
+	
 	<script type="text/javascript" src="<%=path %>/resources/index/min/-f=-res-js-SuperSlide.min.js,-res-js-template.js,-res-js-scorll.img.js" ></script>
 	<script type="text/javascript" src="<%=path %>/resources/index/res/js/layer/layer.js" ></script>
 </body>

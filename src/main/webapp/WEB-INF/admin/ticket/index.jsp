@@ -97,18 +97,22 @@ var scenicData = null;
 
 $(function(){
 	scenicData = null;
-	$.get($("#ctx").val()+"/admin/scenic/scenicData",
-			null,
-			function(data){
-				if(data != null){
-					scenicData = new Array(); 
-					for(var i = 0; i < data.length; i++){
-						scenicData[data[i].id] = data[i].name;
-						//console.log(data[i].id +" "+ data[i].name);
-					}
+	$.ajax({
+        type:"GET",
+		url:$("#ctx").val()+"/admin/scenic/scenicData",
+        data: null,
+        async:false,
+        dataType: "json",
+        success: function(data){
+			if(data != null){
+				scenicData = new Array(); 
+				for(var i = 0; i < data.length; i++){
+					scenicData[data[i].id] = data[i].name;
+					//console.log(data[i].id +" "+ data[i].name);
 				}
-			},
-			"json");
+			}
+        }
+	});
 
 	query(1, 12);
 });

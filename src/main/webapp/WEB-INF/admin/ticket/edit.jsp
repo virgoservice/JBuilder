@@ -223,7 +223,7 @@
 										</div>
 
 										<div class="form-group">
-											<label for="_con" class="col-sm-3 control-label">有效星期</label>
+											<label for="_con" class="col-sm-3 control-label">无效星期</label>
 											<div class="col-sm-9">
 												<div class="form-control" id="multi-select-weekDay" style="padding-bottom:30px;" >
 													<input type="checkbox" name="weekDate" value="0">每周日
@@ -288,7 +288,12 @@
 								<ul class="list-unstyled col-xs-12">
 									<c:forEach items="${imgList }"  begin="0" end="4" var="ticketAttachment">
 					 				<li class="col-xs-2 margin-bottom">
-					 					<img src="${ticketAttachment.attachmentUrl }?imageView2/2/h/250" class="img-thumbnail img-responsive"/>
+					 					<img src="${ticketAttachment.attachmentUrl }?imageView2/1/w/300/h/230" class="img-thumbnail img-responsive" />
+					 					<div style="width:100%;" >
+					 					<input type="text" name="showOrder" value="${ticketAttachment.showOrder }" style="width:100px;"/>
+					 					<button class="btn btn-primary btn-xs" type="button" onclick="editImage(this, ${ticketAttachment.id}, 1);">更新顺序</button> 
+					 					<button class="btn btn-warning btn-xs" type="button" onclick="editImage(this, ${ticketAttachment.id}, 2);">删除</button>
+					 					</div>
 					 				</li>
 						 			</c:forEach>
 								</ul>
@@ -441,6 +446,22 @@
 	
 	function checkWeekDate(){
 		$("#multi-select-weekDay").find("input:checkbox").prop({checked:true});
+	}
+	
+	function editImage(obj, id, op){
+		var url = $("#ctx").val() + "/admin/ticket/editImage";
+		var showOrder = 1;
+		if(op == 1){//修改顺序
+			showOrder = $(obj).parent().find("input").val();
+			if(isNaN(showOrder) || showOrder < 1){
+				alert("顺序必须是大于0的整数");
+				return ;
+			}
+			$.post(url, {"taId":id, "showOrder":showOrder, "isDel":1}, function (){alert("保存成功")}, "json");
+		}else if(op == 2){//删除
+			$.post(url, {"taId":id, "showOrder":0, "isDel":2}, "json");
+			$(obj).parent().parent().remove();
+		}
 	}
 </script>
 <script type="text/javascript">

@@ -175,16 +175,16 @@
 										</div>
 
 										<div class="form-group">
-											<label for="_con" class="col-sm-3 control-label">有效星期</label>
+											<label for="_con" class="col-sm-3 control-label">无效星期</label>
 											<div class="col-sm-9">
 												<div class="form-control" id="multi-select-weekDay" style="padding-bottom:30px;" >
-													<input type="checkbox" name="weekDate" value="0" checked="checked">每周日
-													<input type="checkbox" name="weekDate" value="1" checked="checked">每周一
-													<input type="checkbox" name="weekDate" value="2" checked="checked">每周二
-													<input type="checkbox" name="weekDate" value="3" checked="checked">每周三
-													<input type="checkbox" name="weekDate" value="4" checked="checked">每周四
-													<input type="checkbox" name="weekDate" value="5" checked="checked">每周五
-													<input type="checkbox" name="weekDate" value="6" checked="checked">每周六
+													<input type="checkbox" name="weekDate" value="0">每周日
+													<input type="checkbox" name="weekDate" value="1">每周一
+													<input type="checkbox" name="weekDate" value="2">每周二
+													<input type="checkbox" name="weekDate" value="3">每周三
+													<input type="checkbox" name="weekDate" value="4">每周四
+													<input type="checkbox" name="weekDate" value="5">每周五
+													<input type="checkbox" name="weekDate" value="6">每周六
 													<a class="btn btn-default btn-xs" href="javascript:void(0);" onclick="clearWeekDate();">清空</a>
 													<a class="btn btn-info btn-xs" href="javascript:void(0);" onclick="checkWeekDate();">全选</a>
 												</div>
@@ -277,13 +277,13 @@
             minuteStep: 1,
             showSeconds: false,
             showMeridian: false,
-            defaultTime: false
+            defaultTime: "00:01"
         });
         $("#stopCheckTime").timepicker({
             minuteStep: 1,
             showSeconds: false,
             showMeridian: false,
-            defaultTime: false
+            defaultTime: "23:59"
         });
     });
 
