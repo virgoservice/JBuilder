@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	String path = request.getContextPath();
 %>
@@ -33,29 +35,7 @@
 					<a href="/">首页</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;会员中心 </div>
 				<!--面包屑-->
 				<div class="st-main-page">
-					<div class="user-side-menu">
-						<ul>
-							<li>
-								<a id="nav_index" href="<%=path %>/member/index"><i class="st-user-icon user-home-icon"></i>会员首页</a>
-							</li>
-							<li>
-								<a class="side-menu-group" href="javascript:;"> <i class="st-user-icon user-order-icon"></i>我的订单<i class="arrow-icon"></i> </a>
-								<div class="son">
-									<a id="nav_allorder" href="<%=path %>/member/order/list">全部订单</a>
-									<a id="nav_spotorder" href="/member/order/plugin_list?typeid=5">景点订单</a>
-								</div>
-							</li>
-							<li>
-								<a class="side-menu-group" href="javascript:;"> <i class="st-user-icon user-center-icon"></i>个人中心<i class="arrow-icon"></i> </a>
-								<div class="son">
-									<a id="nav_userinfo" href="<%=path %>/member/userinfo">个人资料</a>
-									<a id="nav_safecenter" href="/member/index/safecenter">账号安全</a>
-									<a id="nav_userbind" href="/member/index/userbind">账号绑定</a>
-									<a id="nav_consignees_address" href="/member/index/address">收货地址</a>
-								</div>
-							</li>
-						</ul>
-					</div>
+					<jsp:include page="member_menu.jsp" />
 					<script>
 						$(function() {
 							$(".side-menu-group").on("click", function() {
@@ -104,11 +84,6 @@
 										<li class="my-jf" data-url="/member/order/all-unpay"> <em></em> <span>未付款</span> <strong>3</strong> </li>
 										<li class="un-fk" data-url="/member/order/all-uncomment"> <em></em> <span>未点评</span> <strong>0</strong> </li>
 										<li class="my-zx" data-url="/member/index/myquestion"> <em></em> <span>我的咨询</span> <strong>0</strong> </li>
-										<!--                    <li class="un-dp" data-url="/member/index/myquestion">-->
-										<!--                        <em></em>-->
-										<!--                        <span>我的咨询</span>-->
-										<!--                        <strong>0</strong>-->
-										<!--                    </li>-->
 									</ul>
 								</div>
 								<!-- 订单信息 -->
@@ -122,78 +97,70 @@
 								</div>
 							</div>
 							<div class="user-home-order">
-								<div class="order-tit">最新订单
-									<a class="more" href="/member/order/all">查看更多&gt;</a>
-								</div>
 								<div class="order-list">
-									<table width="100%" border="0" body_html=Nt4odC>
-										<tr>
-											<th width="55%" height="38" scope="col">订单信息</th>
-											<th width="15%" height="38" scope="col">订单金额</th>
-											<th width="15%" height="38" scope="col">订单状态</th>
-											<th width="15%" height="38" scope="col">订单操作</th>
-										</tr>
-										<tr>
-											<td height="114">
-												<div class="con">
-													<dl> <dt><a href="http://www.situcms.com/spots/show_27.html" target="_blank"><img src="http://www.situcms.com/uploads/2016/0222/c9b3521f90742f41963a23b9024d827b_110x80.jpg" width="110" height="80" alt="" /></a></dt>
-														<dd>
-															<a class="tit" href="http://www.situcms.com/spots/show_27.html" target="_blank">四川泸沽湖(四川泸沽湖门票)</a>
-															<p>订单编号：05236666710887</p>
-															<p>下单时间：2017-06-29 16:07:46</p>
-														</dd>
-													</dl>
-												</div>
-											</td>
-											<td align="center"><span class="price"><i class="currency_sy">￥</i>360</span></td>
-											<td align="center"><span class="dfk">等待付款</span></td>
-											<td align="center">
-												<a class="now-fk" href="/member/index/pay?ordersn=05236666710887">立即付款</a>
-												<a class="cancel_order now-dp" style="background:#ccc" href="javascript:;" data-orderid="1321">取消</a>
-												<a class="order-ck" href="/member/order/view?ordersn=05236666710887">查看订单</a>
-											</td>
-										</tr>
-										<tr>
-											<td height="114">
-												<div class="con">
-													<dl> <dt><a href="http://www.situcms.com/spots/show_25.html" target="_blank"><img src="http://www.situcms.com/uploads/main/litimg/20150917/20150917181230_110x80.jpg" width="110" height="80" alt="" /></a></dt>
-														<dd>
-															<a class="tit" href="http://www.situcms.com/spots/show_25.html" target="_blank">四川九寨沟甘海子风景名胜区(九寨沟甘海子门票)</a>
-															<p>订单编号：05179925284193</p>
-															<p>下单时间：2017-06-22 15:53:12</p>
-														</dd>
-													</dl>
-												</div>
-											</td>
-											<td align="center"><span class="price"><i class="currency_sy">￥</i>130</span></td>
-											<td align="center"><span class="dfk">等待付款</span></td>
-											<td align="center">
-												<a class="now-fk" href="/member/index/pay?ordersn=05179925284193">立即付款</a>
-												<a class="cancel_order now-dp" style="background:#ccc" href="javascript:;" data-orderid="1303">取消</a>
-												<a class="order-ck" href="/member/order/view?ordersn=05179925284193">查看订单</a>
-											</td>
-										</tr>
-										<tr>
-											<td height="114">
-												<div class="con">
-													<dl> <dt><a href="http://www.situcms.com/spots/show_130.html" target="_blank"><img src="http://www.situcms.com/uploads/2016/1229/5994efc163e76d27e69cc9d00e2a2190_110x80.jpg" width="110" height="80" alt="" /></a></dt>
-														<dd>
-															<a class="tit" href="http://www.situcms.com/spots/show_130.html" target="_blank">花湖(花湖门票)</a>
-															<p>订单编号：05176554819778</p>
-															<p>下单时间：2017-06-22 15:47:35</p>
-														</dd>
-													</dl>
-												</div>
-											</td>
-											<td align="center"><span class="price"><i class="currency_sy">￥</i>52</span></td>
-											<td align="center"><span class="dfk">等待付款</span></td>
-											<td align="center">
-												<a class="now-fk" href="/member/index/pay?ordersn=05176554819778">立即付款</a>
-												<a class="cancel_order now-dp" style="background:#ccc" href="javascript:;" data-orderid="1302">取消</a>
-												<a class="order-ck" href="/member/order/view?ordersn=05176554819778">查看订单</a>
-											</td>
-										</tr>
+									<table width="100%" border="0" body_strong="ryimVs">
+										<tbody>
+											<tr>
+												<th width="45%" height="38" bgcolor="#fbfbfb" scope="col">订单信息</th>
+												<th width="15%" height="38" bgcolor="#fbfbfb" scope="col">订单金额</th>
+												<th width="10%" height="38" bgcolor="#fbfbfb" scope="col">订单票数</th>
+												<th width="10%" height="38" bgcolor="#fbfbfb" scope="col">订单状态</th>
+												<th width="10%" height="38" bgcolor="#fbfbfb" scope="col">订单操作</th>
+											</tr>
+											<c:forEach items="${list.items}" var="item">  
+											
+											<tr>
+												<td height="114">
+													<div class="con">
+														<dl> <dt><a href="" target="_blank">
+														<img src="${tlMap.get(item.list[0].ticketId).cover}" width="110" height="80"></a></dt>
+															<dd>
+																<a class="tit" href="<%=path %>/member/order/detail?orderid=${item.id}" target="_blank">${item.list[0].goodsName }</a>
+																<p>订单编号：${item.orderCode }</p>
+																<p>下单时间：${item.list[0].ticketId}<fmt:formatDate value="${item.createTime}" type="both" /></p>
+															</dd>
+														</dl>
+													</div>
+												</td>
+												<td align="center"><span class="price"><i class="currency_sy">￥</i>${item.orderPrice }</span></td>
+												<td align="center"><i class="currency_sy"></i>${item.total }</td>
+												<td align="center">
+												<span class="dfk"></span>
+												<c:if test='${item.status==0 }'>
+													等待付款
+												</c:if>
+												<c:if test='${item.status==1 }'>
+													申请退款
+												</c:if>
+												<c:if test='${item.status==2 }'>
+													等待消费
+												</c:if>
+												<c:if test='${item.status==3 }'>
+													交易完成
+												</c:if>
+												</td>
+												<td align="center">
+													<c:if test="${item.payStatus==0 }">
+														<a class="now-fk" href="#" onclick="payOrder(${item.id })">立即付款</a>
+														<a class="now-fk" style="background:#ccc;cursor:pointer" onclick="cancelOrder(${item.id })">取消</a>
+													</c:if>
+													<c:if test="${item.payStatus==1&&item.total-item.returnNum-item.checkNum>0}">
+														<a class="now-fk" href="#" onclick="returnTicket(${item.list[0].id },${item.total-item.checkNum })">申请退票</a>
+													</c:if>
+													<c:if test="${item.list[0].status==1||item.list[0].returnStatus==1}">
+														<a class="order-ck" href="<%=path %>/member/order/returnTicketMes?corderId=${item.list[0].id}">退票进度</a>
+													</c:if>
+													
+													<a class="order-ck" href="<%=path %>/member/order/detail?orderid=${item.id}">查看订单</a>
+												</td>
+											</tr>
+											
+											</c:forEach>
+											
+										</tbody>
 									</table>
+									<div class="main_mod_page clear"> </div>
+									<!-- 翻页 -->
 								</div>
 							</div>
 							<!-- 我的订单 -->
@@ -220,44 +187,95 @@
 			})
 		</script>
 		<!--订单中心用的js事件-->
-		<script>
-			$(function() {
-				//取消订单
-				$(".cancel_order").click(function() {
-					var orderid = $(this).attr('data-orderid');
-					var url = SITEURL + 'member/order/ajax_order_cancel';
-					layer.confirm('确定取消订单吗？', {
-						icon: 3,
-						btn: ['放弃', '确定'], //按钮
-						btn1: function() {
-							layer.closeAll();
-						},
-						btn2: function() {
-							$.getJSON(url, {
-								orderid: orderid
-							}, function(data) {
-								if(data.status) {
-									layer.msg('取消订单成功', {
-										icon: 6,
-										time: 1000
-									});
-									setTimeout(function() {
-										location.reload()
-									}, 1000);
-								} else {
-									layer.msg('取消订单失败', {
-										icon: 5,
-										time: 1000
-									});
+		<script> 
+			
+			function payOrder(orderId){
+				window.opener=this.window;
+				window.open("<%=path %>/member/order/payTicket?orderId="+orderId);
+			}
+			
+			function cancelOrder(orderId){
+				layer.confirm('确定取消订单吗？', {
+					icon: 3,
+					btn: ['确定', '放弃'],
+					btn2: function() {
+						layer.closeAll();
+					},
+					btn1: function() {
+						$.ajax({
+							url:"<%=path %>/member/order/delete",
+							type:"POST",
+							data:{
+								orderId:orderId,
+							},
+							cache:false,
+							success:function(data){
+								if(data.success){
+									layer.confirm('取消成功', {
+										icon: 3,
+										btn: ['确定'],
+										btn1: function() {
+											window.location.reload();
+										},
+									})
+										
+								}else{
+									layer.alert("取消失败:"+data.errorMsg);
 								}
-							})
-						},
-						cancel: function() {
-							layer.closeAll();
-						}
-					})
+							},
+							error:function(){
+								layer.alert("取消订单出错");
+							}
+						});
+					},
+					
+					cancel: function() {
+						layer.closeAll();
+					}
 				})
-			})
+			}
+			
+			//退票
+			function returnTicket(corderId,returnNum){
+				
+				var num=prompt("请输入退票数量:")
+				
+				if(num==null)
+					return ;
+				
+				if(num!=0){
+					
+					$.ajax({
+						url:"<%=path %>/member/order/returnTicket",
+						type:"POST",
+						data:{
+							corderId:corderId,
+							num:num
+						},
+						cache:false,
+						success:function(data){
+							if(data.success){
+								layer.confirm('申请退票成功！请等待审核', {
+									icon: 3,
+									btn: ['确定'],
+									btn1: function() {
+										window.location.reload();
+									},
+								})
+							}else{
+								layer.alert("退票失败:"+data.errorMsg);
+							}
+						},
+						error:function(){
+							layer.alert("系统错误");
+						}
+					});
+					
+				}else{
+					layer.alert("请输入正确的退票数量！");
+				}
+				
+			}
 		</script>
 	</body>
 

@@ -30,7 +30,7 @@
 		<div class="st-header">
 			<div class="wm-1200">
 				<div class="st-logo">
-					<a href="#" title="贵州古城文化旅游开发股份有限公司官方网站">
+					<a href="<%=path %>/index" title="贵州古城文化旅游开发股份有限公司官方网站">
 						<img src="<%=path %>/resources/index/img/logo.png" alt="贵州古城文化旅游开发股份有限公司官方网站" />
 					</a>
 				</div>

@@ -10,6 +10,10 @@
 */
 package com.ramostear.jbuilder.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.SecurityUtils;
@@ -25,7 +29,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ramostear.jbuilder.consts.SysConsts;
+import com.ramostear.jbuilder.entity.Ticket;
 import com.ramostear.jbuilder.entity.User;
+import com.ramostear.jbuilder.kit.ReqDto;
+import com.ramostear.jbuilder.service.OrderService;
+import com.ramostear.jbuilder.service.TicketService;
 import com.ramostear.jbuilder.service.UserService;
 
 /** 
@@ -40,6 +48,13 @@ public class MemberController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private OrderService orderService;
+	
+	
+	@Autowired
+	private TicketService ticketService;
 	
 	/**
 	 * 游客登录界面，不采用异步登录方式，直接进行页面跳转
@@ -151,7 +166,18 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/index",method=RequestMethod.GET)
-	public String index(){
+	public String index(ReqDto req,HttpSession session,Model model){
+		User member = (User)session.getAttribute(SysConsts.LOGIN_USER);
+		model.addAttribute("member", member);
+		List<Ticket> tlist=this.ticketService.findAll();
+		
+		Map<Long,Ticket> tlMap=new HashMap<>();
+	       for(Ticket entity : tlist){
+	    	   tlMap.put(entity.getId(),entity);
+	       }
+		
+		model.addAttribute("list", this.orderService.findByPageByUid(req.getPageNo(), req.getPageSize(), "id", true,member.getId(),null));
+		model.addAttribute("tlMap",tlMap);
 		return "member/index";
 	}
 }

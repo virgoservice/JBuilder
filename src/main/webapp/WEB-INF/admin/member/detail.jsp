@@ -34,27 +34,7 @@
 					<a href="/">首页</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;会员中心 </div>
 				<!--面包屑-->
 				<div class="st-main-page">
-					<div class="user-side-menu">
-						<ul>
-							<li>
-								<a id="nav_index" href="/member"><i class="st-user-icon user-home-icon"></i>会员首页</a>
-							</li>
-							<li>
-								<a class="side-menu-group" href="javascript:;"> <i class="st-user-icon user-order-icon"></i>我的订单<i class="arrow-icon"></i> </a>
-								<div class="son">
-									<a id="nav_allorder" href="/member/order/all">全部订单</a>
-									<a id="nav_spotorder" href="/member/order/plugin_list?typeid=5" class="on">景点订单</a>
-								</div>
-							</li>
-							<li>
-								<a class="side-menu-group" href="javascript:;"> <i class="st-user-icon user-center-icon"></i>个人中心<i class="arrow-icon"></i> </a>
-								<div class="son">
-									<a id="nav_userinfo" href="/member/index/userinfo">个人资料</a>
-									<a id="nav_safecenter" href="/member/index/safecenter" >账号安全</a>
-								</div>
-							</li>
-						</ul>
-					</div>
+					<jsp:include page="member_menu.jsp" />
 					<script>
 						$(function() {
 							$(".side-menu-group").on("click", function() {
