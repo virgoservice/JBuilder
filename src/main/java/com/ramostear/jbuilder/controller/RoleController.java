@@ -100,7 +100,7 @@ public class RoleController {
 	 * @param response
 	 */
 	@RequiresPermissions(value={"role:add","role:edit"})
-	@RequestMapping(value="/allPerms",method=RequestMethod.GET)
+	@RequestMapping(value="/allPerms",method=RequestMethod.POST)
 	public void allPerms(HttpServletResponse response){
 		List<Permission> plist = permissionService.findAll();
 		List<ZTreeDto> treeNodes = new ArrayList<ZTreeDto>();
@@ -119,7 +119,7 @@ public class RoleController {
 		}
 	}
 	@RequiresPermissions(value="role:edit")
-	@RequestMapping(value="/checkedPerms",method=RequestMethod.GET)
+	@RequestMapping(value="/checkedPerms",method=RequestMethod.POST)
 	public void checkedPerms(Long id,HttpServletResponse response){
 		List<Permission> allList = permissionService.findAll();
 		List<Long> clist = roleService.findPermissions(id);

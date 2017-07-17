@@ -149,7 +149,7 @@
 					autoParam:["id","name","parentId","checked"],
 					contentType:'application/json;charset=utf-8',
 					enable:true,
-					type:"GET",
+					type:"POST",
 					url:"<%=path%>/admin/role/allPerms"
 				},
 				callback:{
