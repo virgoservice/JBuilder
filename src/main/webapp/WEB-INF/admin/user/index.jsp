@@ -15,9 +15,9 @@
 		<!-- Bootstrap 3.3.6 -->
 		<link rel="stylesheet" href="<%=path %>/resources/admin/bootstrap/css/bootstrap.min.css">
 		<!-- Font Awesome -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-		<!-- Ionicons -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+	    <!-- Ionicons -->
+	    <link rel="stylesheet" href="<%=path %>/resources/admin/plugins/ionicons-2.0.1/css/ionicons.min.css">
 		<!-- Theme style -->
 		<link rel="stylesheet" href="<%=path %>/resources/admin/dist/css/AdminLTE.min.css">
 		<!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -78,7 +78,7 @@
 		<!-- jQuery 2.2.3 -->
 		<script src="<%=path %>/resources/admin/plugins/jQuery/jquery-2.2.3.min.js"></script>
 		<!-- jQuery UI 1.11.4 -->
-		<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+		<script src="<%=path %>/resources/admin/plugins/jQueryUI/jquery-ui.min.js"></script>
 		<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 		<script>
 			$.widget.bridge('uibutton', $.ui.button);
@@ -86,7 +86,6 @@
 		<!-- Bootstrap 3.3.6 -->
 		<script src="<%=path %>/resources/admin/bootstrap/js/bootstrap.min.js"></script>
 		<!-- Morris.js charts -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 		<!-- Sparkline -->
 		<script src="<%=path %>/resources/admin/plugins/sparkline/jquery.sparkline.min.js"></script>
 		<!-- jvectormap -->
@@ -95,7 +94,6 @@
 		<!-- jQuery Knob Chart -->
 		<script src="<%=path %>/resources/admin/plugins/knob/jquery.knob.js"></script>
 		<!-- daterangepicker -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
 		<!-- Bootstrap WYSIHTML5 -->
 		<script src="<%=path %>/resources/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 		<!-- Slimscroll -->

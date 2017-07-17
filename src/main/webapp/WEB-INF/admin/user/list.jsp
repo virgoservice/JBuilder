@@ -39,11 +39,9 @@
 								</shiro:hasPermission>
 								<td>${user.id}</td>
 								<td>
-									<a href="<%=path%>/admin/user/show?id=${user.id}">
 										<img src="<%=path %>/${user.avatar }" style="float:letf;width:25px;height:25px;border-radius:50%;margin-right:10px;margin-top:-2px;" alt="${user.username }">
-									</a>
 								</td>
-								<td><a href="<%=path%>/admin/user/show?id=${user.id}">${user.username}</a></td>
+								<td>${user.username}</td>
 								<td>${user.nickname}</td>
 								<td>
 									<c:if test="${user.type eq 0}">来宾用户</c:if>

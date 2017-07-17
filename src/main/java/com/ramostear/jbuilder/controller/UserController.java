@@ -10,12 +10,15 @@
 */
 package com.ramostear.jbuilder.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.ramostear.jbuilder.consts.SysConsts;
 import com.ramostear.jbuilder.entity.User;
 import com.ramostear.jbuilder.kit.ReqDto;
 import com.ramostear.jbuilder.service.RoleService;
@@ -91,8 +94,9 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/user/profile",method=RequestMethod.GET)
-	public String profile(Long id,Model model){
-		User user = userService.findById(id);
+	public String profile(HttpSession session,Model model){
+		User u = (User)session.getAttribute(SysConsts.LOGIN_USER);
+		User user = userService.findById(u.getId());
 		if(user!=null){
 			model.addAttribute("user", user);
 		}else{
@@ -100,6 +104,13 @@ public class UserController {
 		}
 		return "user/profile";
 	}
+	
+	@RequestMapping(value="/user/profile",method=RequestMethod.POST)
+	public String profile(User user,Model model){
+		this.userService.updateUser(user);
+		return "user/profile";
+	}
+	
 	@RequestMapping(value="/user/changeStatus",method=RequestMethod.POST)
 	public String changeStatus(Long id){
 		User u = userService.findById(id);

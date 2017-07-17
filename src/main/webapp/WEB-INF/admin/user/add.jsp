@@ -17,9 +17,9 @@
 	<!-- Bootstrap 3.3.6 -->
 	<link rel="stylesheet" href="<%=path %>/resources/admin/bootstrap/css/bootstrap.min.css">
 	<!-- Font Awesome -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-	<!-- Ionicons -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="<%=path %>/resources/admin/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="<%=path %>/resources/admin/plugins/ionicons-2.0.1/css/ionicons.min.css">
 	<!-- Theme style -->
 	<link rel="stylesheet" href="<%=path %>/resources/admin/dist/css/AdminLTE.min.css">
 	<!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -152,7 +152,7 @@
 										</c:forEach>
 									</div>
 								</div>
-								<div class="box box-solid">
+								<%-- <div class="box box-solid">
 									<div class="box-header with-border">
 										<h3 class="box-title">头像</h3>
 										<div class="box-tools">
@@ -177,7 +177,7 @@
 											</li>
 										</ul>
 									</div>
-								</div>
+								</div> --%>
 							</div>
 						</div>							
 					</form>
@@ -191,7 +191,7 @@
 		<script src="<%=path %>/resources/admin/plugins/jQuery/jquery.min.js"></script>
 		<script src="<%=path %>/resources/admin/plugins/editormd/editormd.min.js"></script>
 		<script type="text/javascript" src="<%=path %>/resources/admin/plugins/layer-v3.0.3/layer/layer.js" ></script>
-		<script type="text/javascript">
+		<!-- <script type="text/javascript">
 			var testEditor;
             $(function() {
                 testEditor = editormd("test-editormd", {
@@ -218,9 +218,9 @@
                     imageUploadURL : "./php/upload.php",
                 });
             });
-        </script>
+        </script> -->
 		<!-- jQuery UI 1.11.4 -->
-		<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+		<script src="<%=path %>/resources/admin/plugins/jQueryUI/jquery-ui.min.js"></script>
 		<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 		<script>
 			$.widget.bridge('uibutton', $.ui.button);

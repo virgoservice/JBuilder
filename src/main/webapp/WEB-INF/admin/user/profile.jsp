@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html>
-
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>JBuilder 2 | 我的资料</title>
+	<title>JBuilder| 我的资料</title>
 	<link rel="stylesheet" href="<%=path %>/resources/admin/plugins/editormd/css/editormd.css" />
 	<link rel="stylesheet" type="text/css" href="<%=path %>/resources/admin/plugins/layer-v3.0.3/layer/skin/default/layer.css"/>
 	<!-- Tell the browser to be responsive to screen width -->
@@ -17,9 +18,9 @@
 	<!-- Bootstrap 3.3.6 -->
 	<link rel="stylesheet" href="<%=path %>/resources/admin/bootstrap/css/bootstrap.min.css">
 	<!-- Font Awesome -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-	<!-- Ionicons -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="<%=path %>/resources/admin/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="<%=path %>/resources/admin/plugins/ionicons-2.0.1/css/ionicons.min.css">
 	<!-- Theme style -->
 	<link rel="stylesheet" href="<%=path %>/resources/admin/dist/css/AdminLTE.min.css">
 	<!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -48,461 +49,140 @@
 			<div class="content-wrapper">
 				<!-- Content Header (Page header) -->
 				<section class="content-header">
-					<h1>用户个人信息</h1>
+					<h1>用户资料</h1>
 				</section>
 				<section class="content">
-					<div class="row">
-						<div class="col-md-3">
-							<div class="box box-solid" style="padding: 5px;">
-								<div class="box-header with-border">
-									<h3 class="box-title">简介</h3>
-									<div class="box-tools">
-										<button type="button" class="btn btn-box-tool" data-widget="collapse">
-											<i class="fa fa-minus"></i>
-										</button>
-									</div>
-								</div>
-								<div class="box-body">
-									<img src="<%=path %>/resources/admin/dist/img/user2-160x160.jpg" class="profile-user-img img-responsive img-circle" alt="谭朝红"/>
-									<h3 class="profile-username text-center">谭朝红</h3>
-									<p class="text-muted text-center">Administrator</p>
-									<ul class="list-group list-group-unbordered">
-										<li class="list-group-item">
-											<b>发布文章</b>
-											<a class="pull-right">103</a>
-										</li>
-										<li class="list-group-item">
-											<b>文章草稿</b>
-											<a class="pull-right">15</a>
-										</li>
-										<li class="list-group-item">
-											<b>附件总数</b>
-											<a class="pull-right">234</a>
-										</li>
-									</ul>
-									<a href="user_edit.html" class="btn btn-primary btn-block"><b>修改信息</b></a>
-								</div>
-							</div>
-							<div class="box box-solid">
-								<div class="box-header with-border">
-									<h3 class="box-title">详细信息</h3>
-									<div class="box-tools">
-										<button type="button" class="btn btn-box-tool" data-widget="collapse">
-											<i class="fa fa-minus"></i>
-										</button>
-									</div>
-								</div>
-								<div class="box-body">
-									<strong>
-										<i class="fa fa-user">用户名</i>
-									</strong>
-									<p class="text-muted">ramostear</p>
-									<hr />
-									<strong>
-										<i class="fa fa-user-secret">姓名</i>
-									</strong>
-									<p class="text-muted">谭朝红</p>
-									<hr />
-									<strong>
-										<i class="fa fa-envelope-o">电子邮箱</i>
-									</strong>
-									<p class="text-muted">ramostear@seele.com</p>
-									<hr />
-									<strong>
-										<i class="fa fa-qq">QQ账号</i>
-									</strong>
-									<p class="text-muted">845275633</p>
-									<hr />
-									<strong>
-										<i class="fa fa-weibo">微博账号</i>
-									</strong>
-									<p class="text-muted">ramostear@sina.com</p>
-									<hr />
-									<strong>
-										<i class="fa fa-user">角色信息</i>
-									</strong>
-									<p class="text-muted">
-										<span class="label label-danger">超级管理员</span>
-										<span class="label label-success">站点管理员</span>
-										<span class="label label-info">文章编辑员</span>
-										<span class="label label-primary">文章审核员</span>
-									</p>
-									<hr />
-									<strong>
-										<i class="fa fa-file-archive-o">个性签名</i>
-									</strong>
-									<p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-9">
-							<div class="row">
-								<div class="nav-tabs-custom">
-									<ul class="nav nav-tabs">
-										<li class="active">
-											<a href="#publish" data-toggle="tab">已发布</a>
-										</li>
-										<li>
-											<a href="#authing" data-toggle="tab">审核中</a>
-										</li>
-										<li>
-											<a href="#caogao" data-toggle="tab">草稿箱</a>
-										</li>
-									</ul>
-									<div class="tab-content">
-										<div class="active tab-pane" id="publish">
-											<table class="table">
-												<thead>
-													<tr>
-														<td style="width: 10px;">#</td>
-														<td>标题</td>
-														<td>栏目</td>
-														<td>审核时间</td>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td>1</td>
-														<td>spring boot in action</td>
-														<td>spring boot</td>
-														<td>2017-04-28</td>
-													</tr>
-													<tr>
-														<td>1</td>
-														<td>spring boot in action</td>
-														<td>spring boot</td>
-														<td>2017-04-28</td>
-													</tr>
-													<tr>
-														<td>1</td>
-														<td>spring boot in action</td>
-														<td>spring boot</td>
-														<td>2017-04-28</td>
-													</tr>
-													<tr>
-														<td>1</td>
-														<td>spring boot in action</td>
-														<td>spring boot</td>
-														<td>2017-04-28</td>
-													</tr>
-													<tr>
-														<td>1</td>
-														<td>spring boot in action</td>
-														<td>spring boot</td>
-														<td>2017-04-28</td>
-													</tr>
-													<tr>
-														<td>1</td>
-														<td>spring boot in action</td>
-														<td>spring boot</td>
-														<td>2017-04-28</td>
-													</tr>
-												</tbody>
-											</table>
-											<div class="clearfix">
-												<ul class="pagination pagination-sm no-margin pull-right">
-													<li>
-														<a href="#">&laquo;</a>
-													</li>
-													<li>
-														<a href="#" class="active">1</a>
-													</li>
-													<li>
-														<a href="#">2</a>
-													</li>
-													<li>
-														<a href="#">3</a>
-													</li>
-													<li>
-														<a href="#">&raquo;</a>
-													</li>
-												</ul>
-											</div>
-										</div>
-										<div class="tab-pane" id="authing">
-											<table class="table">
-												<thead>
-													<tr>
-														<td style="width: 10px;">#</td>
-														<td>标题</td>
-														<td>栏目</td>
-														<td>提交时间</td>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td>1</td>
-														<td>spring boot in action</td>
-														<td>spring boot</td>
-														<td>2017-04-28</td>
-													</tr>
-													<tr>
-														<td>1</td>
-														<td>spring boot in action</td>
-														<td>spring boot</td>
-														<td>2017-04-28</td>
-													</tr>
-													<tr>
-														<td>1</td>
-														<td>spring boot in action</td>
-														<td>spring boot</td>
-														<td>2017-04-28</td>
-													</tr>
-													<tr>
-														<td>1</td>
-														<td>spring boot in action</td>
-														<td>spring boot</td>
-														<td>2017-04-28</td>
-													</tr>
-													<tr>
-														<td>1</td>
-														<td>spring boot in action</td>
-														<td>spring boot</td>
-														<td>2017-04-28</td>
-													</tr>
-													<tr>
-														<td>1</td>
-														<td>spring boot in action</td>
-														<td>spring boot</td>
-														<td>2017-04-28</td>
-													</tr>
-												</tbody>
-											</table>
-											<div class="clearfix">
-												<ul class="pagination pagination-sm no-margin pull-right">
-													<li>
-														<a href="#">&laquo;</a>
-													</li>
-													<li>
-														<a href="#" class="active">1</a>
-													</li>
-													<li>
-														<a href="#">2</a>
-													</li>
-													<li>
-														<a href="#">3</a>
-													</li>
-													<li>
-														<a href="#">&raquo;</a>
-													</li>
-												</ul>
-											</div>
-										</div>
-										<div class="tab-pane" id="caogao">
-											<table class="table">
-												<thead>
-													<tr>
-														<td style="width: 10px;">#</td>
-														<td>标题</td>
-														<td>栏目</td>
-														<td>创建时间</td>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td>1</td>
-														<td>spring boot in action</td>
-														<td>spring boot</td>
-														<td>2017-04-28</td>
-													</tr>
-													<tr>
-														<td>1</td>
-														<td>spring boot in action</td>
-														<td>spring boot</td>
-														<td>2017-04-28</td>
-													</tr>
-													<tr>
-														<td>1</td>
-														<td>spring boot in action</td>
-														<td>spring boot</td>
-														<td>2017-04-28</td>
-													</tr>
-													<tr>
-														<td>1</td>
-														<td>spring boot in action</td>
-														<td>spring boot</td>
-														<td>2017-04-28</td>
-													</tr>
-													<tr>
-														<td>1</td>
-														<td>spring boot in action</td>
-														<td>spring boot</td>
-														<td>2017-04-28</td>
-													</tr>
-													<tr>
-														<td>1</td>
-														<td>spring boot in action</td>
-														<td>spring boot</td>
-														<td>2017-04-28</td>
-													</tr>
-												</tbody>
-											</table>
-											<div class="clearfix">
-												<ul class="pagination pagination-sm no-margin pull-right">
-													<li>
-														<a href="#">&laquo;</a>
-													</li>
-													<li>
-														<a href="#" class="active">1</a>
-													</li>
-													<li>
-														<a href="#">2</a>
-													</li>
-													<li>
-														<a href="#">3</a>
-													</li>
-													<li>
-														<a href="#">&raquo;</a>
-													</li>
-												</ul>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							
-							<div class="row">
+					<form action="#" id="form"method="post">
+						<div class="row">
+							<div class="col-md-9">
 								<div class="box box-solid">
-									<div class="box-header with-border">
-									<h3 class="box-title">已传附件</h3>
-									<div class="box-tools">
-										<button type="button" class="btn btn-box-tool" data-widget="collapse">
-											<i class="fa fa-minus"></i>
-										</button>
-									</div>
-								</div>
 									<div class="box-body">
-										<ul class="list-unstyled col-xs-12">
-											<div class="row">
-								 				<li class="col-xs-2 margin-bottom">
-								 					<a href="javascript:void(0);" onclick="openlayer()">
-								 						<img src="<%=path %>/resources/admin/dist/img/photo2.png" title="spring3-mvc注解教程.ppt" alt="spring3-mvc注解教程.ppt" class="img-thumbnail img-responsive"/>
-								 					</a>
-								 				</li>
-								 				<li class="col-xs-2 margin-bottom">
-								 					<a href="javascript:void(0);" onclick="openlayer()">
-									 					<img src="<%=path %>/resources/admin/dist/img/photo3.jpg" title="spring3-mvc注解教程.ppt" alt="spring3-mvc注解教程.ppt" class="img-thumbnail img-responsive"/>
-								 					</a>
-								 				</li>
-								 				<li class="col-xs-2 margin-bottom">
-								 					<a href="javascript:void(0);" onclick="openlayer()">
-								 						<img src="<%=path %>/resources/admin/dist/img/photo2.png" title="spring3-mvc注解教程.ppt" alt="spring3-mvc注解教程.ppt" class="img-thumbnail img-responsive"/>
-								 					</a>
-								 				</li>
-								 				<li class="col-xs-2 margin-bottom">
-								 					<a href="javascript:void(0);" onclick="openlayer()">
-									 					<img src="<%=path %>/resources/admin/dist/img/photo3.jpg" title="spring3-mvc注解教程.ppt" alt="spring3-mvc注解教程.ppt" class="img-thumbnail img-responsive"/>
-								 					</a>
-								 				</li>
-								 				<li class="col-xs-2 margin-bottom">
-								 					<a href="javascript:void(0);" onclick="openlayer()">
-								 						<img src="<%=path %>/resources/admin/dist/img/photo2.png" title="spring3-mvc注解教程.ppt" alt="spring3-mvc注解教程.ppt" class="img-thumbnail img-responsive"/>
-								 					</a>
-								 				</li>
-								 				<li class="col-xs-2 margin-bottom">
-								 					<a href="javascript:void(0);" onclick="openlayer()">
-									 					<img src="<%=path %>/resources/admin/dist/img/photo3.jpg" title="spring3-mvc注解教程.ppt" alt="spring3-mvc注解教程.ppt" class="img-thumbnail img-responsive"/>
-								 					</a>
-								 				</li>
+										<div class="form-horizontal">
+											<h4>用户姓名</h4>
+											<hr />
+											<div class="form-group">
+												<label for="username" class="col-md-2 control-label">姓名（必填）</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" name="username" id="username"  readonly="readonly" value="${user.username}"/>
+													<input type="hidden" name="id" value="${user.id }" />
+												</div>
 											</div>
-											<div class="row">
-								 				<li class="col-xs-2 margin-bottom">
-								 					<a href="javascript:void(0);" onclick="openlayer()">
-								 						<img src="<%=path %>/resources/admin/dist/img/photo2.png" title="spring3-mvc注解教程.ppt" alt="spring3-mvc注解教程.ppt" class="img-thumbnail img-responsive"/>
-								 					</a>
-								 				</li>
-								 				<li class="col-xs-2 margin-bottom">
-								 					<a href="javascript:void(0);" onclick="openlayer()">
-									 					<img src="<%=path %>/resources/admin/dist/img/photo3.jpg" title="spring3-mvc注解教程.ppt" alt="spring3-mvc注解教程.ppt" class="img-thumbnail img-responsive"/>
-								 					</a>
-								 				</li>
-								 				<li class="col-xs-2 margin-bottom">
-								 					<a href="javascript:void(0);" onclick="openlayer()">
-								 						<img src="<%=path %>/resources/admin/dist/img/photo2.png" title="spring3-mvc注解教程.ppt" alt="spring3-mvc注解教程.ppt" class="img-thumbnail img-responsive"/>
-								 					</a>
-								 				</li>
-								 				<li class="col-xs-2 margin-bottom">
-								 					<a href="javascript:void(0);" onclick="openlayer()">
-									 					<img src="<%=path %>/resources/admin/dist/img/photo3.jpg" title="spring3-mvc注解教程.ppt" alt="spring3-mvc注解教程.ppt" class="img-thumbnail img-responsive"/>
-								 					</a>
-								 				</li>
-								 				<li class="col-xs-2 margin-bottom">
-								 					<a href="javascript:void(0);" onclick="openlayer()">
-								 						<img src="<%=path %>/resources/admin/dist/img/photo2.png" title="spring3-mvc注解教程.ppt" alt="spring3-mvc注解教程.ppt" class="img-thumbnail img-responsive"/>
-								 					</a>
-								 				</li>
-								 				<li class="col-xs-2 margin-bottom">
-								 					<a href="javascript:void(0);" onclick="openlayer()">
-									 					<img src="<%=path %>/resources/admin/dist/img/photo3.jpg" title="spring3-mvc注解教程.ppt" alt="spring3-mvc注解教程.ppt" class="img-thumbnail img-responsive"/>
-								 					</a>
-								 				</li>
+											<div class="form-group">
+												<label for="nickname" class="col-sm-2 control-label">昵称（必填）</label>
+												<div class="col-sm-9">
+													<input type="text" class="form-control" name="nickname" id="nickname"  value="${user.nickname }"/>
+												</div>
 											</div>
-											<div class="row">
-								 				<li class="col-xs-2 margin-bottom">
-								 					<a href="javascript:void(0);" onclick="openlayer()">
-								 						<img src="<%=path %>/resources/admin/dist/img/photo2.png" title="spring3-mvc注解教程.ppt" alt="spring3-mvc注解教程.ppt" class="img-thumbnail img-responsive"/>
-								 					</a>
-								 				</li>
-								 				<li class="col-xs-2 margin-bottom">
-								 					<a href="javascript:void(0);" onclick="openlayer()">
-									 					<img src="<%=path %>/resources/admin/dist/img/photo3.jpg" title="spring3-mvc注解教程.ppt" alt="spring3-mvc注解教程.ppt" class="img-thumbnail img-responsive"/>
-								 					</a>
-								 				</li>
-								 				<li class="col-xs-2 margin-bottom">
-								 					<a href="javascript:void(0);" onclick="openlayer()">
-								 						<img src="<%=path %>/resources/admin/dist/img/photo2.png" title="spring3-mvc注解教程.ppt" alt="spring3-mvc注解教程.ppt" class="img-thumbnail img-responsive"/>
-								 					</a>
-								 				</li>
-								 				<li class="col-xs-2 margin-bottom">
-								 					<a href="javascript:void(0);" onclick="openlayer()">
-									 					<img src="<%=path %>/resources/admin/dist/img/photo3.jpg" title="spring3-mvc注解教程.ppt" alt="spring3-mvc注解教程.ppt" class="img-thumbnail img-responsive"/>
-								 					</a>
-								 				</li>
-								 				<li class="col-xs-2 margin-bottom">
-								 					<a href="javascript:void(0);" onclick="openlayer()">
-								 						<img src="<%=path %>/resources/admin/dist/img/photo2.png" title="spring3-mvc注解教程.ppt" alt="spring3-mvc注解教程.ppt" class="img-thumbnail img-responsive"/>
-								 					</a>
-								 				</li>
-								 				<li class="col-xs-2 margin-bottom">
-								 					<a href="javascript:void(0);" onclick="openlayer()">
-									 					<img src="<%=path %>/resources/admin/dist/img/photo3.jpg" title="spring3-mvc注解教程.ppt" alt="spring3-mvc注解教程.ppt" class="img-thumbnail img-responsive"/>
-								 					</a>
-								 				</li>
-											</div>
-							 			</ul>
-									</div>
-									<div class="row">
-										<div class="col-sm-4">
 										</div>
-										<div class="col-sm-7">
-											<div class="dataTables_paginate paging_simple_numbers pull-right">
-												<ul class="pagination">
-													<li class="paginate_button previous disabled">
-														<a href="#">上一页</a>
-													</li>
-													<li class="paginate_button active">
-														<a href="#">1</a>
-													</li>
-													<li class="paginate_button">
-														<a href="#">2</a>
-													</li>
-													<li class="paginate_button">
-														<a href="#">3</a>
-													</li>
-													<li class="paginate_button">
-														<a href="#">4</a>
-													</li>
-													<li class="paginate_button next">
-														<a href="#">下一页</a>
-													</li>
-												</ul>
+										<div class="form-horizontal">
+											<h4>联系信息</h4>
+											<hr />
+											<div class="form-group">
+												<label for="email" class="col-md-2 control-label">电子邮件（必填）</label>
+												<div class="col-md-9">
+													<input type="email" class="form-control" name="email" id="email"  value="${user.email }"/>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="phone" class="col-sm-2 control-label">联系电话</label>
+												<div class="col-sm-9">
+													<input type="tel" class="form-control" name="phone" id="phone"  value="${user.phone}"/>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="qq" class="col-sm-2 control-label">QQ号码</label>
+												<div class="col-sm-9">
+													<input type="text" class="form-control" name="qq" id="qq"  value="${user.qq }"/>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="weibo" class="col-sm-2 control-label">微博号码</label>
+												<div class="col-sm-9">
+													<input type="text" class="form-control" name="weibo" id="weibo"  value="${user.weibo }"/>
+												</div>
+											</div>
+										</div>
+										<div class="form-horizontal">
+											<h4>重置密码</h4>
+											<hr />
+											<div class="form-group">
+												<label for="password" class="col-md-2 control-label">密码（不修改则不填写）</label>
+												<div class="col-md-9">
+													<input type="password" class="form-control" name="password" id="password"  value=""/>
+												</div>
+											</div>
+										</div>
+										<div class="form-horizontal">
+											<h4>个人说明</h4>
+											<hr />
+											<div class="form-group">
+												<label for="signature" class="col-md-2 control-label">个性签名</label>
+												<div class="col-md-9">
+													<textarea rows="4" id="signature" name="signature" class="form-control" placeholder="分享你的一些心情或者公开信息">${user.signature}</textarea>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					</div>
+							<div class="col-md-3">
+								<div class="box box-solid" style="display: block;padding: 10px 15px; position: relative;">
+									<div class="box-body">
+										<button type="button" class="btn btn-primary btn-sm "  onclick="submitDo();">保存</button>
+										<button type="button" class="btn btn-default btn-sm pull-right">重置</button>
+									</div>
+								</div>
+								
+								<%-- <div class="box box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">角色</h3>
+										<div class="box-tools">
+											<button type="button" class="btn btn-box-tool" data-widget="collapse">
+												<i class="fa fa-minus"></i>
+											</button>
+										</div>
+									</div>
+									<div class="box-body" style="padding: 10px 3px;">
+										<c:forEach items="${roles}" var="role">
+											<div class="col-sm-6">
+												<div class="checkbox">
+													<label>
+														<input type="checkbox" name="roleIds" <c:if test="${fn:contains(userRole,role.id)}"> checked="checked" </c:if> value="${role.id }"/>${role.name}
+													</label>
+												</div>
+											</div>
+										</c:forEach>
+									</div>
+								</div> --%>
+								<%-- <div class="box box-solid">
+									<div class="box-header with-border">
+										<h3 class="box-title">头像</h3>
+										<div class="box-tools">
+											<button type="button" class="btn btn-box-tool" data-widget="collapse">
+												<i class="fa fa-minus"></i>
+											</button>
+										</div>
+									</div>
+									<div class="box-body no-padding">
+										<ul class="nav">
+											<li class="">
+												<div style="min-height: 100px;">
+													<img src="<%=path %>/resources/admin/dist/img/avatar5.png" id="thumbnail" class="img-responsive img-circle center-block"/>
+													<input type="hidden" name="" value="" id="" />
+												</div>
+												<div style="clear: both;"></div>
+											</li>
+											<li style="border-top: 1px solid #f4f4f4; display: block;padding: 10px 15px;position: relative;">
+												<button type="button" class="btn btn-default btn-sm" onclick="selectThumbnail()">上传头像</button>
+												<a href="javascript:;" style="display: inline;" onclick="removeThumbnail()">移除头像</a>
+												<div style="clear: both;"></div>
+											</li>
+										</ul>
+									</div>
+								</div> --%>
+							</div>
+						</div>							
+					</form>
 				</section>
 			</div>
 			<jsp:include page="../../common/footer.jsp"/>
@@ -511,29 +191,11 @@
 		<!-- jQuery 2.2.3 -->
 		<script src="<%=path %>/resources/admin/plugins/jQuery/jquery-2.2.3.min.js"></script>
 		<script src="<%=path %>/resources/admin/plugins/jQuery/jquery.min.js"></script>
+		<script src="<%=path %>/resources/admin/plugins/editormd/editormd.min.js"></script>
 		<script type="text/javascript" src="<%=path %>/resources/admin/plugins/layer-v3.0.3/layer/layer.js" ></script>
 		<script src="<%=path%>/resources/admin/dist/js/common.js"></script>
-		<script type="text/javascript">
-			var reload = false;
-			function openlayer(){
-				reload = false;
-				layer.open({
-					type:2,
-					title:'附件详情',
-					shadeClose:true,
-					shade:0.85,
-					area:['70%','80%'],
-					content:'attachment_detail.html',
-					end:function(){
-						if(reload){
-							location.reload();
-						}
-					}
-				});
-			}
-		</script>
 		<!-- jQuery UI 1.11.4 -->
-		<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+		<script src="<%=path %>/resources/admin/plugins/jQueryUI/jquery-ui.min.js"></script>
 		<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 		<script>
 			$.widget.bridge('uibutton', $.ui.button);
@@ -541,16 +203,49 @@
 		<!-- Bootstrap 3.3.6 -->
 		<script src="<%=path %>/resources/admin/bootstrap/js/bootstrap.min.js"></script>
 		<!-- Morris.js charts -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+		<!-- Sparkline -->
+		<script src="<%=path %>/resources/admin/plugins/sparkline/jquery.sparkline.min.js"></script>
 		<!-- jvectormap -->
 		<script src="<%=path %>/resources/admin/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
 		<script src="<%=path %>/resources/admin/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+		<!-- jQuery Knob Chart -->
+		<script src="<%=path %>/resources/admin/plugins/knob/jquery.knob.js"></script>
+		<!-- daterangepicker -->
 		<!-- Bootstrap WYSIHTML5 -->
 		<script src="<%=path %>/resources/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 		<!-- Slimscroll -->
+		<script src="<%=path %>/resources/admin/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 		<!-- FastClick -->
+		<script src="<%=path %>/resources/admin/plugins/fastclick/fastclick.js"></script>
 		<!-- AdminLTE App -->
 		<script src="<%=path %>/resources/admin/dist/js/app.min.js"></script>
-		
+		<script type="text/javascript">
+			function submitDo(){
+				var data = $("#form").serialize();
+				data = decodeURIComponent(data,true);
+				$.ajax({
+					url:"<%=path%>/admin/user/profile",
+					type:'POST',
+					data:data,
+					contentType:"application/x-www-form-urlencoded",
+					encoding:"utf-8",
+					cache:false,
+					success:function(html){
+						layer.open({
+							title:'系统提示',
+							content:"用户已经成功修改！",
+							icon:1,
+							offset:'15px',
+							btnAlign:'c',
+							btn:['我知道了'],
+							yes:function(index){
+								layer.close(index);
+								$(location).attr("href","<%=path%>/admin/user/profile");
+							},
+						});
+					}
+				});
+			}
+		</script>
 	</body>
 </html>

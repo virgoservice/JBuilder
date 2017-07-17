@@ -200,6 +200,9 @@ public class UserServiceImpl implements UserService{
 	 */
 	@Override
 	public User updateUser(User user) {
+		if(user.getPassword()!=null || !"".equals(user.getPassword())){
+			passwordHelper.encryptPassword(user);
+		}
 		userDao.update(user);
 		return user;
 	}

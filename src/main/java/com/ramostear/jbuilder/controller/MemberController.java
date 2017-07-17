@@ -58,6 +58,8 @@ public class MemberController {
 	@Autowired
 	private PasswordHelper passwordHelper;
 	
+	public  static final String USER_AVATAR = "resources/index/res/images/member_nopic.png";
+	
 	/**
 	 * 游客登录界面，不采用异步登录方式，直接进行页面跳转
 	 * @param model
@@ -138,6 +140,7 @@ public class MemberController {
 		user.setType(2); 	//设置用户类型为注册用户
 		user.setStatus(1);  //启用该用户
 		user.setNickname(user.getUsername());
+		user.setAvatar(USER_AVATAR);
 		userService.add(user);
 		return "redirect:/member/login";
 	}

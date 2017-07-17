@@ -7,7 +7,7 @@
 <div class="web-top">
 			<div class="wm-1200">
 				<div class="notice-txt">
-					<p>欢迎访问贵州古城文化旅游开发股份有限公司官网</p>
+					<p>欢迎访问去古城网官方网站</p>
 				</div>
 				<div class="top-login"> 
 					<c:if test="${login_user ==null }">
@@ -30,8 +30,8 @@
 		<div class="st-header">
 			<div class="wm-1200">
 				<div class="st-logo">
-					<a href="<%=path %>/index" title="贵州古城文化旅游开发股份有限公司官方网站">
-						<img src="<%=path %>/resources/index/img/logo.png" alt="贵州古城文化旅游开发股份有限公司官方网站" />
+					<a href="<%=path %>/index" title="去古城官网">
+						<img src="<%=path %>/resources/index/img/logo.png" width="279" height="66" alt="去古城官网" />
 					</a>
 				</div>
 				<div class="st-top-search">

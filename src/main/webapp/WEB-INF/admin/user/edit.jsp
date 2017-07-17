@@ -18,9 +18,9 @@
 	<!-- Bootstrap 3.3.6 -->
 	<link rel="stylesheet" href="<%=path %>/resources/admin/bootstrap/css/bootstrap.min.css">
 	<!-- Font Awesome -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-	<!-- Ionicons -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="<%=path %>/resources/admin/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="<%=path %>/resources/admin/plugins/ionicons-2.0.1/css/ionicons.min.css">
 	<!-- Theme style -->
 	<link rel="stylesheet" href="<%=path %>/resources/admin/dist/css/AdminLTE.min.css">
 	<!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -128,7 +128,7 @@
 							<div class="col-md-3">
 								<div class="box box-solid" style="display: block;padding: 10px 15px; position: relative;">
 									<div class="box-body">
-										<button type="button" class="btn btn-primary btn-sm ">保存</button>
+										<button type="button" class="btn btn-primary btn-sm " onclick="submitDo();">保存</button>
 										<button type="button" class="btn btn-default btn-sm pull-right">重置</button>
 									</div>
 								</div>
@@ -154,7 +154,7 @@
 										</c:forEach>
 									</div>
 								</div>
-								<div class="box box-solid">
+								<%-- <div class="box box-solid">
 									<div class="box-header with-border">
 										<h3 class="box-title">头像</h3>
 										<div class="box-tools">
@@ -179,7 +179,7 @@
 											</li>
 										</ul>
 									</div>
-								</div>
+								</div> --%>
 							</div>
 						</div>							
 					</form>
@@ -194,7 +194,7 @@
 		<script src="<%=path %>/resources/admin/plugins/editormd/editormd.min.js"></script>
 		<script type="text/javascript" src="<%=path %>/resources/admin/plugins/layer-v3.0.3/layer/layer.js" ></script>
 		<script src="<%=path%>/resources/admin/dist/js/common.js"></script>
-		<script type="text/javascript">
+		<!-- <script type="text/javascript">
 			var testEditor;
             $(function() {
                 testEditor = editormd("test-editormd", {
@@ -221,9 +221,9 @@
                     imageUploadURL : "./php/upload.php",
                 });
             });
-        </script>
+        </script> -->
 		<!-- jQuery UI 1.11.4 -->
-		<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+		<script src="<%=path %>/resources/admin/plugins/jQueryUI/jquery-ui.min.js"></script>
 		<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 		<script>
 			$.widget.bridge('uibutton', $.ui.button);
@@ -231,7 +231,6 @@
 		<!-- Bootstrap 3.3.6 -->
 		<script src="<%=path %>/resources/admin/bootstrap/js/bootstrap.min.js"></script>
 		<!-- Morris.js charts -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 		<!-- Sparkline -->
 		<script src="<%=path %>/resources/admin/plugins/sparkline/jquery.sparkline.min.js"></script>
 		<!-- jvectormap -->
@@ -240,7 +239,6 @@
 		<!-- jQuery Knob Chart -->
 		<script src="<%=path %>/resources/admin/plugins/knob/jquery.knob.js"></script>
 		<!-- daterangepicker -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
 		<!-- Bootstrap WYSIHTML5 -->
 		<script src="<%=path %>/resources/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 		<!-- Slimscroll -->
@@ -250,19 +248,29 @@
 		<!-- AdminLTE App -->
 		<script src="<%=path %>/resources/admin/dist/js/app.min.js"></script>
 		<script type="text/javascript">
-			function selectThumbnail(){
-				layer.open({
-					type:2,
-					title:'上传头像',
-					shadeClose:true,
-					shade:0.8,
-					area:['60%','60%'],
-					content:'face_upload.html',
-					end:function(){
-						if(''!=data.url && null != data.url){
-							$("#thumbnail").attr('src',data.url);
-							$("#content_thumbnail").attr("value",data.url);
-						}
+			function submitDo(){
+				var data = $("#form").serialize();
+				data = decodeURIComponent(data,true);
+				$.ajax({
+					url:"<%=path%>/admin/user/edit",
+					type:'POST',
+					data:data,
+					contentType:"application/x-www-form-urlencoded",
+					encoding:"utf-8",
+					cache:false,
+					success:function(html){
+						layer.open({
+							title:'系统提示',
+							content:"用户已经成功修改！",
+							icon:1,
+							offset:'15px',
+							btnAlign:'c',
+							btn:['我知道了'],
+							yes:function(index){
+								layer.close(index);
+								$(location).attr("href","<%=path%>/admin/user/index");
+							},
+						});
 					}
 				});
 			}

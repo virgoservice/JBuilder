@@ -27,7 +27,7 @@
 						</li>
 						<li class="user-footer">
 							<div class="pull-left">
-								<a href="user_profilet.html" class="btn btn-default btn-flat">资料</a>
+								<a href="<%=path %>/admin/user/profile" class="btn btn-default btn-flat">资料</a>
 							</div>
 							<div class="pull-right">
 								<a href="<%=path %>/admin/logout" class="btn btn-default btn-flat">退出</a>
