@@ -111,7 +111,7 @@
 		select sum(t.num) from 
 		order_cancel_order t 
 		where t.childOrderId=#{id}
- 
+ 		and t.status=0
 	</select>
 	
 	<select id="findCancelResult"  parameterType="Long"  resultType="Long">
