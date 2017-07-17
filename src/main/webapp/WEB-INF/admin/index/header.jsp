@@ -18,7 +18,7 @@
 					</c:if>
 					<c:if test="${login_user !=null }">
 						<span id="loginstatus"> 
-							<a class="dl" href="<%=path %>/member/order/list">欢迎！${login_user.nickname }</a>
+							<a class="dl" href="<%=path %>/member/index">欢迎！${login_user.nickname }</a>
 							<a class="zc" href="<%=path %>/member/logout">退出</a>
 						</span>
 					</c:if>

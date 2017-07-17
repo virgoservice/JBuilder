@@ -228,14 +228,16 @@ public class MemberController {
 		boolean flag = false;
 		User user = this.userService.findByName(username);
 		if(user != null){
-			User cu = new User(username, password);
-			cu.setSalt(user.getSalt());
-			String pwd = passwordHelper.getPassword(cu);
-			if(user.getPassword().equals(pwd)){
-				flag = true;
+			if(user.getStatus()==1)
+			{
+				User cu = new User(username, password);
+				cu.setSalt(user.getSalt());
+				String pwd = passwordHelper.getPassword(cu);
+				if(user.getPassword().equals(pwd)){
+					flag = true;
+				}
 			}
 		}
 		return flag;
 	}
-	
 }
