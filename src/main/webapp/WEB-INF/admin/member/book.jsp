@@ -31,7 +31,7 @@
 		<div class="big">
 			<div class="wm-1200">
 				<div class="st-guide">
-					<a href="/">首页</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;景点 </div>
+					<a href="<%=path %>/index">首页</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;景点 </div>
 				<!--面包屑-->
 				<div class="st-main-page">
 					<div class="order-content">

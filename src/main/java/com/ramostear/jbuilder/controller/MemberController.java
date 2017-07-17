@@ -17,10 +17,6 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,12 +25,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ramostear.jbuilder.consts.SysConsts;
+import com.ramostear.jbuilder.entity.Order;
 import com.ramostear.jbuilder.entity.Ticket;
 import com.ramostear.jbuilder.entity.User;
+import com.ramostear.jbuilder.kit.PageDto;
 import com.ramostear.jbuilder.kit.ReqDto;
 import com.ramostear.jbuilder.service.OrderService;
 import com.ramostear.jbuilder.service.TicketService;
 import com.ramostear.jbuilder.service.UserService;
+import com.ramostear.jbuilder.service.impl.PasswordHelper;
 
 /** 
  * @Desc: (处理前端注册用户的控制类) 
@@ -55,6 +54,9 @@ public class MemberController {
 	
 	@Autowired
 	private TicketService ticketService;
+	
+	@Autowired
+	private PasswordHelper passwordHelper;
 	
 	/**
 	 * 游客登录界面，不采用异步登录方式，直接进行页面跳转
@@ -94,39 +96,19 @@ public class MemberController {
 			return "member/login";
 		}
 		session.removeAttribute(SysConsts.VERIFY_CODE);
-		Subject currUser = SecurityUtils.getSubject();
-		if(!currUser.isAuthenticated()){
-			UsernamePasswordToken token = new UsernamePasswordToken(username,password);
-			token.setRememberMe(true);
-			try {
-				currUser.login(token);
-			}catch(UnknownAccountException uae){
-				model.addAttribute("msg", "<i class=\"fa  fa-bell\"></i> 用户名或密码不正确！")
-				.addAttribute("username", username)
-				.addAttribute("password", password).
-				addAttribute("verifyCode", verifyCode);
-				return "login";
-			}catch (LockedAccountException e){
-				model.addAttribute("msg", "<i class=\"fa  fa-bell\"></i> 用户已被锁定，请联系管理员！")
-				.addAttribute("username", username)
-				.addAttribute("password", password).
-				addAttribute("verifyCode", verifyCode);
-				return "login";
-			}
-			catch (AuthenticationException e) {
-				model.addAttribute("msg", "<i class=\"fa  fa-bell\"></i> 用户名或密码不正确！")
-				.addAttribute("username", username)
-				.addAttribute("password", password).
-				addAttribute("verifyCode", verifyCode);
-				return "login";
-			}
-		}
-		if(currUser.isAuthenticated()){
+		
+		boolean flag = this.memberLogin(username, password);
+		if(flag){
 			User user = userService.findByName(username);
 			session.setAttribute(SysConsts.LOGIN_USER, user);
 			return "redirect:/member/index";
+		}else{
+			model.addAttribute("msg", "<i class=\"fa  fa-bell\"></i> 用户名或密码不正确！")
+			.addAttribute("username", username)
+			.addAttribute("password", password).
+			addAttribute("verifyCode", verifyCode);
+			return "member/login";
 		}
-		return "member/login";
 	}
 	
 	/**
@@ -161,9 +143,27 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/userinfo",method=RequestMethod.GET)
-	public String userinfo(){
+	public String userinfo(HttpSession session,Model model){
+		User member = (User) session.getAttribute(SysConsts.LOGIN_USER);
+		model.addAttribute("member", this.userService.findById(member.getId()));
 		return "member/userinfo";
 	}
+	
+	@RequestMapping(value="/userinfo",method=RequestMethod.POST)
+	public String userinfo(User user,Model model){
+		User u = this.userService.findById(user.getId());
+		if(u != null)
+		{
+			u.setEmail(user.getEmail());
+			u.setNickname(user.getNickname());
+			u.setPhone(user.getPhone());
+			u.setQq(user.getQq());
+			u.setSignature(user.getSignature());
+			this.userService.updateMember(u);
+		}
+		return "member/userinfo";
+	}
+	
 	
 	@RequestMapping(value="/index",method=RequestMethod.GET)
 	public String index(ReqDto req,HttpSession session,Model model){
@@ -175,9 +175,67 @@ public class MemberController {
 	       for(Ticket entity : tlist){
 	    	   tlMap.put(entity.getId(),entity);
 	       }
-		
-		model.addAttribute("list", this.orderService.findByPageByUid(req.getPageNo(), req.getPageSize(), "id", true,member.getId(),null));
+	    PageDto<Order> list = this.orderService.findByPageByUid(req.getPageNo(), req.getPageSize(), "id", true,member.getId(),null);
+		model.addAttribute("list", list);
+		model.addAttribute("size", list.getItems().size());
 		model.addAttribute("tlMap",tlMap);
 		return "member/index";
 	}
+	
+	@RequestMapping(value="/safecenter",method=RequestMethod.GET)
+	public String safecenter(HttpSession session,Model model)
+	{
+		User u = (User)session.getAttribute(SysConsts.LOGIN_USER);
+		User member = this.userService.findById(u.getId());
+		model.addAttribute("member",member);
+		return "member/safecenter";
+	}
+	
+	@RequestMapping(value="/changePwd",method=RequestMethod.POST)
+	public String changPwd(String oldPwd,String newPwd,Long id,Model model){
+		boolean flag = this.checkPwd(id, oldPwd);
+		if(flag){
+			User u = this.userService.findById(id);
+			if(u!=null){
+				u.setPassword(newPwd);
+				passwordHelper.encryptPassword(u);
+				this.userService.updateUser(u);
+				return "redirect:/member/logout";
+			}else{
+				return "member/safecenter";
+			}
+		}else{
+			model.addAttribute("msg", "*原始密码不正确!");
+			return "member/safecenter";
+		}
+	}
+	
+	private boolean checkPwd(Long userId,String pwd)
+	{
+		boolean flag = false;
+		User cu = this.userService.findById(userId);
+		User u = new User(cu.getUsername(), pwd);
+		u.setSalt(cu.getSalt());
+		String password = passwordHelper.getPassword(u);
+		if(cu.getPassword().equals(password))
+		{
+			flag = true;
+		}
+		return flag;
+	}
+	
+	private boolean memberLogin(String username,String password){
+		boolean flag = false;
+		User user = this.userService.findByName(username);
+		if(user != null){
+			User cu = new User(username, password);
+			cu.setSalt(user.getSalt());
+			String pwd = passwordHelper.getPassword(cu);
+			if(user.getPassword().equals(pwd)){
+				flag = true;
+			}
+		}
+		return flag;
+	}
+	
 }

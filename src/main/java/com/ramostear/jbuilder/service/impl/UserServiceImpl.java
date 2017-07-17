@@ -226,5 +226,13 @@ public class UserServiceImpl implements UserService{
 		return new PageDto<User>(totalSize,offset,size,list);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.ramostear.jbuilder.service.UserService#updateMember(com.ramostear.jbuilder.entity.User)
+	 */
+	@Override
+	public User updateMember(User user) {
+		this.userDao.updateMember(user);
+		return user;
+	}
 
 }

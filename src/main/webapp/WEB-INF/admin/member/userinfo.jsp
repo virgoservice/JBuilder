@@ -30,7 +30,7 @@
 		<div class="big">
 			<div class="wm-1200">
 				<div class="st-guide">
-					<a href="/">首页</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;会员中心 </div>
+					<a href="<%=path %>/index">首页</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;会员中心 </div>
 				<!--面包屑-->
 				<div class="st-main-page">
 					<jsp:include page="member_menu.jsp" />
@@ -47,79 +47,52 @@
 					</script>
 					<div class="user-cont-box">
 						<div class="personal-data">
-							<h3 class="gr-tit">个人资料</h3>
-							<dl> <dt>头&nbsp;&nbsp;像：</dt>
-								<dd>
-									<div class="head-pic">
-										<img id="face" src="<%=path %>/resources/index/res/images/member_nopic.png">
-										<span class="upload">编辑头像</span>
-									</div> 
-									<input type="hidden" id="litpic" value="/res/images/member_nopic.png"> 
-								</dd>
-							</dl>
-							<dl> 
-								<dt>昵&nbsp;&nbsp;称：</dt>
-								<dd> 
-									<input type="text" class="msg-text" id="nickname" value="ramostear">
-									<span class="star-ico">*</span> 
-								</dd>
-							</dl>
-							<dl> <dt>性&nbsp;&nbsp;别：</dt>
-								<dd> <span class="sex"><a href="javascript:;">男</a><a href="javascript:;">女</a></span> <input type="hidden" name="sex" id="sex" value="保密"> </dd>
-							</dl>
-							<dl> <dt>出生年月：</dt>
-								<dd> <input type="text" class="default-text" id="birth_date" name="birth_date" placeholder="年/月/日" value=""> </dd>
-							</dl>
-							<dl> <dt>籍&nbsp;&nbsp;贯：</dt>
-								<dd> <input type="text" class="default-text" name="native_place" id="native_place" value=""> </dd>
-							</dl>
-							<dl> <dt>常住地址：</dt>
-								<dd> <input type="text" class="default-text" name="address" id="address" value=""> </dd>
-							</dl>
-							<dl> <dt>手机号：</dt>
-								<dd> <span class="phone-num">未绑定</span>
-									<a class="revise" href="/member/index/modify_phone?change=1">绑定手机&gt;</a>
-								</dd>
-							</dl>
-							<dl> <dt>E-mail：</dt>
-								<dd> <span class="mail">ramostear@163.com</span>
-									<a class="revise" href="/member/index/modify_email?change=1">更换邮箱&gt;</a>
-								</dd>
-							</dl>
-							<dl> <dt>微信号：</dt>
-								<dd> <input type="text" class="default-text" name="wechat" id="wechat" value=""> </dd>
-							</dl>
-							<dl> <dt>星&nbsp;&nbsp;座：</dt>
-								<dd>
-									<select name="constellation" id="constellation" class="drop-down" style="width: 65px;">
-										<option value="水瓶座">水瓶座</option>
-										<option value="双鱼座">双鱼座</option>
-										<option value="白羊座">白羊座</option>
-										<option value="金牛座">金牛座</option>
-										<option value="双子座">双子座</option>
-										<option value="巨蟹座">巨蟹座</option>
-										<option value="狮子座">狮子座</option>
-										<option value="处女座">处女座</option>
-										<option value="天秤座">天秤座</option>
-										<option value="天蝎座">天蝎座</option>
-										<option value="射手座">射手座</option>
-										<option value="魔羯座">魔羯座</option>
-									</select>
-								</dd>
-							</dl>
-							<dl> <dt>Q&nbsp;&nbsp;Q：</dt>
-								<dd> <input type="text" class="default-text" name="qq" id="qq" value=""> </dd>
-							</dl>
-							<dl> <dt>个性签名：</dt>
-								<dd> <textarea name="signature" id="signature" class="default-textarea"></textarea> </dd>
-							</dl>
+							<form id="user-form">
+								<h3 class="gr-tit">个人资料</h3>
+								<dl> <dt>头&nbsp;&nbsp;像：</dt>
+									<dd>
+										<div class="head-pic">
+											<img id="face" src="<%=path %>/resources/index/res/images/member_nopic.png">
+											<span class="upload">编辑头像</span>
+										</div> 
+										<!-- <input type="hidden" id="litpic" value="/res/images/member_nopic.png">  -->
+										<input type="hidden" id="id" name="id" value="${member.id }">
+									</dd>
+								</dl>
+								<dl> 
+									<dt>登录账户：</dt>
+									<dd> 
+										<input type="text" class="msg-text" id="username" name="username" value="${member.username }" readonly="readonly">
+										<span class="star-ico">*</span> 
+									</dd>
+								</dl>
+								<dl> 
+									<dt>昵&nbsp;&nbsp;称：</dt>
+									<dd> 
+										<input type="text" class="msg-text" id="nickname" name="nickname" value="${member.nickname }">
+										<span class="star-ico">*</span> 
+									</dd>
+								</dl>
+								<dl> <dt>联系电话：</dt>
+									<dd> <input type="text" class="default-text" id="phone" name="phone" value="${member.phone }"> </dd>
+								</dl>
+								<dl> <dt>邮&nbsp;&nbsp;箱：</dt>
+									<dd> <input type="text" class="default-text" name="email" id="email" value="${member.email}"> </dd>
+								</dl>
+								<dl> <dt>Q&nbsp;&nbsp;Q：</dt>
+									<dd> <input type="text" class="default-text" name="qq" id="qq" value="${member.qq }"> </dd>
+								</dl>
+								<dl> <dt>个性签名：</dt>
+									<dd> <textarea name="signature" id="signature" class="default-textarea">${member.signature }</textarea> </dd>
+								</dl>
+							</form>
 							<hr>
 							<div class="save-revise">
 								<a href="javascript:;" class="saveinfo">保存修改</a>
 							</div>
 							<div class="success-out-box" style=" display:none">
 								<div class="box-con">
-									<h3><img src="/res/images/success-ico.png">个人资料修改成功！</h3>
+									<h3><img src="<%=path %>/resources/index/res/images/success-ico.png">个人资料修改成功！</h3>
 									<a href="javascript:;" class="close_success">确 定</a>
 								</div>
 							</div>
@@ -146,6 +119,24 @@
 		</script>
 		<!--订单中心用的js事件-->
 		<script>
+			$(".saveinfo").click(function(){
+				var data = $("#user-form").serialize();
+				data = decodeURIComponent(data,true);
+				$.ajax({
+					url:"<%=path %>/member/userinfo",
+					type:'POST',
+					encentType:"application/x-www-form-urlencoded",
+					encoding:"utf-8",
+					cache:false,
+					data:data,
+					success:function(){
+					$(".success-out-box").show();
+					}
+				});
+			});
+			$(".close_success").click(function(){
+				$(".success-out-box").hide();
+			});
 			$(function() {
 				//取消订单
 				$(".cancel_order").click(function() {

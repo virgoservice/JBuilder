@@ -39,6 +39,12 @@ public interface UserDao {
 	public Long size();
 	
 	public Long memberSize();
+	/**
+	 * 修改前端用户
+	 * @param user
+	 * @return
+	 */
+	public void updateMember(User user);
 	
 	public List<User> findByPage(@Param("offset")int offset,@Param("size")int size,@Param("orderBy")String orderBy,@Param("order")boolean order);
 	

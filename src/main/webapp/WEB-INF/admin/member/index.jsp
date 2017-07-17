@@ -32,7 +32,7 @@
 		<div class="big">
 			<div class="wm-1200">
 				<div class="st-guide">
-					<a href="/">首页</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;会员中心 </div>
+					<a href="<%=path %>/index">首页</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;会员中心 </div>
 				<!--面包屑-->
 				<div class="st-main-page">
 					<jsp:include page="member_menu.jsp" />
@@ -69,21 +69,27 @@
 											<a href="/member/club/rank"><span class="level">Lv.1</span></a>
 										</p>
 										<p class="item-bar">会员等级：普通会员</p>
-										<p class="item-bar">登录邮箱： 未绑定
-											<a class="rz-no" href="/member/index/modify_phone?change=0">立即绑定</a>
-										</p>
+										<c:if test="${member.email == null }">
+											<p class="item-bar">登录邮箱： 未绑定
+												<a class="rz-no" href="/member/index/modify_phone?change=0">立即绑定</a>
+											</p>
+										</c:if>
+										<c:if test="${member.email != null }">
+											<p class="item-bar">邮箱：${member.email}
+											</p>
+										</c:if>
 										<p class="item-bar">手机号码： ${member.username}</p>
 										<p class="item-bar">真实姓名： 未实名
-											<a class="rz-no" href="/member/index/modify_idcard">实名认证</a>
+											<a class="rz-no" href="#">实名认证</a>
 										</p>
 									</div>
 								</div>
 								<!-- 账号信息 -->
 								<div class="user-msg-tj">
 									<ul>
-										<li class="my-jf" data-url="/member/order/all-unpay"> <em></em> <span>未付款</span> <strong>3</strong> </li>
-										<li class="un-fk" data-url="/member/order/all-uncomment"> <em></em> <span>未点评</span> <strong>0</strong> </li>
-										<li class="my-zx" data-url="/member/index/myquestion"> <em></em> <span>我的咨询</span> <strong>0</strong> </li>
+										<li class="my-jf" data-url="<%=path %>/member/order/list"> <em></em> <span>订单数</span> <strong>${size}</strong> </li>
+										<li class="un-fk" data-url="#"> <em></em> <span>未点评</span> <strong>0</strong> </li>
+										<li class="my-zx" data-url="#"> <em></em> <span>我的咨询</span> <strong>0</strong> </li>
 									</ul>
 								</div>
 								<!-- 订单信息 -->

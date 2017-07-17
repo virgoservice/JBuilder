@@ -34,7 +34,7 @@
 					<div class="wm-1200">
 
 						<div class="st-guide">
-							<a href="/">首页</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;在线支付
+							<a href="<%=path %>/index">首页</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;在线支付
 						</div>
 						<!--面包屑-->
 

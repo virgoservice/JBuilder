@@ -54,4 +54,14 @@ public class PasswordHelper {
 				hashIterations).toHex();
 		user.setPassword(newPassword);
 	}
+	
+	public String getPassword(User user){
+		String newPassword = new SimpleHash(
+				algorithmName,
+				user.getPassword(),
+				ByteSource.Util.bytes(user.getCredentialsSalt()),
+				hashIterations).toHex();
+		user.setPassword(newPassword);
+		return user.getPassword();
+	}
 }

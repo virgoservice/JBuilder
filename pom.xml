@@ -495,6 +495,7 @@
 		  <groupId>com.ramostear.svip</groupId>
 		  <artifactId>alipay-sdk-java</artifactId>
 		  <version>20170307171631</version>
+		  <classifier>jar</classifier>
 		</dependency>
 		<!-- private repo end -->
 		

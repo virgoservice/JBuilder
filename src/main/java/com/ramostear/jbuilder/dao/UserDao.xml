@@ -67,12 +67,24 @@
 			<if test="salt != null">salt = #{salt},</if>
 			<if test="status != null">status = #{status},</if>
 			<if test="avatar != null">avatar = #{avatar},</if>
-			<if test="signature != null"> signature = #{signature}</if>
+			<if test="signature != null"> signature = #{signature},</if>
 			<if test="email != null">email = #{email},</if>
 			<if test="type != null">type = #{type},</if>
 			<if test="phone != null">phone = #{phone},</if>
 			<if test="qq != null">qq = #{qq},</if>
 			<if test="weibo != null">weibo = #{weibo}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<update id="updateMember" parameterType="User">
+		update sys_user  
+		<set>
+			<if test="nickname != null">nickname = #{nickname},</if>
+			<if test="signature != null">signature = #{signature},</if>
+			<if test="email != null">email = #{email},</if>
+			<if test="phone != null">phone = #{phone},</if>
+			<if test="qq != null">qq = #{qq}</if>
 		</set>
 		where id = #{id}
 	</update>

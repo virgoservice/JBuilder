@@ -23,7 +23,6 @@ import com.ramostear.jbuilder.entity.CancelOrder;
 import com.ramostear.jbuilder.entity.InvalidDate;
 import com.ramostear.jbuilder.entity.Order;
 import com.ramostear.jbuilder.entity.OrderChild;
-import com.ramostear.jbuilder.entity.ScenicSpot;
 import com.ramostear.jbuilder.entity.Ticket;
 import com.ramostear.jbuilder.entity.User;
 import com.ramostear.jbuilder.exception.BusinessException;
@@ -204,11 +203,15 @@ public class MemberOrderController {
 	public String payList(ReqDto req,Model model,HttpSession session){
 		
 		User user=(User)session.getAttribute(SysConsts.LOGIN_USER);
+		List<Ticket> tlist=this.ticketService.findAll();
 		
-		
+		Map<Long,Ticket> tlMap=new HashMap<>();
+	       for(Ticket entity : tlist){
+	    	   tlMap.put(entity.getId(),entity);
+	       }
 		
 		model.addAttribute("list", this.orderService.findByPageByUid(req.getPageNo(), req.getPageSize(), "id", true,user.getId(),"0"));
-		
+		model.addAttribute("tlMap",tlMap);
 		model.addAttribute("pay",1);
 		return "member/all_order";
 	}

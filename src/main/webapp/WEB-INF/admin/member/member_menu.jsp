@@ -18,7 +18,7 @@
 			<a class="side-menu-group" href="javascript:;"> <i class="st-user-icon user-center-icon"></i>个人中心<i class="arrow-icon"></i> </a>
 			<div class="son">
 				<a id="nav_userinfo" href="<%=path %>/member/userinfo">个人资料</a>
-				<a id="nav_safecenter" href="/member/index/safecenter">账号安全</a>
+				<a id="nav_safecenter" href="<%=path %>/member/safecenter">账号安全</a>
 			</div>
 		</li>
 	</ul>

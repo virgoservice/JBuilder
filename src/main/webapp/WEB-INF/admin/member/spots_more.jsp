@@ -27,7 +27,7 @@
 		<div class="big">
 			<div class="wm-1200">
 				<div class="st-guide">
-					<a href="<%=path %>/"  title="首页">首页</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;
+					<a href="<%=path %>/index"  title="首页">首页</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;
 					<a href="#"  title="景点">更多景点</a>
 					</div>
 				<!--面包屑-->

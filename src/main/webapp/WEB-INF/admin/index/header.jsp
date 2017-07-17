@@ -46,7 +46,7 @@
 				</div>
 				<div class="st-link-way"> 
 					<img class="link-way-ico" src="<%=path %>/resources/index/res/images/24hours-ico.png" width="45" height="45" />
-					<div class="link-way-txt"> <em>0859-xxxxxxx</em> </div>
+					<div class="link-way-txt"> <em>0855-5729999</em> </div>
 				</div>
 			</div>
 		</div>

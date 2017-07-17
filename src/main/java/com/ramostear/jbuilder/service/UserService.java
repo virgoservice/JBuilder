@@ -88,7 +88,8 @@ public interface UserService {
 	public User updateUser(User user);
 	
 	public User update(User user,Long...roleIds);
-	
+
+	public User updateMember(User user);
 	public User findByName(String username);
 	
 	/**

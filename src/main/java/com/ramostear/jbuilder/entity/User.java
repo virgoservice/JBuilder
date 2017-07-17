@@ -170,4 +170,15 @@ public class User {
 	public String getCredentialsSalt(){
 		return username+salt;
 	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", nickname="
+				+ nickname + ", password=" + password + ", salt=" + salt
+				+ ", createTime=" + createTime + ", status=" + status
+				+ ", avatar=" + avatar + ", signature=" + signature
+				+ ", email=" + email + ", type=" + type + ", phone=" + phone
+				+ ", qq=" + qq + ", weibo=" + weibo + "]";
+	}
+	
 }
